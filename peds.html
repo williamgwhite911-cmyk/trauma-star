@@ -156,6 +156,8 @@
       return;
     }
     renderZone(kg);
+    const _z = zoneFor(kg);
+    const zc = _z ? _z.c : '#38bdf8'; // active Broselow/Handtevy zone color
     conv.textContent = estimated
       ? `≈ ${f(kg)} kg estimated from age ${f(ageY,0)} y`
       : (wU === 'lb' ? `${wRaw} lb = ${f(kg)} kg` : `${wRaw} kg = ${fi(kg/KG_PER_LB)} lb`);
@@ -164,7 +166,7 @@
     let html = '';
 
     // Equipment & energy
-    html += '<section><div class="sec-h">Equipment & energy</div><div class="block" style="--c:#38bdf8">';
+    html += `<section><div class="sec-h" style="color:${zc}">Equipment & energy</div><div class="block" style="--c:${zc}">`;
     if (ageY && ageY > 0) {
       const unc = 4 + ageY/4, cuf = 3.5 + ageY/4;
       html += row('ETT (cuffed)', 'age/4 + 3.5', f(cuf,1) + ' mm', 'b');
@@ -178,7 +180,7 @@
     html += '</div></section>';
 
     // Resuscitation drugs
-    html += '<section><div class="sec-h">Resuscitation drugs</div><div class="block" style="--c:#ef4444">';
+    html += `<section><div class="sec-h" style="color:${zc}">Resuscitation drugs</div><div class="block" style="--c:${zc}">`;
     html += row('Epinephrine — arrest', '0.01 mg/kg IV/IO · 0.1 mg/mL · max 1 mg', `${nice(min(0.01*kg,1))} mg · ${nice(min(0.1*kg,10))} mL`);
     html += row('Epinephrine — anaphylaxis', '0.01 mg/kg IM · 1 mg/mL · max 0.3 mg', `${nice(min(0.01*kg,0.3))} mg`);
     html += row('Fluid bolus (isotonic)', '20 mL/kg (10 in trauma/cardiac)', `${fi(20*kg)} mL (${fi(10*kg)} mL)`, 'g');
@@ -190,7 +192,7 @@
     html += '</div></section>';
 
     // Sedation / RSI / seizure
-    html += '<section><div class="sec-h">Seizure · RSI</div><div class="block" style="--c:#a855f7">';
+    html += `<section><div class="sec-h" style="color:${zc}">Seizure · RSI</div><div class="block" style="--c:${zc}">`;
     html += row('Midazolam — seizure', '0.1 mg/kg IV/IM/IN (max 4–5 mg)', `${nice(min(0.1*kg,5))} mg`);
     html += row('Ketamine — induction', '1–2 mg/kg IV', `${nice(1*kg)}–${nice(2*kg)} mg`);
     html += row('Rocuronium — paralytic', '1 mg/kg IV', `${nice(1*kg)} mg`);

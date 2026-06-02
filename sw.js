@@ -1,5 +1,5 @@
 // Trauma Star launcher — offline cache
-const CACHE = 'trauma-star-v8';
+const CACHE = 'trauma-star-v9';
 const ASSETS = ['./', './index.html', './protocols.html', './airway-ketamine.html', './ibw.html', './pressors.html', './peds.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (e) => {
