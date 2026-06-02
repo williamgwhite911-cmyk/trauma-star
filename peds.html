@@ -82,7 +82,7 @@
       </select>
     </div>
     <div class="conv" id="wtConv"></div>
-    <label class="fl" style="margin-top:12px">Age <span style="text-transform:none;letter-spacing:0">(optional — ETT sizing; estimates weight if blank)</span></label>
+    <label class="fl" style="margin-top:12px">Age <span style="text-transform:none;letter-spacing:0">(Handtevy entry / ETT sizing — estimates weight &amp; color zone)</span></label>
     <input id="age" type="number" inputmode="decimal" placeholder="years" oninput="calc()">
     <div class="hint">Prefer a measured or Broselow/Handtevy weight. If only age is entered, weight is roughly estimated (≈ 2 × age + 8 kg) — verify.</div>
     <div id="zone"></div>
@@ -119,7 +119,7 @@
     const z = (kg && kg > 0) ? zoneFor(kg) : null;
     const strip = ZONES.map((s,i) => `<span style="background:${s.c}" class="${z && s.n===z.n ? 'on':''}" title="${s.n} (${s.lo}–${s.hi} kg)" onclick="pickZone(${i})"></span>`).join('');
     let banner;
-    if (!kg || kg <= 0) banner = `<div class="zonepick">▸ Tap a color zone to use its estimated weight</div>`;
+    if (!kg || kg <= 0) banner = `<div class="zonepick">Broselow — tap a color &nbsp;·&nbsp; Handtevy — enter age below</div>`;
     else if (!z) banner = `<div class="zonebanner" style="background:#1b2740;color:#9fb2cf">Below color zones (&lt; 3 kg) — neonatal</div>`;
     else if (z.over) banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">ABOVE GREEN · &gt; 36 kg — use adult/largest zone</div>`;
     else banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">${z.n.toUpperCase()} ZONE · ≈ ${z.lo}–${z.hi} kg</div>`;
