@@ -39,9 +39,11 @@
   .conv{font-family:var(--mono);font-size:.7rem;color:var(--blue);margin-top:8px;text-align:center;min-height:1em}
   .hint{font-size:.7rem;color:var(--text-faint);margin-top:8px;text-align:center;line-height:1.5}
   .zonebanner{border-radius:10px;padding:9px 12px;font-family:var(--mono);font-weight:700;font-size:.82rem;text-align:center;letter-spacing:.08em;margin-top:12px}
-  .zonestrip{display:flex;gap:3px;margin-top:7px}
-  .zonestrip span{flex:1;height:13px;border-radius:3px;opacity:.4;transition:opacity .12s}
-  .zonestrip span.on{opacity:1;outline:2px solid #fff;outline-offset:1px;height:17px;margin-top:-2px}
+  .zonestrip{display:flex;gap:3px;margin-top:8px}
+  .zonestrip span{flex:1;height:24px;border-radius:4px;opacity:.55;transition:opacity .12s,transform .12s;cursor:pointer}
+  .zonestrip span:hover{opacity:.85}
+  .zonestrip span.on{opacity:1;outline:2px solid #fff;outline-offset:1px;height:30px;margin-top:-3px}
+  .zonepick{border:1px dashed var(--line-bright);border-radius:10px;padding:9px 12px;font-family:var(--mono);font-weight:600;font-size:.74rem;text-align:center;letter-spacing:.06em;color:var(--blue);margin-top:12px}
   .zonenote{font-size:.64rem;color:var(--text-faint);text-align:center;margin-top:7px;font-family:var(--mono);line-height:1.5}
 
   section{margin-bottom:16px}
@@ -114,14 +116,22 @@
   function renderZone(kg){
     const box = document.getElementById('zone');
     if (!box) return;
-    if (!kg || kg <= 0) { box.innerHTML = ''; return; }
-    const z = zoneFor(kg);
-    const strip = ZONES.map(s => `<span style="background:${s.c}" class="${z && s.n===z.n ? 'on':''}" title="${s.n} (${s.lo}–${s.hi} kg)"></span>`).join('');
+    const z = (kg && kg > 0) ? zoneFor(kg) : null;
+    const strip = ZONES.map((s,i) => `<span style="background:${s.c}" class="${z && s.n===z.n ? 'on':''}" title="${s.n} (${s.lo}–${s.hi} kg)" onclick="pickZone(${i})"></span>`).join('');
     let banner;
-    if (!z) banner = `<div class="zonebanner" style="background:#1b2740;color:#9fb2cf">Below color zones (&lt; 3 kg) — neonatal</div>`;
+    if (!kg || kg <= 0) banner = `<div class="zonepick">▸ Tap a color zone to use its estimated weight</div>`;
+    else if (!z) banner = `<div class="zonebanner" style="background:#1b2740;color:#9fb2cf">Below color zones (&lt; 3 kg) — neonatal</div>`;
     else if (z.over) banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">ABOVE GREEN · &gt; 36 kg — use adult/largest zone</div>`;
     else banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">${z.n.toUpperCase()} ZONE · ≈ ${z.lo}–${z.hi} kg</div>`;
     box.innerHTML = banner + `<div class="zonestrip">${strip}</div><div class="zonenote">Broselow / Handtevy length-color zones (approx.) — confirm with the tape.</div>`;
+  }
+  // Tap a color → fill that zone's representative pediatric weight and compute.
+  function pickZone(i){
+    const z = ZONES[i];
+    const mid = Math.round((z.lo + z.hi) / 2 * 2) / 2; // representative kg (nearest 0.5)
+    document.getElementById('wtU').value = 'kg';
+    document.getElementById('wt').value = mid;
+    calc();
   }
   const f = (n, d=1) => (Math.round(n * 10**d) / 10**d).toFixed(d);
   const fi = (n) => Math.round(n).toString();
@@ -152,7 +162,7 @@
     if (!kg || kg <= 0) {
       conv.textContent = '';
       renderZone(null);
-      out.innerHTML = '<div class="ph">Enter a weight (or age) to compute pediatric doses.</div>';
+      out.innerHTML = '<div class="ph">Enter a weight, an age, or tap a color zone above to compute pediatric doses.</div>';
       return;
     }
     renderZone(kg);
