@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Peds">
+<meta name="theme-color" content="#0a0f1c">
+<title>Pediatric Resuscitation — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --blue:#38bdf8; --green:#22c55e; --amber:#f59e0b; --pink:#ec4899;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.4rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1rem;font-weight:800}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.14em;text-transform:uppercase}
+  .wrap{max-width:620px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+
+  .calc{background:var(--card);border:1px solid var(--line-bright);border-radius:14px;padding:14px;margin-bottom:16px}
+  .calc .fl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);display:block;margin-bottom:5px}
+  .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:10px}
+  .row2{display:grid;grid-template-columns:1fr auto;gap:8px}
+  .calc input,.calc select{width:100%;min-width:0;background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-size:1.2rem;font-weight:700;font-family:var(--mono);padding:11px 10px;text-align:center}
+  .calc select{font-size:.9rem;padding:0 8px}
+  .conv{font-family:var(--mono);font-size:.7rem;color:var(--blue);margin-top:8px;text-align:center;min-height:1em}
+  .hint{font-size:.7rem;color:var(--text-faint);margin-top:8px;text-align:center;line-height:1.5}
+  .zonebanner{border-radius:10px;padding:9px 12px;font-family:var(--mono);font-weight:700;font-size:.82rem;text-align:center;letter-spacing:.08em;margin-top:12px}
+  .zonestrip{display:flex;gap:3px;margin-top:7px}
+  .zonestrip span{flex:1;height:13px;border-radius:3px;opacity:.4;transition:opacity .12s}
+  .zonestrip span.on{opacity:1;outline:2px solid #fff;outline-offset:1px;height:17px;margin-top:-2px}
+  .zonenote{font-size:.64rem;color:var(--text-faint);text-align:center;margin-top:7px;font-family:var(--mono);line-height:1.5}
+
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.14em;color:var(--text-faint);margin:0 2px 8px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .item{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 15px;border-top:1px solid var(--line)}
+  .item:first-child{border-top:none}
+  .item .k{flex:1;min-width:0}
+  .item .k .nm{font-weight:700;font-size:.9rem}
+  .item .k .ba{font-family:var(--mono);font-size:.62rem;color:var(--text-faint);margin-top:2px}
+  .item .v{font-family:var(--mono);font-weight:700;font-size:.92rem;color:var(--amber);white-space:nowrap;text-align:right}
+  .item .v.b{color:var(--blue)} .item .v.g{color:var(--green)}
+  .ph{padding:22px 16px;text-align:center;color:var(--text-faint);font-family:var(--mono);font-size:.82rem;background:var(--card);border:1px dashed var(--line-bright);border-radius:14px}
+  .disc{margin-top:8px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="back" href="protocols.html" aria-label="Back">‹</a>
+  <div>
+    <h1>Pediatric Resuscitation</h1>
+    <div class="sub">Weight-based · Broselow / Handtevy</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="calc">
+    <label class="fl">Weight (from Broselow tape / Handtevy / scale)</label>
+    <div class="row2">
+      <input id="wt" type="number" inputmode="decimal" placeholder="weight" oninput="calc()">
+      <select id="wtU" onchange="calc()">
+        <option value="kg">kg</option>
+        <option value="lb">lb</option>
+      </select>
+    </div>
+    <div class="conv" id="wtConv"></div>
+    <label class="fl" style="margin-top:12px">Age <span style="text-transform:none;letter-spacing:0">(optional — ETT sizing; estimates weight if blank)</span></label>
+    <input id="age" type="number" inputmode="decimal" placeholder="years" oninput="calc()">
+    <div class="hint">Prefer a measured or Broselow/Handtevy weight. If only age is entered, weight is roughly estimated (≈ 2 × age + 8 kg) — verify.</div>
+    <div id="zone"></div>
+  </div>
+
+  <div id="out"><div class="ph">Enter a weight (or age) to compute pediatric doses.</div></div>
+
+  <div class="disc">Reference only — standard weight-based (PALS) formulas. Always confirm against your Broselow tape / Handtevy and Trauma Star medical direction. Verify every dose and max before administration.</div>
+</div>
+
+<script>
+  const KG_PER_LB = 0.45359237;
+  // Standard length/color zones used by Broselow & Handtevy (approximate weight
+  // bands, widely published). Color is a visual aid only — measure with the tape.
+  const ZONES = [
+    {n:'Grey',   c:'#9ca3af', t:'#0a0f1c', lo:3,  hi:5},
+    {n:'Pink',   c:'#f472b6', t:'#0a0f1c', lo:6,  hi:7},
+    {n:'Red',    c:'#ef4444', t:'#ffffff', lo:8,  hi:9},
+    {n:'Purple', c:'#a855f7', t:'#ffffff', lo:10, hi:11},
+    {n:'Yellow', c:'#eab308', t:'#0a0f1c', lo:12, hi:14},
+    {n:'White',  c:'#e5e7eb', t:'#0a0f1c', lo:15, hi:18},
+    {n:'Blue',   c:'#3b82f6', t:'#ffffff', lo:19, hi:23},
+    {n:'Orange', c:'#f97316', t:'#0a0f1c', lo:24, hi:29},
+    {n:'Green',  c:'#22c55e', t:'#0a0f1c', lo:30, hi:36},
+  ];
+  function zoneFor(kg){
+    if (kg < 3) return null;
+    for (const z of ZONES) if (kg <= z.hi) return z;
+    return {n:'Adult', c:'#64748b', t:'#ffffff', lo:36, hi:null, over:true};
+  }
+  function renderZone(kg){
+    const box = document.getElementById('zone');
+    if (!box) return;
+    if (!kg || kg <= 0) { box.innerHTML = ''; return; }
+    const z = zoneFor(kg);
+    const strip = ZONES.map(s => `<span style="background:${s.c}" class="${z && s.n===z.n ? 'on':''}" title="${s.n} (${s.lo}–${s.hi} kg)"></span>`).join('');
+    let banner;
+    if (!z) banner = `<div class="zonebanner" style="background:#1b2740;color:#9fb2cf">Below color zones (&lt; 3 kg) — neonatal</div>`;
+    else if (z.over) banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">ABOVE GREEN · &gt; 36 kg — use adult/largest zone</div>`;
+    else banner = `<div class="zonebanner" style="background:${z.c};color:${z.t}">${z.n.toUpperCase()} ZONE · ≈ ${z.lo}–${z.hi} kg</div>`;
+    box.innerHTML = banner + `<div class="zonestrip">${strip}</div><div class="zonenote">Broselow / Handtevy length-color zones (approx.) — confirm with the tape.</div>`;
+  }
+  const f = (n, d=1) => (Math.round(n * 10**d) / 10**d).toFixed(d);
+  const fi = (n) => Math.round(n).toString();
+  // round to a "nice" value for display
+  function nice(n){
+    let r;
+    if (n >= 100) r = Math.round(n);
+    else if (n >= 10) r = Math.round(n*10)/10;
+    else r = Math.round(n*100)/100;
+    return r.toString(); // drops trailing zeros: 2, 0.2, 0.4, 4.5
+  }
+
+  function row(nm, basis, val, cls){
+    return `<div class="item"><div class="k"><div class="nm">${nm}</div><div class="ba">${basis}</div></div><div class="v ${cls||''}">${val}</div></div>`;
+  }
+
+  function calc(){
+    const wRaw = parseFloat(document.getElementById('wt').value);
+    const wU = document.getElementById('wtU').value;
+    const ageY = parseFloat(document.getElementById('age').value);
+    const conv = document.getElementById('wtConv');
+    const out = document.getElementById('out');
+
+    let kg = null, estimated = false;
+    if (wRaw && wRaw > 0) kg = wU === 'lb' ? wRaw * KG_PER_LB : wRaw;
+    else if (ageY && ageY > 0) { kg = 2 * ageY + 8; estimated = true; }
+
+    if (!kg || kg <= 0) {
+      conv.textContent = '';
+      renderZone(null);
+      out.innerHTML = '<div class="ph">Enter a weight (or age) to compute pediatric doses.</div>';
+      return;
+    }
+    renderZone(kg);
+    conv.textContent = estimated
+      ? `≈ ${f(kg)} kg estimated from age ${f(ageY,0)} y`
+      : (wU === 'lb' ? `${wRaw} lb = ${f(kg)} kg` : `${wRaw} kg = ${fi(kg/KG_PER_LB)} lb`);
+
+    const min = (a,b)=>Math.min(a,b), clamp=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
+    let html = '';
+
+    // Equipment & energy
+    html += '<section><div class="sec-h">Equipment & energy</div><div class="block" style="--c:#38bdf8">';
+    if (ageY && ageY > 0) {
+      const unc = 4 + ageY/4, cuf = 3.5 + ageY/4;
+      html += row('ETT (cuffed)', 'age/4 + 3.5', f(cuf,1) + ' mm', 'b');
+      html += row('ETT (uncuffed)', 'age/4 + 4', f(unc,1) + ' mm', 'b');
+      html += row('ETT depth at lip', 'ETT × 3', f(cuf*3,1) + ' cm', 'b');
+    } else {
+      html += row('ETT size', 'enter age for tube size', '—', 'b');
+    }
+    html += row('Defibrillation', '2 J/kg → 4 J/kg', `${fi(2*kg)} J → ${fi(4*kg)} J`, 'b');
+    html += row('Synchronized cardioversion', '0.5–1 J/kg', `${nice(0.5*kg)}–${fi(1*kg)} J`, 'b');
+    html += '</div></section>';
+
+    // Resuscitation drugs
+    html += '<section><div class="sec-h">Resuscitation drugs</div><div class="block" style="--c:#ef4444">';
+    html += row('Epinephrine — arrest', '0.01 mg/kg IV/IO · 0.1 mg/mL · max 1 mg', `${nice(min(0.01*kg,1))} mg · ${nice(min(0.1*kg,10))} mL`);
+    html += row('Epinephrine — anaphylaxis', '0.01 mg/kg IM · 1 mg/mL · max 0.3 mg', `${nice(min(0.01*kg,0.3))} mg`);
+    html += row('Fluid bolus (isotonic)', '20 mL/kg (10 in trauma/cardiac)', `${fi(20*kg)} mL (${fi(10*kg)} mL)`, 'g');
+    html += row('Dextrose D10', '5 mL/kg = 0.5 g/kg', `${fi(5*kg)} mL`, 'g');
+    html += row('Naloxone', '0.1 mg/kg (max 2 mg)', `${nice(min(0.1*kg,2))} mg`);
+    html += row('Adenosine', '0.1 then 0.2 mg/kg (max 6 / 12 mg)', `${nice(min(0.1*kg,6))} → ${nice(min(0.2*kg,12))} mg`);
+    html += row('Amiodarone', '5 mg/kg IV/IO (max 300 mg)', `${nice(min(5*kg,300))} mg`);
+    html += row('Atropine', '0.02 mg/kg (min 0.1, max 0.5 mg)', `${nice(clamp(0.02*kg,0.1,0.5))} mg`);
+    html += '</div></section>';
+
+    // Sedation / RSI / seizure
+    html += '<section><div class="sec-h">Seizure · RSI</div><div class="block" style="--c:#a855f7">';
+    html += row('Midazolam — seizure', '0.1 mg/kg IV/IM/IN (max 4–5 mg)', `${nice(min(0.1*kg,5))} mg`);
+    html += row('Ketamine — induction', '1–2 mg/kg IV', `${nice(1*kg)}–${nice(2*kg)} mg`);
+    html += row('Rocuronium — paralytic', '1 mg/kg IV', `${nice(1*kg)} mg`);
+    html += '</div></section>';
+
+    out.innerHTML = html;
+  }
+  calc();
+</script>
+</body>
+</html>

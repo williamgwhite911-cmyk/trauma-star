@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS IBW">
+<meta name="theme-color" content="#0a0f1c">
+<title>Ideal Body Weight — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --blue:#38bdf8; --blue2:#2563eb; --green:#22c55e; --amber:#f59e0b;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1rem;font-weight:800}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.14em;text-transform:uppercase}
+  .wrap{max-width:560px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
+
+  .card{background:var(--card);border:1px solid var(--line-bright);border-radius:14px;padding:16px;margin-bottom:14px}
+  label.fl{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);display:block;margin-bottom:8px}
+
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .seg button{font-family:var(--body);font-weight:700;font-size:.95rem;padding:12px;border-radius:10px;border:1px solid var(--line-bright);background:var(--bg-soft);color:var(--text-dim);cursor:pointer}
+  .seg button.on{color:#fff;border-color:transparent}
+  .seg button.male.on{background:linear-gradient(135deg,#2563eb,#38bdf8)}
+  .seg button.female.on{background:linear-gradient(135deg,#9333ea,#ec4899)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .fld label{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);display:block;margin-bottom:5px}
+  .fld input,.fld select{width:100%;min-width:0;background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-size:1.15rem;font-weight:700;font-family:var(--mono);padding:11px 10px;text-align:center}
+  .row2{display:grid;grid-template-columns:1fr auto;gap:8px}
+  .conv{font-family:var(--mono);font-size:.7rem;color:var(--blue);margin-top:8px;text-align:center;min-height:1em}
+
+  .out{background:linear-gradient(135deg,#0c1322,#0f1d34);border:1px solid var(--line-bright);border-radius:14px;padding:6px 0;margin-bottom:14px}
+  .out .res{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:13px 16px;border-top:1px solid var(--line)}
+  .out .res:first-child{border-top:none}
+  .out .res .k{font-size:.82rem;color:var(--text-dim)}
+  .out .res .k small{display:block;font-family:var(--mono);font-size:.58rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+  .out .res .v{font-family:var(--mono);font-weight:700;font-size:1.05rem;color:var(--text);white-space:nowrap}
+  .out .res.hl .v{color:var(--blue);font-size:1.25rem}
+  .out .res.vt .v{color:var(--green)}
+  .placeholder{padding:22px 16px;text-align:center;color:var(--text-faint);font-family:var(--mono);font-size:.82rem}
+
+  .note{font-size:.72rem;color:var(--text-faint);line-height:1.55;font-family:var(--mono);text-align:center;margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="back" href="index.html" aria-label="Back">‹</a>
+  <div>
+    <h1>Ideal Body Weight</h1>
+    <div class="sub">Devine · IBW / ABW / dosing weight</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="seg">
+      <button type="button" class="male on" id="bMale" onclick="setSex('male')">♂ Male</button>
+      <button type="button" class="female" id="bFemale" onclick="setSex('female')">♀ Female</button>
+    </div>
+
+    <label class="fl">Height</label>
+    <div class="grid" id="ftinWrap">
+      <div class="fld"><label>feet</label><input id="ft" type="number" inputmode="numeric" placeholder="5" oninput="calc()"></div>
+      <div class="fld"><label>inches</label><input id="in" type="number" inputmode="decimal" placeholder="10" oninput="calc()"></div>
+    </div>
+    <div class="conv" id="htConv"></div>
+
+    <label class="fl" style="margin-top:14px">Actual body weight <span style="color:var(--text-faint);text-transform:none;letter-spacing:0">(optional — for ABW)</span></label>
+    <div class="row2">
+      <div class="fld"><input id="wt" type="number" inputmode="decimal" placeholder="weight" oninput="calc()"></div>
+      <select id="wtU" onchange="calc()" style="background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-family:var(--mono);font-weight:700;padding:0 10px">
+        <option value="kg">kg</option>
+        <option value="lb">lb</option>
+      </select>
+    </div>
+    <div class="conv" id="wtConv"></div>
+  </div>
+
+  <div class="out" id="out">
+    <div class="placeholder" id="ph">Enter sex and height to calculate IBW.</div>
+  </div>
+
+  <div class="note">
+    Devine IBW: Male 50 kg + 2.3 kg per inch over 5 ft; Female 45.5 kg + 2.3 kg per inch over 5 ft.
+    ABW = IBW + 0.4 × (actual − IBW). Lung-protective Vt 6–8 mL/kg IBW.
+    Adult estimate — verify before dosing.
+  </div>
+</div>
+
+<script>
+  let sex = 'male';
+  function setSex(s){
+    sex = s;
+    document.getElementById('bMale').classList.toggle('on', s === 'male');
+    document.getElementById('bFemale').classList.toggle('on', s === 'female');
+    calc();
+  }
+  const KG_PER_LB = 0.45359237;
+  function fmt(n, d){ d = d == null ? 1 : d; return (Math.round(n * 10**d) / 10**d).toFixed(d); }
+
+  function calc(){
+    const ft = parseFloat(document.getElementById('ft').value) || 0;
+    const inch = parseFloat(document.getElementById('in').value) || 0;
+    const totalIn = ft * 12 + inch;
+    const htConv = document.getElementById('htConv');
+    const out = document.getElementById('out');
+
+    if (!totalIn || totalIn <= 0) {
+      htConv.textContent = '';
+      out.innerHTML = '<div class="placeholder">Enter sex and height to calculate IBW.</div>';
+      document.getElementById('wtConv').textContent = '';
+      return;
+    }
+    htConv.textContent = `${ft || 0}′ ${fmt(inch,0)}″ = ${fmt(totalIn,0)} in = ${fmt(totalIn*2.54,0)} cm`;
+
+    const base = sex === 'male' ? 50 : 45.5;
+    let ibw = base + 2.3 * (totalIn - 60);
+    if (ibw < 1) ibw = 0; // guard for very short / non-adult input
+
+    // actual weight
+    const wRaw = parseFloat(document.getElementById('wt').value);
+    const wU = document.getElementById('wtU').value;
+    const wtConv = document.getElementById('wtConv');
+    let actualKg = null;
+    if (wRaw && wRaw > 0) {
+      actualKg = wU === 'lb' ? wRaw * KG_PER_LB : wRaw;
+      wtConv.textContent = wU === 'lb'
+        ? `${wRaw} lb = ${fmt(actualKg)} kg`
+        : `${wRaw} kg = ${fmt(actualKg/KG_PER_LB,0)} lb`;
+    } else {
+      wtConv.textContent = '';
+    }
+
+    let html = '';
+    html += `<div class="res hl"><div class="k">Ideal Body Weight<small>${sex} · Devine</small></div><div class="v">${fmt(ibw)} kg <span style="color:var(--text-faint);font-size:.8rem">/ ${fmt(ibw/KG_PER_LB,0)} lb</span></div></div>`;
+
+    // Lung-protective tidal volume from IBW
+    html += `<div class="res vt"><div class="k">Tidal volume 6–8 mL/kg<small>lung-protective, by IBW</small></div><div class="v">${fmt(6*ibw,0)}–${fmt(8*ibw,0)} mL</div></div>`;
+
+    if (actualKg != null) {
+      const pct = actualKg / ibw * 100;
+      // ABW is meaningful when actual exceeds IBW
+      const abw = ibw + 0.4 * (actualKg - ibw);
+      html += `<div class="res"><div class="k">Adjusted Body Weight<small>IBW + 0.4 × (actual − IBW)</small></div><div class="v">${fmt(abw)} kg <span style="color:var(--text-faint);font-size:.8rem">/ ${fmt(abw/KG_PER_LB,0)} lb</span></div></div>`;
+      html += `<div class="res"><div class="k">Actual / Total Body Weight<small>${fmt(pct,0)}% of IBW</small></div><div class="v">${fmt(actualKg)} kg</div></div>`;
+    }
+
+    out.innerHTML = html;
+  }
+  calc();
+</script>
+</body>
+</html>

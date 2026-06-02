@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Airway">
+<meta name="theme-color" content="#0a0f1c">
+<title>Ketamine-Forward Trauma Airway — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e; --card2:#152138;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --green:#22c55e; --green-bg:#0c2a1a; --green-line:#1c5237;
+    --amber:#f59e0b; --red:#ef4444; --red-bg:#2a1212; --red-line:#5b2330;
+    --cyan:#38bdf8;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.4rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1rem;font-weight:800;letter-spacing:-.01em}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.14em;text-transform:uppercase}
+
+  .wrap{max-width:720px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
+
+  .calc{background:var(--card);border:1px solid var(--line-bright);border-radius:14px;padding:14px;margin-bottom:16px}
+  .calc label{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);display:block;margin-bottom:8px}
+  .calc-row{display:flex;gap:8px;align-items:center}
+  .calc input{flex:1;min-width:0;background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-size:1.2rem;font-weight:700;font-family:var(--mono);padding:11px 12px;text-align:center}
+  .calc .unit{font-family:var(--mono);font-size:.8rem;color:var(--text-dim)}
+  .calc .conv{font-family:var(--mono);font-size:.7rem;color:var(--cyan);margin-top:8px;min-height:1em;text-align:center}
+  .calc .hint{font-size:.7rem;color:var(--text-faint);margin-top:6px;text-align:center}
+
+  .pathsel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+  .pathsel .p{border-radius:12px;padding:12px;text-align:center;border:1px solid var(--line)}
+  .pathsel .p.norm{background:var(--green-bg);border-color:var(--green-line)}
+  .pathsel .p.hypo{background:var(--red-bg);border-color:var(--red-line)}
+  .pathsel .p .t{font-weight:800;font-size:.95rem;margin-bottom:3px}
+  .pathsel .p.norm .t{color:var(--green)}
+  .pathsel .p.hypo .t{color:var(--red)}
+  .pathsel .p .c{font-family:var(--mono);font-size:.66rem;color:var(--text-dim);line-height:1.5}
+
+  section{margin-bottom:18px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden}
+  .block.norm{border-left:4px solid var(--green)}
+  .block.hypo{border-left:4px solid var(--red)}
+  .block.bridge{border-left:4px solid var(--amber)}
+  .sub-h{font-weight:700;font-size:.8rem;color:var(--text-dim);padding:12px 16px 4px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
+
+  .item{padding:11px 16px;border-top:1px solid var(--line)}
+  .item:first-child{border-top:none}
+  .item .drug{font-weight:700;font-size:.95rem}
+  .item .route{font-family:var(--mono);font-size:.78rem;color:var(--amber);font-weight:600}
+  .item .detail{font-size:.8rem;color:var(--text-dim);margin-top:3px;line-height:1.45}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.82rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .calcdose{display:none;font-family:var(--mono);font-weight:700;font-size:.82rem;color:#052e1a;background:linear-gradient(135deg,#86efac,#22c55e);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .calcdose.show{display:inline-block}
+
+  ul.checks{list-style:none;padding:6px 0}
+  ul.checks li{padding:9px 16px 9px 38px;position:relative;font-size:.84rem;color:var(--text);border-top:1px solid var(--line);line-height:1.45}
+  ul.checks li:first-child{border-top:none}
+  ul.checks li::before{content:"";position:absolute;left:16px;top:14px;width:10px;height:10px;border-radius:3px;border:1.5px solid var(--cyan)}
+
+  .warn{background:var(--red-bg);border:1px solid var(--red-line);border-radius:14px;padding:4px 0}
+  .warn li{padding:10px 16px 10px 40px;position:relative;font-size:.82rem;border-top:1px solid var(--red-line);line-height:1.45;list-style:none}
+  .warn li:first-child{border-top:none}
+  .warn li::before{content:"!";position:absolute;left:16px;top:9px;width:16px;height:16px;border-radius:50%;background:var(--red);color:#fff;font-size:.7rem;font-weight:800;text-align:center;line-height:16px;font-family:var(--mono)}
+
+  details.refs{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}
+  details.refs li{font-size:.72rem;color:var(--text-faint);line-height:1.5;margin:5px 0;word-break:break-word}
+  details.refs a{color:var(--cyan);text-decoration:none}
+
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.5;text-align:center;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="back" href="index.html" aria-label="Back">‹</a>
+  <div>
+    <h1>Ketamine-Forward Trauma Airway</h1>
+    <div class="sub">Adult RSI · post-intubation transport</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="calc">
+    <label for="wt">Patient weight → auto-dose</label>
+    <div class="calc-row">
+      <input id="wt" type="number" inputmode="decimal" placeholder="weight" oninput="recalc()">
+      <select id="wtUnit" onchange="recalc()" style="background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-family:var(--mono);padding:11px 8px;font-weight:700">
+        <option value="kg">kg</option>
+        <option value="lb">lb</option>
+      </select>
+    </div>
+    <div class="conv" id="wtConv"></div>
+    <div class="hint">Computed doses (green) appear beside each weight-based med. Verify before administering.</div>
+  </div>
+
+  <div class="pathsel">
+    <div class="p norm"><div class="t">Normotensive</div><div class="c">MAP ≥ 65<br>AND SBP ≥ 100</div></div>
+    <div class="p hypo"><div class="t">Hypotensive</div><div class="c">MAP &lt; 65<br>OR SBP &lt; 100</div></div>
+  </div>
+
+  <section>
+    <div class="sec-h">Before drugs</div>
+    <ul class="checks block">
+      <li>Monitor: ECG, SpO₂, BP, ETCO₂ when available.</li>
+      <li>Prepare suction, VL/DL, bougie, backup airway, and a cric plan.</li>
+      <li>Preoxygenate with best tolerated method.</li>
+      <li>Confirm the post-intubation sedation plan <b>before</b> paralysis.</li>
+      <li>In hemorrhagic shock: blood and hemorrhage control first.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-h">Normotensive pathway · MAP ≥ 65 and SBP ≥ 100</div>
+    <div class="block norm">
+      <div class="item">
+        <span class="drug">Ketamine</span> <span class="route">IV</span> — induction
+        <div class="detail">
+          <span class="dose">1–2 mg/kg</span>
+          <span class="calcdose" data-lo="1" data-hi="2" data-unit="mg"></span>
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Rocuronium</span> <span class="route">IV</span> — paralytic
+        <div class="detail">
+          <span class="dose">1–1.2 mg/kg</span>
+          <span class="calcdose" data-lo="1" data-hi="1.2" data-unit="mg"></span>
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Ketamine drip</span> <span class="route">IV</span> — post-intubation sedation
+        <div class="detail">
+          Start <span class="dose">1 mg/kg/hr</span><span class="calcdose" data-lo="1" data-hi="1" data-unit="mg/hr"></span>,
+          titrate <span class="dose">1–4 mg/kg/hr</span><span class="calcdose" data-lo="1" data-hi="4" data-unit="mg/hr"></span>.
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Midazolam</span> <span class="route">IV</span> — add-on amnesia/sedation
+        <div class="detail">
+          <span class="dose">1–2 mg</span> bolus, then <span class="dose">1–10 mg/hr</span>
+          or <span class="dose">0.02–0.1 mg/kg/hr</span><span class="calcdose" data-lo="0.02" data-hi="0.1" data-unit="mg/hr"></span>.
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Breakthrough agitation</span>
+        <div class="detail">Midazolam <span class="dose">2 mg IV q15 min PRN</span>, max <b>4 doses in 60 min</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h">Hypotensive pathway · MAP &lt; 65 or SBP &lt; 100</div>
+
+    <div class="block bridge" style="margin-bottom:12px">
+      <div class="sub-h">Pressor bridge</div>
+      <div class="item">
+        <span class="drug">Push-dose epinephrine</span>
+        <div class="detail">
+          Mix <span class="dose">1 mg in 100 mL</span> NS/D5W = <span class="dose">10 mcg/mL</span>.
+          Give <span class="dose">1 mL = 10 mcg IV</span> push, repeat q2–3 min PRN.
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Epinephrine drip</span>
+        <div class="detail">Start <span class="dose">10 mL/hr ≈ 1.7 mcg/min</span>, titrate to effect.</div>
+      </div>
+      <div class="item">
+        <span class="drug">Norepinephrine</span>
+        <div class="detail">Preferred continuous vasopressor if time and staffing allow.</div>
+      </div>
+    </div>
+
+    <div class="block hypo">
+      <div class="sub-h">Induction</div>
+      <div class="item">
+        <span class="drug">Ketamine</span> <span class="route">IV</span> — reduced dose
+        <div class="detail">
+          <span class="dose">0.5–1 mg/kg</span>
+          <span class="calcdose" data-lo="0.5" data-hi="1" data-unit="mg"></span>
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Rocuronium</span> <span class="route">IV</span> — paralytic
+        <div class="detail">
+          <span class="dose">1–1.2 mg/kg</span>
+          <span class="calcdose" data-lo="1" data-hi="1.2" data-unit="mg"></span>
+        </div>
+      </div>
+      <div class="sub-h">Post-intubation</div>
+      <div class="item">
+        <span class="drug">Resuscitation target</span>
+        <div class="detail">Continue pressors/resuscitation to at least <b>MAP 65 and SBP 100</b> when feasible.</div>
+      </div>
+      <div class="item">
+        <span class="drug">Ketamine drip</span> <span class="route">IV</span>
+        <div class="detail">
+          Start <span class="dose">1 mg/kg/hr</span><span class="calcdose" data-lo="1" data-hi="1" data-unit="mg/hr"></span>,
+          titrate <span class="dose">1–4 mg/kg/hr</span><span class="calcdose" data-lo="1" data-hi="4" data-unit="mg/hr"></span>.
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Midazolam</span> <span class="route">IV</span> — add-on (caution in shock)
+        <div class="detail">
+          <span class="dose">1–2 mg</span> bolus, then <span class="dose">1–10 mg/hr</span>
+          or <span class="dose">0.02–0.1 mg/kg/hr</span><span class="calcdose" data-lo="0.02" data-hi="0.1" data-unit="mg/hr"></span>.
+        </div>
+      </div>
+      <div class="item">
+        <span class="drug">Breakthrough agitation</span>
+        <div class="detail">Midazolam <span class="dose">2 mg IV q15 min PRN</span>, max <b>4 doses in 60 min</b> — extra caution in shock.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h">Safety reminders</div>
+    <ul class="warn">
+      <li>Rocuronium outlasts ketamine — <b>never leave a paralyzed patient without sedation.</b></li>
+      <li>Use clearly labeled pressor concentrations only.</li>
+      <li>Titrate all post-intubation meds to response, RASS, and hemodynamics.</li>
+    </ul>
+  </section>
+
+  <details class="refs">
+    <summary>Sources (45)</summary>
+    <ol>
+      <li>Vasopressors Part 1: Pressor Basics — <a href="https://www.criticalcaretime.com/episodes/vasopressors-1">criticalcaretime.com</a></li>
+      <li>Mean Arterial Pressure Goal in Critically Ill Patients — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9187355/">PMC9187355</a></li>
+      <li>Intubation, Hypotension and Shock — <a href="https://litfl.com/intubation-hypotension-and-shock/">LITFL</a></li>
+      <li>Prevent Peri-intubation Deaths with Careful Medication Choice — <a href="https://www.acepnow.com/article/prevent-peri-intubation-deaths-careful-medication-choice/2/">ACEP Now</a></li>
+      <li>Post-Intubation Sedation and Analgesia — <a href="https://coreem.net/core/post-intubation-sedation-and-analgesia/">CoreEM</a></li>
+      <li>Post-Intubation Analgesia and Sedation — <a href="https://emergencycarebc.ca/clinical_resource/clinical-summary/post-intubation-analgesia-and-sedation/">EmergencyCareBC</a></li>
+      <li>Consensus Statement: Adult RSI / Post-Intubation Sedation (2025) — <a href="https://nbtrauma.ca/wp-content/uploads/2025/08/Consensus-Statement-RSI-Post-Intubation-Sedation-and-Analgesia-March-2025-final-003-1.pdf">NB Trauma</a></li>
+      <li>ICU Sedation and Analgesia — <a href="https://rydertraumacenter.jacksonhealth.org/trauma-critical-care-guidelines/icu-sedation-and-analgesia/">Ryder Trauma Center</a></li>
+      <li>Foundational Stabilization: Post-Intubation Sedation — <a href="https://emcrit.org/emcrit/foundstab-post-intubation-sedation/">EMCrit</a></li>
+      <li>Endotracheal intubation in trauma patients with isolated shock — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9712316/">PMC9712316</a></li>
+      <li>Rethinking vasopressor use in the trauma bay — <a href="https://tsaco.bmj.com/content/10/Suppl_1/e001788">TSACO</a></li>
+      <li>First Do No Harm: Intubation in Trauma — <a href="https://rebelem.com/first-do-no-harm-rethinking-our-approach-to-intubation-in-trauma/">REBEL EM</a></li>
+      <li>Rapid Sequence Intubation (RSI) — <a href="https://litfl.com/rapid-sequence-intubation-rsi/">LITFL</a></li>
+      <li>Ketamine — <a href="https://www.ncbi.nlm.nih.gov/books/NBK470357/">StatPearls / NCBI</a></li>
+      <li>Guidelines for RSI — <a href="https://www.vumc.org/trauma-and-scc/sites/default/files/public_files/Protocols/Rapid%20Sequence%20Intubation%20w%20checklist-2022.pdf">VUMC</a></li>
+      <li>Pharmacology for RSI Airway Management in Trauma — <a href="https://jomi.com/article/299.11/pharmacology-for-rapid-sequence-intubation-(rsi)-airway-management-in-trauma-patients">JOMI</a></li>
+      <li>Ketamine versus etomidate for RSI — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10228132/">PMC10228132</a></li>
+      <li>Ketamine — <a href="https://wikem.org/wiki/Ketamine">WikEM</a></li>
+      <li>RSI Guide — Adult — <a href="https://www.creehealth.org/sites/default/files/RSI%20guide%20updated%20version%2017%20jan%202013%20pdf26mars2013.pdf">Cree Health</a></li>
+      <li>Ketamine for continuous sedation in ventilated patients — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4335149/">PMC4335149</a></li>
+      <li>Ketamine Infusion as Single Sedative Post-Intubation — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12303407/">PMC12303407</a></li>
+      <li>Post-Intubation Sedation in the ED: The Basics — <a href="https://emresident.org/post-intubation-sedation-2023/">EM Resident</a></li>
+      <li>Post-Intubation Medication Standard Orders — <a href="https://healthproviders.sharedhealthmb.ca/files/post-intubation-medication-standard-orders.pdf">Shared Health MB</a></li>
+      <li>Midazolam CIV Injection, USP (label) — <a href="https://labeling.pfizer.com/ShowLabeling.aspx?id=4529">Pfizer</a></li>
+      <li>Analgesia and sedation for the critically ill — <a href="https://emcrit.org/ibcc/pain/">EMCrit IBCC</a></li>
+      <li>Pharmacokinetics of Midazolam Infusion — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3813240/">PMC3813240</a></li>
+      <li>Medications — <a href="https://sedationcertification.com/medications/">Sedation Certification</a></li>
+      <li>Midazolam hydrochloride — <a href="https://www.glowm.com/resources/glowm/cd/pages/drugs/m047.html">GLOWM</a></li>
+      <li>Air Care Medications — Epinephrine — <a href="https://www.tamingthesru.com/air-care-medications">Taming the SRU</a></li>
+      <li>Stability of Epinephrine at Standard Concentrations — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4071081/">PMC4071081</a></li>
+      <li>Preparation and Dosing of Push Dose Epinephrine (PR-230) — <a href="https://www.ochealthinfo.com/sites/healthcare/files/2024-03/PR-230%20Push%20Dose%20Epi%201-2024.pdf">OC Health</a></li>
+      <li>Push-dose pressors for immediate BP control — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5052865/">PMC5052865</a></li>
+      <li>Push Dose Epinephrine as a Temporizing Measure — <a href="https://www.jems.com/patient-care/push-dose-epinephrine-temporizing-measure-0/">JEMS</a></li>
+      <li>Push Dose Epi (policy 0735) — <a href="https://hca.venturacounty.gov/public-health/~documents/ems/policies/0735-push-dose-epinephrine-oct24/?layout=file">Ventura County EMS</a></li>
+      <li>Part 6: Advanced Cardiovascular Life Support — <a href="https://www.ahajournals.org/doi/10.1161/circ.102.suppl_1.i-129">Circulation</a></li>
+      <li>ACLS and Epinephrine — <a href="https://acls-algorithms.com/acls-drugs/acls-and-epinephrine/">ACLS Algorithms</a></li>
+      <li>65 Trial — <a href="https://www.thebottomline.org.uk/summaries/icm/65-trial/">The Bottom Line</a></li>
+      <li>About Pressors — <a href="https://theprotectedairway.com/about-pressors/">The Protected Airway</a></li>
+      <li>Endotracheal Intubation Following Trauma — <a href="https://www.east.org/education-resources/practice-management-guidelines/details/endotracheal-intubation-following-trauma">EAST</a></li>
+      <li>Consensus Guidelines on IV Ketamine — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6023582/">PMC6023582</a></li>
+      <li>Push-Dose Pressors During Peri-intubation Hypotension — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8610482/">PMC8610482</a></li>
+      <li>An Inadvertent Bolus of Norepinephrine — <a href="https://psnet.ahrq.gov/web-mm/inadvertent-bolus-norepinephrine">AHRQ PSNet</a></li>
+      <li>Pre-Hospital Sedation Strategies — <a href="https://www.vdh.virginia.gov/content/uploads/sites/23/2016/05/MED-1215.pdf">Virginia DH</a></li>
+      <li>Postintubation sedation in the ED — <a href="https://caep.ca/periodicals/Volume_22_Issue_6/Vol_22_Issue_6_Page_764_-_767_Rosenberg.pdf">CAEP</a></li>
+      <li>Managing sedation in the ventilated ED patient — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7493591/">PMC7493591</a></li>
+    </ol>
+  </details>
+
+  <div class="disc">Clinical reference only. Follow Trauma Star medical direction, online medical control, and current protocols. Verify every dose before administration.</div>
+
+</div>
+
+<script>
+  function recalc(){
+    const raw = parseFloat(document.getElementById('wt').value);
+    const unit = document.getElementById('wtUnit').value;
+    const conv = document.getElementById('wtConv');
+    const chips = document.querySelectorAll('.calcdose');
+    if (!raw || raw <= 0) {
+      conv.textContent = '';
+      chips.forEach(c => c.classList.remove('show'));
+      return;
+    }
+    const kg = unit === 'lb' ? raw / 2.2046226 : raw;
+    conv.textContent = unit === 'lb'
+      ? `${raw} lb = ${kg.toFixed(1)} kg`
+      : `${kg.toFixed(1)} kg = ${(kg * 2.2046226).toFixed(0)} lb`;
+    const fmt = (n) => {
+      if (n >= 100) return Math.round(n).toString();
+      if (n >= 10) return (Math.round(n * 10) / 10).toString();
+      return (Math.round(n * 100) / 100).toString();
+    };
+    chips.forEach(c => {
+      const lo = parseFloat(c.dataset.lo) * kg;
+      const hi = parseFloat(c.dataset.hi) * kg;
+      const u = c.dataset.unit;
+      c.textContent = (c.dataset.lo === c.dataset.hi)
+        ? `= ${fmt(lo)} ${u}`
+        : `= ${fmt(lo)}–${fmt(hi)} ${u}`;
+      c.classList.add('show');
+    });
+  }
+</script>
+</body>
+</html>

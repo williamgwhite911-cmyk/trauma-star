@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MCFR Protocols">
+<meta name="theme-color" content="#0a0f1c">
+<title>MCFR Protocols 2025 — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e; --card2:#172339;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --cyan:#38bdf8; --gold:#f59e0b;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1rem;font-weight:800}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.14em;text-transform:uppercase}
+  .search{margin-top:10px}
+  .search input{width:100%;background:var(--bg-soft);border:1px solid var(--line-bright);border-radius:10px;color:var(--text);font-size:.95rem;padding:10px 13px;font-family:var(--body)}
+  .search input::placeholder{color:var(--text-faint)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
+  .lbl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-faint);text-align:center;margin:6px 0 12px}
+
+  /* shared card row (icon tile + body + chevron), stat-OB style */
+  .ic{width:48px;height:48px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.02em;background:linear-gradient(145deg,#16223a,#0d1525);border:1px solid var(--c,#33476e);color:var(--c,#9fb2cf)}
+  .bd{flex:1;min-width:0}
+  .bd .nm{font-size:1.02rem;font-weight:800;line-height:1.2}
+  .bd .sub{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+  .chev{flex-shrink:0;color:var(--text-faint);font-size:1.2rem;font-weight:300}
+
+  /* featured / built tool cards */
+  a.proto-card{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px 15px 18px;position:relative;overflow:hidden;margin-bottom:11px;transition:transform .15s,border-color .15s,background .15s}
+  a.proto-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--gold),#ef4444)}
+  a.proto-card:hover,a.proto-card:active{transform:translateY(-2px);border-color:var(--line-bright);background:var(--card2)}
+  a.proto-card .ic{background:linear-gradient(145deg,#b45309,#f59e0b);border-color:transparent;color:#0a0f1c}
+  a.proto-card:hover .chev{color:var(--gold)}
+
+  /* collapsible category cards */
+  details.cat-card{margin-bottom:11px}
+  details.cat-card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px 14px 18px;position:relative;overflow:hidden}
+  details.cat-card>summary::-webkit-details-marker{display:none}
+  details.cat-card>summary::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,#64748b)}
+  details.cat-card>summary:active{background:var(--card2)}
+  details.cat-card>summary .chev{transition:transform .18s ease}
+  details.cat-card[open]>summary .chev{transform:rotate(90deg)}
+  details.cat-card[open]>summary{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-color:transparent}
+  details.cat-card .count{font-family:var(--mono);font-size:.6rem;color:var(--text-faint);margin-top:4px}
+
+  .list{background:var(--bg-soft);border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;overflow:hidden;border-left:4px solid var(--c,#64748b)}
+  .item{display:flex;align-items:center;gap:10px;padding:12px 15px;border-top:1px solid var(--line);text-decoration:none;color:var(--text);font-size:.88rem;font-weight:500}
+  .item:first-child{border-top:none}
+  a.item:active,a.item:hover{background:var(--card2)}
+  .item .nm{flex:1;min-width:0}
+  .item .pg{font-family:var(--mono);font-size:.62rem;color:var(--text-faint);flex-shrink:0}
+  .item .arrow{color:var(--cyan);font-size:1.05rem;flex-shrink:0}
+  .item.soon{color:var(--text-faint);cursor:default}
+  .item.soon .badge{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);border:1px solid var(--line-bright);border-radius:999px;padding:2px 7px;flex-shrink:0}
+  .item.ready .nm{font-weight:700}
+  .item .star{color:var(--gold);flex-shrink:0}
+
+  .empty{text-align:center;color:var(--text-faint);font-family:var(--mono);font-size:.8rem;padding:30px 10px;display:none}
+  .empty.show{display:block}
+  .disc{margin-top:14px;font-size:.68rem;color:var(--text-faint);line-height:1.5;text-align:center;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="index.html" aria-label="Back">‹</a>
+    <div>
+      <h1>MCFR Protocols</h1>
+      <div class="sub">Monroe County Fire Rescue · 2025 · EMS</div>
+    </div>
+  </div>
+  <div class="search"><input id="q" type="search" placeholder="Search protocols…" oninput="filter()" autocomplete="off"></div>
+</div>
+
+<div class="wrap">
+  <div id="featured"></div>
+  <div class="lbl" id="sectLbl">Air / Trauma Star references</div>
+  <div id="cats"></div>
+  <div class="empty" id="empty">No protocol matches that search.</div>
+  <div class="disc">Reference to the MCFR 2025 EMS Protocols. Always follow current protocol, medical direction, and online medical control. Built tools are marked ★; section protocols are being added.</div>
+</div>
+
+<script>
+  // Featured = built interactive tools. Categories list the manual's sections;
+  // protocols gain an `href` as their page is built.
+  const FEATURED = [
+    { ic:'RSI', name:'Ketamine-Forward Trauma Airway', sub:'RSI · normo / hypotensive · dose calc', href:'airway-ketamine.html' },
+    { ic:'PDP', name:'Push-Dose Pressors', sub:'Epinephrine & phenylephrine · bridge', href:'pressors.html' },
+    { ic:'PED', name:'Pediatric Resuscitation', sub:'Broselow / Handtevy · weight-based', href:'peds.html' },
+  ];
+  const DATA = [];
+
+  // Featured built tools
+  const feat = document.getElementById('featured');
+  FEATURED.forEach(t => {
+    const a = document.createElement('a');
+    a.className = 'proto-card';
+    a.href = t.href;
+    a.dataset.name = t.name.toLowerCase();
+    a.innerHTML = `<div class="ic">${t.ic}</div><div class="bd"><div class="nm">${t.name}</div><div class="sub">${t.sub}</div></div><div class="chev">›</div>`;
+    feat.appendChild(a);
+  });
+
+  // Category cards (accordion)
+  const root = document.getElementById('cats');
+  if (!DATA.length) document.getElementById('sectLbl').style.display = 'none';
+  DATA.forEach(cat => {
+    const det = document.createElement('details');
+    det.className = 'cat-card';
+    det.style.setProperty('--c', cat.c);
+    const sum = document.createElement('summary');
+    sum.innerHTML = `<div class="ic">${cat.ic}</div><div class="bd"><div class="nm">${cat.name}</div><div class="count">${cat.items.length} protocols</div></div><div class="chev">›</div>`;
+    det.appendChild(sum);
+    const list = document.createElement('div');
+    list.className = 'list';
+    list.style.setProperty('--c', cat.c);
+    cat.items.forEach(it => {
+      const el = document.createElement(it.href ? 'a' : 'div');
+      el.className = 'item ' + (it.href ? 'ready' : 'soon');
+      el.dataset.name = it.name.toLowerCase();
+      if (it.href) el.href = it.href;
+      const pg = it.p ? `<span class="pg">p.${it.p}</span>` : '';
+      el.innerHTML = it.href
+        ? `<span class="star">★</span><span class="nm">${it.name}</span>${pg}<span class="arrow">›</span>`
+        : `<span class="nm">${it.name}</span>${pg}<span class="badge">soon</span>`;
+      list.appendChild(el);
+    });
+    det.appendChild(list);
+    root.appendChild(det);
+  });
+
+  function filter(){
+    const q = document.getElementById('q').value.trim().toLowerCase();
+    let any = false;
+    // featured cards
+    document.querySelectorAll('a.proto-card').forEach(c => {
+      const m = !q || c.dataset.name.includes(q);
+      c.style.display = m ? '' : 'none';
+      if (m) any = true;
+    });
+    // category cards — open while searching, hide cards with no match
+    document.querySelectorAll('details.cat-card').forEach(det => {
+      det.open = !!q;
+      let catHas = false;
+      det.querySelectorAll('.item').forEach(it => {
+        const m = !q || it.dataset.name.includes(q);
+        it.style.display = m ? '' : 'none';
+        if (m) catHas = true;
+      });
+      det.style.display = catHas ? '' : 'none';
+      if (catHas) any = true;
+    });
+    document.getElementById('sectLbl').style.display = q ? 'none' : '';
+    document.getElementById('empty').classList.toggle('show', !any);
+  }
+</script>
+</body>
+</html>

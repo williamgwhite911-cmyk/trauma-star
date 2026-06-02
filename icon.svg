@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102036"/>
+      <stop offset="1" stop-color="#0a0f1c"/>
+    </linearGradient>
+    <linearGradient id="h" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5cc6ff"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- main rotor + mast -->
+  <rect x="118" y="150" width="256" height="15" rx="7" fill="url(#h)"/>
+  <rect x="238" y="162" width="16" height="46" rx="7" fill="url(#h)"/>
+  <!-- tail boom -->
+  <path d="M298 252 L430 214 q16 -5 19 11 q2 14 -14 18 L322 290 z" fill="url(#h)"/>
+  <!-- tail fin + rotor -->
+  <path d="M428 226 q28 -10 33 -46 q2 -13 -12 -11 q-19 4 -30 39 z" fill="url(#h)"/>
+  <!-- fuselage -->
+  <path d="M252 204 q-96 0 -126 46 q-22 34 8 59 q19 17 59 17 l90 0 q58 0 58 -61 q0 -61 -89 -61 z" fill="url(#h)"/>
+  <!-- cockpit glass -->
+  <path d="M150 252 q-16 19 -9 43 q3 9 16 9 l42 0 l0 -60 q-32 -4 -49 8 z" fill="#0a0f1c" opacity="0.5"/>
+  <!-- skids -->
+  <rect x="148" y="326" width="176" height="14" rx="7" fill="url(#h)"/>
+  <rect x="178" y="296" width="14" height="34" rx="7" fill="url(#h)"/>
+  <rect x="280" y="296" width="14" height="34" rx="7" fill="url(#h)"/>
+</svg>

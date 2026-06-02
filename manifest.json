@@ -1,0 +1,13 @@
+{
+  "name": "Trauma Star — Critical Care Transport",
+  "short_name": "Trauma Star",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0f1c",
+  "theme_color": "#0a0f1c",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
