@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma Star — Clinical Protocols (Approval Manual)</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111827;--dim:#374151;--faint:#6b7280;--line:#d1d5db;--accent:#b91c1c;--blue:#1d4ed8;--bg:#f3f4f6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Outfit",system-ui,sans-serif;line-height:1.5}
+  .toolbar{position:sticky;top:0;z-index:10;background:#0a0f1c;color:#fff;display:flex;gap:10px;align-items:center;padding:10px 16px}
+  .toolbar a{color:#9fb2cf;text-decoration:none;font-size:1.3rem}
+  .toolbar .t{font-weight:700;font-size:.9rem}
+  .toolbar button{margin-left:auto;background:#2563eb;color:#fff;border:none;border-radius:8px;padding:9px 14px;font-weight:700;font-family:inherit;cursor:pointer}
+  .page{max-width:820px;margin:18px auto;background:#fff;padding:48px 56px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+
+  h1{font-size:1.7rem;font-weight:900;margin:0 0 4px;letter-spacing:-.02em}
+  .subt{color:var(--faint);font-weight:600;margin-bottom:18px}
+  h2{font-size:1.05rem;font-weight:800;margin:26px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--ink)}
+  h3{font-size:.95rem;font-weight:800;margin:18px 0 4px;color:var(--accent)}
+  p{margin:6px 0}
+  .muted{color:var(--faint);font-size:.85rem}
+  .doc-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:.85rem;margin:10px 0 6px}
+  .doc-meta b{color:var(--dim)}
+  .stmt{background:#f9fafb;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-size:.9rem;margin:14px 0}
+
+  table{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:#f3f4f6;font-weight:700}
+  td.c{font-family:ui-monospace,monospace;white-space:nowrap}
+
+  .sign{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;margin-top:18px}
+  .sigbox{margin-top:26px}
+  .sigline{border-bottom:1.5px solid var(--ink);height:34px}
+  .siglabel{font-size:.78rem;color:var(--faint);margin-top:3px}
+
+  .proto{margin:16px 0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;break-inside:avoid}
+  .proto .cat{font-family:ui-monospace,monospace;font-size:.72rem;color:var(--accent);font-weight:700}
+  .proto .nm{font-size:1.02rem;font-weight:800;margin:2px 0 6px}
+  .proto .row{font-size:.86rem;margin:5px 0}
+  .proto .row b{color:var(--dim)}
+  .dz{font-family:ui-monospace,monospace;font-size:.82rem;background:#fef3c7;border:1px solid #fde68a;border-radius:4px;padding:1px 5px;white-space:nowrap}
+  .src{font-size:.78rem;color:var(--faint);margin-top:6px}
+  .disc{font-size:.78rem;color:var(--faint);margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
+
+  @media print{
+    body{background:#fff}
+    .toolbar{display:none}
+    .page{box-shadow:none;margin:0;max-width:none;padding:0 8px}
+    .sec{break-before:page}
+    .proto{break-inside:avoid}
+    a{color:var(--ink);text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="protocols.html" aria-label="Back">‹</a>
+  <span class="t">Protocol Manual — Approval Copy</span>
+  <button onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<div class="page">
+
+  <h1>Trauma Star — Critical Care Transport</h1>
+  <div class="subt">Clinical Care Protocols · Medical Director Approval Manual</div>
+
+  <div class="doc-meta">
+    <div><b>Service:</b> Monroe County Fire Rescue — Trauma Star (AW139, rotor-wing)</div>
+    <div><b>Manual version:</b> ______________</div>
+    <div><b>Effective date:</b> ______________</div>
+    <div><b>Next review:</b> ______________ (annual)</div>
+  </div>
+
+  <div class="stmt">
+    <b>Purpose &amp; scope.</b> This manual contains the clinical care guidelines for use by Trauma Star critical-care flight crews. Drug doses and treatment thresholds are adapted from the cited sources, including the PHI Air Medical Clinical Care Guidelines and published society guidelines, and <b>require the Medical Director's review and approval before clinical use.</b> Crews must operate within their scope of practice and contact online medical control as indicated. Where a standing order is not specified, an online physician order is required.
+  </div>
+
+  <h2>Approval &amp; Sign-Off</h2>
+  <p class="muted">By signing below, the undersigned have reviewed and approve these clinical care guidelines for use by Trauma Star flight crews, effective the date noted above.</p>
+  <div class="sign">
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Medical Director — signature</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Printed name</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Date</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">License / credentials</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">EMS Director — signature</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Printed name</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Date</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Program / agency</div></div>
+  </div>
+
+  <h2>Document Control — Protocol Index</h2>
+  <table>
+    <thead><tr><th>Catalog #</th><th>Protocol</th><th>Section</th><th>Primary source</th></tr></thead>
+    <tbody>
+      <tr><td class="c">TS-AW-001</td><td>Ketamine-Forward Trauma Airway (RSI)</td><td>§1 Airway</td><td>THOR / RSI literature</td></tr>
+      <tr><td class="c">TS-HD-001</td><td>Push-Dose Pressors</td><td>§2 Hemodynamics</td><td>Consensus / EM literature</td></tr>
+      <tr><td class="c">TS-HD-002</td><td>Whole Blood — Field Administration</td><td>§2 Hemodynamics</td><td>THOR-AABB / JTS / EAST</td></tr>
+      <tr><td class="c">TS-PED-001</td><td>Pediatric Resuscitation (Broselow / Handtevy)</td><td>§3 Pediatrics</td><td>PALS weight-based</td></tr>
+      <tr><td class="c">TS-OPS-001</td><td>IFT Transport Times (ground vs AW139)</td><td>§4 Operations</td><td>Operational reference</td></tr>
+      <tr><td class="c">TS-ENV-001</td><td>Decompression Sickness (Bends)</td><td>§5 Environmental</td><td>DAN / UHMS / DCI consensus</td></tr>
+      <tr><td class="c">TS-NEU-001</td><td>Stroke — Ischemic</td><td>§6 Neurology</td><td>PHI §7.2 / AHA-ASA</td></tr>
+      <tr><td class="c">TS-NEU-002</td><td>Stroke — Hemorrhagic (ICH)</td><td>§6 Neurology</td><td>PHI §7.3 / AHA-ASA</td></tr>
+      <tr><td class="c">TS-NEU-003</td><td>Stroke — Undetermined</td><td>§6 Neurology</td><td>PHI §7.4 / AHA-ASA</td></tr>
+      <tr><td class="c">TS-NEU-004</td><td>Seizures / Status Epilepticus</td><td>§6 Neurology</td><td>PHI §7.1</td></tr>
+      <tr><td class="c">TS-NEU-005</td><td>Brain Herniation Syndrome</td><td>§6 Neurology</td><td>PHI §7.5</td></tr>
+      <tr><td class="c">TS-NEU-006</td><td>CNS Infection</td><td>§6 Neurology</td><td>PHI §7.6</td></tr>
+      <tr><td class="c">TS-TOX-001</td><td>Opioid Overdose</td><td>§7 Toxicology</td><td>PHI §9.1.1</td></tr>
+      <tr><td class="c">TS-TOX-002</td><td>Smoke Inhalation &amp; Cyanide</td><td>§7 Toxicology</td><td>PHI §9.1.2 / EM literature</td></tr>
+      <tr><td class="c">TS-TOX-003</td><td>TCA Overdose</td><td>§7 Toxicology</td><td>PHI §9.1.3</td></tr>
+      <tr><td class="c">TS-TOX-004</td><td>Envenomation (snake / scorpion)</td><td>§7 Toxicology</td><td>PHI §9.2</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Each protocol is reviewed and approved as part of this manual. Initials of approval may be placed beside each catalog number if individual sign-off is required.</p>
+
+  <!-- ================= AIRWAY ================= -->
+  <div class="sec">
+  <h2>§1 — Airway &amp; Ventilation</h2>
+
+  <div class="proto">
+    <div class="cat">TS-AW-001</div>
+    <div class="nm">Ketamine-Forward Trauma Airway (RSI)</div>
+    <div class="row"><b>Indications:</b> RSI for trauma / critical-care transport; choose pathway by hemodynamics (normotensive: MAP ≥ 65 &amp; SBP ≥ 100; hypotensive: MAP &lt; 65 or SBP &lt; 100).</div>
+    <div class="row"><b>Normotensive:</b> Ketamine <span class="dz">1–2 mg/kg IV</span>; Rocuronium <span class="dz">1–1.2 mg/kg IV</span>. Post-intubation ketamine drip start <span class="dz">1 mg/kg/hr</span> (titrate 1–4); midazolam add-on <span class="dz">1–2 mg</span> then 1–10 mg/hr.</div>
+    <div class="row"><b>Hypotensive:</b> push-dose epi bridge (see TS-HD-001) / norepinephrine; Ketamine <span class="dz">0.5–1 mg/kg IV</span>; Rocuronium <span class="dz">1–1.2 mg/kg</span>; resuscitate to MAP ≥ 65 / SBP ≥ 100; same post-intubation sedation.</div>
+    <div class="row"><b>Key points:</b> confirm post-intubation sedation before paralysis; rocuronium outlasts ketamine — never leave a paralyzed patient unsedated.</div>
+    <div class="src">Source: THOR / peri-intubation &amp; post-intubation sedation literature.</div>
+  </div>
+  </div>
+
+  <!-- ================= HEMODYNAMICS ================= -->
+  <div class="sec">
+  <h2>§2 — Hemodynamics &amp; Shock</h2>
+
+  <div class="proto">
+    <div class="cat">TS-HD-001</div>
+    <div class="nm">Push-Dose Pressors</div>
+    <div class="row"><b>Indications:</b> transient hypotension / peri-intubation bridge to a continuous infusion.</div>
+    <div class="row"><b>Epinephrine:</b> mix <span class="dz">1 mg in 100 mL NS/D5W = 10 mcg/mL</span>; give <span class="dz">0.5–2 mL (5–20 mcg) IV q2–5 min</span>.</div>
+    <div class="row"><b>Phenylephrine:</b> <span class="dz">100 mcg/mL</span>; give <span class="dz">0.5–2 mL (50–200 mcg) IV q2–5 min</span>.</div>
+    <div class="row"><b>Key points:</b> label syringe + concentration; bridge only — transition to infusion early.</div>
+    <div class="src">Source: push-dose pressor consensus / EM literature.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-HD-002</div>
+    <div class="nm">Whole Blood — Field Administration</div>
+    <div class="row"><b>Indications:</b> hemorrhagic shock — SBP &lt; 90, or HR ≥ 110 with SBP ≤ 90, or class III–IV shock from hemorrhage.</div>
+    <div class="row"><b>Product:</b> LTOWB <span class="dz">1 unit (~500 mL) IV/IO</span>, titrate to radial pulse / SBP ~90 (TBI: SBP ≥ 110). Calcium <span class="dz">CaCl₂ 1 g</span> or <span class="dz">Ca gluconate 3 g</span> with 1st unit; TXA <span class="dz">1 g</span> if &lt; 3 h.</div>
+    <div class="row"><b>Key points:</b> warm to ~38 °C (≤ 42); NaCl-only line (no LR/Ca); two-person unit verification; treat hypothermia/hypocalcemia.</div>
+    <div class="src">Source: THOR-AABB prehospital recommendations; JTS Damage Control Resuscitation; EAST whole-blood guideline.</div>
+  </div>
+  </div>
+
+  <!-- ================= PEDIATRICS ================= -->
+  <div class="sec">
+  <h2>§3 — Pediatrics</h2>
+
+  <div class="proto">
+    <div class="cat">TS-PED-001</div>
+    <div class="nm">Pediatric Resuscitation (Broselow / Handtevy)</div>
+    <div class="row"><b>Indications:</b> pediatric resuscitation; weight from Broselow tape / Handtevy (age) / scale.</div>
+    <div class="row"><b>Core doses:</b> Epi (arrest) <span class="dz">0.01 mg/kg IV/IO</span>; fluids <span class="dz">20 mL/kg</span> (10 in trauma); defib <span class="dz">2→4 J/kg</span>; D10 <span class="dz">5 mL/kg</span>; naloxone <span class="dz">0.1 mg/kg</span>; amiodarone <span class="dz">5 mg/kg</span>; midazolam <span class="dz">0.1 mg/kg</span>; ketamine <span class="dz">1–2 mg/kg</span>; rocuronium <span class="dz">1 mg/kg</span>.</div>
+    <div class="row"><b>Key points:</b> interactive weight-based calculator; ketamine concentration default 500 mg/5 mL; color zones with weight + age ranges.</div>
+    <div class="src">Source: standard weight-based (PALS) dosing; Broselow/Handtevy color zones (visual aid).</div>
+  </div>
+  </div>
+
+  <!-- ================= OPERATIONS ================= -->
+  <div class="sec">
+  <h2>§4 — Operations &amp; Transport</h2>
+
+  <div class="proto">
+    <div class="cat">TS-OPS-001</div>
+    <div class="nm">IFT Transport Times — Ground vs AW139</div>
+    <div class="row"><b>Reference:</b> Keys → Miami corridor (single highway, US-1). Ground &gt; 4 h (~160 mi from Lower Keys) vs AW139 ~45–50 min — ~3+ hours saved.</div>
+    <div class="row"><b>Use:</b> supports the air-vs-ground medical-necessity rationale; confirm actual mileage/ETA per transport (GPS / Google Maps).</div>
+    <div class="src">Source: operational planning reference (estimates).</div>
+  </div>
+  </div>
+
+  <!-- ================= ENVIRONMENTAL ================= -->
+  <div class="sec">
+  <h2>§5 — Environmental &amp; Diving</h2>
+
+  <div class="proto">
+    <div class="cat">TS-ENV-001</div>
+    <div class="nm">Decompression Sickness (Bends)</div>
+    <div class="row"><b>Indications:</b> dive injury with joint/limb pain, skin, neuro, or cardiopulmonary symptoms after a dive.</div>
+    <div class="row"><b>Treatment:</b> assume DCI; notify pilot for lowest feasible cabin altitude; <span class="dz">100% O₂ 15 L/min</span> continuous; supine; IV fluids <span class="dz">LR or NS 150 mL/hr</span>; DAN <span class="dz">+1-919-684-9111</span> + nearest chamber.</div>
+    <div class="row"><b>Flight (rotor-wing):</b> fly &lt; 1000 ft / near sea-level; continuous O₂. No nitrous oxide.</div>
+    <div class="src">Source: DAN; UHMS best-practice; 2018 pre-hospital DCI consensus; aeromedical transport literature.</div>
+  </div>
+  </div>
+
+  <!-- ================= NEUROLOGY ================= -->
+  <div class="sec">
+  <h2>§6 — Neurology</h2>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-001</div>
+    <div class="nm">Stroke — Ischemic</div>
+    <div class="row"><b>Assess:</b> BE-FAST + LVO screen; Last Known Well; glucose; anticoagulant use.</div>
+    <div class="row"><b>BP:</b> no tPA/intervention — treat only SBP &gt; 220 or DBP &gt; 120 (limit reduction 15% baseline). To qualify for / post-tPA: <span class="dz">≤ 180/105</span>. Post-thrombectomy: per interventionalist.</div>
+    <div class="row"><b>Alteplase (online order):</b> <span class="dz">0.9 mg/kg TBW (max 90 mg)</span> — 10% over 1 min, 90% over 60 min; &lt; 4.5 h, age ≥ 18.</div>
+    <div class="row"><b>Antihypertensives:</b> Nicardipine <span class="dz">5 mg/hr, ↑2.5 q5–15, max 15</span>; Clevidipine <span class="dz">1–2 mg/hr, max 32</span>; Labetalol <span class="dz">20 mg, repeat 40/80, max 300</span>.</div>
+    <div class="src">Source: PHI §7.2 Acute Ischemic Stroke; AHA/ASA AIS guideline.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-002</div>
+    <div class="nm">Stroke — Hemorrhagic (ICH)</div>
+    <div class="row"><b>BP:</b> ICH with SBP &gt; 160 → lower to <span class="dz">130–160 mmHg</span>, smooth control.</div>
+    <div class="row"><b>Antihypertensives:</b> Nicardipine / Clevidipine / Labetalol (as above); Esmolol <span class="dz">500 mcg/kg load, 50 mcg/kg/min titration, max 300 mcg/kg/min</span>.</div>
+    <div class="row"><b>Key points:</b> anticoagulant reversal under direct medical control; HOB 30°; neurosurgical-capable destination.</div>
+    <div class="src">Source: PHI §7.3 Hemorrhagic Stroke; AHA/ASA ICH guideline.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-003</div>
+    <div class="nm">Stroke — Undetermined</div>
+    <div class="row"><b>BP:</b> positive stroke assessment + glucose ≥ 60 → <span class="dz">SBP goal &lt; 185</span>; antihypertensives as above (Nicardipine / Clevidipine / Labetalol).</div>
+    <div class="row"><b>Key points:</b> hypoglycemia mimics stroke — check/treat first; rapid transport to CT to define type.</div>
+    <div class="src">Source: PHI §7.4 Undifferentiated Stroke.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-004</div>
+    <div class="nm">Seizures / Status Epilepticus</div>
+    <div class="row"><b>Glucose first.</b> Benzodiazepine q2–3 min until controlled (IV preferred): Lorazepam <span class="dz">4 mg IV/IM/NAS</span> (peds 0.1 mg/kg, max 4); Midazolam <span class="dz">0.1 mg/kg IV (max 5)</span> or 0.2 mg/kg IM/NAS (max 10).</div>
+    <div class="row"><b>Refractory (choose one):</b> Levetiracetam <span class="dz">4 g IV over 15 min</span> (peds 60 mg/kg); Fosphenytoin <span class="dz">15 mg PE/kg</span>; Phenytoin <span class="dz">15 mg/kg</span>. Infusions (propofol/phenobarb/benzo) under direct medical control.</div>
+    <div class="row"><b>Key points:</b> paralytics do NOT treat seizures.</div>
+    <div class="src">Source: PHI §7.1 Seizures &amp; §7.1.1 Refractory Seizures.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-005</div>
+    <div class="nm">Brain Herniation Syndrome</div>
+    <div class="row"><b>Recognize:</b> abnormal breathing, pupillary changes, posturing, Cushing reflex (bradycardia + HTN + resp depression).</div>
+    <div class="row"><b>Treatment:</b> Sodium Chloride 3% <span class="dz">250 mL IV over 5–15 min</span> (peds 3–5 mL/kg IBW). Alternate Mannitol <span class="dz">0.5–1 g/kg over 30–60 min</span> (online order). HOB 30°, optimize ventilation/oxygenation.</div>
+    <div class="src">Source: PHI §7.5 Brain Herniation Syndrome.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-NEU-006</div>
+    <div class="nm">CNS Infection</div>
+    <div class="row"><b>Treatment (ASAP):</b> Cefotaxime <span class="dz">50 mg/kg IV over 3–5 min</span> PLUS — Ceftriaxone <span class="dz">50 mg/kg (max 2 g)</span> if ≥ 3 months, or Ampicillin <span class="dz">100 mg/kg</span> if &lt; 3 months.</div>
+    <div class="row"><b>Key points:</b> do not delay antibiotics; treat sepsis/seizures; droplet precautions.</div>
+    <div class="src">Source: PHI §7.6 CNS Infection.</div>
+  </div>
+  </div>
+
+  <!-- ================= TOXICOLOGY ================= -->
+  <div class="sec">
+  <h2>§7 — Toxicology</h2>
+
+  <div class="proto">
+    <div class="cat">TS-TOX-001</div>
+    <div class="nm">Opioid Overdose</div>
+    <div class="row"><b>Treatment:</b> ventilate first; Naloxone — adult <span class="dz">1–2 mg IV/IM/IN</span>, peds <span class="dz">0.01 mg/kg (max 1 mg)</span>, newborn <span class="dz">0.1 mg/kg</span>. Infusion: ⅔ of the effective dose each hour.</div>
+    <div class="row"><b>Key points:</b> titrate to respiration, not full arousal; watch for re-sedation.</div>
+    <div class="src">Source: PHI §9.1.1 Opioid Overdose.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-TOX-002</div>
+    <div class="nm">Smoke Inhalation &amp; Cyanide</div>
+    <div class="row"><b>Suspect:</b> enclosed-space fire + AMS, seizures, SBP &lt; 90/shock, arrest, lactate ≥ 8, or pH &lt; 7.25 — treat empirically.</div>
+    <div class="row"><b>Cyanokit (hydroxocobalamin):</b> adult <span class="dz">5 g in 100 mL NS over 15 min</span> (peds 70 mg/kg, max 5 g); repeat ×1, <span class="dz">max 10 g</span>.</div>
+    <div class="row"><b>Concurrent:</b> 100% O₂ (CO); hyperbaric for severe CO; early airway for burns/edema; treat bronchospasm, seizures, hypotension.</div>
+    <div class="src">Source: PHI §9.1.2; ACEP / LITFL / EM literature.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-TOX-003</div>
+    <div class="nm">TCA Overdose</div>
+    <div class="row"><b>Treat if:</b> CV instability/hypotension, seizures/coma, wide QRS, prolonged QT, ventricular dysrhythmia.</div>
+    <div class="row"><b>Sodium Bicarbonate:</b> adult <span class="dz">50–100 mEq IV over 5–10 min</span> (peds 1–2 mEq/kg); 1 dose standing, repeats need physician order.</div>
+    <div class="src">Source: PHI §9.1.3 TCA Overdose.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-TOX-004</div>
+    <div class="nm">Envenomation (snake / scorpion)</div>
+    <div class="row"><b>General:</b> mark swelling border + time; immobilize below heart; measure circumference q15 min.</div>
+    <div class="row"><b>Pit viper:</b> CroFab <span class="dz">4–6 vials in 250 mL NS</span>; start 25–50 mL/hr ×10 min, then 250 mL/hr.</div>
+    <div class="row"><b>Scorpion:</b> Atropine <span class="dz">1 mg (peds 0.02 mg/kg, max 0.5)</span> for secretions; Fentanyl <span class="dz">0.5–2 mcg/kg</span> or Midazolam for clonus/sedation; avoid long-acting opioids/benzos &amp; anticholinergics.</div>
+    <div class="src">Source: PHI §9.2 Envenomation.</div>
+  </div>
+  </div>
+
+  <div class="disc">
+    This manual is a clinical reference for Trauma Star flight crews and is not a substitute for the Medical Director's judgment or online medical control. Drug doses and thresholds are adapted from the cited sources and the PHI Air Medical Clinical Care Guidelines and require Medical Director approval prior to clinical use. Verify every dose before administration. Generated from the Trauma Star protocol app for review and sign-off.
+  </div>
+
+</div>
+</body>
+</html>
