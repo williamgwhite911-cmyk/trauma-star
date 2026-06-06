@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Stroke">
+<meta name="theme-color" content="#0a0f1c">
+<title>Stroke (CVA) — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e; --card2:#152138;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --blue:#38bdf8; --blue2:#2563eb; --green:#22c55e; --amber:#f59e0b;
+    --red:#ef4444; --red-bg:#2a1212; --red-line:#5b2330; --gold:#f59e0b; --purple:#a855f7;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .phead{font-weight:800;font-size:.95rem;padding:12px 16px 2px;color:var(--c,#38bdf8)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}
+  .block.warn .item{border-top-color:var(--red-line)}
+  .item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}
+  .item .detail{font-size:.82rem;color:var(--text-dim);margin-top:3px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.chk,ul.bul{list-style:none;padding:6px 0}
+  ul.chk li,ul.bul li{position:relative;padding:9px 16px 9px 36px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.chk li:first-child,ul.bul li:first-child{border-top:none}
+  ul.chk li::before{content:"";position:absolute;left:16px;top:12px;width:13px;height:13px;border-radius:3px;border:1.5px solid var(--c,#38bdf8)}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#38bdf8)}
+  .block.warn ul.bul li::before{background:var(--red)} .block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  p.body-text sup{color:var(--blue);font-weight:700;font-size:.7em}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}
+  details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0;word-break:break-word}
+  details.refs a{color:var(--blue);text-decoration:none}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Stroke (CVA)</h1>
+      <div class="sub">Ischemic · hemorrhagic · undetermined</div>
+      <div class="cat">TS-NEU-001 · §6 Neurology</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===================== QUICK CARD ===================== -->
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize &amp; assess (all strokes)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="chk">
+          <li><b class="k">BE-FAST</b> — Balance, Eyes, Face, Arm, Speech, Time; plus an LVO screen (RACE / LAMS / VAN) per your system.</li>
+          <li><b class="k">Last Known Well (LKW)</b> — exact time drives tPA/thrombectomy eligibility. Get a witness/phone number.</li>
+          <li><b class="k">Glucose</b> — always check; hypoglycemia mimics stroke (treat if &lt; 60 mg/dL).</li>
+          <li><b class="k">Anticoagulant / antiplatelet</b> use, meds, PMH; cardiac monitor (AF).</li>
+          <li>⚠ Field <b class="k">cannot</b> distinguish ischemic vs hemorrhagic without CT — see pathways below.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Common actions</div>
+      <div class="block" style="--c:#22c55e">
+        <ul class="bul" style="--c:#22c55e">
+          <li>O₂ only to keep <b class="k">SpO₂ ≥ 94%</b> (avoid hyperoxia); protect airway; suction PRN.</li>
+          <li>Position: HOB <b class="k">~30°</b> if ↓LOC, vomiting, or suspected ICP; otherwise supine as tolerated.</li>
+          <li>IV access; avoid hypotension &amp; hypoxia; treat hypoglycemia; avoid hyperthermia.</li>
+          <li><b class="k">Pre-notify</b> the receiving stroke center; pick destination by suspected LVO + time window.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Pathways — BP &amp; destination</div>
+
+      <div class="block" style="--c:#38bdf8;margin-bottom:11px">
+        <div class="phead" style="--c:#38bdf8">Ischemic (suspected)</div>
+        <div class="item">
+          <div class="nm">Blood pressure — permissive hypertension</div>
+          <div class="detail"><b class="k">Do not routinely lower.</b> Treat only if <span class="dose">SBP &gt; 220 or DBP &gt; 120</span> (cautious lowering per med control). Thrombolysis candidate: target <span class="dose">&lt; 185/110</span>.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Destination / time</div>
+          <div class="detail">tPA window <span class="dose">≤ 4.5 h</span> from LKW; thrombectomy for LVO up to <span class="dose">24 h</span> (selected) → thrombectomy-capable / comprehensive stroke center.</div>
+        </div>
+      </div>
+
+      <div class="block warn" style="margin-bottom:11px">
+        <div class="phead" style="--c:#fb7185">Hemorrhagic (suspected ICH)</div>
+        <div class="item">
+          <div class="nm">Clues</div>
+          <div class="detail">Severe headache, vomiting, rapid ↓LOC, very high BP, anticoagulated, posturing/herniation signs.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Blood pressure — controlled lowering</div>
+          <div class="detail">If SBP 150–220: target <span class="dose">~130–150</span>, <b class="k">avoid &lt; 130</b>. Higher: reduce ~20% in 1st hr, smooth control — per med control.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Other</div>
+          <div class="detail">HOB 30°, avoid hypoxia/hypotension, anticipate ICP/herniation; anticoagulation reversal at receiving → neurosurgical-capable center.</div>
+        </div>
+      </div>
+
+      <div class="block" style="--c:#f59e0b">
+        <div class="phead" style="--c:#f59e0b">Undetermined (can't differentiate in field)</div>
+        <div class="item">
+          <div class="nm">Default — supportive, don't over-treat BP</div>
+          <div class="detail"><b class="k">Do not aggressively lower BP</b> unless extreme (SBP &gt; 220) or clear herniation; over-lowering harms the ischemic penumbra. <b class="k">Contact medical control.</b></div>
+        </div>
+        <div class="item">
+          <div class="nm">Priority</div>
+          <div class="detail">Rapid transport to a <b class="k">CT/stroke-capable center</b>, pre-notify, document LKW &amp; exam — let CT define the type.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Cautions &amp; red flags</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Check glucose first — <b class="k">hypoglycemia mimics stroke.</b></li>
+          <li>Don't delay transport — <b class="k">time is brain</b>; LKW drives every decision.</li>
+          <li>Avoid <b class="k">hypotension and hypoxia</b> — both worsen ischemic and hemorrhagic stroke.</li>
+          <li>Anticoagulant use raises ICH risk — relay it to receiving.</li>
+          <li>Herniation (blown pupil, posturing, Cushing reflex) → ICP measures, elevate HOB, notify early.</li>
+          <li>Posterior/basilar stroke (balance, eyes, vertigo) can be subtle — use BE-FAST.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li><b class="k">Last Known Well</b> time + how determined (witness/contact).</li>
+          <li>Stroke scale type &amp; score; LVO screen result.</li>
+          <li>Glucose; serial BP, GCS/neuro exam, pupils.</li>
+          <li>Anticoagulant/antiplatelet &amp; med list, PMH.</li>
+          <li>Destination rationale (LVO / time window) and pre-notification time.</li>
+          <li>Interventions (O₂, glucose, any BP med + order source) and response.</li>
+          <li>Why rotor-wing / this level of care (thrombectomy window, distance to capable center).</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===================== BACKGROUND ===================== -->
+  <div id="bgView" class="hidden">
+
+    <section>
+      <div class="sec-h">Overview</div>
+      <p class="body-text">Stroke is time-critical — "time is brain." About 87% are ischemic (vessel occlusion) and the remainder hemorrhagic (intracerebral or subarachnoid). The two require <b class="k">opposite</b> blood-pressure strategies, yet they cannot be reliably distinguished without CT. The prehospital goals are rapid recognition, supportive care, accurate Last-Known-Well, and delivery to the right imaging/intervention-capable center as fast as possible.<sup>1</sup></p>
+    </section>
+
+    <section>
+      <div class="sec-h">Pathophysiology / rationale</div>
+      <p class="body-text">In ischemic stroke a perfusion-dependent penumbra surrounds the core; elevated BP helps maintain collateral flow, so permissive hypertension is favored until reperfusion.<sup>1</sup> In intracerebral hemorrhage, higher BP promotes hematoma expansion, so smooth, early BP control improves outcomes — while excessive lowering (&lt; 130 mmHg) can cause harm.<sup>2</sup> Because the field strategies diverge and the type is unknown without imaging, the "undetermined" pathway defaults to supportive care and rapid transport rather than aggressive BP manipulation.</p>
+    </section>
+
+    <section>
+      <div class="sec-h">In-flight considerations</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>Continuous BP and neuro monitoring; protect airway in ↓LOC; HOB 30° when ICP is a concern.</li>
+          <li>Choose destination by suspected LVO and the thrombolysis/thrombectomy time window; pre-notify so the team is ready on arrival.<sup>1,3</sup></li>
+          <li>From the Keys, the ground-vs-air time differential is decisive for reaching a comprehensive stroke / thrombectomy center within window.</li>
+          <li>Avoid hypoxia, hypotension, hyperthermia, and glucose extremes throughout.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Management — detail</div>
+      <p class="body-text">Use a validated stroke scale plus an LVO screen and establish Last-Known-Well; provide advance notification to the receiving hospital, which shortens treatment times and improves outcomes.<sup>1,3</sup> For suspected ischemic stroke do not routinely lower BP; antihypertensives are generally reserved for SBP &gt; 220 or DBP &gt; 120, or to reach &lt; 185/110 when thrombolysis is planned.<sup>1</sup> For suspected ICH with SBP 150–220, target roughly 130–150 mmHg and avoid dropping below 130; for higher pressures, lower by about 20% in the first hour with smooth control.<sup>2</sup> When the type is undetermined — the usual prehospital situation — manage supportively, treat glucose, avoid hypoxia/hypotension, and expedite imaging rather than aggressively manipulating BP; obtain online medical control for any BP intervention.<sup>1,2</sup></p>
+    </section>
+
+    <section>
+      <div class="sec-h">Sources &amp; evidence</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American Heart Association / American Stroke Association. <span style="color:var(--text-faint)">Guideline for the Early Management of Patients With Acute Ischemic Stroke. <em>Stroke</em>, 2026.</span> <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000513">ahajournals.org — STR.0000000000000513</a></li>
+          <li>Greenberg SM, et al. (AHA/ASA). <span style="color:var(--text-faint)">2022 Guideline for the Management of Patients With Spontaneous Intracerebral Hemorrhage. <em>Stroke</em>, 2022.</span> <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000407">ahajournals.org — STR.0000000000000407</a></li>
+          <li>Prehospital identification of large-vessel occlusion stroke (stroke-scale screening). <span style="color:var(--text-faint)">PMC8162654.</span> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8162654/">ncbi.nlm.nih.gov/pmc/articles/PMC8162654</a></li>
+        </ol>
+      </details>
+    </section>
+
+  </div>
+
+  <div class="disc">Reference only — prehospital BP management in stroke is protocol- and medical-control-dependent. Follow current MCFR / Trauma Star protocol and online medical control. Confirm destination capability (thrombectomy / neurosurgery) before launch.</div>
+</div>
+
+<script>
+  function showView(v){
+    const card = v === 'card';
+    document.getElementById('cardView').classList.toggle('hidden', !card);
+    document.getElementById('bgView').classList.toggle('hidden', card);
+    document.getElementById('tabCard').classList.toggle('on', card);
+    document.getElementById('tabBg').classList.toggle('on', !card);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
