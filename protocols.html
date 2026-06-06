@@ -42,6 +42,7 @@
   .bd{flex:1;min-width:0}
   .bd .nm{font-size:1.02rem;font-weight:800;line-height:1.2}
   .bd .sub{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+  .bd .catref{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:5px}
   .chev{flex-shrink:0;color:var(--text-faint);font-size:1.2rem;font-weight:300}
 
   /* featured / built tool cards */
@@ -104,10 +105,10 @@
   // Featured = built interactive tools. Categories list the manual's sections;
   // protocols gain an `href` as their page is built.
   const FEATURED = [
-    { ic:'RSI', name:'Ketamine-Forward Trauma Airway', sub:'RSI · normo / hypotensive · dose calc', href:'airway-ketamine.html' },
-    { ic:'PDP', name:'Push-Dose Pressors', sub:'Epinephrine & phenylephrine · bridge', href:'pressors.html' },
-    { ic:'PED', name:'Pediatric Resuscitation', sub:'Broselow / Handtevy · weight-based', href:'peds.html' },
-    { ic:'IFT', name:'IFT Transport Times', sub:'Keys → Miami · ground vs AW139', href:'transport-times.html' },
+    { ic:'RSI', name:'Ketamine-Forward Trauma Airway', sub:'RSI · normo / hypotensive · dose calc', href:'airway-ketamine.html', sec:'§1 Airway & Ventilation', cat:'TS-AW-001' },
+    { ic:'PDP', name:'Push-Dose Pressors', sub:'Epinephrine & phenylephrine · bridge', href:'pressors.html', sec:'§2 Hemodynamics & Shock', cat:'TS-HD-001' },
+    { ic:'PED', name:'Pediatric Resuscitation', sub:'Broselow / Handtevy · weight-based', href:'peds.html', sec:'§3 Pediatrics', cat:'TS-PED-001' },
+    { ic:'IFT', name:'IFT Transport Times', sub:'Keys → Miami · ground vs AW139', href:'transport-times.html', sec:'§4 Operations & Transport', cat:'TS-OPS-001' },
   ];
   const DATA = [];
 
@@ -118,7 +119,7 @@
     a.className = 'proto-card';
     a.href = t.href;
     a.dataset.name = t.name.toLowerCase();
-    a.innerHTML = `<div class="ic">${t.ic}</div><div class="bd"><div class="nm">${t.name}</div><div class="sub">${t.sub}</div></div><div class="chev">›</div>`;
+    a.innerHTML = `<div class="ic">${t.ic}</div><div class="bd"><div class="nm">${t.name}</div><div class="sub">${t.sub}</div>${t.cat ? `<div class="catref">${t.cat} · ${t.sec}</div>` : ''}</div><div class="chev">›</div>`;
     feat.appendChild(a);
   });
 
