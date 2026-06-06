@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Transport">
+<meta name="theme-color" content="#0a0f1c">
+<title>IFT Transport Times — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --blue:#38bdf8; --blue2:#2563eb; --green:#22c55e; --amber:#f59e0b; --red:#ef4444;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.4rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1rem;font-weight:800}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase}
+  .wrap{max-width:680px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
+
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+  .vs .c{border-radius:14px;padding:16px 14px;text-align:center;border:1px solid var(--line)}
+  .vs .ground{background:#2a1212;border-color:#5b2330}
+  .vs .air{background:#0c2436;border-color:#13507a}
+  .vs .lbl{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);margin-bottom:8px}
+  .vs .big{font-size:1.55rem;font-weight:900;line-height:1.05}
+  .vs .ground .big{color:#fb7185}
+  .vs .air .big{color:#38bdf8}
+  .vs .small{font-family:var(--mono);font-size:.66rem;color:var(--text-faint);margin-top:6px}
+
+  .saved{background:linear-gradient(135deg,#0c2a1a,#0f1d34);border:1px solid #1c5237;border-radius:14px;padding:14px 16px;text-align:center;margin-bottom:18px}
+  .saved .t{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim)}
+  .saved .v{font-size:1.4rem;font-weight:900;color:var(--green);margin-top:4px}
+  .saved .n{font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.5}
+
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .tbl th,.tbl td{padding:10px 11px;text-align:left;border-top:1px solid var(--line);font-size:.8rem}
+  .tbl thead th{background:var(--bg-soft);font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);border-top:none}
+  .tbl td.r,.tbl th.r{text-align:right;font-family:var(--mono);font-weight:600;white-space:nowrap}
+  .tbl .gnd{color:#fb7185}
+  .tbl .air{color:#38bdf8}
+  .tbl .org{font-weight:700}
+
+  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;padding:13px 15px;margin-top:16px}
+  .note .h{font-weight:700;font-size:.85rem;margin-bottom:5px}
+  .note p{font-size:.8rem;color:var(--text-dim);line-height:1.55}
+  .disc{margin-top:14px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="back" href="protocols.html" aria-label="Back">‹</a>
+  <div>
+    <h1>IFT Transport Times</h1>
+    <div class="sub">Keys → Miami · ground vs AW139</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="vs">
+    <div class="c ground">
+      <div class="lbl">Ground (US-1)</div>
+      <div class="big">4+ hrs</div>
+      <div class="small">~160 mi · single highway</div>
+    </div>
+    <div class="c air">
+      <div class="lbl">Air · AW139</div>
+      <div class="big">45–50 min</div>
+      <div class="small">~140 nm direct</div>
+    </div>
+  </div>
+
+  <div class="saved">
+    <div class="t">Time saved — Lower Keys → Miami</div>
+    <div class="v">≈ 3+ hours</div>
+    <div class="n">Rotor-wing transport removes 3+ hours of prehospital time for a time-critical patient, enabling far earlier definitive care and continuous critical-care monitoring en route.</div>
+  </div>
+
+  <div class="sec-h">Representative IFT routes</div>
+  <table class="tbl">
+    <thead>
+      <tr><th>From (Keys)</th><th class="r">Road mi</th><th class="r">Ground</th><th class="r">AW139</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="org">Key West<br><span style="color:var(--text-faint);font-weight:400;font-size:.72rem">Lower Keys Med Ctr</span></td><td class="r">~160</td><td class="r gnd">~4–4.5 hr</td><td class="r air">~45–50 min</td></tr>
+      <tr><td class="org">Marathon<br><span style="color:var(--text-faint);font-weight:400;font-size:.72rem">Fishermen's Community</span></td><td class="r">~110</td><td class="r gnd">~2.5–3.5 hr</td><td class="r air">~30–35 min</td></tr>
+      <tr><td class="org">Tavernier<br><span style="color:var(--text-faint);font-weight:400;font-size:.72rem">Mariners Hospital</span></td><td class="r">~85</td><td class="r gnd">~1.5–2.5 hr</td><td class="r air">~20–25 min</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <div class="h">Why this matters for medical necessity</div>
+    <p>The Florida Keys are served by a single highway (US-1) with no alternate route; ground times rise sharply with traffic, weather, and bridge/road incidents. For time-sensitive conditions, rotor-wing transport provides the only timely access to tertiary trauma, neuro, cardiac, and critical-care resources in Miami.</p>
+  </div>
+
+  <div class="disc">Distances and times are planning estimates — confirm actual mileage and ETA with GPS / Google Maps for each transport. Ground times vary with traffic, weather, and road conditions; air times vary with winds, routing, and ATC.</div>
+
+</div>
+</body>
+</html>

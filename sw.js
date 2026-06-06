@@ -1,6 +1,6 @@
 // Trauma Star launcher — offline cache
-const CACHE = 'trauma-star-v13';
-const ASSETS = ['./', './index.html', './protocols.html', './airway-ketamine.html', './ibw.html', './pressors.html', './peds.html', './manifest.json', './icon.svg'];
+const CACHE = 'trauma-star-v14';
+const ASSETS = ['./', './index.html', './protocols.html', './airway-ketamine.html', './ibw.html', './pressors.html', './peds.html', './transport-times.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
