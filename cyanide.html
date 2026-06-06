@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="TS Cyanide">
+<meta name="apple-mobile-web-app-title" content="TS Smoke/CN">
 <meta name="theme-color" content="#0a0f1c">
-<title>Cyanide Poisoning — Trauma Star</title>
+<title>Smoke Inhalation &amp; Cyanide — Trauma Star</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -39,6 +39,10 @@
   .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
   .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
   .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.steps{list-style:none;counter-reset:s;padding:6px 0}
+  ul.steps li{position:relative;padding:11px 16px 11px 44px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.steps li:first-child{border-top:none}
+  ul.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:21px;height:21px;border-radius:50%;background:var(--purple);color:#fff;font-family:var(--mono);font-weight:700;font-size:.7rem;text-align:center;line-height:21px}
   ul.bul{list-style:none;padding:6px 0}
   ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
   ul.bul li:first-child{border-top:none}
@@ -50,6 +54,7 @@
   details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
   details.refs>summary::-webkit-details-marker{display:none}
   details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:var(--blue);text-decoration:none}
   .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
   .hidden{display:none}
 </style>
@@ -59,8 +64,8 @@
   <div class="top-row">
     <a class="back" href="protocols.html" aria-label="Back">‹</a>
     <div>
-      <h1>Cyanide Poisoning</h1>
-      <div class="sub">Toxicology · hydroxocobalamin</div>
+      <h1>Smoke Inhalation &amp; Cyanide</h1>
+      <div class="sub">Fire/smoke · CO + CN · Cyanokit</div>
       <div class="cat">TS-TOX-002 · §7 Toxicology</div>
     </div>
   </div>
@@ -77,52 +82,94 @@
     </div>
 
     <section>
-      <div class="sec-h">Indication — suspect cyanide</div>
-      <div class="block" style="--c:#a855f7">
+      <div class="sec-h">When to suspect cyanide</div>
+      <div class="block warn">
+        <div class="item"><div class="detail" style="margin-top:0"><b class="k">Exposure:</b> enclosed-space structure fire — especially plastics, synthetics, wool, silk.</div></div>
+        <div class="item">
+          <div class="nm">Treat empirically if smoke inhalation + any of:</div>
+          <div class="detail"></div>
+        </div>
         <ul class="bul">
-          <li><b class="k">Smoke inhalation / removal from fire</b>, or ingestion/inhalation/dermal cyanide exposure,</li>
-          <li><b class="k">PLUS</b> a neurological, cardiac, or respiratory complaint.</li>
+          <li>Altered mental status (GCS &lt; 15)</li>
+          <li>Seizures</li>
+          <li>Hypotension (SBP &lt; 90) or shock</li>
+          <li>Cardiac arrest</li>
+          <li>Lactate ≥ 8 mmol/L (if quickly available)</li>
+          <li>Persistent metabolic acidosis (pH &lt; 7.25)</li>
+        </ul>
+        <div class="item"><div class="detail" style="margin-top:0"><b class="k">Do NOT wait for lab confirmation if the patient is unstable.</b></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Immediate actions (scene &amp; transport)</div>
+      <div class="block" style="--c:#22c55e">
+        <ul class="steps">
+          <li><b class="k">Remove from smoke</b> — scene safety / decon as needed.</li>
+          <li><b class="k">High-flow 100% O₂</b> via NRB or advanced airway (treats both CO and CN).</li>
+          <li><b class="k">Secure airway early</b> if GCS &lt; 8, respiratory distress, or suspected airway edema.</li>
+          <li>IV/IO access; monitor cardiac, SpO₂, glucose, EtCO₂ (if intubated).</li>
+          <li>Obtain <b class="k">lactate</b> if point-of-care available — but don't delay the antidote in a critical patient.</li>
+          <li>Notify the receiving facility of suspected cyanide toxicity + ETA.</li>
         </ul>
       </div>
     </section>
 
     <section>
-      <div class="sec-h">Hydroxocobalamin</div>
+      <div class="sec-h">Cyanokit (hydroxocobalamin)</div>
       <div class="block" style="--c:#f59e0b">
         <div class="item">
           <div class="nm">Adult</div>
-          <div class="detail"><span class="dose">5 g IV infusion over 15 min</span> — may repeat ×1 (<b class="k">max total 10 g</b>).</div>
+          <div class="detail"><span class="dose">5 g (1 vial) in 100 mL NS → infuse over 15 min</span> IV/IO.</div>
         </div>
         <div class="item">
           <div class="nm">Pediatric</div>
-          <div class="detail"><span class="dose peds">70 mg/kg IV over 15 min</span> — max single 5 g, <b class="k">max total 10 g</b>.</div>
+          <div class="detail"><span class="dose peds">70 mg/kg (max 5 g) in NS to 100 mL → over 15 min</span></div>
         </div>
         <div class="item">
-          <div class="nm">Cardiac arrest</div>
-          <div class="detail">May give <b class="k">undiluted IV push</b>.</div>
+          <div class="nm">Repeat</div>
+          <div class="detail">May repeat <b class="k">once</b> if response inadequate — <b class="k">max total 10 g</b>. In cardiac arrest may push undiluted.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Prep</div>
+          <div class="detail">Reconstitute vial with one 100 mL NS bag via transfer spike; <b class="k">gently invert (don't shake)</b>; infuse over 15 min; use a <b class="k">dedicated line</b> (incompatibilities).</div>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="sec-h">Administration advisories</div>
+      <div class="sec-h">Concurrent management</div>
+      <div class="block" style="--c:#38bdf8">
+        <div class="item"><div class="nm">Carbon monoxide</div><div class="detail">100% O₂ continuously; consider hyperbaric if COHb &gt; 25%, pregnant + COHb &gt; 15%, seizures, LOC, or arrhythmia.</div></div>
+        <div class="item"><div class="nm">Bronchospasm</div><div class="detail">Albuterol / ipratropium nebulizers.</div></div>
+        <div class="item"><div class="nm">Airway edema</div><div class="detail"><b class="k">Early intubation</b> for stridor, hoarseness, facial burns, or progressive swelling.</div></div>
+        <div class="item"><div class="nm">Seizures</div><div class="detail">Benzodiazepine (see Seizures, TS-NEU-004).</div></div>
+        <div class="item"><div class="nm">Hypotension</div><div class="detail">Fluids; vasopressors if refractory after cyanide treatment.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Precautions &amp; side effects</div>
       <div class="block warn">
         <ul class="bul">
-          <li>Second dose timing <b class="k">15 min – 2 h</b> based on patient condition.</li>
-          <li>Diluent is <b class="k">0.9% NaCl</b> (use the kit diluent / follow kit instructions).</li>
-          <li><b class="k">Use a separate IV line</b> — multiple drug incompatibilities (turns fluids/skin/urine red).</li>
+          <li><b class="k">No absolute contraindications.</b> Caution: known B12 allergy (rare). Pregnancy — use if benefit &gt; risk.</li>
+          <li>Expected: <b class="k">red/orange discoloration</b> of skin, urine, IV fluid (harmless, days); transient hypertension.</li>
+          <li>May interfere with <b class="k">colorimetric lab tests</b> — notify the lab/receiving.</li>
+          <li>Cyanokit is preferred over nitrite-based kits (safer; no effect on CO carrying).</li>
         </ul>
       </div>
     </section>
 
     <section>
-      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="sec-h">Handoff &amp; documentation — medically necessary</div>
       <div class="block" style="--c:#a855f7">
         <ul class="bul" style="--c:#a855f7">
-          <li>Exposure (fire/smoke/chemical), time, and the neuro/cardiac/resp findings supporting treatment.</li>
-          <li>Hydroxocobalamin — dose, route, time, line used; any repeat dose.</li>
-          <li>Concurrent care (100% O₂, ventilation, CO co-exposure considerations); vitals/response.</li>
-          <li>Poison Control contact; why rotor-wing / level of care.</li>
+          <li>Fire exposure (time, enclosure, materials burned); symptom-onset time.</li>
+          <li>GCS, vitals, lactate, COHb (if available).</li>
+          <li><b class="k">Cyanokit</b> — dose, time, response; any repeat.</li>
+          <li>Airway interventions, O₂ delivery; other treatments (seizure control, bronchodilators, pressors).</li>
+          <li><b class="k">Request hyperbaric evaluation</b> if CO and/or CN toxicity suspected.</li>
+          <li>Why rotor-wing / level of care.</li>
         </ul>
       </div>
     </section>
@@ -131,24 +178,27 @@
   <div id="bgView" class="hidden">
     <section>
       <div class="sec-h">Overview</div>
-      <p class="body-text">Cyanide blocks cellular oxygen use (cytochrome oxidase), causing rapid neuro/cardiac/respiratory collapse — classically after smoke inhalation. Hydroxocobalamin binds cyanide to form cyanocobalamin (excreted renally) and is given empirically when exposure plus organ symptoms are present. Treat concurrent carbon monoxide and provide 100% oxygen.</p>
+      <p class="body-text">Enclosed-space fires produce both carbon monoxide and hydrogen cyanide. Cyanide blocks cellular oxygen use (cytochrome oxidase), causing rapid neurologic, cardiac, and respiratory collapse and a high lactate / metabolic acidosis. Because confirmatory testing is slow, hydroxocobalamin is given empirically when smoke exposure occurs with shock, altered mental status, seizures, arrest, or a high lactate.<sup>1,2</sup></p>
     </section>
     <section>
       <div class="sec-h">Management — detail</div>
-      <p class="body-text">Give hydroxocobalamin 5 g IV over 15 minutes (pediatric 70 mg/kg, max single 5 g), repeatable once for a maximum total of 10 g, with the second dose timed 15 minutes to 2 hours later per condition; in cardiac arrest it may be pushed undiluted. Reconstitute/dilute with 0.9% NaCl per kit instructions and run through a dedicated line due to incompatibilities. Provide high-flow oxygen and supportive care.</p>
+      <p class="body-text">Remove from smoke, give high-flow 100% oxygen (treats CO and supports CN), and secure the airway early when GCS is low or airway burns/edema are suspected. Give hydroxocobalamin (Cyanokit) 5 g in 100 mL NS over 15 minutes (pediatric 70 mg/kg, max 5 g), repeatable once to a 10 g maximum, through a dedicated line. Manage CO with sustained oxygen and hyperbaric referral for severe features, treat bronchospasm, airway edema, seizures, and post-antidote hypotension, and arrange hyperbaric evaluation at the receiving facility. Hydroxocobalamin is preferred over nitrite-based antidotes because it does not impair oxygen carrying and is safer in mixed CO/CN exposure.<sup>1,3</sup></p>
     </section>
     <section>
       <div class="sec-h">Sources &amp; evidence</div>
       <details class="refs" open>
-        <summary>Cited sources — 1 · reviewed Jun 2026</summary>
+        <summary>Cited sources — 4 · reviewed Jun 2026</summary>
         <ol>
-          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, §9.1.2 Cyanide Poisoning</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — drug/dose source.</span></li>
+          <li>Cyanide, House Fires, and When to Give Hydroxocobalamin. <span style="color:var(--text-faint)">Tampa Emergency Medicine.</span> <a href="https://www.tampaemergencymedicine.org/blog/cyanide-housefires-and-when-to-give-hydroxocobalamin">tampaemergencymedicine.org</a></li>
+          <li>Carbon Monoxide–Cyanide Toxicity (House Fire). <span style="color:var(--text-faint)">ACEP Toxicology.</span> <a href="https://www.acep.org/toxicology/cases/simulation-cases/carbon-monoxide-cyanide-toxicity-house-fire">acep.org</a></li>
+          <li>Cyanide Toxicity. <span style="color:var(--text-faint)">LITFL.</span> <a href="https://litfl.com/cyanide-toxicity/">litfl.com</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, §9.1.2 Cyanide Poisoning</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025).</span></li>
         </ol>
       </details>
     </section>
   </div>
 
-  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control / Poison Control. Verify every dose before administration.</div>
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol, medical control, and Poison Control. Verify every dose; adapt to your medical director, scope, and formulary.</div>
 </div>
 <script>
   function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
