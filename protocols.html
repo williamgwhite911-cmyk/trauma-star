@@ -110,22 +110,22 @@
   // Featured = built interactive tools. Categories list the manual's sections;
   // protocols gain an `href` as their page is built.
   const FEATURED = [
-    { ic:'RSI', name:'Ketamine-Forward Trauma Airway', sub:'RSI · normo / hypotensive · dose calc', href:'airway-ketamine.html', sec:'§1 Airway & Ventilation', cat:'TS-AW-001' },
-    { ic:'PDP', name:'Push-Dose Pressors', sub:'Epinephrine & phenylephrine · bridge', href:'pressors.html', sec:'§2 Hemodynamics & Shock', cat:'TS-HD-001' },
-    { ic:'WB', name:'Whole Blood — Field Administration', sub:'Hemorrhagic shock · LTOWB · fluid warmer', href:'wholeblood.html', sec:'§2 Hemodynamics & Shock', cat:'TS-HD-002' },
-    { ic:'PED', name:'Pediatric Resuscitation', sub:'Broselow / Handtevy · weight-based', href:'peds.html', sec:'§3 Pediatrics', cat:'TS-PED-001' },
-    { ic:'IFT', name:'IFT Transport Times', sub:'Keys → Miami · ground vs AW139', href:'transport-times.html', sec:'§4 Operations & Transport', cat:'TS-OPS-001' },
-    { ic:'DCS', name:'Decompression Sickness (Bends)', sub:'Dive injury · 100% O₂ · fly low · DAN', href:'bends.html', sec:'§5 Environmental & Diving', cat:'TS-ENV-001' },
-    { ic:'CVA', name:'Stroke — Ischemic', sub:'Permissive HTN · LVO · thrombectomy', href:'stroke-ischemic.html', sec:'§6 Neurology', cat:'TS-NEU-001' },
-    { ic:'ICH', name:'Stroke — Hemorrhagic (ICH)', sub:'Controlled BP · neurosurgical center', href:'stroke-hemorrhagic.html', sec:'§6 Neurology', cat:'TS-NEU-002' },
-    { ic:'CVA?', name:'Stroke — Undetermined', sub:'Type unknown · supportive · rush to CT', href:'stroke-undetermined.html', sec:'§6 Neurology', cat:'TS-NEU-003' },
-    { ic:'SZ', name:'Seizures / Status Epilepticus', sub:'Benzo first-line · refractory agents', href:'seizures.html', sec:'§6 Neurology', cat:'TS-NEU-004' },
-    { ic:'ICP', name:'Brain Herniation Syndrome', sub:'3% NaCl / mannitol · ICP measures', href:'herniation.html', sec:'§6 Neurology', cat:'TS-NEU-005' },
-    { ic:'CNS', name:'CNS Infection', sub:'Empiric antibiotics ASAP', href:'cns-infection.html', sec:'§6 Neurology', cat:'TS-NEU-006' },
-    { ic:'OD', name:'Opioid Overdose', sub:'Naloxone · ventilate first', href:'opioid-overdose.html', sec:'§7 Toxicology', cat:'TS-TOX-001' },
-    { ic:'CN', name:'Smoke Inhalation &amp; Cyanide', sub:'Fire · CO + CN · Cyanokit · airway', href:'cyanide.html', sec:'§7 Toxicology', cat:'TS-TOX-002' },
-    { ic:'TCA', name:'TCA Overdose', sub:'Wide QRS · sodium bicarbonate', href:'tca-overdose.html', sec:'§7 Toxicology', cat:'TS-TOX-003' },
-    { ic:'ENV', name:'Envenomation', sub:'Snake bite (CroFab) · scorpion', href:'envenomation.html', sec:'§7 Toxicology', cat:'TS-TOX-004' },
+    { ic:'RSI', name:'Ketamine-Forward Trauma Airway', sub:'RSI · normo / hypotensive · dose calc', href:'airway-ketamine.html', sec:'Sec 1 Airway & Ventilation', cat:'TS-AW-001' },
+    { ic:'PDP', name:'Push-Dose Pressors', sub:'Epinephrine & phenylephrine · bridge', href:'pressors.html', sec:'Sec 2 Hemodynamics & Shock', cat:'TS-HD-001' },
+    { ic:'WB', name:'Whole Blood — Field Administration', sub:'Hemorrhagic shock · LTOWB · fluid warmer', href:'wholeblood.html', sec:'Sec 2 Hemodynamics & Shock', cat:'TS-HD-002' },
+    { ic:'PED', name:'Pediatric Resuscitation', sub:'Broselow / Handtevy · weight-based', href:'peds.html', sec:'Sec 3 Pediatrics', cat:'TS-PED-001' },
+    { ic:'IFT', name:'IFT Transport Times', sub:'Keys → Miami · ground vs AW139', href:'transport-times.html', sec:'Sec 4 Operations & Transport', cat:'TS-OPS-001' },
+    { ic:'DCS', name:'Decompression Sickness (Bends)', sub:'Dive injury · 100% O₂ · fly low · DAN', href:'bends.html', sec:'Sec 5 Environmental & Diving', cat:'TS-ENV-001' },
+    { ic:'CVA', name:'Stroke — Ischemic', sub:'Permissive HTN · LVO · thrombectomy', href:'stroke-ischemic.html', sec:'Sec 6 Neurology', cat:'TS-NEU-001' },
+    { ic:'ICH', name:'Stroke — Hemorrhagic (ICH)', sub:'Controlled BP · neurosurgical center', href:'stroke-hemorrhagic.html', sec:'Sec 6 Neurology', cat:'TS-NEU-002' },
+    { ic:'CVA?', name:'Stroke — Undetermined', sub:'Type unknown · supportive · rush to CT', href:'stroke-undetermined.html', sec:'Sec 6 Neurology', cat:'TS-NEU-003' },
+    { ic:'SZ', name:'Seizures / Status Epilepticus', sub:'Benzo first-line · refractory agents', href:'seizures.html', sec:'Sec 6 Neurology', cat:'TS-NEU-004' },
+    { ic:'ICP', name:'Brain Herniation Syndrome', sub:'3% NaCl / mannitol · ICP measures', href:'herniation.html', sec:'Sec 6 Neurology', cat:'TS-NEU-005' },
+    { ic:'CNS', name:'CNS Infection', sub:'Empiric antibiotics ASAP', href:'cns-infection.html', sec:'Sec 6 Neurology', cat:'TS-NEU-006' },
+    { ic:'OD', name:'Opioid Overdose', sub:'Naloxone · ventilate first', href:'opioid-overdose.html', sec:'Sec 7 Toxicology', cat:'TS-TOX-001' },
+    { ic:'CN', name:'Smoke Inhalation &amp; Cyanide', sub:'Fire · CO + CN · Cyanokit · airway', href:'cyanide.html', sec:'Sec 7 Toxicology', cat:'TS-TOX-002' },
+    { ic:'TCA', name:'TCA Overdose', sub:'Wide QRS · sodium bicarbonate', href:'tca-overdose.html', sec:'Sec 7 Toxicology', cat:'TS-TOX-003' },
+    { ic:'ENV', name:'Envenomation', sub:'Snake bite (CroFab) · scorpion', href:'envenomation.html', sec:'Sec 7 Toxicology', cat:'TS-TOX-004' },
   ];
   const DATA = [];
 
