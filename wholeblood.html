@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Whole Blood">
+<meta name="theme-color" content="#0a0f1c">
+<title>Whole Blood (Field) — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1c; --bg-soft:#0f1626; --card:#121b2e; --card2:#152138;
+    --line:#21304c; --line-bright:#33476e;
+    --text:#e6edf8; --text-dim:#9fb2cf; --text-faint:#5f7596;
+    --blue:#38bdf8; --blue2:#2563eb; --green:#22c55e; --amber:#f59e0b;
+    --red:#ef4444; --red-bg:#2a1212; --red-line:#5b2330; --gold:#f59e0b;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --body:"Outfit",system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ef4444)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}
+  .block.warn .item{border-top-color:var(--red-line)}
+  .item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.92rem}
+  .item .detail{font-size:.82rem;color:var(--text-dim);margin-top:3px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.82rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.steps{list-style:none;counter-reset:s;padding:6px 0}
+  ul.steps li{position:relative;padding:11px 16px 11px 46px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.steps li:first-child{border-top:none}
+  ul.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--mono);font-weight:700;font-size:.72rem;text-align:center;line-height:22px}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ef4444)}
+  .block.warn ul.bul li::before{background:var(--red)} .block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  p.body-text sup{color:var(--blue);font-weight:700;font-size:.7em}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}
+  details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0;word-break:break-word}
+  details.refs a{color:var(--blue);text-decoration:none}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Whole Blood — Field Administration</h1>
+      <div class="sub">Hemorrhagic shock · LTOWB</div>
+      <div class="cat">TS-HD-002 · §2 Hemodynamics &amp; Shock</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===================== QUICK CARD ===================== -->
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Indications — hemorrhagic shock</div>
+      <div class="block" style="--c:#ef4444">
+        <ul class="bul">
+          <li>Suspected/known traumatic hemorrhage with shock: <b class="k">SBP &lt; 90 mmHg</b>, or <b class="k">HR ≥ 110 with SBP ≤ 90</b> (shock index &gt; 1), or SBP &lt; 70.</li>
+          <li>Class III–IV shock / poor perfusion (weak-absent radial pulse, altered mentation, pallor) from hemorrhage.</li>
+          <li>Non-compressible torso, pelvic, junctional, or major external hemorrhage after bleeding control measures.</li>
+          <li>Consider in non-trauma hemorrhagic shock (GI bleed, ruptured AAA, OB hemorrhage) per medical direction.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Product &amp; dosing</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="item">
+          <span class="nm">Low-Titer O Whole Blood (LTOWB)</span>
+          <div class="detail"><span class="dose">1 unit (~500 mL) IV/IO</span> titrate to endpoint; repeat per protocol / medical control.</div>
+        </div>
+        <div class="item">
+          <span class="nm">Resuscitation target (permissive hypotension)</span>
+          <div class="detail"><span class="dose">palpable radial pulse / SBP ~90</span> &nbsp;·&nbsp; <b class="k">TBI:</b> <span class="dose">SBP ≥ 110 / MAP ≥ 80</span>. Stop bolusing once perfusing.</div>
+        </div>
+        <div class="item">
+          <span class="nm">Calcium (citrate-induced hypocalcemia)</span>
+          <div class="detail"><span class="dose">CaCl₂ 1 g</span> or <span class="dose">Ca gluconate 3 g</span> IV/IO with the 1st unit; repeat per protocol.</div>
+        </div>
+        <div class="item">
+          <span class="nm">TXA (adjunct, if &lt; 3 h from injury)</span>
+          <div class="detail"><span class="dose">1 g IV over 10 min</span> per protocol — do not delay blood for TXA.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Procedure — infuse via fluid warmer</div>
+      <div class="block" style="--c:#22c55e">
+        <ul class="steps">
+          <li><b class="k">Control bleeding first</b> — tourniquet, wound packing/pressure, pelvic binder, splinting. Obtain order / contact medical control per protocol.</li>
+          <li><b class="k">Verify the unit</b> (two-person): LTOWB, group O low-titer, unit/segment number, ABO/Rh label, expiration, and integrity (no clots, discoloration, leaks). Record the unit number.</li>
+          <li><b class="k">Access:</b> two large-bore IVs (≥18 g) or IO. Use a <b class="k">blood administration set with in-line filter (170–260 µm)</b>.</li>
+          <li><b class="k">Fluid/blood warmer:</b> use a device <b class="k">rated for blood</b>; power on and let it reach <span class="dose">~38 °C</span> — <b class="k">never exceed 42 °C</b> (hemolysis). Prime the warmer and tubing per the device IFU.</li>
+          <li><b class="k">Connect &amp; infuse:</b> run through the warmer; rapid for shock (pressure bag / rapid infuser within the device's rated flow). Titrate to endpoint. Only <b class="k">0.9% NaCl</b> is line-compatible — <b class="k">never LR or calcium-containing fluid in the same line</b> (clots citrated blood).</li>
+          <li><b class="k">Give calcium</b> with the first unit; consider TXA. Keep the patient warm (blankets, warm cabin).</li>
+          <li><b class="k">Monitor</b> vitals + temp q5 min; watch for transfusion reaction. Reassess endpoint; repeat units per protocol.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Cautions &amp; red flags</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Blood does <b class="k">not</b> replace hemorrhage control — control the source.</li>
+          <li><b class="k">Hypothermia</b> worsens coagulopathy — always warm blood and patient; avoid over-cooling.</li>
+          <li><b class="k">Hypocalcemia</b> (citrate): give calcium with transfusion; watch for hypotension/arrhythmia.</li>
+          <li><b class="k">Transfusion reaction</b> — fever, hypotension, dyspnea, urticaria, hemoglobinuria: <b class="k">stop</b>, maintain access with NS, support airway/BP, document.</li>
+          <li>Caution with TACO/volume overload in cardiac/renal disease — titrate to endpoint, don't over-transfuse.</li>
+          <li>Honor documented refusal (e.g., faith-based) per consent/protocol.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul">
+          <li>Indication: mechanism, signs of hemorrhagic shock, and vitals (SBP, HR, shock index, perfusion) with times.</li>
+          <li>Order obtained / medical control contacted (name, time).</li>
+          <li>Product: <b class="k">unit/segment number(s)</b>, LTOWB, ABO/Rh, volume infused, expiration; two-person verification.</li>
+          <li>Warmer used and set temperature; start/stop time of each unit.</li>
+          <li>Adjuncts: calcium (dose/time), TXA (dose/time).</li>
+          <li>Response: serial vitals/mentation, endpoint reached, any reaction and management.</li>
+          <li>Why rotor-wing / this level of care was required (time-critical hemorrhage, capability/time differential).</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===================== BACKGROUND ===================== -->
+  <div id="bgView" class="hidden">
+
+    <section>
+      <div class="sec-h">Overview</div>
+      <p class="body-text">Hemorrhage is the leading cause of preventable death after injury. Low-titer group O whole blood (LTOWB) delivers red cells, plasma, and platelets in near-physiologic proportions in a single product, enabling balanced resuscitation at the point of injury. Prehospital blood transfusion programs are feasible and safe and are recommended by national and international consensus bodies.<sup>1,2,5</sup></p>
+    </section>
+
+    <section>
+      <div class="sec-h">Pathophysiology / rationale</div>
+      <p class="body-text">Major hemorrhage drives the "lethal diamond" — hypothermia, acidosis, coagulopathy, and hypocalcemia — each worsening the others. Crystalloid dilutes clotting factors and worsens outcomes; whole blood restores oxygen-carrying capacity and hemostatic function together.<sup>4,6</sup> Resuscitation is titrated to perfusion (permissive hypotension) until surgical control, except in TBI where adequate cerebral perfusion pressure is prioritized.<sup>4</sup> Citrate anticoagulant binds calcium, so calcium repletion is given early; cold product mandates warming to prevent hypothermia-induced coagulopathy.<sup>3,7</sup></p>
+    </section>
+
+    <section>
+      <div class="sec-h">In-flight considerations</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>Maintain and document the blood's cold-chain/temperature until administration; follow your unit's storage and monitoring procedure.</li>
+          <li>Pre-flight: confirm the warmer is charged/functional and an approved blood set + NaCl are stocked; plan IO backup.</li>
+          <li>Keep the cabin warm and the patient insulated; vibration/limited lighting make the two-person unit check and reaction monitoring harder — slow down for the safety check.</li>
+          <li>Anticipate calcium and TXA needs before they're urgent; pre-draw/label.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Management — detail</div>
+      <p class="body-text">Give LTOWB for hemorrhagic shock using the indication thresholds above; published prehospital criteria use SBP ≤ 90 with HR ≥ 108, or SBP ≤ 70, in patients at risk of hemorrhage.<sup>1,6</sup> Titrate to a palpable radial pulse / SBP ~90, raising the target for suspected TBI.<sup>4</sup> Repeat units and activate massive-transfusion/receiving-facility notification per protocol. Replete calcium with transfusion — civilian prehospital guidance suggests calcium after the first 1–2 units (CaCl₂ 1 g or Ca gluconate 3 g), with military guidance giving 1 g with the first unit and after every 4 units.<sup>2,3</sup> Add TXA within 3 hours of injury if not contraindicated, without delaying blood.<sup>4</sup> Infuse all product through a warmer set to ~38 °C (never &gt;42 °C) via a blood set with in-line filter, using only 0.9% NaCl as a companion fluid.<sup>3,7</sup> Monitor continuously for transfusion reaction and stop the infusion if one is suspected.</p>
+    </section>
+
+    <section>
+      <div class="sec-h">Sources &amp; evidence</div>
+      <details class="refs" open>
+        <summary>Cited sources — 7 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Yazer MH, Spinella PC, et al. <span style="color:var(--text-faint)">THOR-AABB Working Party Recommendations for a Prehospital Blood Product Transfusion Program. <em>Transfusion</em>, 2022.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/34669564/">pubmed.ncbi.nlm.nih.gov/34669564</a></li>
+          <li>Prehospital Blood Transfusion Coalition. <span style="color:var(--text-faint)">Clinical Practice Guideline for Civilian Emergency Medical Services, 2024.</span> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12278122/">pmc.ncbi.nlm.nih.gov/articles/PMC12278122</a></li>
+          <li>Joint Trauma System. <span style="color:var(--text-faint)">Damage Control Resuscitation — Clinical Practice Guideline (CPG ID 18), 2019.</span> <a href="https://jts.health.mil/assets/docs/cpgs/Damage_Control_Resuscitation_12_Jul_2019_ID18.pdf">jts.health.mil</a></li>
+          <li>Committee on Tactical Combat Casualty Care (TCCC). <span style="color:var(--text-faint)">TCCC Guidelines — fluid resuscitation / whole blood (current edition).</span> <a href="https://deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>Eastern Association for the Surgery of Trauma (EAST). <span style="color:var(--text-faint)">Whole Blood Resuscitation for Injured Patients — Practice Management Guideline, 2024.</span> <a href="https://www.east.org/education-resources/practice-management-guidelines/details/whole-blood-resuscitation-for-injured-patients-requiring-transfusion-a-systematic-review-metaanalysi">east.org</a></li>
+          <li>Williams J, Merutka N, et al. <span style="color:var(--text-faint)">Prehospital Low-Titer Group O Whole Blood Is Feasible and Safe: a prospective randomized pilot trial. <em>J Trauma Acute Care Surg</em>, 2022.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/35081595/">pubmed.ncbi.nlm.nih.gov/35081595</a></li>
+          <li>Massive Transfusion — citrate toxicity, hypocalcemia &amp; hypothermia. <span style="color:var(--text-faint)">StatPearls / NCBI Bookshelf (current).</span> <a href="https://www.ncbi.nlm.nih.gov/books/NBK499929/">ncbi.nlm.nih.gov/books/NBK499929</a></li>
+        </ol>
+      </details>
+    </section>
+
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol, your blood-product SOP, and online medical control. Verify the unit, dose, and warmer settings before administration. Device-specific warming/priming steps: follow your fluid warmer's instructions for use.</div>
+</div>
+
+<script>
+  function showView(v){
+    const card = v === 'card';
+    document.getElementById('cardView').classList.toggle('hidden', !card);
+    document.getElementById('bgView').classList.toggle('hidden', card);
+    document.getElementById('tabCard').classList.toggle('on', card);
+    document.getElementById('tabBg').classList.toggle('on', !card);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
