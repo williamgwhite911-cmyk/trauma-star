@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TS-CCG Drug Index & Dosing Matrix — Trauma Star</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111827;--dim:#374151;--faint:#6b7280;--line:#d1d5db;--accent:#b91c1c;--blue:#1d4ed8;--bg:#f3f4f6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Outfit",system-ui,sans-serif;line-height:1.45}
+  .toolbar{position:sticky;top:0;z-index:10;background:#0a0f1c;color:#fff;display:flex;gap:10px;align-items:center;padding:10px 16px}
+  .toolbar a{color:#9fb2cf;text-decoration:none;font-size:1.3rem}
+  .toolbar .t{font-weight:700;font-size:.9rem}
+  .toolbar button{margin-left:auto;background:#2563eb;color:#fff;border:none;border-radius:8px;padding:9px 14px;font-weight:700;font-family:inherit;cursor:pointer}
+  .page{max-width:1000px;margin:18px auto;background:#fff;padding:40px 40px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+  h1{font-size:1.5rem;font-weight:900;margin:0 0 4px}
+  .subt{color:var(--faint);font-weight:600;margin-bottom:14px}
+  h2{font-size:1rem;font-weight:800;margin:22px 0 6px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+  .stmt{background:#f9fafb;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:10px 13px;font-size:.84rem;margin:12px 0}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.8rem;margin:6px 0 4px}
+  th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  th{background:#eef2ff;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.02em}
+  td.d{font-family:ui-monospace,monospace;font-size:.76rem;white-space:nowrap}
+  td.dn{font-weight:700}
+  .ln{font-family:ui-monospace,monospace;font-size:.68rem;color:#0a0f1c;background:#e0e7ff;border-radius:4px;padding:1px 5px}
+  .first{background:#dcfce7}.second{background:#fef9c3}.third{background:#fee2e2}.adj{background:#e0e7ff}
+  .muted{color:var(--faint);font-size:.78rem}
+  .disc{font-size:.76rem;color:var(--faint);margin-top:16px;border-top:1px solid var(--line);padding-top:10px}
+  @media print{body{background:#fff}.toolbar{display:none}.page{box-shadow:none;margin:0;max-width:none;padding:0}h2{break-after:avoid}tr{break-inside:avoid}a{color:var(--ink);text-decoration:none}}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <a href="manual.html" aria-label="Back">‹</a>
+  <span class="t">TS-CCG Drug Index &amp; Dosing Matrix</span>
+  <button onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+<div class="page">
+  <h1>Drug Index &amp; Dosing Matrix</h1>
+  <div class="subt">TS-CCG · every drug, indication/line, dose, route, concentration &amp; max — quick-reference companion to the full protocols</div>
+
+  <div class="stmt">
+    <b>How to read:</b> <span class="ln first">1st</span> / <span class="ln second">2nd</span> / <span class="ln third">3rd</span> = line of therapy; <span class="ln adj">adj</span> = adjunct/situational. Routes: IV, IO, IM, IN/NAS (intranasal), SQ, PO, neb, SL. <b>The full protocol page is authoritative</b> — verify every dose, max, and contraindication before administration. Doses are adapted from the PHI Air Medical Clinical Care Guidelines and cited society guidelines; require Medical Director approval.
+  </div>
+
+  <h2>Sec 1 — Airway &amp; Ventilation (TS-AW-001)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Ketamine</td><td><span class="ln first">1st</span> RSI induction</td><td class="d">1–2 mg/kg IV/IO (normotensive); 0.5–1 mg/kg if hypotensive</td><td class="d">1–2 mg/kg IV/IO</td><td class="d">resuscitate BP first if shock</td></tr>
+      <tr><td class="dn">Rocuronium</td><td><span class="ln first">1st</span> paralytic</td><td class="d">1–1.2 mg/kg IV/IO</td><td class="d">1 mg/kg</td><td class="d">confirm post-intub sedation ready</td></tr>
+      <tr><td class="dn">Ketamine (drip)</td><td>post-intubation sedation</td><td class="d">1 mg/kg/hr, titrate 1–4 mg/kg/hr</td><td class="d">0.1–2 mg/kg/hr</td><td class="d">bolus before infusion</td></tr>
+      <tr><td class="dn">Midazolam</td><td>sedation add-on</td><td class="d">1–2 mg IV then 1–10 mg/hr</td><td class="d">0.05–0.1 mg/kg/hr</td><td class="d">caution + opioid</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 2 — Hemodynamics &amp; Shock (TS-HD-001/002)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Epinephrine (push-dose)</td><td><span class="ln adj">bridge</span> transient hypotension (low/normal HR)</td><td class="d">0.5–2 mL = 5–20 mcg IV q2–5 min</td><td class="d">—</td><td class="d">mix 1 mg/100 mL = 10 mcg/mL</td></tr>
+      <tr><td class="dn">Phenylephrine (push-dose)</td><td><span class="ln adj">bridge</span> hypotension w/ tachycardia</td><td class="d">0.5–2 mL = 50–200 mcg IV q2–5 min</td><td class="d">—</td><td class="d">mix 10 mg/100 mL = 100 mcg/mL</td></tr>
+      <tr><td class="dn">Norepinephrine</td><td><span class="ln first">1st</span> shock infusion</td><td class="d">start 5 mcg/min IV, titrate MAP ≥ 65</td><td class="d">0.05–0.1 mcg/kg/min</td><td class="d">4 mg/250 mL = 16 mcg/mL · max ~70 mcg/min</td></tr>
+      <tr><td class="dn">LTOWB (whole blood)</td><td><span class="ln first">1st</span> hemorrhagic shock</td><td class="d">1 unit (~500 mL) IV/IO</td><td class="d">10–20 mL/kg</td><td class="d">warm ≤ 42 °C; NaCl-only line</td></tr>
+      <tr><td class="dn">Calcium chloride</td><td>citrate hypocalcemia (w/ 1st unit)</td><td class="d">1 g IV/IO</td><td class="d">20 mg/kg (max 1 g)</td><td class="d">central/large vein</td></tr>
+      <tr><td class="dn">Calcium gluconate</td><td>alternative to CaCl₂</td><td class="d">3 g IV/IO</td><td class="d">60 mg/kg (max 3 g)</td><td class="d">—</td></tr>
+      <tr><td class="dn">TXA</td><td><span class="ln adj">adj</span> hemorrhage &lt; 3 h</td><td class="d">≥ 12 yr: 2 g IV over 10 min</td><td class="d">&lt; 12 yr: 15 mg/kg over 10 min (max 1 g) + 2 mg/kg/hr</td><td class="d">don't delay blood</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 3 — Pediatrics (TS-PED-001, weight-based)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug / therapy</th><th>Indication</th><th>Dose · route</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Epinephrine</td><td>cardiac arrest</td><td class="d">0.01 mg/kg (0.1 mL/kg of 0.1 mg/mL) IV/IO q3–5 min</td></tr>
+      <tr><td class="dn">Fluids (NS/LR)</td><td>shock</td><td class="d">20 mL/kg (10 mL/kg in trauma) IV/IO</td></tr>
+      <tr><td class="dn">Defibrillation</td><td>VF/pVT</td><td class="d">2 J/kg → 4 J/kg</td></tr>
+      <tr><td class="dn">Dextrose (D10)</td><td>hypoglycemia</td><td class="d">5 mL/kg IV/IO</td></tr>
+      <tr><td class="dn">Naloxone</td><td>opioid</td><td class="d">0.1 mg/kg IV/IO/IM/IN</td></tr>
+      <tr><td class="dn">Amiodarone</td><td>VF/pVT</td><td class="d">5 mg/kg IV/IO</td></tr>
+      <tr><td class="dn">Midazolam</td><td>seizure</td><td class="d">0.1 mg/kg IV/IO (0.2 IM/IN)</td></tr>
+      <tr><td class="dn">Ketamine</td><td>RSI/sedation</td><td class="d">1–2 mg/kg IV/IO (4 IM)</td></tr>
+      <tr><td class="dn">Rocuronium</td><td>paralytic</td><td class="d">1 mg/kg IV/IO</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 6 — Neurology (TS-NEU-001…006)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Alteplase (tPA)</td><td>ischemic stroke (online order)</td><td class="d">0.9 mg/kg IV (10% bolus/1 min, 90% over 60 min)</td><td class="d">—</td><td class="d">max 90 mg; &lt; 4.5 h, age ≥ 18</td></tr>
+      <tr><td class="dn">Nicardipine</td><td><span class="ln first">1st</span> BP (infusion)</td><td class="d">5 mg/hr IV, ↑ 2.5 q5–15 min</td><td class="d">—</td><td class="d">25 mg/250 mL; max 15 mg/hr</td></tr>
+      <tr><td class="dn">Clevidipine</td><td><span class="ln first">1st</span> BP (infusion)</td><td class="d">1–2 mg/hr IV, double q90 s</td><td class="d">—</td><td class="d">max 32 mg/hr</td></tr>
+      <tr><td class="dn">Labetalol</td><td><span class="ln second">2nd</span> BP</td><td class="d">20 mg IV → 40 → 80 mg q10–20 min; or 2 mg/min</td><td class="d">—</td><td class="d">max 300 mg; avoid asthma/brady/block</td></tr>
+      <tr><td class="dn">Esmolol</td><td><span class="ln third">3rd</span> BP / rate</td><td class="d">500 mcg/kg load, then 50 mcg/kg/min</td><td class="d">—</td><td class="d">max 300 mcg/kg/min</td></tr>
+      <tr><td class="dn">Midazolam</td><td><span class="ln first">1st</span> seizure (V4.1)</td><td class="d">&gt; 50 kg 5 mg IV/IO (10 IM/NAS)</td><td class="d">0.1 mg/kg IV/IO (max 5); 0.2 IM/NAS (max 10)</td><td class="d">repeat ×1 q3–5 min</td></tr>
+      <tr><td class="dn">Levetiracetam</td><td><span class="ln second">2nd</span> seizure</td><td class="d">60 mg/kg IV/IO over 10 min</td><td class="d">60 mg/kg</td><td class="d">max 4,500 mg</td></tr>
+      <tr><td class="dn">Ketamine</td><td><span class="ln third">3rd</span> refractory seizure</td><td class="d">1–2 mg/kg IV/IO (2 IM/NAS), then 0.5–1 mg/kg/hr</td><td class="d">same</td><td class="d">sedation-facilitated airway</td></tr>
+      <tr><td class="dn">3% Saline</td><td>herniation / hyponatremia</td><td class="d">250 mL IV/IO over 5–15 min</td><td class="d">3–5 mL/kg</td><td class="d">first-line hyperosmolar</td></tr>
+      <tr><td class="dn">Mannitol</td><td>herniation (alt, online order)</td><td class="d">0.5–1 g/kg IV over 30–60 min</td><td class="d">0.5–1 g/kg</td><td class="d">watch hypotension/diuresis</td></tr>
+      <tr><td class="dn">Cefotaxime</td><td>CNS infection (all)</td><td class="d">50 mg/kg IV over 3–5 min</td><td class="d">50 mg/kg</td><td class="d">give ASAP</td></tr>
+      <tr><td class="dn">Ceftriaxone</td><td>CNS infection ≥ 3 mo</td><td class="d">50 mg/kg IV</td><td class="d">50 mg/kg (max 2 g)</td><td class="d">—</td></tr>
+      <tr><td class="dn">Ampicillin</td><td>CNS infection &lt; 3 mo (Listeria)</td><td class="d">—</td><td class="d">100 mg/kg IV</td><td class="d">add to cephalosporin</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 7 — Toxicology (TS-TOX-001…004)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Naloxone</td><td><span class="ln first">1st</span> opioid (ventilate first)</td><td class="d">1–2 mg IV/IM/IN</td><td class="d">0.01 mg/kg (max 1 mg); neonate 0.1 mg/kg</td><td class="d">infusion ⅔ effective dose/hr</td></tr>
+      <tr><td class="dn">Hydroxocobalamin (Cyanokit)</td><td><span class="ln first">1st</span> cyanide / smoke</td><td class="d">5 g in 100 mL NS IV over 15 min</td><td class="d">70 mg/kg (max 5 g)</td><td class="d">repeat ×1 → max 10 g</td></tr>
+      <tr><td class="dn">Sodium bicarbonate</td><td><span class="ln first">1st</span> TCA cardiotoxicity</td><td class="d">50–100 mEq IV over 5–10 min</td><td class="d">1–2 mEq/kg</td><td class="d">1 dose standing; repeats = MD order</td></tr>
+      <tr><td class="dn">CroFab</td><td>pit-viper envenomation</td><td class="d">4–6 vials in 250 mL NS</td><td class="d">same</td><td class="d">start 25–50 mL/hr ×10 min → 250 mL/hr</td></tr>
+      <tr><td class="dn">Atropine</td><td>scorpion secretions</td><td class="d">1 mg IV</td><td class="d">0.02 mg/kg (max 0.5 mg)</td><td class="d">single dose</td></tr>
+      <tr><td class="dn">Fentanyl / Midazolam</td><td>scorpion clonus/sedation</td><td class="d">fentanyl 0.5–2 mcg/kg / midazolam per anxiolysis</td><td class="d">weight-based</td><td class="d">avoid long-acting</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 8 — Obstetrics (TS-OB-001…007)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Magnesium sulfate</td><td><span class="ln first">1st</span> seizure prophylaxis / eclampsia / tocolysis</td><td class="d">preeclampsia 4–6 g IV load → 2 g/hr · eclampsia 6 g → 2 g/hr · tocolysis 6 g → 3–4 g/hr</td><td class="d">over 15–30 min; antidote = calcium</td></tr>
+      <tr><td class="dn">Labetalol</td><td><span class="ln first">1st</span> severe-range BP (≥160/110)</td><td class="d">20 mg IV → 40 → 80 mg q10–20 min</td><td class="d">max 300 mg</td></tr>
+      <tr><td class="dn">Hydralazine</td><td><span class="ln second">2nd</span> severe-range BP</td><td class="d">10 mg IV → 10 → 5 mg q20 min</td><td class="d">max 30 mg; hold HR &gt; 120</td></tr>
+      <tr><td class="dn">Nifedipine</td><td><span class="ln second">2nd</span> severe-range BP (PO)</td><td class="d">10 mg PO → 20 → 20 mg</td><td class="d">max 50 mg; recheck BP q15 min</td></tr>
+      <tr><td class="dn">Oxytocin</td><td><span class="ln first">1st</span> postpartum hemorrhage</td><td class="d">30 u/500 mL at 500–1000 mL/hr (10 u IM if no IV)</td><td class="d">titrate to tone</td></tr>
+      <tr><td class="dn">Tranexamic acid</td><td><span class="ln first">1st</span> PPH</td><td class="d">1 g IV over 10 min, repeat 1 g if bleeding</td><td class="d">&lt; 3 h of onset</td></tr>
+      <tr><td class="dn">Terbutaline</td><td><span class="ln first">1st</span> fast tocolysis</td><td class="d">0.25 mg SQ q20–30 min</td><td class="d">hold HR &gt; 120</td></tr>
+      <tr><td class="dn">Ketorolac</td><td>tocolysis (terbutaline C/I)</td><td class="d">30 mg IV</td><td class="d">repeat ×1 at 60 min</td></tr>
+      <tr><td class="dn">Lorazepam / Midazolam</td><td>eclamptic seizure</td><td class="d">lorazepam 2 mg IV/IM/NAS (q5 min) or midazolam 5 mg</td><td class="d">with magnesium</td></tr>
+      <tr><td class="dn">Propylthiouracil (PTU)</td><td>thyroid storm (online order)</td><td class="d">300–600 mg PO load → 150–200 mg q4–6h</td><td class="d">avoid aspirin for fever</td></tr>
+      <tr><td class="dn">Fentanyl / Acetaminophen / Ondansetron / Promethazine</td><td>OB pain / nausea</td><td class="d">fent 0.5–1 mcg/kg IBW · APAP 650–1000 PO · ondans 4 mg · prometh 12.5–25 mg</td><td class="d">no opioid if delivery &lt; 1 h</td></tr>
+      <tr><td class="dn">Calcium (CaCl₂/gluconate)</td><td>magnesium toxicity</td><td class="d">0.5–1 g IV over 3 min</td><td class="d">DTR loss/resp depression</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 9 — Trauma (TS-TR-001…007)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">TXA</td><td><span class="ln adj">adj</span> hemorrhage &lt; 3 h</td><td class="d">≥ 12 yr: 2 g IV over 10 min</td><td class="d">&lt; 12 yr: 15 mg/kg (max 1 g) + 2 mg/kg/hr</td><td class="d">see TS-HD-002</td></tr>
+      <tr><td class="dn">Cefazolin (Ancef)</td><td><span class="ln first">1st</span> open fracture</td><td class="d">2 g in 50 mL NS IV over 10 min (≥ 80 kg)</td><td class="d">&gt; 1 yr: 25 mg/kg (max 2 g)</td><td class="d">NOT if cephalosporin allergy</td></tr>
+      <tr><td class="dn">Ceftriaxone (Rocephin)</td><td>open fracture (alt)</td><td class="d">2 g in 50 mL NS IV over 10 min (≥ 40 kg)</td><td class="d">&gt; 28 d: 50 mg/kg (max 2 g)</td><td class="d">NOT if cephalosporin allergy</td></tr>
+      <tr><td class="dn">Clindamycin</td><td>open fx (cephalosporin allergy)</td><td class="d">900 mg IV over 30 min</td><td class="d">10 mg/kg (max 900 mg)</td><td class="d">rate ≤ 30 mg/min</td></tr>
+      <tr><td class="dn">Sodium chloride 0.9%</td><td><span class="ln first">1st</span> crush syndrome</td><td class="d">40 mL/kg IBW (max 2 L) → 20 mL/kg/hr (max 1 L) → 1.5× maint</td><td class="d">same</td><td class="d">start before release; LR may substitute</td></tr>
+      <tr><td class="dn">Lactated Ringer's</td><td>burn resuscitation &gt; 20% TBSA</td><td class="d">2 mL × kg × %TBSA (peds 3); ½ over 8 h. Electrical 4 mL/kg/TBSA</td><td class="d">fixed: ≤5 yr 125 / 6–13 250 / ≥14 500 mL/hr</td><td class="d">titrate UO 30–50 (peds 1 mL/kg/hr)</td></tr>
+      <tr><td class="dn">3% Saline (TBI/herniation)</td><td>herniation</td><td class="d">250 mL IV/IO</td><td class="d">3–5 mL/kg</td><td class="d">see TS-NEU-005</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 10 — Medical (TS-MED-001…011)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">Droperidol</td><td><span class="ln first">1st</span> at-risk agitation (MD order)</td><td class="d">2.5 mg IV/IM/IO q3 min</td><td class="d">no peds standing</td><td class="d">max 10 mg; ½ in elderly</td></tr>
+      <tr><td class="dn">Midazolam</td><td>agitation co-therapy</td><td class="d">5 mg IV/IM/IO q5 min</td><td class="d">weight-based</td><td class="d">—</td></tr>
+      <tr><td class="dn">Ketamine</td><td>dangerous agitation (dissociative)</td><td class="d">3 mg/kg IV/IO or 4 mg/kg IM, then infusion 4 mg/kg/hr</td><td class="d">same; infusion 2 mg/kg/hr</td><td class="d">most concentrated form; airway ready</td></tr>
+      <tr><td class="dn">Rocuronium / Succinylcholine</td><td>agitation NMB (adult)</td><td class="d">roc 1.5 mg/kg IV (2 IM) · sux 4 mg/kg IM</td><td class="d">no peds standing</td><td class="d">airway mandatory</td></tr>
+      <tr><td class="dn">Aspirin</td><td><span class="ln first">1st</span> ACS</td><td class="d">162–324 mg chewed PO</td><td class="d">—</td><td class="d">—</td></tr>
+      <tr><td class="dn">Nitroglycerin</td><td>ACS / pulmonary edema</td><td class="d">0.4 mg SL; infusion 40–200 mcg/min (titrate 20–50 q3–5 min)</td><td class="d">—</td><td class="d">hold: PDE5i, RV/inferior MI, SBP low</td></tr>
+      <tr><td class="dn">Heparin</td><td>ACS (per MD/IFT)</td><td class="d">60 u/kg bolus (max 4,000) → 12 u/kg/hr (max 1,000/hr)</td><td class="d">—</td><td class="d">—</td></tr>
+      <tr><td class="dn">Epinephrine</td><td><span class="ln first">1st</span> anaphylaxis</td><td class="d">0.5 mg IM (1 mg/mL) q20 min</td><td class="d">0.01 mg/kg IM (max 0.5)</td><td class="d">IM thigh; not IV in perfusing pt</td></tr>
+      <tr><td class="dn">Diphenhydramine</td><td>anaphylaxis adjunct / EPS</td><td class="d">25–50 mg IV/IM</td><td class="d">1–2 mg/kg (max 50)</td><td class="d">—</td></tr>
+      <tr><td class="dn">Methylprednisolone</td><td>anaphylaxis / asthma / croup</td><td class="d">125 mg IV</td><td class="d">2 mg/kg (max 125)</td><td class="d">—</td></tr>
+      <tr><td class="dn">Glucagon</td><td>anaphylaxis on β-blocker</td><td class="d">1–5 mg IV → 3 mg/hr</td><td class="d">30–150 mcg/kg (max 1 mg) → 70 mcg/kg/hr</td><td class="d">—</td></tr>
+      <tr><td class="dn">Albuterol</td><td><span class="ln first">1st</span> asthma / hyperK / anaphylaxis</td><td class="d">5 mg neb (continuous if severe)</td><td class="d">same</td><td class="d">—</td></tr>
+      <tr><td class="dn">Ipratropium</td><td>severe asthma</td><td class="d">0.5 mg neb</td><td class="d">0.25–0.5 mg</td><td class="d">—</td></tr>
+      <tr><td class="dn">Magnesium sulfate</td><td>severe asthma</td><td class="d">2–3 g IV over 15–20 min</td><td class="d">25–50 mg/kg over 20 min</td><td class="d">max single 3 g / total 6 g</td></tr>
+      <tr><td class="dn">Terbutaline</td><td>refractory asthma</td><td class="d">10 mcg/kg IV load → 0.3–0.5 mcg/kg/min</td><td class="d">same</td><td class="d">max 3 mcg/kg/min</td></tr>
+      <tr><td class="dn">Dextrose</td><td><span class="ln first">1st</span> hypoglycemia</td><td class="d">10–25 g IV (D50 adult)</td><td class="d">0.5–1 g/kg (D25/D10) max 25 g</td><td class="d">D10 all incl. neonate</td></tr>
+      <tr><td class="dn">Glucagon</td><td>hypoglycemia, no access</td><td class="d">1 mg IM</td><td class="d">≥ 20 kg 1 mg / &lt; 20 kg 0.5 mg</td><td class="d">repeat 10 min</td></tr>
+      <tr><td class="dn">Calcium chloride / gluconate</td><td><span class="ln first">1st</span> hyperkalemia (stabilize)</td><td class="d">CaCl₂ 1 g / Ca gluc 3 g IV over 2–10 min</td><td class="d">20 / 60 mg/kg</td><td class="d">q10 min ×3; don't mix w/ bicarb</td></tr>
+      <tr><td class="dn">Sodium bicarbonate</td><td>hyperK (shift) if acidosis/arrest</td><td class="d">50 mEq IV over 5–10 min</td><td class="d">1 mEq/kg (max 50)</td><td class="d">—</td></tr>
+      <tr><td class="dn">Racemic / L-epinephrine</td><td><span class="ln first">1st</span> croup stridor at rest</td><td class="d">racemic 0.25–0.5 mL 2.25% in 3 mL NS neb</td><td class="d">&lt; 15 kg 0.25 mL; L-epi 0.5 mL/kg (max 5)</td><td class="d">watch rebound ~2 h</td></tr>
+      <tr><td class="dn">Norepinephrine → Vasopressin → Epinephrine</td><td>septic shock (ladder)</td><td class="d">norepi 5–70 mcg/min → vaso 0.04 u/min (fixed) → epi 2–10 mcg/min</td><td class="d">MD control</td><td class="d">after 30 mL/kg NS; MAP ≥ 65</td></tr>
+      <tr><td class="dn">Hydrocortisone</td><td>catecholamine-resistant shock</td><td class="d">100 mg IV (MD order)</td><td class="d">MD order</td><td class="d">—</td></tr>
+      <tr><td class="dn">Esmolol / Labetalol / Metoprolol</td><td><span class="ln first">1st</span> aortic dissection (rate)</td><td class="d">esmolol 500 mcg/kg → 50 mcg/kg/min · labetalol 20→40→80 · metoprolol 5 mg q5 (max 15)</td><td class="d">—</td><td class="d">HR &lt; 60 before vasodilator</td></tr>
+      <tr><td class="dn">Nicardipine / Clevidipine / Nitroprusside</td><td><span class="ln second">2nd</span> dissection (BP, after β-block)</td><td class="d">nicardipine 5 mg/hr (max 15) · clevidipine 1–2 mg/hr (max 32) · nitroprusside 0.3–10 mcg/kg/min</td><td class="d">—</td><td class="d">target SBP 100–120</td></tr>
+      <tr><td class="dn">Ondansetron</td><td><span class="ln first">1st</span> nausea</td><td class="d">4 mg IV/IM/ODT</td><td class="d">0.1 mg/kg (max 4)</td><td class="d">repeat ×1 30 min</td></tr>
+      <tr><td class="dn">Prochlorperazine / Promethazine</td><td><span class="ln second">2nd</span> nausea</td><td class="d">prochlor 5–10 mg · prometh 12.5–25 mg in 10 mL IV</td><td class="d">prometh ≥ 2 yr 0.25–0.5 mg/kg</td><td class="d">prometh boxed warning &lt; 2 yr</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Sec 11 — Analgesia &amp; Sedation (TS-AS-001…004)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Drug</th><th>Indication / line</th><th>Adult dose · route</th><th>Pediatric</th><th>Conc / start · max</th></tr></thead>
+    <tbody>
+      <tr><td class="dn">IV Acetaminophen</td><td><span class="ln first">1st</span> non-opioid (before narcotics)</td><td class="d">1000 mg IV over 15 min (≥ 50 kg) q6h</td><td class="d">15 mg/kg (max 1000) q6h</td><td class="d">max 4 g/24 h (3 g hepatic risk)</td></tr>
+      <tr><td class="dn">Ketorolac</td><td><span class="ln first">1st</span> non-opioid adjunct</td><td class="d">15 mg IV over 30–60 s</td><td class="d">0.5 mg/kg (max 15)</td><td class="d">avoid bleeding/renal/pregnancy</td></tr>
+      <tr><td class="dn">Fentanyl</td><td><span class="ln second">2nd</span> opioid (unstable)</td><td class="d">0.5–2 mcg/kg IBW IV/IM/NAS q10 min</td><td class="d">same</td><td class="d">hemodynamically neutral</td></tr>
+      <tr><td class="dn">Morphine</td><td><span class="ln second">2nd</span> opioid</td><td class="d">2–10 mg IV/IM q20 min</td><td class="d">0.05–0.2 mg/kg (max 10)</td><td class="d">avoid in shock (histamine)</td></tr>
+      <tr><td class="dn">Hydromorphone</td><td><span class="ln second">2nd</span> opioid</td><td class="d">0.2–1 mg IV/IM q15 min</td><td class="d">0.01–0.02 mg/kg (max 1)</td><td class="d">max total 4 mg</td></tr>
+      <tr><td class="dn">Ketamine (analgesic)</td><td><span class="ln third">3rd</span> opioid-refractory / bup-nalt</td><td class="d">0.1–0.3 mg/kg IV/IM/NAS slow</td><td class="d">same</td><td class="d">max single 30 mg; give slowly</td></tr>
+      <tr><td class="dn">Midazolam / Lorazepam</td><td>anxiolysis (after pain)</td><td class="d">midaz 0.5–5 mg · loraz 0.5–2 mg IV/IM/NAS</td><td class="d">0.05–0.1 mg/kg</td><td class="d">benzo + opioid = caution</td></tr>
+      <tr><td class="dn">Naloxone</td><td>therapeutic over-sedation</td><td class="d">0.001–0.01 mg/kg IV/IM/IN, titrate to breathing</td><td class="d">same</td><td class="d">don't fully reverse</td></tr>
+      <tr><td class="dn">Ketamine / Etomidate</td><td>procedural sedation</td><td class="d">ketamine 1–2 mg/kg IV (4 IM) · etomidate 0.1 mg/kg IV</td><td class="d">same</td><td class="d">capnography mandatory</td></tr>
+      <tr><td class="dn">Propofol</td><td>post-intubation sedative</td><td class="d">5–100 mcg/kg/min (bolus 0.5–1 mg/kg)</td><td class="d">same</td><td class="d">no analgesia; hypotension; &gt;100 = MD</td></tr>
+      <tr><td class="dn">Dexmedetomidine</td><td>post-intubation (light)</td><td class="d">0.2–1.5 mcg/kg/hr IV</td><td class="d">same</td><td class="d">bradycardia/hypotension</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="disc">
+    Quick-reference matrix — the individual protocol pages and the PHI Air Medical Clinical Care Guidelines are authoritative. Some agents require an online physician order or have contraindications not fully listed here. Pediatric doses use ideal/actual body weight per protocol. Verify drug, concentration, dose, route, and maximum before every administration. Requires Medical Director approval prior to clinical use.
+  </div>
+</div>
+</body>
+</html>
