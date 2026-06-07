@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Trauma">
+<meta name="theme-color" content="#0a0f1c">
+<title>Trauma Assessment & Hemorrhage Control — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Trauma Assessment &amp; Hemorrhage Control</h1>
+      <div class="sub">ABCDE · MARCH · bleeding control</div>
+      <div class="cat">TS-TR-001 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Primary survey — life threats first</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Control catastrophic external hemorrhage immediately</b> as you find it (before/with airway).</li>
+          <li><b class="k">A</b>irway (+ C-spine) · <b class="k">B</b>reathing · <b class="k">C</b>irculation · <b class="k">D</b>isability · <b class="k">E</b>xposure / temp.</li>
+          <li>Confirm any advanced airway (placement/position/function); BVM if RR &lt; 10 or &gt; 30 or ineffective.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Oxygen — empiric for trauma</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Adult &amp; peds: <span class="dose">FiO₂ 100% / 15–25 L/min</span>. Acutely/critically injured → high-flow; <b class="k">avoid down-titrating FiO₂</b> (blood loss = reduced O₂ carrying).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Chest — open &amp; tension pneumothorax</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Open chest wound:</b> seal with a vented chest seal (Asherman preferred), or 3-sided occlusive dressing; gloved palm as a temporary measure.</li>
+          <li><b class="k">Tension</b> (esp. ventilated): falling SpO₂ + hypotension + high vent pressures + ↓ lung sounds → <b class="k">needle / simple thoracostomy</b> — low threshold in ventilated trauma.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hemorrhage control — in order</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li><b class="k">Direct pressure</b> with gauze (hemostatic gauze if available).</li>
+          <li><b class="k">Wound packing</b> for deep extremity / junctional wounds — pack tightly, hold pressure.</li>
+          <li><b class="k">Pressure bandage</b> (SWAT-T) to maintain control.</li>
+          <li><b class="k">Tourniquet</b> (CAT / SOF-TT) immediately for life-threatening extremity bleeding or if pressure/packing fail.</li>
+          <li><b class="k">Pelvic binder</b> (SAM sling / sheet) if pelvic fracture likely; <b class="k">splint</b> long bones.</li>
+          <li>Re-bleeding through a dressing → remove to the source, clear clot, re-control. Reassess all dressings.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Circulation / shock</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Vascular access; resuscitate per Shock / CV-instability — favor <b class="k">blood products</b> (see TS-HD-002 whole blood). Permissive hypotension (SBP ~90; <b class="k">SBP 100–110 if TBI</b>).</li>
+          <li>TXA <span class="dose">1 g</span> within 3 h for significant hemorrhage (see TS-HD-002).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Disability / exposure</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>AMS → <b class="k">check glucose</b>, treat hypoglycemia. Baseline GCS, pupils &amp; motor/sensory <b class="k">before any paralytic</b>.</li>
+          <li>SMR for significant blunt mechanism meeting criteria; assess spine/back.</li>
+          <li>Expose to assess, then <b class="k">prevent hypothermia</b> (warm cabin, blankets, warm fluids).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Mechanism, time of injury; primary-survey findings + interventions and times.</li>
+          <li>Hemorrhage-control devices (tourniquet time!), chest seals/decompression, access, fluids/blood/TXA.</li>
+          <li>Serial vitals/GCS/pupils, SMR, temperature; why rotor-wing / trauma-center destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — an organized, prioritized approach</div>
+      <p class="body-text">Trauma kills in a predictable order, so the assessment is built to find and fix the fastest killers first. The <b class="k">ABCDE primary survey</b> (airway with C-spine, breathing, circulation, disability, exposure) is a prioritization framework, not a rigid checklist — the crew treats each life threat as it is found rather than completing one letter before moving on.<sup>1</sup> The single most important modern modification is that <b class="k">catastrophic external hemorrhage is controlled first</b>, even before the airway, because a patient can exsanguinate from a limb in minutes; this is the logic behind the military <b class="k">MARCH</b> sequence (Massive hemorrhage, Airway, Respiration, Circulation, Head/Hypothermia) that complements ABCDE in the bleeding patient.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why high-flow oxygen and why permissive hypotension coexist</div>
+      <p class="body-text">These two ideas seem contradictory but address different problems. Trauma patients lose red cells and therefore oxygen-<b class="k">carrying</b> capacity, so empiric <b class="k">high-flow oxygen (FiO₂ 100%)</b> maximizes the oxygen carried by whatever hemoglobin remains, and down-titration is avoided in the acutely injured.<sup>5</sup> Meanwhile, <b class="k">permissive hypotension</b> (titrating to a radial pulse / SBP ~90) limits hydrostatic disruption of fresh clot and dilutional coagulopathy before surgical control.<sup>2,5</sup> The crucial exception is <b class="k">traumatic brain injury</b>, where the SBP target rises to 100–110 mmHg because the injured brain needs perfusion pressure — hypotension and hypoxia each multiply TBI mortality (see TS-TR-002).<sup>3,5</sup> Resuscitation favors blood products over crystalloid, consistent with damage-control principles (see TS-HD-002).<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Hemorrhage control — the evidence-based ladder</div>
+      <p class="body-text">Field hemorrhage control follows a stepwise ladder validated by military and civilian experience and codified by Stop the Bleed and TCCC: <b class="k">direct pressure</b> → <b class="k">wound packing</b> (with hemostatic gauze where available) → <b class="k">pressure dressing</b> → <b class="k">tourniquet</b> for life-threatening extremity bleeding.<sup>2,6</sup> Tourniquets were once feared but battlefield data showed that <b class="k">early application saves lives with rare limb loss</b>, reversing decades of teaching — so a CAT/SOF-TT is applied immediately for a clearly life-threatening extremity wound rather than as a last resort, and the <b class="k">application time is documented</b> because it drives downstream limb-salvage decisions.<sup>2,6</sup> Junctional and deep wounds are packed tightly to the bleeding vessel; a <b class="k">pelvic binder</b> closes the pelvic ring volume to tamponade venous bleeding in suspected pelvic fracture, and long-bone splinting reduces ongoing blood loss and pain.<sup>1,2</sup> Re-bleeding through a dressing is managed by going down to the source rather than piling on more gauze.</p>
+    </section>
+    <section>
+      <div class="sec-h">Chest decompression — recognizing tension early</div>
+      <p class="body-text">Tension pneumothorax is the classic preventable trauma death and is <b class="k">far more common and faster in the ventilated patient</b>, because positive pressure forces air into the pleural space.<sup>1,4</sup> The teaching axiom — <b class="k">difficult ventilation and hypoxia followed by hypotension in a newly intubated trauma patient is tension until proven otherwise</b> — drives a low threshold for needle or simple thoracostomy.<sup>4</sup> In the ventilated patient the order of signs is rapid: falling SpO₂, falling cardiac output/hypotension, high ventilation pressures, then hyperexpansion and decreased breath sounds; awake patients present more insidiously with chest pain and tachycardia. Open ("sucking") chest wounds are sealed with a vented chest seal to restore respiratory mechanics, then watched for conversion to a tension as air accumulates — at which point the seal is burped or the chest decompressed.<sup>1,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Disability, exposure &amp; the lethal triad</div>
+      <p class="body-text">A brief neurologic exam (GCS, pupils, gross motor/sensory) is obtained <b class="k">before any paralytic</b>, because once a patient is paralyzed and sedated that baseline is lost forever and it anchors all downstream neuro decisions.<sup>1</sup> Altered mental status prompts a glucose check, and significant blunt mechanisms meeting criteria get spinal motion restriction. Finally, <b class="k">exposure must be balanced against hypothermia</b>: trauma patients are uncovered to be assessed but then actively kept warm, because hypothermia is one corner of the <b class="k">lethal triad</b> (hypothermia, acidosis, coagulopathy) — a cold patient cannot clot, which worsens the very hemorrhage the crew is fighting.<sup>2,5</sup> Warm cabin, blankets, and warmed fluids/blood are therefore part of hemorrhage control, not comfort care.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 6 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">Advanced Trauma Life Support (ATLS), 10th ed. — primary survey &amp; ABCDE. 2018.</span></li>
+          <li>Committee on Tactical Combat Casualty Care (CoTCCC). <span style="color:var(--text-faint)">TCCC Guidelines — MARCH, hemorrhage control, damage-control resuscitation. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>Spaite DW, et al. <span style="color:var(--text-faint)">Effect of prehospital hypotension and hypoxia on TBI outcome. <em>JAMA Surg.</em> 2017;152(4):360–368.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27926759">pubmed.ncbi.nlm.nih.gov/27926759</a></li>
+          <li>Leigh-Smith S, Harris T. <span style="color:var(--text-faint)">Tension pneumothorax — time for a re-think. <em>Emerg Med J.</em> 2005;22(1):8–16.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/15611534">pubmed.ncbi.nlm.nih.gov/15611534</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1 Trauma Assessment &amp; Transport Considerations</b> <span style="color:var(--text-faint)">(Rev 22–23, 2024–2025) — O₂, hemorrhage control &amp; assessment source.</span></li>
+          <li>Bulger EM, et al. <span style="color:var(--text-faint)">Stop the Bleed / prehospital external hemorrhage control — evidence-based guideline. <em>Prehosp Emerg Care.</em> 2014;18:163–173.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/24641269">pubmed.ncbi.nlm.nih.gov/24641269</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

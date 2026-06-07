@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Temp">
+<meta name="theme-color" content="#0a0f1c">
+<title>Hypothermia, Frostbite & Heat Illness — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .block.cold{border-left-color:#38bdf8}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  .block.cold ul.bul li::before{background:#38bdf8}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Hypothermia, Frostbite &amp; Heat Illness</h1>
+      <div class="sub">Core temp · staged rewarming</div>
+      <div class="cat">TS-TR-007 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">All hypothermia — do these</div>
+      <div class="block cold">
+        <ul class="bul">
+          <li>Measure <b class="k">core temperature continuously</b>.</li>
+          <li>Remove wet clothing; warm environment; cover with warm dry blankets; <b class="k">warm all IV fluids</b>.</li>
+          <li><b class="k">Handle gently</b> — rough movement can trigger VF in the cold heart.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Stage &amp; treat</div>
+      <div class="block cold">
+        <div class="item">
+          <div class="nm">Mild — 32–35 °C</div>
+          <div class="detail">Awake, shivering, uncomfortable, tachycardia, mild amnesia. <b class="k">Warm fluids as tolerated</b>; passive + active external rewarming.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Moderate — 28–32 °C</div>
+          <div class="detail">Altered LOC, minimal shivering, confusion, HR decreasing. <b class="k">Avoid stimulation</b>; thermal blanket; warm oxygen.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Severe — &lt; 28 °C</div>
+          <div class="detail">Obtunded/unconscious, no shivering, bradypnea, severe bradycardia. <b class="k">Active core rewarming</b> (heated O₂, warm gastric lavage, ECMO at center).</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Frostbite</div>
+      <div class="block cold">
+        <ul class="bul">
+          <li>Treat associated hypothermia first; move to heat, handle gently, warm blankets.</li>
+          <li><b class="k">Do NOT rub</b> frostbitten areas; bandage with <b class="k">loose sterile</b> dressings.</li>
+          <li>Protect from trauma &amp; <b class="k">partial thawing</b> — if you can't fully thaw and keep thawed, <b class="k">withhold thawing until arrival</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Heat-related illness</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Move to a cool environment; remove clothing.</li>
+          <li><b class="k">Active cooling:</b> cold packs / cool cloths to <b class="k">lateral chest walls, groin, axillae</b>.</li>
+          <li>Support airway/perfusion; treat associated seizures/AMS.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Core temp + method, trend; stage; rewarming/cooling measures &amp; response.</li>
+          <li>Cardiac rhythm; gentle-handling precautions; frostbite care (no rubbing / thaw decision).</li>
+          <li>Destination (ECMO/critical care for severe hypothermia).</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — temperature is a true vital sign</div>
+      <p class="body-text">Accidental hypothermia (core temperature &lt; 35 °C) and heat illness sit at opposite ends of a thermoregulatory spectrum, but both demand that <b class="k">core temperature be measured, not estimated</b>, because skin feel is unreliable and management is staged by the actual core reading.<sup>1,3</sup> In trauma, hypothermia is also one corner of the <b class="k">lethal triad</b> (with acidosis and coagulopathy) — a cold patient cannot clot — so preventing and reversing hypothermia is part of hemorrhage control, and the same warming discipline applies whether cold is the primary problem or a complication of injury and resuscitation.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why "handle gently" is a hard rule</div>
+      <p class="body-text">The cold myocardium is <b class="k">electrically irritable and prone to ventricular fibrillation</b>, and below about 30 °C that VF is notoriously resistant to defibrillation and drugs until the patient is rewarmed.<sup>1,3</sup> Rough handling, sudden movement, or unnecessary procedures can mechanically trigger VF in a moderately or severely hypothermic patient — which is why the protocol mandates <b class="k">gentle handling</b>, minimal stimulation, and keeping the patient horizontal. It also reframes the cardiac arrest: in profound hypothermia the patient is not dead until <b class="k">"warm and dead,"</b> so resuscitation and rewarming continue to a normothermic temperature before outcome is judged, because full neurologic recovery has occurred from extreme hypothermic arrest.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Staged rewarming — matching method to severity</div>
+      <p class="body-text">The staging drives the rewarming strategy.<sup>1,3</sup> <b class="k">Mild (32–35 °C)</b> patients are still shivering — their own most effective heat generator — so they need insulation, a warm environment, and warm fluids, and they generally recover with passive and active <b class="k">external</b> rewarming. <b class="k">Moderate (28–32 °C)</b> patients have lost shivering and have a slowing heart; they need active external rewarming with care to <b class="k">avoid stimulation</b> and to anticipate <b class="k">"afterdrop"</b> — the transient core-temperature fall and hypotension that occur when cold, acidotic peripheral blood returns centrally during rewarming, which is why warmed core measures and IV fluids are favored.<sup>1</sup> <b class="k">Severe (&lt; 28 °C)</b> patients require <b class="k">active core rewarming</b> (warm humidified oxygen, warm IV fluids, warm lavage) and, for arrest or refractory instability, <b class="k">extracorporeal rewarming (ECMO/bypass)</b> — which is a key destination driver, since only select centers offer it.<sup>1,3</sup> Warm IV fluids are used throughout because room-temperature fluid actively cools the patient.</p>
+    </section>
+    <section>
+      <div class="sec-h">Frostbite — protect the tissue, don't make it worse</div>
+      <p class="body-text">Frostbite management is dominated by avoiding <b class="k">refreezing and mechanical injury</b>, which cause far more tissue loss than the original freeze.<sup>1,4</sup> The frostbitten part is <b class="k">never rubbed</b> (ice crystals shear the tissue) and is dressed loosely and protected from trauma. The pivotal field decision is about thawing: rapid rewarming is the definitive treatment, but a <b class="k">partial thaw followed by refreezing is devastating</b>, so if the crew cannot fully thaw the part and reliably keep it thawed through transport, thawing is <b class="k">deliberately withheld until arrival</b>.<sup>4</sup> Underlying systemic hypothermia is always treated first, because a frostbitten extremity in a hypothermic patient is a sign the whole patient is cold.</p>
+    </section>
+    <section>
+      <div class="sec-h">Heat illness — cool first, fast</div>
+      <p class="body-text">At the other extreme, heat stroke (hyperthermia with CNS dysfunction) is a true emergency in which <b class="k">the speed of cooling determines survival and neurologic outcome</b>.<sup>5</sup> Field treatment is immediate active cooling — moving to a cool environment, removing clothing, and applying cold packs and cool cloths to the <b class="k">groin, axillae, and lateral chest/neck</b> where large vessels run close to the skin to maximize heat transfer (evaporative and, where feasible, cold-water immersion cooling are most effective).<sup>5</sup> Supportive care addresses the airway, perfusion, and any seizures or altered mental status, and cooling continues during transport with monitoring to avoid overshoot into hypothermia.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Lott C, et al. (ERC). <span style="color:var(--text-faint)">European Resuscitation Council Guidelines — Cardiac arrest in special circumstances: accidental hypothermia. <em>Resuscitation.</em> 2021;161:152–219.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/33773826">pubmed.ncbi.nlm.nih.gov/33773826</a></li>
+          <li>Cap AP, et al. (Joint Trauma System). <span style="color:var(--text-faint)">Damage Control Resuscitation — hypothermia &amp; the lethal triad. 2019.</span></li>
+          <li>Dow J, et al. (Wilderness Medical Society). <span style="color:var(--text-faint)">Clinical Practice Guidelines for Out-of-Hospital Evaluation and Treatment of Accidental Hypothermia: 2019 Update. <em>Wilderness Environ Med.</em> 2019;30(4S):S47–S69.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/31740369">pubmed.ncbi.nlm.nih.gov/31740369</a></li>
+          <li>McIntosh SE, et al. (WMS). <span style="color:var(--text-faint)">Practice Guidelines for the Prevention and Treatment of Frostbite: 2019 Update. <em>Wilderness Environ Med.</em> 2019;30(4S):S19–S32.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/31326282">pubmed.ncbi.nlm.nih.gov/31326282</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.2 Hypothermia / Frostbite / Heat-related Illness</b> <span style="color:var(--text-faint)">(Rev 6, 10 Oct 2019) — staging &amp; treatment source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

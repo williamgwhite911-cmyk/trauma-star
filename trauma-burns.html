@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Burns">
+<meta name="theme-color" content="#0a0f1c">
+<title>Burns — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Burns</h1>
+      <div class="sub">Thermal · electrical · chemical · airway &amp; fluids</div>
+      <div class="cat">TS-TR-006 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">First — stop the burn, then ABCDE</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Responder safety; stop the burning process. ABCDE is unchanged from any trauma.</li>
+          <li><b class="k">Airway is the priority</b> — examine oropharynx for soot, edema, mucosal injury. Inhalation injury can appear hours later.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Early intubation indications (thermal)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Hoarseness, <b class="k">stridor</b>, accessory-muscle use, sternal retraction.</li>
+          <li>TBSA burn <b class="k">&gt; 40–50%</b>; extensive/facial burns; <b class="k">burns inside the mouth</b>; difficulty swallowing.</li>
+          <li>Secure the airway <b class="k">early</b> — laryngeal edema makes later intubation impossible.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Fluid resuscitation — deep partial / full thickness &gt; 20% TBSA (LR)</div>
+      <div class="block" style="--c:#f43f5e">
+        <div class="item">
+          <div class="nm">Fixed age-based rate (early phase)</div>
+          <div class="detail">≤ 5 yr <span class="dose">125 mL/hr</span> · 6–13 yr <span class="dose">250 mL/hr</span> · ≥ 14 yr <span class="dose">500 mL/hr</span> LR.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Weight / TBSA (when practicable)</div>
+          <div class="detail">Adult <span class="dose">2 mL × kg × %TBSA</span> · Peds <span class="dose peds">3 mL × kg × %TBSA</span> LR. <b class="k">½ over first 8 h</b>, ½ over next 16 h. Peds: add D-containing maintenance fluids.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Titrate to urine output</div>
+          <div class="detail">Adult <b class="k">30–50 mL/hr</b> · Peds <b class="k">1 mL/kg/hr</b>. No catheter → use HR/SBP/cap refill/mentation. <b class="k">Avoid over-resuscitation.</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Electrical burns</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li><b class="k">LR 4 mL/kg/%TBSA</b> if TBSA &gt; 20%; obtain <b class="k">EKG</b>; urinary catheter if practicable.</li>
+          <li>Cutaneous burns under-represent deep injury — assess for <b class="k">compartment syndrome</b> &amp; contact points.</li>
+          <li><b class="k">Myoglobinuria:</b> adult 150–200 mL/hr to make urine 75–100 mL/hr; peds 1.5–2× MIVF to make 1.5–2 mL/kg/hr.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Chemical burns</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>PPE; remove clothing/jewelry/contacts that may hold the agent; <b class="k">brush off dry chemical first</b>.</li>
+          <li><b class="k">Irrigate ≥ 20 min</b> (shower/hose; include eyes) — irrigation is the only thing that stops the burn. Do not soak.</li>
+          <li><b class="k">Do not transport before thorough decontamination.</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Burn transport care</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Cover burns with <b class="k">clean DRY</b> dressings; replace any wet dressings (they cause hypothermia). Keep patient warm; warm cabin.</li>
+          <li>Monitor distal neurovascular function with circumferential burns; remove jewelry early.</li>
+          <li>Pain control may need higher/more frequent analgesia; monitor urine output.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Time/mechanism, %TBSA &amp; depth, airway findings + airway interventions.</li>
+          <li>Fluid (type/rate/formula) + urine output; EKG &amp; myoglobinuria (electrical); decon details (chemical).</li>
+          <li>Analgesia; temperature management; burn-center destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a burn is still a trauma patient</div>
+      <p class="body-text">The dramatic appearance of a burn can distract from the fact that the <b class="k">ABCDE primary survey is unchanged</b> — burn patients die of the same airway, breathing, and circulation problems as other trauma patients, plus burn-specific threats.<sup>1,2</sup> After ensuring responder safety and stopping the burning process, the two burn-specific priorities that change outcome in the field are <b class="k">protecting the airway</b> and <b class="k">starting measured fluid resuscitation</b>, while never forgetting concomitant mechanical trauma (especially after explosions, falls, or motor-vehicle fires).<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why the airway is the time bomb</div>
+      <p class="body-text">Inhalation of hot gases and combustion products causes progressive <b class="k">laryngeal and airway edema</b> that may be subtle at first and then swell shut over hours. The danger is that intubation gets <b class="k">harder by the minute</b> as edema advances, so the protocol intubates <b class="k">early on suspicion</b> rather than waiting for failure.<sup>1,2</sup> The listed indications — hoarseness or stridor, soot/edema/burns inside the mouth, facial burns, difficulty swallowing, accessory-muscle use, and very large (&gt;40–50%) TBSA burns — are all markers that the airway is threatened or that massive fluid shifts will compromise it. A patient who looks comfortable now can have an unobtainable airway in an hour, and in a noisy transport cabin that deterioration is easy to miss — hence the bias toward securing the airway before flight.<sup>1,2</sup> (For enclosed-space fires, also treat CO and cyanide — see TS-TOX-002.)</p>
+    </section>
+    <section>
+      <div class="sec-h">Fluid resuscitation — enough, but not too much</div>
+      <p class="body-text">Deep burns cause a systemic capillary leak that drives massive plasma loss and <b class="k">burn shock</b>; replacing it with warmed isotonic crystalloid (LR) maintains organ perfusion.<sup>2,3</sup> Resuscitation is indicated for deep-partial/full-thickness burns over <b class="k">~20% TBSA</b>. Fixed age-based rates allow immediate, calculation-free starting in the field, transitioning to a weight- and TBSA-based estimate (the Parkland-type formula, 2 mL/kg/%TBSA for adults, 3 for children, half in the first 8 hours from the time of injury) when practicable.<sup>2,3</sup> Crucially, these formulas are <b class="k">starting points titrated to urine output</b> (adult 30–50 mL/hr; peds 1 mL/kg/hr), because the equally important error is <b class="k">over-resuscitation</b> — "fluid creep" causes pulmonary edema, abdominal and extremity compartment syndromes, and conversion of partial- to full-thickness burns.<sup>3</sup> Children additionally need dextrose-containing maintenance fluid because of limited glycogen stores.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Electrical burns — the iceberg injury</div>
+      <p class="body-text">Electrical injury is deceptive: the visible skin wounds at contact points <b class="k">vastly under-represent</b> the deep destruction of muscle and nerve as current passes through the body.<sup>2</sup> Two consequences drive the protocol. First, extensive deep-muscle necrosis releases myoglobin, so fluids are run higher (LR 4 mL/kg/%TBSA) and titrated to a <b class="k">brisk urine output (75–100 mL/hr in adults) when myoglobinuria is present</b> to protect the kidneys.<sup>2</sup> Second, current depolarizes the heart and can cause life-threatening <b class="k">dysrhythmias</b>, so an EKG and cardiac monitoring are obtained, and the swollen deep compartments must be assessed for <b class="k">compartment syndrome</b> that the cutaneous exam will not reveal.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Chemical burns &amp; temperature — two field-defining rules</div>
+      <p class="body-text">For chemical burns, <b class="k">decontamination by copious irrigation is the only thing that stops the injury</b>, and it must be thorough (≥ 20 minutes, including the eyes) with dry chemicals brushed off first; a patient is <b class="k">not transported until decontaminated</b>, both to halt their injury and to protect the crew and aircraft.<sup>1</sup> Finally, the burn patient is exquisitely vulnerable to <b class="k">hypothermia</b> — the loss of skin destroys thermoregulation, and a cold patient becomes coagulopathic and acidotic. This is why burns are covered with <b class="k">clean, dry</b> dressings (any wet dressings applied earlier are removed because they wick away heat), jewelry is removed before swelling, and the cabin is kept warm.<sup>1,2</sup> Adequate, often high-dose analgesia is humane and physiologically beneficial, and major burns are routed to a <b class="k">burn center</b>.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American Burn Association. <span style="color:var(--text-faint)">Advanced Burn Life Support (ABLS) Provider Manual — airway, fluid resuscitation, transfer criteria. 2018.</span></li>
+          <li>ISBI Practice Guidelines Committee. <span style="color:var(--text-faint)">ISBI Practice Guidelines for Burn Care. <em>Burns.</em> 2016;42(5):953–1021.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27542292">pubmed.ncbi.nlm.nih.gov/27542292</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1.5 Thermal / 8.1.6 Electrical &amp; Chemical Burns</b> <span style="color:var(--text-faint)">(Rev 21–23, 2024–2025) — airway, fluid &amp; resuscitation dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

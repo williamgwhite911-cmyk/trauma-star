@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Chest Trauma">
+<meta name="theme-color" content="#0a0f1c">
+<title>Chest Trauma — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Chest Trauma</h1>
+      <div class="sub">Tension &amp; open pneumothorax · decompression</div>
+      <div class="cat">TS-TR-003 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Tension pneumothorax — recognize</div>
+      <div class="block warn">
+        <div class="item">
+          <div class="nm">Ventilated patient (fast, in order of likelihood)</div>
+          <div class="detail">Rapid onset → <b class="k">↓ SpO₂</b> → ↓ cardiac output / <b class="k">hypotension</b> → high vent pressures → chest hyper-expansion → ↓ lung sounds → SubQ emphysema → JVD. <b class="k">"Difficult to ventilate + hypoxia then hypotension in a newly intubated trauma patient = tension until proven otherwise."</b></div>
+        </div>
+        <div class="item">
+          <div class="nm">Awake patient (insidious)</div>
+          <div class="detail">Chest pain → tachycardia → ↓ lung sounds → hypoxia.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Decompress — low threshold (ventilated)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Needle thoracostomy</b> or <b class="k">simple/finger thoracostomy</b> — maintain a low threshold in ventilated chest-trauma patients.</li>
+          <li>Decompress immediately for hemodynamic collapse with suspected tension — do not wait for imaging.</li>
+          <li>(Procedures: needle thoracostomy 3-15; simple/tube thoracostomy 3-8.)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Open ("sucking") chest wound</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Seal immediately to restore respiratory mechanics:</li>
+          <li><b class="k">Vented chest seal</b> (Asherman preferred), OR</li>
+          <li>3- or 4-sided occlusive dressing (taping 3 sides allows a vent), OR</li>
+          <li>Gloved palm directly on the wound as a temporary measure while preparing a seal.</li>
+          <li>After sealing, <b class="k">watch for conversion to tension</b> → burp/remove the seal or perform thoracostomy.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Breathing — supportive</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Expose chest + neck; note work of breathing and rate; auscultate for equality.</li>
+          <li>BVM if RR <b class="k">&lt; 10 or &gt; 30</b> or ineffective. High-flow O₂ (FiO₂ 100% / 15–25 L/min).</li>
+          <li>Diaphragmatic rupture (bowel sounds in chest, distress): consider gastric tube to reduce aspiration/dilatation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Mechanism, wound location/size; lung-sound &amp; SpO₂ trend; vent pressures if ventilated.</li>
+          <li>Chest seal type/time; decompression site/time/technique and response.</li>
+          <li>Reassessment for re-accumulation; destination + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — the immediately reversible chest killers</div>
+      <p class="body-text">Most trauma deaths from chest injury that are preventable in the field come from a small set of conditions that impair ventilation or venous return and can be reversed with simple maneuvers — chiefly <b class="k">tension pneumothorax</b> and the <b class="k">open pneumothorax</b>.<sup>1,2</sup> Both are part of the breathing step of the primary survey, and both are <b class="k">clinical diagnoses</b> treated on suspicion: in the transport environment there is no time and often no imaging to confirm, so recognition and immediate action are the entire skill set.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why tension is different in the ventilated patient</div>
+      <p class="body-text">A tension pneumothorax forms when air enters the pleural space through a one-way leak and cannot escape; rising intrapleural pressure collapses the lung, then shifts the mediastinum and kinks the great veins, cutting off venous return and causing obstructive shock.<sup>2</sup> <b class="k">Positive-pressure ventilation dramatically accelerates this</b> — every breath pumps more air into the space — which is why tension is more common and far faster in the ventilated patient and why the order of signs differs.<sup>1,2</sup> In the ventilated patient the earliest, most reliable signs are physiologic (<b class="k">falling SpO₂, then falling cardiac output and hypotension, with rising ventilation pressures</b>), and the classic exam findings (tracheal deviation, distended neck veins) are <b class="k">late and unreliable</b>. The clinical axiom captures it: difficult ventilation and hypoxia followed by hypotension in a newly intubated trauma patient is tension until proven otherwise.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why a low threshold to decompress</div>
+      <p class="body-text">Because untreated tension is rapidly fatal and the intervention (needle or simple/finger thoracostomy) is fast and relatively low-risk in the crashing patient, the protocol mandates a <b class="k">low threshold to decompress</b> rather than waiting for certainty.<sup>1,2</sup> Needle decompression can fail — the catheter may be too short for the chest wall, may kink, or may not reach the pleura — so simple (finger) thoracostomy is increasingly preferred, particularly in the intubated patient where it is reliable and can be definitively confirmed.<sup>2</sup> The decision is driven by the physiology (decompensation with a compatible picture), not by waiting for the textbook late signs that often never appear before arrest.</p>
+    </section>
+    <section>
+      <div class="sec-h">The open pneumothorax and its trap</div>
+      <p class="body-text">An open ("sucking") chest wound large enough to draw air preferentially through the defect impairs ventilation by equalizing intrapleural and atmospheric pressure. Sealing the wound restores normal respiratory mechanics, but it creates a <b class="k">trap</b>: a fully occlusive seal can convert an open pneumothorax into a <b class="k">tension</b> pneumothorax if air continues to enter the pleural space from an underlying lung injury with no way out.<sup>1,2</sup> This is the rationale for a <b class="k">vented chest seal</b> (or a deliberately three-sided dressing that acts as a flutter valve) and for the mandatory reassessment afterward — if tension develops, the seal is burped or removed and the chest is decompressed. The gloved palm is only a momentary bridge while a proper seal is readied.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Supportive breathing care &amp; the diaphragm</div>
+      <p class="body-text">The rest of the breathing assessment supports these priorities: the chest and neck are fully exposed and auscultated, and assisted ventilation is started for a rate under 10 or over 30 or for ineffective effort, with high-flow oxygen because injured patients have reduced oxygen-carrying capacity.<sup>1</sup> A less obvious diagnosis to keep in mind is <b class="k">diaphragmatic rupture</b>, where abdominal contents herniate into the chest — suggested by diminished breath sounds, bowel sounds in the thorax, and respiratory distress — for which a gastric tube can reduce aspiration and gastric distension, particularly before flight where altitude expands gas.<sup>1</sup> All chest-trauma findings and interventions, especially decompression site and time, are documented and the receiving trauma team pre-notified.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">Advanced Trauma Life Support (ATLS), 10th ed. — thoracic trauma &amp; the primary survey. 2018.</span></li>
+          <li>Leigh-Smith S, Harris T. <span style="color:var(--text-faint)">Tension pneumothorax — time for a re-think. <em>Emerg Med J.</em> 2005;22(1):8–16.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/15611534">pubmed.ncbi.nlm.nih.gov/15611534</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1 Trauma — Breathing / Pneumothorax</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — recognition, chest seal &amp; decompression source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose &amp; procedure before performing.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

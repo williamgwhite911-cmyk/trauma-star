@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Crush">
+<meta name="theme-color" content="#0a0f1c">
+<title>Crush Injury / Crush Syndrome — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Crush Injury / Crush Syndrome</h1>
+      <div class="sub">Pre-release fluids · hyperkalemia</div>
+      <div class="cat">TS-TR-005 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Torso or mid/proximal extremity <b class="k">crushed &amp; entrapped &gt; 1 hour</b> → risk of crush syndrome.</li>
+          <li>On release: surge of K⁺, myoglobin, acid → <b class="k">hyperkalemia, arrhythmia/VF, AKI, death</b>.</li>
+          <li><b class="k">Start IV fluids BEFORE extrication / release</b> when possible.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Fluids — Sodium Chloride 0.9%</div>
+      <div class="block" style="--c:#f43f5e">
+        <div class="item">
+          <div class="nm">Initial bolus</div>
+          <div class="detail"><span class="dose">Adult/Peds 40 mL/kg IBW</span> (max 2 L).</div>
+        </div>
+        <div class="item">
+          <div class="nm">After initial bolus</div>
+          <div class="detail"><span class="dose">20 mL/kg IBW over 1 hour</span> (max 1 L).</div>
+        </div>
+        <div class="item">
+          <div class="nm">Maintenance</div>
+          <div class="detail"><span class="dose">1.5 × maintenance rate</span>. May substitute LR.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Monitor / anticipate hyperkalemia</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Cardiac monitor + 12-lead: <b class="k">peaked T waves, wide QRS, sine wave</b>; treat arrhythmia.</li>
+          <li>Anticipate VF/arrest at the moment of release; have defib + hyperkalemia drugs ready (calcium, bicarbonate per medical control).</li>
+          <li>Trend urine output / color (myoglobinuria — tea-colored).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Supportive</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Treat associated hemorrhage/fractures; keep warm; analgesia.</li>
+          <li>Avoid potassium-containing fluids if marked hyperkalemia (favor NS for the resuscitation phase).</li>
+          <li>Transport to a facility with critical-care/renal (dialysis) capability.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Entrapment time + body region; time of release; fluids started pre/post release.</li>
+          <li>Fluid type/volumes/rate; ECG changes; urine output/color; arrhythmia treatment.</li>
+          <li>Destination rationale (renal/critical care).</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — the danger is the release, not the crush</div>
+      <p class="body-text">Crush injury is direct trauma from sustained compression; <b class="k">crush syndrome</b> is the systemic, potentially fatal consequence that appears <b class="k">after the compressing force is removed</b>.<sup>1,2</sup> While a limb is compressed, injured muscle leaks its contents into the trapped tissue but they stay sequestered. The moment circulation is restored, a bolus of <b class="k">potassium, myoglobin, phosphate, and acid</b> washes into the central circulation — which is why a patient can look stable under the rubble and then arrest seconds after extrication. The syndrome can develop after as little as <b class="k">one hour</b> of entrapment of the torso or a proximal extremity, and the entire protocol is built around anticipating and blunting that reperfusion surge.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why fluids before release is the key move</div>
+      <p class="body-text">The single most important intervention is <b class="k">aggressive isotonic fluid started before extrication</b> whenever access allows.<sup>1,2,3</sup> Pre-loading the circulation does three things: it expands intravascular volume to counter the profound third-spacing and hypotension that follow release, it <b class="k">dilutes the potassium</b> surge to reduce the risk of lethal arrhythmia, and it drives a brisk urine output that <b class="k">flushes myoglobin</b> through the kidney before it precipitates and causes acute kidney injury (rhabdomyolysis-induced AKI).<sup>2,3</sup> The protocol uses <b class="k">normal saline</b> for the resuscitation phase — large-volume 40 mL/kg IBW initial bolus, then 20 mL/kg over an hour, then 1.5× maintenance — deliberately avoiding potassium-containing fluids during the period of greatest hyperkalemia risk (LR may be substituted once that risk is lower).<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Hyperkalemia — the proximate killer</div>
+      <p class="body-text">The cause of death in early crush syndrome is usually <b class="k">hyperkalemic cardiac arrest</b>, so the crew treats the ECG, not just the potassium number it cannot measure.<sup>2</sup> Continuous monitoring watches for the classic progression — <b class="k">peaked T waves → widening QRS → loss of P waves → sine wave → VF/asystole</b> — and these changes, especially appearing around the time of release, are treated as hyperkalemia. Definitive field therapy (IV <b class="k">calcium</b> to stabilize the myocardium, plus shifting agents such as bicarbonate, and inhaled beta-agonist) is given per medical control, and the team should literally have calcium and the defibrillator ready at the instant of extrication.<sup>2</sup> Bicarbonate also helps by alkalinizing the urine, which keeps myoglobin soluble and protects the kidney.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Tourniquets, the limb, and supportive care</div>
+      <p class="body-text">There is genuine controversy about <b class="k">tourniquet use</b> in crush: a tourniquet placed before release can prevent the reperfusion washout, but it also guarantees ischemic loss of the limb and merely delays the metabolic insult, so it is generally reserved for life-threatening hemorrhage or as a deliberate, physician-guided decision rather than a routine crush maneuver.<sup>2,3</sup> The rest of care is supportive and shares the trauma principles: control associated hemorrhage and fractures, provide analgesia, and aggressively <b class="k">prevent hypothermia</b> (the cold, acidotic, coagulopathic crush patient is fragile).<sup>1</sup> Because the downstream course frequently includes <b class="k">dialysis</b> for AKI and hyperkalemia, the destination must have critical-care and renal capability — from the Keys, this is a clear indication for rotor-wing transport to a tertiary center.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Sever MS, Vanholder R. <span style="color:var(--text-faint)">Management of crush victims in mass disasters — recommendations. <em>Clin J Am Soc Nephrol.</em> 2013;8(2):328–335.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/23024156">pubmed.ncbi.nlm.nih.gov/23024156</a></li>
+          <li>Gonzalez D. <span style="color:var(--text-faint)">Crush syndrome. <em>Crit Care Med.</em> 2005;33(1 Suppl):S34–S41.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/15640677">pubmed.ncbi.nlm.nih.gov/15640677</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1.4 Crush Injury</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — fluid resuscitation dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

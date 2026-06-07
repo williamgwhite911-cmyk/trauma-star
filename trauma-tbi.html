@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS TBI">
+<meta name="theme-color" content="#0a0f1c">
+<title>Traumatic Brain Injury — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Traumatic Brain Injury (TBI)</h1>
+      <div class="sub">Avoid hypoxia &amp; hypotension · CPP</div>
+      <div class="cat">TS-TR-002 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">The two killers — avoid at all costs</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Hypoxia and hypotension</b> each raise TBI mortality up to <b class="k">6×</b>. A single episode of either worsens outcome.</li>
+          <li>Use high FiO₂ and aggressive resuscitation to <b class="k">prevent and treat</b> both.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Targets</div>
+      <div class="block" style="--c:#f43f5e">
+        <div class="item"><div class="nm">Oxygenation</div><div class="detail"><b class="k">SpO₂ &gt; 90%</b> (avoid any hypoxia; high FiO₂).</div></div>
+        <div class="item"><div class="nm">Blood pressure</div><div class="detail"><b class="k">SBP 100–110 mmHg</b> for TBI with altered mental status (higher than the general trauma SBP ~90 target — protects cerebral perfusion).</div></div>
+        <div class="item"><div class="nm">Ventilation (intubated)</div><div class="detail"><b class="k">EtCO₂ 35–45 mmHg</b> (normocapnia). <b class="k">30–35 only if herniation signs.</b></div></div>
+        <div class="item"><div class="nm">Position</div><div class="detail">Head <b class="k">midline</b>, HOB up <b class="k">15–30°</b>; avoid tight C-collar / jugular obstruction.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Monitoring</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Baseline + continuous <b class="k">GCS</b>, <b class="k">pupils</b> (size/reactivity), respiratory rate &amp; pattern.</li>
+          <li>Continuous SpO₂, EtCO₂ (if intubated), BP. Check glucose; treat hypoglycemia.</li>
+          <li>Obtain GCS/pupils/motor <b class="k">before any paralytic</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Herniation syndrome → escalate</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Signs: <b class="k">declining LOC, unilateral blown pupil, posturing</b> (decorticate/decerebrate), Cushing reflex (HTN + bradycardia + irregular resp), abnormal breathing.</li>
+          <li>Mild controlled hyperventilation to <b class="k">EtCO₂ 30–35</b> as a temporizing rescue (never routine).</li>
+          <li>Hyperosmolar therapy per the <b class="k">Brain Herniation</b> protocol (TS-NEU-005): 3% NaCl first-line.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Note — TBI vs hemorrhagic stroke BP</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>TBI: keep SBP <b class="k">up</b> (100–110) for perfusion. Non-traumatic ICH: controlled <b class="k">lowering</b> (different mechanism) — see TS-NEU-002. Don't confuse the two.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Mechanism, initial &amp; serial GCS, pupils, motor exam (and pre-paralytic baseline).</li>
+          <li>Every SpO₂/SBP value + any hypoxia/hypotension episode and its correction; EtCO₂ targets.</li>
+          <li>Herniation signs + interventions; glucose; neurosurgical-center destination + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — preventing the second injury</div>
+      <p class="body-text">In traumatic brain injury the <b class="k">primary injury</b> (the impact itself) is already done by the time the crew arrives and cannot be undone. Everything prehospital and transport care can change is the <b class="k">secondary injury</b> — the cascade of ischemia, edema, and metabolic failure that follows, and that is driven largely by two insults the crew controls: <b class="k">hypoxia and hypotension</b>.<sup>1,3</sup> This reframes the mission: TBI care is not about a drug, it is about relentlessly maintaining oxygenation, blood pressure, ventilation, and cerebral venous drainage so the injured-but-salvageable brain survives to definitive neurosurgical care.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why hypoxia and hypotension are catastrophic</div>
+      <p class="body-text">The landmark prehospital data are stark: in severe TBI, a single episode of hypotension or hypoxia is associated with a <b class="k">mortality increase of up to roughly six-fold</b>, and the two together are worse still.<sup>3</sup> The mechanism is cerebral perfusion pressure (<b class="k">CPP = MAP − ICP</b>): after injury, ICP rises and cerebral autoregulation is impaired, so perfusion becomes dangerously dependent on systemic blood pressure. A drop in MAP collapses CPP directly, and hypoxia/hypercarbia cause cerebral vasodilation that raises ICP and further lowers CPP.<sup>1,4</sup> This is why the protocol uses <b class="k">high FiO₂ and aggressive resuscitation</b> in TBI — the usual caution about hyperoxia is outweighed by the catastrophic cost of even brief hypoxia in the injured brain.<sup>3,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why the TBI blood-pressure target is higher</div>
+      <p class="body-text">General trauma uses <b class="k">permissive hypotension</b> (SBP ~90) to avoid disrupting clot, but TBI flips this: an SBP that is "fine" for a bleeding limb may be inadequate for a swollen brain. The protocol therefore raises the target to <b class="k">SBP 100–110 mmHg</b> in TBI with altered mental status to preserve CPP.<sup>1,5</sup> When a patient has both hemorrhagic shock and TBI, the brain target generally wins — perfusing the brain takes precedence, which usually means earlier and more aggressive use of blood products. A critical teaching point is that this is the <b class="k">opposite</b> of non-traumatic intracerebral hemorrhage, where blood pressure is deliberately <b class="k">lowered</b> to limit hematoma expansion (TS-NEU-002); the mechanisms differ, and confusing the two pathways harms patients.<sup>5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Ventilation — the normocapnia rule</div>
+      <p class="body-text">CO₂ is a potent cerebral vasodilator, so ventilation directly controls cerebral blood volume and ICP. The target is <b class="k">normocapnia, EtCO₂ 35–45 mmHg</b> — both extremes are harmful.<sup>1,4</sup> Hypoventilation (high CO₂) raises ICP; aggressive <b class="k">hyperventilation</b> (low CO₂) constricts cerebral vessels and causes ischemia, and routine prophylactic hyperventilation worsens outcome.<sup>1</sup> Brief, <b class="k">controlled</b> mild hyperventilation to EtCO₂ 30–35 is reserved strictly as a temporizing rescue for active herniation while definitive measures are mobilized, never as standard practice. Because manual or unmonitored ventilation easily drifts into harmful hypocapnia, continuous EtCO₂ monitoring is mandatory in the intubated TBI patient.<sup>1,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Positioning, monitoring &amp; recognizing herniation</div>
+      <p class="body-text">Simple mechanical measures lower ICP at no cost: keep the head <b class="k">midline</b> (a turned head or tight cervical collar kinks the jugular veins and impedes venous drainage) and elevate the head of bed <b class="k">15–30°</b>.<sup>1,4</sup> Serial neurologic assessment is the early-warning system — a <b class="k">baseline GCS, pupils, and motor exam are obtained before any paralytic</b>, because sedation/paralysis erase the exam, and the trend (a falling GCS, a newly fixed pupil) is what signals deterioration.<sup>1</sup> Signs of <b class="k">herniation</b> — declining consciousness, a unilateral dilated pupil, posturing, the Cushing reflex, or an abnormal respiratory pattern — trigger escalation: controlled mild hyperventilation as a bridge and hyperosmolar therapy (3% saline first-line) per the Brain Herniation protocol (TS-NEU-005), plus expedited transport to a neurosurgical-capable center.<sup>1,4</sup> From the Keys, rotor-wing delivery to neurosurgery is frequently the deciding factor in survival.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Carney N, et al. (Brain Trauma Foundation). <span style="color:var(--text-faint)">Guidelines for the Management of Severe TBI, 4th ed. <em>Neurosurgery.</em> 2017;80(1):6–15.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27654000">pubmed.ncbi.nlm.nih.gov/27654000</a></li>
+          <li>Brain Trauma Foundation. <span style="color:var(--text-faint)">Guidelines for Prehospital Management of Traumatic Brain Injury, 2nd ed. <em>Prehosp Emerg Care.</em> 2008;12(S1).</span> <a href="https://pubmed.ncbi.nlm.nih.gov/18203044">pubmed.ncbi.nlm.nih.gov/18203044</a></li>
+          <li>Spaite DW, et al. <span style="color:var(--text-faint)">Effect of prehospital hypotension and hypoxia on outcome in TBI. <em>JAMA Surg.</em> 2017;152(4):360–368.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27926759">pubmed.ncbi.nlm.nih.gov/27926759</a></li>
+          <li>Stevens RD, et al. <span style="color:var(--text-faint)">Emergency Neurological Life Support: intracranial hypertension &amp; herniation. <em>Neurocrit Care.</em> 2015;23(S2):S76–S82.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/26438459">pubmed.ncbi.nlm.nih.gov/26438459</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1 Trauma — Traumatic Brain Injury / Brain Herniation</b> <span style="color:var(--text-faint)">(Rev 22–23, 2024–2025) — targets &amp; management source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

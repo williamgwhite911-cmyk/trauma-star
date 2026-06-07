@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS MSK Trauma">
+<meta name="theme-color" content="#0a0f1c">
+<title>Musculoskeletal & Extremity Trauma — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Musculoskeletal &amp; Extremity Trauma</h1>
+      <div class="sub">Fractures · pelvis · open fx antibiotics · amputation</div>
+      <div class="cat">TS-TR-004 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Always — neurovascular checks (CMS)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Check <b class="k">circulation, motion, sensation distal</b> to injury <b class="k">before AND after</b> every manipulation/splint. (SpO₂ on the limb can gauge distal perfusion.)</li>
+          <li>Notify the receiving facility of any extremity injury with <b class="k">absent distal pulses</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Fractures &amp; splinting</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Realign deformed long-bone fractures with steady traction/rotation; splint joint <b class="k">above and below</b>.</li>
+          <li><b class="k">Severe angulation / presumed fx with absent pulse / dislocation with absent pulse:</b> realign with traction & rotation — <b class="k">max 2 attempts</b>.</li>
+          <li><b class="k">Never</b> apply traction/rotation/realignment to <b class="k">elbow</b> injuries.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Femur fracture + traction splint</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Steady traction + rotation to alignment; splint with the other leg or backboard.</li>
+          <li><b class="k">Traction device</b> (KTD / Slishman / Optimum) only for well-aligned <b class="k">mid-shaft</b> femur fx.</li>
+          <li><b class="k">Contraindicated:</b> hip fx/injury, knee dislocation/injury, ankle injury.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Pelvic fracture / unstable pelvis</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Stabilize with <b class="k">SAM pelvic sling</b>, commercial device, or sheet wrap.</li>
+          <li><b class="k">Do NOT place a urinary catheter</b> with suspected pelvic fx or blood at the meatus/perineum — risk of urethral injury.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Open fracture — antibiotics early (choose ONE)</div>
+      <div class="block" style="--c:#f43f5e">
+        <div class="item">
+          <div class="nm">Cefazolin (first choice)</div>
+          <div class="detail">Adult ≥ 50 kg <span class="dose">2 g IV over 3–5 min / IM</span> · &lt; 50 kg <span class="dose">1 g IV/IM</span> · Peds <span class="dose peds">25 mg/kg IV/IM</span></div>
+        </div>
+        <div class="item">
+          <div class="nm">Clindamycin (PCN/cephalosporin allergy)</div>
+          <div class="detail">Adult <span class="dose">900 mg IV over 30 min</span> · Peds <span class="dose peds">10 mg/kg IV over 10–30 min (max 900 mg)</span> — rate ≤ 30 mg/min.</div>
+        </div>
+        <div class="item"><div class="detail" style="margin-top:0">Control bleeding, realign, splint; cover wound with <b class="k">saline-soaked gauze</b>. Any skin opening near a fracture = open fracture.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Amputation · avulsion · impaled · eye</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li><b class="k">Amputated part:</b> rinse → wrap in NS-dampened gauze → sealed dry bag → bag into ice + water (do NOT freeze / direct ice).</li>
+          <li><b class="k">Avulsion:</b> rinse debris, replace tissue in normal position, dress.</li>
+          <li><b class="k">Impaled object:</b> do NOT remove — stabilize in place with bulky dressing.</li>
+          <li><b class="k">Eye:</b> loose sterile dressing + shield; cover both eyes PRN to limit movement; remove contacts.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li><b class="k">CMS before &amp; after</b> each manipulation/splint; pulse status changes.</li>
+          <li>Open fx + antibiotic (drug/dose/time); realignment attempts; pelvic binder; tourniquet time.</li>
+          <li>Amputated-part care/handoff; analgesia; destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — limbs are about perfusion and contamination</div>
+      <p class="body-text">Most extremity injuries are not immediately life-threatening, so after catastrophic bleeding is controlled (see TS-TR-001) the orthopedic priorities shift to two goals that determine whether the limb survives and stays functional: <b class="k">preserving distal perfusion</b> and <b class="k">preventing infection</b>.<sup>1,5</sup> The unifying habit that protects the limb is the <b class="k">neurovascular (CMS) check before and after every intervention</b> — it both detects a perfusion problem and documents that a maneuver did not create one.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why realign — and the two-attempt / no-elbow rules</div>
+      <p class="body-text">A grossly deformed fracture or dislocation can <b class="k">kink or compress the artery and nerve</b> running past it, threatening the limb. Gentle realignment with steady traction and rotation restores both length and, often, the distal pulse, and it reduces pain and bleeding — so a deformed long bone, a fracture with an absent distal pulse, or a dislocation with an absent pulse is realigned.<sup>1,5</sup> The protocol caps this at <b class="k">two attempts</b> because repeated forceful manipulation causes more soft-tissue and neurovascular injury, and a limb that stays pulseless needs the vascular surgeon, not more attempts. The <b class="k">elbow is the explicit exception</b> — its tightly bound brachial artery, median nerve, and complex joint make blind manipulation uniquely dangerous, so elbow injuries are splinted as found and reassessed, not reduced in the field.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Femur fractures and traction splints</div>
+      <p class="body-text">A femur fracture can sequester a liter or more of blood into the thigh and is intensely painful; <b class="k">traction splinting</b> realigns the bone, reduces the thigh compartment volume to tamponade bleeding, relieves pain, and prevents the bone ends from causing further injury.<sup>1</sup> But traction devices are appropriate only for <b class="k">isolated, well-aligned mid-shaft</b> femur fractures — they are <b class="k">contraindicated with hip, knee, or ankle injury</b> because applying longitudinal traction across an injured joint (or a hip fracture) pulls against the wrong structures and worsens the injury.<sup>1</sup> When a traction device is contraindicated or unavailable, the limb is splinted to the other leg or a board in anatomic position.</p>
+    </section>
+    <section>
+      <div class="sec-h">Pelvic fractures — bind it, don't catheterize it</div>
+      <p class="body-text">An unstable pelvic fracture can cause massive, often <b class="k">concealed</b> retroperitoneal hemorrhage from the disrupted venous plexus and bone ends. A <b class="k">pelvic binder</b> (SAM sling or sheet) closes the pelvic ring volume and stabilizes clot, and is applied for any likely or suspected pelvic fracture — it is a hemorrhage-control device, not just a splint.<sup>1,2</sup> The protocol's firm rule against placing a <b class="k">urinary catheter</b> when a pelvic fracture is suspected or there is blood at the urethral meatus/perineum exists because pelvic fractures frequently injure the urethra, and blind catheter passage can convert a partial urethral tear into a complete one — a serious, avoidable complication.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Open fractures — why antibiotics are time-critical</div>
+      <p class="body-text">Any skin breach near a fracture is treated as an <b class="k">open fracture</b>, meaning the bone is contaminated and at high risk of osteomyelitis and deep infection. The strongest modifiable predictor of that infection is <b class="k">time to antibiotics</b>: early administration markedly reduces infection rates, and the benefit is large enough that antibiotics are given in the field rather than deferred to the hospital.<sup>3,4</sup> A first-generation cephalosporin (<b class="k">cefazolin</b>) covers the relevant skin flora and is first-line, with weight-based dosing; <b class="k">clindamycin</b> is the alternative for penicillin/cephalosporin allergy.<sup>3,4</sup> The wound is otherwise handled to minimize further contamination and drying — bleeding controlled, gross alignment restored, and the wound covered with <b class="k">saline-soaked gauze</b> — while definitive irrigation and debridement await the operating room.</p>
+    </section>
+    <section>
+      <div class="sec-h">Amputations, impaled objects &amp; the eye</div>
+      <p class="body-text">An <b class="k">amputated part</b> is salvageable if preserved correctly: rinsed, wrapped in saline-dampened gauze, sealed in a dry bag, and placed on <b class="k">ice water — never in direct contact with ice</b> or frozen, because freezing destroys the tissue and makes replantation impossible.<sup>1</sup> An <b class="k">impaled object is left in place</b> and stabilized, because it may be tamponading a vessel and removal can trigger uncontrolled hemorrhage. <b class="k">Ocular injuries</b> are protected with a shield (not a pressure patch) to avoid pressure on a possibly ruptured globe, and covering both eyes limits the consensual movement of the injured eye.<sup>1</sup> Throughout, adequate analgesia is humane and reduces the catecholamine surge that worsens bleeding, and any extremity with absent distal pulses is flagged to the receiving team so a vascular service can be ready.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">Advanced Trauma Life Support (ATLS), 10th ed. — musculoskeletal trauma. 2018.</span></li>
+          <li>Cullinane DC, et al. (EAST). <span style="color:var(--text-faint)">Practice management guidelines for hemorrhage in pelvic fracture. <em>J Trauma.</em> 2011;71:1850–1868.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/22182895">pubmed.ncbi.nlm.nih.gov/22182895</a></li>
+          <li>Hoff WS, et al. (EAST). <span style="color:var(--text-faint)">Prophylactic antibiotics in open fractures — practice management guideline. <em>J Trauma.</em> 2011;70:751–754.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/21610369">pubmed.ncbi.nlm.nih.gov/21610369</a></li>
+          <li>Lack WD, et al. <span style="color:var(--text-faint)">Type III open tibia fractures: time to antibiotics &amp; infection. <em>J Orthop Trauma.</em> 2015;29(1):1–6.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/24717855">pubmed.ncbi.nlm.nih.gov/24717855</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 8.1.3 Secondary Assessment (orthopedic/soft tissue, pelvis, open fractures)</b> <span style="color:var(--text-faint)">(Rev 7–23, 2020–2025) — splinting &amp; antibiotic dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose &amp; allergy before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
