@@ -58,7 +58,7 @@
     <a class="back" href="protocols.html" aria-label="Back">‹</a>
     <div>
       <h1>Seizures / Status Epilepticus</h1>
-      <div class="sub">Neurocritical care</div>
+      <div class="sub">Trauma Star critical care · tiered algorithm</div>
       <div class="cat">TS-NEU-004 · Sec 6 Neurology</div>
     </div>
   </div>
@@ -70,57 +70,132 @@
 <div class="wrap">
   <div id="cardView">
     <section>
-      <div class="sec-h">Immediate</div>
-      <div class="block" style="--c:#22c55e">
-        <ul class="bul" style="--c:#22c55e">
-          <li><b class="k">Check bedside glucose</b> — treat hypoglycemia straightaway.</li>
-          <li>Protect airway, O₂, position; identify a likely cause (lesion, med non-adherence, OD, tox, metabolic).</li>
-          <li><b class="k">Give a benzodiazepine every 2–3 min until seizures stop.</b> IV preferred; <b class="k">lorazepam IV is preferred</b>, midazolam IV is an acceptable alternative.</li>
-          <li>Eclampsia seizures → manage per the <b class="k">eclampsia</b> guideline.</li>
+      <div class="sec-h">Treat NOW if (status epilepticus)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">One seizure ≥ 5 min</b>, OR <b class="k">≥ 2 seizures without return to baseline</b> between them. Treat at 5 min — don't wait.</li>
+          <li>Most seizures are self-limited; drugs are for the actively / persistently seizing (status) patient.</li>
+          <li><b class="k">Pregnant &gt; 20 wk or ≤ 6 wk postpartum + seizing → ECLAMPSIA</b> (Magnesium-first) — see special situations &amp; TS-OB-005.</li>
         </ul>
       </div>
     </section>
 
     <section>
-      <div class="sec-h">First-line — benzodiazepines (repeat q2–3 min)</div>
+      <div class="sec-h">Every seizure — do first (concurrent)</div>
+      <div class="block" style="--c:#22c55e">
+        <ul class="bul" style="--c:#22c55e">
+          <li><b class="k">CHECK BLOOD GLUCOSE every seizure.</b> If &lt; 60 mg/dL (&lt; 40 neonate) → D10 / treat hypoglycemia first — fastest reversible cause.</li>
+          <li>Protect from injury — <b class="k">do NOT restrain; nothing in the mouth.</b></li>
+          <li>Airway / O₂ PRN; <b class="k">continuous EtCO₂ 35–45</b> (30–35 only if herniation); suction + BVM staged. Neuroprotection: <b class="k">SpO₂ ≥ 94%</b>, avoid hypotension.</li>
+          <li>IV/IO access — <b class="k">do NOT delay the first IM/NAS benzo</b> to get a line. Prepare for intubation (ready RSI gear, pre-oxygenate).</li>
+          <li>After it stops: lateral/recovery position; continuous cardiac, SpO₂, EtCO₂, BP.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① First-line — Midazolam (Versed)</div>
       <div class="block" style="--c:#a855f7">
         <div class="item">
-          <div class="nm">Lorazepam <span class="sub2">preferred with IV/IO access</span></div>
-          <div class="detail">Adult <span class="dose">4 mg IV / IM / NAS</span> · Peds <span class="dose peds">0.1 mg/kg IV/IM/NAS (max 4 mg)</span></div>
+          <div class="nm">Over 50 kg (flat dose)</div>
+          <div class="detail"><span class="dose">5 mg IV/IO</span> (slow, over ≥ 2 min) OR <span class="dose">10 mg IM / intranasal</span> — no calculation needed.</div>
         </div>
         <div class="item">
-          <div class="nm">Midazolam <span class="sub2">preferred for IM / NAS route</span></div>
-          <div class="detail">Adult <span class="dose">0.1 mg/kg IV (max 5 mg)</span> or <span class="dose">0.2 mg/kg IM/NAS (max 10 mg)</span> · Peds: refer to adult dosing</div>
+          <div class="nm">≤ 50 kg incl. pediatric (weight-based)</div>
+          <div class="detail"><span class="dose peds">0.1 mg/kg IV/IO (max 5 mg)</span> OR <span class="dose peds">0.2 mg/kg IM/NAS (max 10 mg)</span> — use 5 mg/mL, up to 1 mL/nostril.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Repeat</div>
+          <div class="detail">May repeat <b class="k">ONCE after 3–5 min ONLY if still actively seizing</b>. If the seizure stopped, do NOT redose. <b class="k">Max 2 doses</b>, then go to second-line. Midazolam is preferred when IM/NAS is indicated.</div>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="sec-h">Refractory / ongoing control — choose one (in order)</div>
-      <div class="block" style="--c:#38bdf8">
-        <div class="item">
-          <div class="nm">Levetiracetam</div>
-          <div class="detail">Adult <span class="dose">4 g IV over 15 min</span> · Peds <span class="dose peds">60 mg/kg IV over 15 min</span> (max 4 g)</div>
-        </div>
-        <div class="item">
-          <div class="nm">Fosphenytoin</div>
-          <div class="detail"><span class="dose">15 mg PE/kg IV</span> — adult ≤ 150 mg PE/min; peds ≤ 3 mg PE/kg/min (max 150). Via pump.</div>
-        </div>
-        <div class="item">
-          <div class="nm">Phenytoin</div>
-          <div class="detail"><span class="dose">15 mg/kg IV</span> — adult ≤ 50 mg/min (max 1 g); peds ≤ 1 mg/kg/min (max 50). Via pump.</div>
-        </div>
-        <div class="item"><div class="detail" style="margin-top:0">Propofol, phenobarbital, or benzodiazepine <b class="k">infusions</b> for status epilepticus → <b class="k">direct medical control</b> only.</div></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="sec-h">Cautions &amp; red flags</div>
+      <div class="sec-h">Benzodiazepine safety (non-intubated)</div>
       <div class="block warn">
         <ul class="bul">
-          <li><b class="k">Paralytics (NMBAs) do NOT treat seizures</b> — they only mask motor activity; ongoing status continues. Not a treatment for status epilepticus.</li>
-          <li>Always correct hypoglycemia first.</li>
-          <li>Treat the underlying cause (tox, metabolic, lesion) alongside benzodiazepines.</li>
+          <li>Give IV/IO <b class="k">slowly over ≥ 2 min</b>, titrate to cessation, stop the moment the seizure breaks (IV peaks faster/higher than IM/NAS).</li>
+          <li>Continuous EtCO₂/SpO₂; support ventilation; <b class="k">prepare for intubation</b> before any repeat dose or escalation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Second-line — Levetiracetam (Keppra)</div>
+      <div class="block" style="--c:#38bdf8">
+        <div class="item">
+          <div class="nm">Adult &amp; Pediatric (same mg/kg)</div>
+          <div class="detail"><span class="dose">60 mg/kg IV/IO (max 4,500 mg)</span> over 10 min. No sedation / no respiratory depression — does not commit the airway.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Equivalent alternatives (if no Keppra)</div>
+          <div class="detail">Fosphenytoin <span class="dose">20 mg PE/kg</span> or Valproate <span class="dose">40 mg/kg</span>.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">③ Third-line — Ketamine + sedation-facilitated airway</div>
+      <div class="block" style="--c:#a855f7">
+        <div class="item">
+          <div class="nm">Ketamine (refractory status)</div>
+          <div class="detail"><span class="dose">1–2 mg/kg IV/IO slow over 1–2 min</span> (<span class="dose">2 mg/kg IM/NAS</span> if no access); may repeat ×1, then infusion <span class="dose">0.5–1 mg/kg/hr</span> titrated to suppression.</div>
+        </div>
+        <div class="item">
+          <div class="nm">If airway control required — PREFER sedation-only</div>
+          <div class="detail">Induce with <span class="dose">Ketamine 2 mg/kg adult / 1.5 mg/kg peds</span> — treats the seizure AND facilitates intubation while preserving seizure visibility. Peds: atropine 0.02 mg/kg pre-treat.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Paralysis — last resort, airway only</div>
+          <div class="detail"><b class="k">AVOID NMBAs when possible.</b> Reserve <span class="dose">Rocuronium 1 mg/kg</span> only if needed for first-pass success — airway only, NOT seizure control.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Mandatory post-intubation sedation</div>
+          <div class="detail">Ketamine <span class="dose">0.1–4 mg/kg/hr</span> (peds 0.1–2) and/or Midazolam <span class="dose">0.05–0.1 mg/kg/hr</span>; ± Fentanyl <span class="dose">1–2 mcg/kg/hr</span>.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Critical-care caveat — paralysis ≠ seizure control</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>A paralytic abolishes <b class="k">visible</b> convulsions but NOT electrographic seizure — and there is <b class="k">no field EEG</b>.</li>
+          <li>If a paralytic is unavoidable, treat it as airway management only; continue sedation + anticonvulsant infusions and manage as <b class="k">ongoing status until EEG</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Special critical-care situations</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Eclampsia (&gt; 20 wk / ≤ 6 wk postpartum)</div>
+          <div class="detail"><b class="k">Magnesium-first:</b> <span class="dose">Mag sulfate 4 g IV/IO over 10 min</span> (4 g IM divided if no access); add Labetalol <span class="dose">10 mg slow IVP</span> if SBP &gt; 160. (TS-OB-005.)</div>
+        </div>
+        <div class="item">
+          <div class="nm">Suspected INH / hydrazine overdose</div>
+          <div class="detail"><span class="dose">Pyridoxine (B₆) gram-for-gram</span> with ingested INH, or <span class="dose">5 g empiric</span>. Poison Control <b class="k">1-800-222-1222</b>.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Symptomatic hyponatremia / herniation</div>
+          <div class="detail"><span class="dose">3% hypertonic saline 250 mL IV/IO</span> (peds <span class="dose peds">3–5 mL/kg</span>); may repeat ×1 per medical control.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Hemodynamics (neuroprotection)</div>
+          <div class="detail">Hypotensive post-RSI / post-ictal → fluid + <span class="dose">Norepinephrine 5–30 mcg/min</span> titrated to age-appropriate SBP/MAP.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Pediatric (pre-puberty / ≤ 50 kg)</div>
+      <div class="block" style="--c:#22c55e">
+        <ul class="bul" style="--c:#22c55e">
+          <li>Dose every agent <b class="k">by weight</b> (confirm with length-based / Handtevy tape); all logic above applies.</li>
+          <li><b class="k">Febrile, NOT seizing:</b> Acetaminophen <span class="dose peds">15 mg/kg PO</span> if tolerated (if given, patient <b class="k">must be transported</b>). Passive cooling — remove clothing; <b class="k">do NOT apply wet towels or ice.</b></li>
+          <li>Use Midazolam only for the prolonged (≥ 5 min) or actively seizing child.</li>
         </ul>
       </div>
     </section>
@@ -129,11 +204,10 @@
       <div class="sec-h">Documentation — medically necessary</div>
       <div class="block" style="--c:#a855f7">
         <ul class="bul" style="--c:#a855f7">
-          <li>Seizure type, onset/duration, and suspected cause.</li>
-          <li>Glucose; benzodiazepine(s) given — drug, dose, route, times, response.</li>
-          <li>Any second-line agent (drug, dose, rate) + medical-control orders for infusions.</li>
-          <li>Airway interventions, post-ictal exam, recurrence.</li>
-          <li>Why rotor-wing / level of care.</li>
+          <li>Seizure onset/duration, status criteria met, suspected/reversible cause; <b class="k">glucose</b>.</li>
+          <li>Every agent — drug, dose, route, time, response; doses given to seizure cessation.</li>
+          <li>Airway: route, sedation-facilitated vs paralytic (justify), post-intubation infusions.</li>
+          <li>EtCO₂/SpO₂/BP trend, recurrence, medical-control contacts; why rotor-wing / level of care.</li>
         </ul>
       </div>
     </section>
@@ -169,19 +243,21 @@
     <section>
       <div class="sec-h">Sources &amp; evidence (footnotes)</div>
       <details class="refs" open>
-        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <summary>Cited sources — 7 · reviewed Jun 2026</summary>
         <ol>
           <li>Glauser T, et al. (American Epilepsy Society). <span style="color:var(--text-faint)">Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus. <em>Epilepsy Curr.</em> 2016;16(1):48–61.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/26900382">pubmed.ncbi.nlm.nih.gov/26900382</a></li>
-          <li>Trinka E, et al. (ILAE). <span style="color:var(--text-faint)">A definition and classification of status epilepticus. <em>Epilepsia.</em> 2015;56(10):1515–1523.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/26336950">pubmed.ncbi.nlm.nih.gov/26336950</a></li>
           <li>Silbergleit R, et al. (RAMPART). <span style="color:var(--text-faint)">Intramuscular versus intravenous therapy for prehospital status epilepticus. <em>N Engl J Med.</em> 2012;366:591–600.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/22335736">pubmed.ncbi.nlm.nih.gov/22335736</a></li>
-          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 7.1 Seizures &amp; Sec 7.1.1 Refractory Seizures</b> <span style="color:var(--text-faint)">(Rev 22–23, 2024–2025) — drug/dose source.</span></li>
+          <li>Alldredge BK, et al. (PHTSE). <span style="color:var(--text-faint)">A comparison of lorazepam, diazepam, and placebo for out-of-hospital status epilepticus. <em>N Engl J Med.</em> 2001;345:631–637.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/11547716">pubmed.ncbi.nlm.nih.gov/11547716</a></li>
           <li>Kapur J, et al. (ESETT). <span style="color:var(--text-faint)">Randomized trial of three anticonvulsant medications for status epilepticus. <em>N Engl J Med.</em> 2019;381:2103–2113.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/31774955">pubmed.ncbi.nlm.nih.gov/31774955</a></li>
+          <li>Neurocritical Care Society. <span style="color:var(--text-faint)">Guidelines for the Evaluation and Management of Status Epilepticus — refractory/super-refractory SE (ketamine; NMBA masks electrographic seizure). <em>Neurocrit Care.</em> 2012.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/22528274">pubmed.ncbi.nlm.nih.gov/22528274</a></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Committee Opinion No. 767 — Emergent therapy for acute-onset severe hypertension / magnesium for eclampsia.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/30575639">pubmed.ncbi.nlm.nih.gov/30575639</a></li>
+          <li><b style="color:var(--text-dim)">MCFR / Trauma Star — Seizure / Status Epilepticus Helicopter Critical Care Protocol (Proposed V4.1, W. White, 2026)</b> <span style="color:var(--text-faint)">— tiered Midazolam → Levetiracetam → Ketamine algorithm &amp; doses (DRAFT, pending Medical Director approval). Replaces PHI Sec 7.1 dosing.</span></li>
         </ol>
       </details>
     </section>
   </div>
 
-  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+  <div class="disc">Reference only — reflects the proposed Trauma Star V4.1 critical-care seizure algorithm (DRAFT, pending Medical Director approval). Follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
 </div>
 <script>
   function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
