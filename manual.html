@@ -38,13 +38,23 @@
   .sigline{border-bottom:1.5px solid var(--ink);height:34px}
   .siglabel{font-size:.78rem;color:var(--faint);margin-top:3px}
 
-  .proto{margin:16px 0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;break-inside:avoid}
+  .proto{margin:16px 0;padding:16px 18px;border:1px solid var(--line);border-radius:8px}
   .proto .cat{font-family:ui-monospace,monospace;font-size:.72rem;color:var(--accent);font-weight:700}
-  .proto .nm{font-size:1.02rem;font-weight:800;margin:2px 0 6px}
+  .proto .nm{font-size:1.08rem;font-weight:800;margin:2px 0 8px}
   .proto .row{font-size:.86rem;margin:5px 0}
   .proto .row b{color:var(--dim)}
   .dz{font-family:ui-monospace,monospace;font-size:.82rem;background:#fef3c7;border:1px solid #fde68a;border-radius:4px;padding:1px 5px;white-space:nowrap}
   .src{font-size:.78rem;color:var(--faint);margin-top:6px}
+
+  .rationale{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+  .rationale h4{font-size:.84rem;font-weight:800;margin:0 0 4px;color:var(--blue);text-transform:uppercase;letter-spacing:.03em}
+  .rationale p{font-size:.85rem;margin:7px 0;color:var(--dim)}
+  .rationale p b{color:var(--ink)}
+  .reflist{margin:8px 0 0;padding-left:22px}
+  .reflist li{font-size:.76rem;color:var(--faint);line-height:1.5;margin:4px 0}
+  .reflist a{color:var(--blue);text-decoration:none;word-break:break-word}
+  sup{font-weight:700;color:var(--accent);font-size:.7em}
+
   .disc{font-size:.78rem;color:var(--faint);margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
 
   @media print{
@@ -52,7 +62,7 @@
     .toolbar{display:none}
     .page{box-shadow:none;margin:0;max-width:none;padding:0 8px}
     .sec{break-before:page}
-    .proto{break-inside:avoid}
+    .proto{break-inside:auto}
     a{color:var(--ink);text-decoration:none}
   }
 </style>
@@ -80,7 +90,7 @@
   </div>
 
   <div class="stmt">
-    <b>Purpose &amp; scope.</b> This manual contains the clinical care guidelines for use by Trauma Star critical-care flight crews. Drug doses and treatment thresholds are adapted from the cited sources, including the PHI Air Medical Clinical Care Guidelines and published society guidelines, and <b>require the Medical Director's review and approval before clinical use.</b> Crews must operate within their scope of practice and contact online medical control as indicated. Where a standing order is not specified, an online physician order is required.
+    <b>Purpose &amp; scope.</b> This manual contains the clinical care guidelines for use by Trauma Star critical-care flight crews. Each protocol includes a quick-reference dosing summary and a <b>Clinical rationale &amp; evidence</b> section with numbered references so the reasoning and supporting literature can be reviewed. Drug doses and treatment thresholds are adapted from the cited sources, including the PHI Air Medical Clinical Care Guidelines and published society guidelines, and <b>require the Medical Director's review and approval before clinical use.</b> Crews must operate within their scope of practice and contact online medical control as indicated. Where a standing order is not specified, an online physician order is required.
   </div>
 
   <h2>Approval &amp; Sign-Off</h2>
@@ -131,6 +141,17 @@
     <div class="row"><b>Normotensive:</b> Ketamine <span class="dz">1–2 mg/kg IV</span>; Rocuronium <span class="dz">1–1.2 mg/kg IV</span>. Post-intubation ketamine drip start <span class="dz">1 mg/kg/hr</span> (titrate 1–4); midazolam add-on <span class="dz">1–2 mg</span> then 1–10 mg/hr.</div>
     <div class="row"><b>Hypotensive:</b> push-dose epi bridge (see TS-HD-001) / norepinephrine; Ketamine <span class="dz">0.5–1 mg/kg IV</span>; Rocuronium <span class="dz">1–1.2 mg/kg</span>; resuscitate to MAP ≥ 65 / SBP ≥ 100; same post-intubation sedation.</div>
     <div class="row"><b>Key points:</b> confirm post-intubation sedation before paralysis; rocuronium outlasts ketamine — never leave a paralyzed patient unsedated.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>The peri-intubation period is one of the most dangerous moments in critical-care transport. Post-intubation <b>hypotension and peri-intubation cardiac arrest</b> are common and independently associated with death, so the protocol is built to protect the blood pressure through induction rather than treat the airway in isolation.<sup>1</sup> Induction agent choice matters: <b>ketamine</b> preserves sympathetic tone and is the preferred sedative in the hemodynamically unstable patient, whereas etomidate can cause adrenal suppression and propofol/benzodiazepines blunt vascular tone.<sup>2,3</sup> A reduced ketamine dose (0.5–1 mg/kg) is used in shock because a catecholamine-depleted patient can still become hypotensive at full dose.<sup>2</sup></p>
+      <p>The protocol resuscitates <b>before</b> intubation in the hypotensive pathway — a push-dose or infusion vasopressor and/or blood to a MAP ≥ 65 / SBP ≥ 100 — because positive-pressure ventilation reduces preload and can precipitate arrest in an under-resuscitated patient.<sup>1</sup> <b>Rocuronium</b> provides reliable, fast intubating conditions, but its duration (~45 min) far outlasts a single dose of ketamine; the most dangerous and preventable error is an <b>awake, paralyzed patient</b>. Confirming that a post-intubation sedation (and analgesia) plan is ready before the paralytic is given is therefore a hard rule, not a preference.<sup>1,4</sup></p>
+      <ol class="reflist">
+        <li>Heffner AC, et al. Incidence and factors associated with cardiac arrest complicating emergency airway management. <em>Resuscitation.</em> 2013;84(11):1500–1504. <a href="https://pubmed.ncbi.nlm.nih.gov/23911630">pubmed.ncbi.nlm.nih.gov/23911630</a></li>
+        <li>Morris C, et al. Anaesthesia in haemodynamically compromised emergency patients: ketamine for induction. <em>Anaesthesia.</em> 2009;64(5):532–539. <a href="https://pubmed.ncbi.nlm.nih.gov/19413824">pubmed.ncbi.nlm.nih.gov/19413824</a></li>
+        <li>April MD, et al. Ketamine versus etomidate for rapid sequence intubation. <em>Acad Emerg Med.</em> 2020;27(11):1106–1115. <a href="https://pubmed.ncbi.nlm.nih.gov/33010102">pubmed.ncbi.nlm.nih.gov/33010102</a></li>
+        <li>Trauma &amp; Hemostasis Oxygenation Research (THOR) / damage-control RSI principles — post-intubation sedation standards.</li>
+      </ol>
+    </div>
     <div class="src">Source: THOR / peri-intubation &amp; post-intubation sedation literature.</div>
   </div>
   </div>
@@ -146,6 +167,16 @@
     <div class="row"><b>Epinephrine:</b> mix <span class="dz">1 mg in 100 mL NS/D5W = 10 mcg/mL</span>; give <span class="dz">0.5–2 mL (5–20 mcg) IV q2–5 min</span>.</div>
     <div class="row"><b>Phenylephrine:</b> <span class="dz">100 mcg/mL</span>; give <span class="dz">0.5–2 mL (50–200 mcg) IV q2–5 min</span>.</div>
     <div class="row"><b>Key points:</b> label syringe + concentration; bridge only — transition to infusion early.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Push-dose (bolus-dose) vasopressors give the crew a way to treat <b>brief, immediately dangerous hypotension</b> — most often peri-intubation or during a transient drop — while a continuous infusion is prepared.<sup>1,3</sup> The agent choice is mechanistic: <b>epinephrine</b> (α + β) raises blood pressure and supports cardiac output and heart rate, making it the better choice in bradycardic or low-output states; <b>phenylephrine</b> (pure α) raises afterload without inotropy or chronotropy and is useful when the heart rate is adequate or fast (e.g., tachydysrhythmia, or to avoid worsening myocardial oxygen demand).<sup>3</sup></p>
+      <p>The dominant safety issue is the <b>dosing error</b>. Push-dose pressors are prepared at the bedside from concentrated stock, and tenfold concentration or dilution errors have produced severe hypertensive and dysrhythmic events.<sup>2</sup> For this reason the protocol fixes the dilutions (epinephrine 10 mcg/mL; phenylephrine 100 mcg/mL), requires the syringe to be <b>labeled with drug and concentration</b>, and frames push-dose pressors explicitly as a <b>bridge</b> — the patient who needs more than a few boluses needs a titrated infusion and a search for the underlying cause (hemorrhage, tension physiology, sedation effect), not repeated boluses.<sup>1,2</sup></p>
+      <ol class="reflist">
+        <li>Holden D, et al. Safety considerations and guideline-based safe-use recommendations for bolus-dose vasopressors in the ED. <em>J Emerg Med.</em> 2018;54(4):457–465. <a href="https://pubmed.ncbi.nlm.nih.gov/29321103">pubmed.ncbi.nlm.nih.gov/29321103</a></li>
+        <li>Cole JB, et al. Human errors and adverse hemodynamic events related to push-dose pressors in the ED. <em>Acad Emerg Med.</em> 2019;26(11):1259–1267. <a href="https://pubmed.ncbi.nlm.nih.gov/31599487">pubmed.ncbi.nlm.nih.gov/31599487</a></li>
+        <li>Weingart S. Push-dose pressors for immediate blood-pressure control. <em>Clin Exp Emerg Med.</em> 2015;2(2):131–132. <a href="https://pubmed.ncbi.nlm.nih.gov/27752585">pubmed.ncbi.nlm.nih.gov/27752585</a></li>
+      </ol>
+    </div>
     <div class="src">Source: push-dose pressor consensus / EM literature.</div>
   </div>
 
@@ -155,7 +186,20 @@
     <div class="row"><b>Indications:</b> hemorrhagic shock — SBP &lt; 90, or HR ≥ 110 with SBP ≤ 90, or class III–IV shock from hemorrhage.</div>
     <div class="row"><b>Product:</b> LTOWB <span class="dz">1 unit (~500 mL) IV/IO</span>, titrate to radial pulse / SBP ~90 (TBI: SBP ≥ 110). Calcium <span class="dz">CaCl₂ 1 g</span> or <span class="dz">Ca gluconate 3 g</span> with 1st unit; TXA <span class="dz">1 g</span> if &lt; 3 h.</div>
     <div class="row"><b>Key points:</b> warm to ~38 °C (≤ 42); NaCl-only line (no LR/Ca); two-person unit verification; treat hypothermia/hypocalcemia.</div>
-    <div class="src">Source: THOR-AABB prehospital recommendations; JTS Damage Control Resuscitation; EAST whole-blood guideline.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Hemorrhage is the leading cause of preventable death in trauma, and patients in hemorrhagic shock are dying from <b>loss of whole blood</b> — red cells, plasma, platelets, and clotting factors together. Resuscitating with crystalloid dilutes the remaining clotting factors, worsens acidosis, and aggravates the <b>"lethal diamond"</b> of coagulopathy, acidosis, hypothermia, and hypocalcemia.<sup>1,2</sup> Low-titer O whole blood (LTOWB) replaces what is being lost in physiologic proportion and, in the PROPPR trial and subsequent military and civilian experience, balanced resuscitation improves hemostasis and early survival compared with red-cell-predominant strategies.<sup>1,3</sup></p>
+      <p><b>Permissive hypotension</b> (titrating to a radial pulse / SBP ~90, but SBP ≥ 110 with concurrent TBI to protect cerebral perfusion) avoids "popping the clot" and dilutional coagulopathy before surgical control.<sup>2</sup> <b>Calcium</b> is given because citrate in stored blood chelates ionized calcium, and calcium is essential to the clotting cascade and to myocardial contractility — hypocalcemia independently predicts mortality in massive transfusion.<sup>4</sup> <b>Warming</b> the product counters hypothermic coagulopathy, and <b>TXA within 3 hours</b> reduces mortality by limiting fibrinolysis (CRASH-2); given after 3 hours it may increase harm.<sup>5</sup> The NaCl-only line (no LR or calcium-containing fluid in the same line) prevents clotting in the tubing, and two-person verification mitigates the catastrophic consequence of a transfusion error.<sup>2,6</sup></p>
+      <ol class="reflist">
+        <li>Holcomb JB, et al. (PROPPR). Transfusion of plasma, platelets, and red blood cells in a 1:1:1 vs 1:1:2 ratio. <em>JAMA.</em> 2015;313(5):471–482. <a href="https://pubmed.ncbi.nlm.nih.gov/25647203">pubmed.ncbi.nlm.nih.gov/25647203</a></li>
+        <li>Cap AP, et al. (Joint Trauma System). Damage Control Resuscitation — Clinical Practice Guideline. 2019.</li>
+        <li>Yazer MH, Spinella PC, et al. (THOR-AABB). Recommendations on the use of whole blood in prehospital and trauma resuscitation. 2021.</li>
+        <li>Ditzel RM, et al. The lethal triad/diamond and the role of ionized hypocalcemia in trauma. <em>J Trauma Acute Care Surg.</em> 2020;88(3):434–439. <a href="https://pubmed.ncbi.nlm.nih.gov/31876689">pubmed.ncbi.nlm.nih.gov/31876689</a></li>
+        <li>CRASH-2 collaborators. Effects of tranexamic acid in trauma haemorrhage. <em>Lancet.</em> 2010;376:23–32. <a href="https://pubmed.ncbi.nlm.nih.gov/20554319">pubmed.ncbi.nlm.nih.gov/20554319</a></li>
+        <li>EAST. Practice management guideline on whole blood / damage-control resuscitation.</li>
+      </ol>
+    </div>
+    <div class="src">Source: THOR-AABB prehospital recommendations; JTS Damage Control Resuscitation; EAST whole-blood guideline; PROPPR; CRASH-2.</div>
   </div>
   </div>
 
@@ -169,6 +213,16 @@
     <div class="row"><b>Indications:</b> pediatric resuscitation; weight from Broselow tape / Handtevy (age) / scale.</div>
     <div class="row"><b>Core doses:</b> Epi (arrest) <span class="dz">0.01 mg/kg IV/IO</span>; fluids <span class="dz">20 mL/kg</span> (10 in trauma); defib <span class="dz">2→4 J/kg</span>; D10 <span class="dz">5 mL/kg</span>; naloxone <span class="dz">0.1 mg/kg</span>; amiodarone <span class="dz">5 mg/kg</span>; midazolam <span class="dz">0.1 mg/kg</span>; ketamine <span class="dz">1–2 mg/kg</span>; rocuronium <span class="dz">1 mg/kg</span>.</div>
     <div class="row"><b>Key points:</b> interactive weight-based calculator; ketamine concentration default 500 mg/5 mL; color zones with weight + age ranges.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Pediatric resuscitation is <b>weight-based</b>, and weight estimation under stress is the single largest source of dosing error in children. Because clinicians see critically ill children infrequently, calculate doses by hand under pressure, and face a wide range of patient sizes, prehospital pediatric medication errors are common and can be an order of magnitude off.<sup>3</sup> The <b>length-based (Broselow) tape</b> was developed precisely to remove this hazard by mapping a measured length to a reliable weight estimate and a set of pre-computed doses and equipment sizes, which reduces error compared with age- or eyeball-based estimates.<sup>2</sup></p>
+      <p>The doses in this protocol follow current <b>PALS</b> standards (e.g., epinephrine 0.01 mg/kg for arrest, defibrillation 2→4 J/kg, 20 mL/kg isotonic boluses — reduced to 10 mL/kg in trauma and in suspected cardiac/DKA physiology).<sup>1</sup> The app pairs an <b>interactive weight-based calculator</b> with the familiar Broselow/Handtevy color zones as a visual aid, and standardizes the ketamine concentration (default 500 mg/5 mL) so that a calculated milligram dose maps cleanly to a volume — closing the gap between "knowing the mg/kg" and "drawing up the right mL." The color zones are used as a visual reference only and do not replace an actual measured or known weight when available.<sup>2,3</sup></p>
+      <ol class="reflist">
+        <li>Topjian AA, et al. (AHA). 2020 American Heart Association Guidelines — Pediatric Advanced Life Support. <em>Circulation.</em> 2020;142(16_suppl_2):S469–S523. <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000901">ahajournals.org — CIR.0000000000000901</a></li>
+        <li>Lubitz DS, Luten RC, et al. A rapid method for estimating weight and resuscitation drug dosages from length in the pediatric age group. <em>Ann Emerg Med.</em> 1988;17(6):576–581. <a href="https://pubmed.ncbi.nlm.nih.gov/3377285">pubmed.ncbi.nlm.nih.gov/3377285</a></li>
+        <li>Hoyle JD, et al. Medication dosing errors in pediatric patients treated by EMS. <em>Prehosp Emerg Care.</em> 2012;16(1):59–66. <a href="https://pubmed.ncbi.nlm.nih.gov/22023164">pubmed.ncbi.nlm.nih.gov/22023164</a></li>
+      </ol>
+    </div>
     <div class="src">Source: standard weight-based (PALS) dosing; Broselow/Handtevy color zones (visual aid).</div>
   </div>
   </div>
@@ -182,7 +236,16 @@
     <div class="nm">IFT Transport Times — Ground vs AW139</div>
     <div class="row"><b>Reference:</b> Keys → Miami corridor (single highway, US-1). Ground &gt; 4 h (~160 mi from Lower Keys) vs AW139 ~45–50 min — ~3+ hours saved.</div>
     <div class="row"><b>Use:</b> supports the air-vs-ground medical-necessity rationale; confirm actual mileage/ETA per transport (GPS / Google Maps).</div>
-    <div class="src">Source: operational planning reference (estimates).</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>The Florida Keys are served by a <b>single highway (US-1)</b> with no alternate route. A patient in the Lower Keys is roughly 160 road miles from Miami's tertiary trauma, neuro, cardiac, and ECMO resources — a ground transport that routinely exceeds <b>4 hours</b>, and one that lengthens unpredictably with traffic, weather, and any bridge or road incident on the only artery out. Rotor-wing transport in the AW139 covers the same corridor in roughly <b>45–50 minutes</b>, saving 3+ hours and providing continuous critical-care monitoring en route.</p>
+      <p>This time differential is the basis of the <b>medical-necessity rationale</b> for air transport in the Keys, and it is clinically meaningful because the conditions Trauma Star moves — hemorrhage, stroke, STEMI, sepsis, and unstable obstetric and pediatric patients — are all <b>time-dependent</b>, with outcomes that degrade hour by hour. For several of these (e.g., stroke reperfusion windows, hemorrhage control), the hours saved are frequently the difference between eligibility and ineligibility for definitive therapy. Helicopter transport of major trauma patients has been associated with improved survival in large registry analyses, consistent with both reduced time-to-definitive-care and a higher level of en-route care.<sup>1</sup> The tabulated times are <b>planning estimates</b>; actual mileage and ETA should be confirmed per transport (GPS / Google Maps), as ground times vary with traffic and weather and air times with winds, routing, and ATC.<sup>2</sup></p>
+      <ol class="reflist">
+        <li>Galvagno SM, et al. Association between helicopter vs ground EMS and survival for adults with major trauma. <em>JAMA.</em> 2012;307(15):1602–1610. <a href="https://pubmed.ncbi.nlm.nih.gov/22511688">pubmed.ncbi.nlm.nih.gov/22511688</a></li>
+        <li>Operational planning reference — route distances/times are estimates; verify per transport.</li>
+      </ol>
+    </div>
+    <div class="src">Source: operational planning reference (estimates); air-medical outcomes literature.</div>
   </div>
   </div>
 
@@ -196,6 +259,19 @@
     <div class="row"><b>Indications:</b> dive injury with joint/limb pain, skin, neuro, or cardiopulmonary symptoms after a dive.</div>
     <div class="row"><b>Treatment:</b> assume DCI; notify pilot for lowest feasible cabin altitude; <span class="dz">100% O₂ 15 L/min</span> continuous; supine; IV fluids <span class="dz">LR or NS 150 mL/hr</span>; DAN <span class="dz">+1-919-684-9111</span> + nearest chamber.</div>
     <div class="row"><b>Flight (rotor-wing):</b> fly &lt; 1000 ft / near sea-level; continuous O₂. No nitrous oxide.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Decompression illness (DCI) — decompression sickness and arterial gas embolism — is caused by inert-gas bubbles forming in blood and tissue when ambient pressure falls faster than dissolved nitrogen can be eliminated. Two gas laws drive management: by <b>Henry's law</b> tissue gas load is proportional to pressure at depth, and by <b>Boyle's law</b> bubbles enlarge as ambient pressure drops.<sup>1,3</sup> <b>High-flow 100% oxygen</b> is the field treatment because it replaces alveolar nitrogen and creates a steep washout gradient that shrinks bubbles and oxygenates ischemic tissue; it is continued even if symptoms resolve, since improvement on oxygen alone is often temporary without recompression.<sup>2,3</sup></p>
+      <p>The defining transport hazard is <b>altitude</b>: any gain in cabin altitude above the dive site lowers ambient pressure and expands bubbles (Boyle's law), which can convert a mild case into a severe one in flight. Trauma Star transports rotor-wing only and flies <b>as low as safely possible (below ~1000 ft, near sea level)</b> with continuous oxygen.<sup>4,5</sup> The patient is kept <b>horizontal</b> — the historical head-down/left-lateral position is no longer recommended and may cause harm — and isotonic IV fluid (LR or NS) supports perfusion and inert-gas elimination.<sup>3,6</sup> Definitive treatment is hyperbaric recompression, so the operational priorities are early oxygen, the lowest safe altitude, early <b>DAN</b> consultation, and delivery to the nearest staffed chamber; nitrous oxide is avoided because it expands gas spaces.<sup>1,2</sup></p>
+      <ol class="reflist">
+        <li>Mitchell SJ, Bennett MH, et al. Pre-hospital management of decompression illness: expert review of key principles and controversies. <em>Diving Hyperb Med.</em> 2018;48(1):45–55. <a href="https://pubmed.ncbi.nlm.nih.gov/29557102">pubmed.ncbi.nlm.nih.gov/29557102</a></li>
+        <li>Divers Alert Network (DAN). Treating Decompression Sickness — 24/7 emergency line +1-919-684-9111. <a href="https://dan.org/health-medicine/health-resource/dive-medical-reference-books/decompression-sickness/treating-dcs/">dan.org</a></li>
+        <li>Undersea &amp; Hyperbaric Medical Society (UHMS). Best Practice Guidelines: Prevention and Treatment of DCS and AGE. <a href="https://www.uhms.org/">uhms.org</a></li>
+        <li>Movement by helicopter of patients with decompression sickness — low-altitude transport thresholds. <em>Aviat Space Environ Med.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/708353/">pubmed.ncbi.nlm.nih.gov/708353</a></li>
+        <li>Severe DCI: prehospital recognition and regional transport considerations. <em>Wilderness Environ Med.</em> 2017. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5646287/">PMC5646287</a></li>
+        <li>Pathophysiology, treatment and aeromedical retrieval of SCUBA-related DCI. <em>J Mil Veterans Health.</em> <a href="https://jmvh.org/article/pathophysiology-treatment-and-aeromedical-retrieval-of-scuba-related-dci/">jmvh.org</a></li>
+      </ol>
+    </div>
     <div class="src">Source: DAN; UHMS best-practice; 2018 pre-hospital DCI consensus; aeromedical transport literature.</div>
   </div>
   </div>
@@ -211,7 +287,22 @@
     <div class="row"><b>BP:</b> no tPA/intervention — treat only SBP &gt; 220 or DBP &gt; 120 (limit reduction 15% baseline). To qualify for / post-tPA: <span class="dz">≤ 180/105</span>. Post-thrombectomy: per interventionalist.</div>
     <div class="row"><b>Alteplase (online order):</b> <span class="dz">0.9 mg/kg TBW (max 90 mg)</span> — 10% over 1 min, 90% over 60 min; &lt; 4.5 h, age ≥ 18.</div>
     <div class="row"><b>Antihypertensives:</b> Nicardipine <span class="dz">5 mg/hr, ↑2.5 q5–15, max 15</span>; Clevidipine <span class="dz">1–2 mg/hr, max 32</span>; Labetalol <span class="dz">20 mg, repeat 40/80, max 300</span>.</div>
-    <div class="src">Source: PHI Sec 7.2 Acute Ischemic Stroke; AHA/ASA AIS guideline.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Ischemic stroke (~87% of strokes) is an occlusion with a salvageable <b>penumbra</b> that converts to infarct over time — an estimated <b>1.9 million neurons are lost per minute</b> of delay, the quantitative basis for "time is brain" and for fixing an accurate Last-Known-Well, which governs eligibility.<sup>1,2</sup> Field care identifies stroke and screens for <b>large-vessel occlusion (LVO)</b>, because LVO patients benefit from triage to an endovascular-capable center even if it means bypassing a closer hospital.<sup>1,4</sup> Reperfusion windows reflect the trial evidence: IV thrombolysis to 3 h (NINDS) and 4.5 h (ECASS III), thrombectomy to 6 h (HERMES) and, with imaging selection, to 24 h (DAWN/DEFUSE-3) — so a patient who looks "too late" by the clock may still be a thrombectomy candidate.<sup>5,6,7</sup></p>
+      <p>Blood pressure is generally <b>not lowered</b> because penumbral perfusion is pressure-passive; antihypertensives are reserved for SBP &gt; 220 / DBP &gt; 120 (limit reduction to ~15% of baseline), or to reach ≤ 185/110 before and ≤ 180/105 after thrombolysis to limit hemorrhagic transformation.<sup>1,8</sup> Titratable agents (nicardipine, clevidipine, labetalol) allow controlled reduction. Glucose is checked first because hypoglycemia is a stroke mimic, oxygen is given only to keep SpO₂ ≥ 94%, and advance notification measurably shortens treatment times — all reasons the Keys air-vs-ground differential is frequently decisive for staying in window.<sup>1,3</sup></p>
+      <ol class="reflist">
+        <li>Powers WJ, et al. (AHA/ASA). Guidelines for the Early Management of Acute Ischemic Stroke. <em>Stroke.</em> 2019;50(12):e344–e418. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000211">STR.0000000000000211</a></li>
+        <li>Saver JL. Time is brain — quantified. <em>Stroke.</em> 2006;37(1):263–266. <a href="https://pubmed.ncbi.nlm.nih.gov/16339467">pubmed.ncbi.nlm.nih.gov/16339467</a></li>
+        <li>AHA/ASA. Prehospital notification &amp; systems of stroke care. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000173">STR.0000000000000173</a></li>
+        <li>Goyal M, et al. (HERMES). Endovascular thrombectomy: individual-patient meta-analysis. <em>Lancet.</em> 2016;387:1723–1731. <a href="https://pubmed.ncbi.nlm.nih.gov/26898852">pubmed.ncbi.nlm.nih.gov/26898852</a></li>
+        <li>NINDS rt-PA Stroke Study Group. tPA for acute ischemic stroke. <em>N Engl J Med.</em> 1995;333:1581–1587. <a href="https://pubmed.ncbi.nlm.nih.gov/7477192">pubmed.ncbi.nlm.nih.gov/7477192</a></li>
+        <li>Hacke W, et al. (ECASS III). Alteplase 3–4.5 h after stroke. <em>N Engl J Med.</em> 2008;359:1317–1329. <a href="https://pubmed.ncbi.nlm.nih.gov/18815396">pubmed.ncbi.nlm.nih.gov/18815396</a></li>
+        <li>Nogueira RG (DAWN) &amp; Albers GW (DEFUSE 3). Thrombectomy 6–24 h with imaging selection. <em>N Engl J Med.</em> 2018;378:11–21 &amp; 708–718. <a href="https://pubmed.ncbi.nlm.nih.gov/29129157">pubmed.ncbi.nlm.nih.gov/29129157</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.2 Acute Ischemic Stroke (Rev 23, 23 Jan 2025) — dose/BP-target source.</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.2 Acute Ischemic Stroke; AHA/ASA AIS guideline; NINDS / ECASS III / HERMES / DAWN / DEFUSE-3.</div>
   </div>
 
   <div class="proto">
@@ -220,7 +311,19 @@
     <div class="row"><b>BP:</b> ICH with SBP &gt; 160 → lower to <span class="dz">130–160 mmHg</span>, smooth control.</div>
     <div class="row"><b>Antihypertensives:</b> Nicardipine / Clevidipine / Labetalol (as above); Esmolol <span class="dz">500 mcg/kg load, 50 mcg/kg/min titration, max 300 mcg/kg/min</span>.</div>
     <div class="row"><b>Key points:</b> anticoagulant reversal under direct medical control; HOB 30°; neurosurgical-capable destination.</div>
-    <div class="src">Source: PHI Sec 7.3 Hemorrhagic Stroke; AHA/ASA ICH guideline.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Spontaneous intracerebral hemorrhage (ICH) is ~10–15% of strokes but disproportionately lethal (30-day mortality ~40%), and the strongest <b>modifiable</b> predictor of death is early <b>hematoma expansion</b>, which occurs in about a third of patients in the first hours.<sup>1</sup> Elevated BP drives expansion, so early controlled lowering reduces growth (INTERACT2), but aggressive over-lowering provides no added benefit and signals harm (ATACH-2) — establishing both a target and a floor.<sup>3,4</sup> The protocol therefore lowers an elevated SBP <b>smoothly</b> into target with titratable infusions (nicardipine, clevidipine, labetalol, esmolol), avoiding the swings and abrupt drops that can cause perilesional ischemia.<sup>1,5</sup></p>
+      <p>Because many ICH patients take anticoagulants or antiplatelets that worsen the bleed and accelerate expansion, the highest-yield transport action is to <b>obtain and relay an accurate medication history (including last dose)</b> so reversal agents can be drawn up and given immediately on arrival.<sup>1</sup> Secondary-injury prevention — SpO₂ ≥ 94%, normocapnia, avoidance of hypotension and hyperthermia, HOB ~30°, and early airway protection in declining consciousness — limits further damage, and any sign of expansion or herniation (declining GCS, new pupillary asymmetry, Cushing response) triggers the herniation pathway and immediate neurosurgical-team notification at a neurosurgery-capable destination.<sup>1,5</sup></p>
+      <ol class="reflist">
+        <li>Greenberg SM, et al. (AHA/ASA). 2022 Guideline for the Management of Spontaneous Intracerebral Hemorrhage. <em>Stroke.</em> 2022;53(7):e282–e361. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000407">STR.0000000000000407</a></li>
+        <li>AHA/ASA. Systems of stroke care &amp; triage to neurosurgical-capable centers. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000173">STR.0000000000000173</a></li>
+        <li>Anderson CS, et al. (INTERACT2). Rapid BP lowering in acute ICH. <em>N Engl J Med.</em> 2013;368:2355–2365. <a href="https://pubmed.ncbi.nlm.nih.gov/23713578">pubmed.ncbi.nlm.nih.gov/23713578</a></li>
+        <li>Qureshi AI, et al. (ATACH-2). Intensive BP lowering in acute cerebral hemorrhage. <em>N Engl J Med.</em> 2016;375:1033–1043. <a href="https://pubmed.ncbi.nlm.nih.gov/27276234">pubmed.ncbi.nlm.nih.gov/27276234</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.3 Hemorrhagic Stroke (Rev 23, 23 Jan 2025) — dose/BP-target source.</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.3 Hemorrhagic Stroke; AHA/ASA ICH guideline; INTERACT2; ATACH-2.</div>
   </div>
 
   <div class="proto">
@@ -228,7 +331,19 @@
     <div class="nm">Stroke — Undetermined</div>
     <div class="row"><b>BP:</b> positive stroke assessment + glucose ≥ 60 → <span class="dz">SBP goal &lt; 185</span>; antihypertensives as above (Nicardipine / Clevidipine / Labetalol).</div>
     <div class="row"><b>Key points:</b> hypoglycemia mimics stroke — check/treat first; rapid transport to CT to define type.</div>
-    <div class="src">Source: PHI Sec 7.4 Undifferentiated Stroke.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Without CT the field cannot reliably separate ischemic from hemorrhagic stroke — bedside judgment and classic features misclassify a large share of patients — so the undifferentiated stroke is the <b>normal starting state</b> for every stroke transport.<sup>1,2</sup> The two subtypes call for <b>opposite</b> BP strategies (permissive hypertension for ischemia vs controlled lowering for hemorrhage), and the asymmetry of harm guides the default: with ~7 of 8 strokes ischemic, inappropriately dropping BP risks extending an infarct, so the field default is to <b>not lower BP</b> unless it is extreme or herniation is evident, and to let CT decide.<sup>1,3,4</sup></p>
+      <p>What is safe for everyone defines the bundle: SpO₂ ≥ 94%, airway protection in declining consciousness, treat hypoglycemia (a mimic and a secondary insult), avoid hypotension and hyperthermia, fix an accurate LKW, gather the anticoagulation history, and move fast to a CT/stroke-capable center (ideally one with both thrombectomy and neurosurgery) with pre-notification.<sup>1,4</sup> Two situations justify acting before imaging: <b>extreme hypertension</b> (cautious titratable reduction under medical control) and <b>clinical herniation</b> (the herniation pathway). From the Keys, rapid rotor-wing delivery to imaging is the intervention that most reliably helps every subtype.<sup>1,3</sup></p>
+      <ol class="reflist">
+        <li>Powers WJ, et al. (AHA/ASA). Early Management of Acute Ischemic Stroke. <em>Stroke.</em> 2019;50(12):e344–e418. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000211">STR.0000000000000211</a></li>
+        <li>AHA/ASA. Prehospital stroke systems &amp; triage when subtype is unknown. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000173">STR.0000000000000173</a></li>
+        <li>Saver JL. Time is brain — quantified. <em>Stroke.</em> 2006;37(1):263–266. <a href="https://pubmed.ncbi.nlm.nih.gov/16339467">pubmed.ncbi.nlm.nih.gov/16339467</a></li>
+        <li>Greenberg SM, et al. (AHA/ASA). 2022 Spontaneous ICH Guideline. <em>Stroke.</em> 2022;53(7):e282–e361. <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000407">STR.0000000000000407</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.4 Undifferentiated Stroke (Rev 23, 23 Jan 2025).</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.4 Undifferentiated Stroke; AHA/ASA AIS &amp; ICH guidelines.</div>
   </div>
 
   <div class="proto">
@@ -237,7 +352,19 @@
     <div class="row"><b>Glucose first.</b> Benzodiazepine q2–3 min until controlled (IV preferred): Lorazepam <span class="dz">4 mg IV/IM/NAS</span> (peds 0.1 mg/kg, max 4); Midazolam <span class="dz">0.1 mg/kg IV (max 5)</span> or 0.2 mg/kg IM/NAS (max 10).</div>
     <div class="row"><b>Refractory (choose one):</b> Levetiracetam <span class="dz">4 g IV over 15 min</span> (peds 60 mg/kg); Fosphenytoin <span class="dz">15 mg PE/kg</span>; Phenytoin <span class="dz">15 mg/kg</span>. Infusions (propofol/phenobarb/benzo) under direct medical control.</div>
     <div class="row"><b>Key points:</b> paralytics do NOT treat seizures.</div>
-    <div class="src">Source: PHI Sec 7.1 Seizures &amp; Sec 7.1.1 Refractory Seizures.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>A convulsion lasting <b>≥ 5 minutes</b> is status epilepticus and is treated as such — the 5-minute definition replaced older 30-minute thresholds because most seizures self-terminate in 2–3 minutes, and prolonged activity becomes progressively pharmacoresistant (GABA-receptor internalization) and neurotoxic.<sup>1,2</sup> Early, adequately-dosed treatment is the main determinant of outcome. <b>Glucose is checked first</b> (a common, fatal, reversible cause), and in pregnancy/postpartum a seizure is eclampsia until proven otherwise (magnesium pathway).<sup>4</sup></p>
+      <p><b>Benzodiazepines are first-line</b>; RAMPART showed IM midazolam is at least as effective as IV lorazepam and reaches the patient faster when no line is in.<sup>3</sup> The dominant error is <b>under-dosing</b> — give a full weight-appropriate dose and repeat q2–3 min until the seizure stops, with airway equipment and monitoring ready for respiratory depression. When benzodiazepines fail, a second-line agent is added; ESETT found <b>levetiracetam, fosphenytoin, and valproate essentially equivalent</b>, so the choice can follow availability and comorbidity.<sup>5</sup> A critical pitfall: <b>neuromuscular blockade stops the movement, not the seizure</b> — if a paralytic is used for airway control, electrical seizure continues to injure the brain, so aggressive anticonvulsant therapy must continue.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>Glauser T, et al. (AES). Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus. <em>Epilepsy Curr.</em> 2016;16(1):48–61. <a href="https://pubmed.ncbi.nlm.nih.gov/26900382">pubmed.ncbi.nlm.nih.gov/26900382</a></li>
+        <li>Trinka E, et al. (ILAE). Definition and classification of status epilepticus. <em>Epilepsia.</em> 2015;56(10):1515–1523. <a href="https://pubmed.ncbi.nlm.nih.gov/26336950">pubmed.ncbi.nlm.nih.gov/26336950</a></li>
+        <li>Silbergleit R, et al. (RAMPART). IM vs IV therapy for prehospital status epilepticus. <em>N Engl J Med.</em> 2012;366:591–600. <a href="https://pubmed.ncbi.nlm.nih.gov/22335736">pubmed.ncbi.nlm.nih.gov/22335736</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.1 Seizures &amp; 7.1.1 Refractory Seizures.</li>
+        <li>Kapur J, et al. (ESETT). Trial of three anticonvulsants for status epilepticus. <em>N Engl J Med.</em> 2019;381:2103–2113. <a href="https://pubmed.ncbi.nlm.nih.gov/31774955">pubmed.ncbi.nlm.nih.gov/31774955</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.1 Seizures &amp; Sec 7.1.1 Refractory Seizures; RAMPART; ESETT; AES/ILAE.</div>
   </div>
 
   <div class="proto">
@@ -245,7 +372,18 @@
     <div class="nm">Brain Herniation Syndrome</div>
     <div class="row"><b>Recognize:</b> abnormal breathing, pupillary changes, posturing, Cushing reflex (bradycardia + HTN + resp depression).</div>
     <div class="row"><b>Treatment:</b> Sodium Chloride 3% <span class="dz">250 mL IV over 5–15 min</span> (peds 3–5 mL/kg IBW). Alternate Mannitol <span class="dz">0.5–1 g/kg over 30–60 min</span> (online order). HOB 30°, optimize ventilation/oxygenation.</div>
-    <div class="src">Source: PHI Sec 7.5 Brain Herniation Syndrome.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Herniation is the final common pathway by which expanding intracranial mass lesions kill. The <b>Monro-Kellie doctrine</b> explains its speed: once the small CSF and venous-blood buffers are exhausted, any further volume produces a steep, nonlinear rise in ICP and fall in cerebral perfusion (CPP = MAP − ICP).<sup>1,2</sup> The <b>Cushing reflex</b> (hypertension, bradycardia, irregular respirations) is a late brainstem attempt to defend perfusion. This relationship makes two field errors catastrophic — allowing <b>hypotension</b> (collapses CPP) or <b>hypoxia/hypercarbia</b> (CO₂ vasodilates and raises ICP) — so oxygenation, ventilation, and blood pressure are as important as any drug.<sup>2,3</sup></p>
+      <p><b>Hyperosmolar therapy</b> draws water out of brain tissue across an intact blood-brain barrier. <b>3% saline</b> (adult 250 mL; peds 3–5 mL/kg IBW over 5–15 min) is first-line and also supports BP/volume — valuable in a patient who must not become hypotensive — while <b>mannitol</b> (0.5–1 g/kg, online order) is effective but can cause diuresis-related hypovolemia.<sup>4</sup> These are paired with the ICP bundle: HOB ~30°, midline head (avoid jugular obstruction), normocapnia (EtCO₂ ~35–40; brief mild hyperventilation only as a temporizing rescue for active herniation), and rapid transport to a neurosurgical-capable center for definitive decompression.<sup>2,3</sup></p>
+      <ol class="reflist">
+        <li>Carney N, et al. (Brain Trauma Foundation). Guidelines for Management of Severe TBI, 4th ed. <em>Neurosurgery.</em> 2017;80(1):6–15. <a href="https://pubmed.ncbi.nlm.nih.gov/27654000">pubmed.ncbi.nlm.nih.gov/27654000</a></li>
+        <li>Stevens RD, et al. Emergency Neurological Life Support: intracranial hypertension and herniation. <em>Neurocrit Care.</em> 2015;23(Suppl 2):S76–S82. <a href="https://pubmed.ncbi.nlm.nih.gov/26438459">pubmed.ncbi.nlm.nih.gov/26438459</a></li>
+        <li>Spaite DW, et al. Effect of prehospital hypotension and hypoxia on TBI outcome. <em>JAMA Surg.</em> 2017;152(4):360–368. <a href="https://pubmed.ncbi.nlm.nih.gov/27926759">pubmed.ncbi.nlm.nih.gov/27926759</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.5 Brain Herniation Syndrome (Rev 22, 01 May 2024).</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.5 Brain Herniation Syndrome; Brain Trauma Foundation; ENLS.</div>
   </div>
 
   <div class="proto">
@@ -253,7 +391,19 @@
     <div class="nm">CNS Infection</div>
     <div class="row"><b>Treatment (ASAP):</b> Cefotaxime <span class="dz">50 mg/kg IV over 3–5 min</span> PLUS — Ceftriaxone <span class="dz">50 mg/kg (max 2 g)</span> if ≥ 3 months, or Ampicillin <span class="dz">100 mg/kg</span> if &lt; 3 months.</div>
     <div class="row"><b>Key points:</b> do not delay antibiotics; treat sepsis/seizures; droplet precautions.</div>
-    <div class="src">Source: PHI Sec 7.6 CNS Infection.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Acute bacterial meningitis behaves like a vascular emergency: untreated mortality is very high and outcome is tightly linked to <b>time-to-effective-antibiotic</b>, with each hour of delay associated with worse survival and neurologic outcome.<sup>1,2,3</sup> Because confirmatory testing (imaging, LP) happens at the receiving facility, the evidence-based field action is to give <b>empiric antibiotics early and not delay them for diagnostics</b> — antibiotics given before CSF sampling still allow diagnosis via blood cultures, CSF chemistries, and PCR.<sup>1</sup> For a Keys transport, starting the antibiotic in the aircraft can be the largest single reduction in time-to-treatment available.</p>
+      <p>The regimen covers the most lethal age-specific pathogens: a third-generation cephalosporin (<b>cefotaxime</b>, plus <b>ceftriaxone</b> ≥ 3 months) for pneumococcus and meningococcus, with <b>ampicillin added &lt; 3 months</b> specifically to cover <em>Listeria</em> and group B strep, which cephalosporins miss.<sup>4</sup> Allergy is checked and the <b>exact administration time recorded</b>, since that timestamp anchors downstream care and the adjunctive-dexamethasone decision.<sup>5</sup> Manage concurrent sepsis/shock and seizures, and observe <b>droplet precautions</b> for suspected meningococcal disease until 24 h of therapy, documenting exposure for possible crew chemoprophylaxis.<sup>1,3</sup></p>
+      <ol class="reflist">
+        <li>Tunkel AR, et al. (IDSA). Practice Guidelines for Bacterial Meningitis. <em>Clin Infect Dis.</em> 2004;39:1267–1284. <a href="https://pubmed.ncbi.nlm.nih.gov/15494903">pubmed.ncbi.nlm.nih.gov/15494903</a></li>
+        <li>Køster-Rasmussen R, et al. Antibiotic treatment delay and outcome in bacterial meningitis. <em>J Infect.</em> 2008;57(6):449–454. <a href="https://pubmed.ncbi.nlm.nih.gov/18950880">pubmed.ncbi.nlm.nih.gov/18950880</a></li>
+        <li>Evans L, et al. (Surviving Sepsis Campaign) 2021. <em>Crit Care Med.</em> 2021;49(11):e1063–e1143. <a href="https://pubmed.ncbi.nlm.nih.gov/34605781">pubmed.ncbi.nlm.nih.gov/34605781</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 7.6 CNS Infection (Rev 20, 05 Sep 2023).</li>
+        <li>de Gans J, van de Beek D. Dexamethasone in adults with bacterial meningitis. <em>N Engl J Med.</em> 2002;347:1549–1556. <a href="https://pubmed.ncbi.nlm.nih.gov/12432041">pubmed.ncbi.nlm.nih.gov/12432041</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 7.6 CNS Infection; IDSA; Surviving Sepsis Campaign.</div>
   </div>
   </div>
 
@@ -266,7 +416,17 @@
     <div class="nm">Opioid Overdose</div>
     <div class="row"><b>Treatment:</b> ventilate first; Naloxone — adult <span class="dz">1–2 mg IV/IM/IN</span>, peds <span class="dz">0.01 mg/kg (max 1 mg)</span>, newborn <span class="dz">0.1 mg/kg</span>. Infusion: ⅔ of the effective dose each hour.</div>
     <div class="row"><b>Key points:</b> titrate to respiration, not full arousal; watch for re-sedation.</div>
-    <div class="src">Source: PHI Sec 9.1.1 Opioid Overdose.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Opioids kill by suppressing brainstem respiratory drive, so the lethal element is <b>hypoventilation</b>, not the pupils or the level of consciousness. The first and most important intervention is <b>oxygenation and ventilation (BVM)</b>; naloxone is an adjunct that buys time, not a substitute for airway management — a patient being ventilated effectively is, for the moment, safe.<sup>1,3</sup> Naloxone is titrated to restore <b>adequate spontaneous breathing, not full arousal</b>, because over-reversal precipitates withdrawal, vomiting/aspiration, and agitation that is a genuine safety hazard in a moving aircraft.<sup>2,3</sup></p>
+      <p>The central pitfall is the <b>duration mismatch</b>: naloxone lasts ~30–90 min, shorter than methadone, extended-release products, and high-potency fentanyl analogs, so a patient can re-sedate after a single dose. Severe or recurrent toxicity is therefore managed with an <b>infusion</b> (≈ ⅔ of the effective bolus per hour) with continuous monitoring of respiratory rate, SpO₂, and ideally EtCO₂.<sup>1,2</sup> An incomplete response despite adequate naloxone should prompt consideration of co-ingestants, hypoglycemia, hypoxic injury, trauma, or chest-wall rigidity from high-potency agents. Contact Poison Control (1-800-222-1222) for atypical presentations.<sup>2</sup></p>
+      <ol class="reflist">
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 9.1.1 Opioid Overdose (Rev 23, 23 Jan 2025).</li>
+        <li>Connors NJ, Nelson LS. Evolution of naloxone dosing &amp; management of opioid toxicity. <em>J Med Toxicol.</em> 2016;12(3):276–281. <a href="https://pubmed.ncbi.nlm.nih.gov/27381954">pubmed.ncbi.nlm.nih.gov/27381954</a></li>
+        <li>Panchal AR, et al. (AHA). 2020 Guidelines for CPR &amp; ECC — opioid-associated emergencies. <em>Circulation.</em> 2020;142(16_suppl_2):S366–S468. <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000916">CIR.0000000000000916</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 9.1.1 Opioid Overdose; AHA 2020 ECC.</div>
   </div>
 
   <div class="proto">
@@ -275,6 +435,17 @@
     <div class="row"><b>Suspect:</b> enclosed-space fire + AMS, seizures, SBP &lt; 90/shock, arrest, lactate ≥ 8, or pH &lt; 7.25 — treat empirically.</div>
     <div class="row"><b>Cyanokit (hydroxocobalamin):</b> adult <span class="dz">5 g in 100 mL NS over 15 min</span> (peds 70 mg/kg, max 5 g); repeat ×1, <span class="dz">max 10 g</span>.</div>
     <div class="row"><b>Concurrent:</b> 100% O₂ (CO); hyperbaric for severe CO; early airway for burns/edema; treat bronchospasm, seizures, hypotension.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Enclosed-space fires produce two synergistic asphyxiants — <b>carbon monoxide and hydrogen cyanide</b> — that poison oxygen delivery and oxygen use respectively. Cyanide cannot be confirmed quickly (levels take hours), so it is treated <b>empirically</b> when smoke exposure coincides with shock, altered mental status, seizures, arrest, or a high lactate.<sup>1,2</sup> Cyanide binds cytochrome c oxidase and halts aerobic ATP production despite available oxygen, producing a profound <b>lactic acidosis</b>; a lactate ≥ 8–10 in a fire victim is a strong surrogate marker.<sup>2,3</sup> Oxygen alone does not fix it — an antidote is required.</p>
+      <p><b>Hydroxocobalamin (Cyanokit)</b> binds cyanide to form renally-excreted cyanocobalamin (5 g over 15 min; peds 70 mg/kg, max 5 g; repeat once to 10 g).<sup>4</sup> It is preferred over nitrite kits in fire victims because nitrites induce <b>methemoglobinemia</b>, which cannot carry oxygen — dangerous when CO has already crippled oxygen carrying; hydroxocobalamin does not impair oxygen transport.<sup>1,3</sup> CO is treated with sustained <b>100% oxygen</b> (hyperbaric for severe features), remembering that standard pulse oximetry reads falsely normal with carboxyhemoglobin. Secure the airway <b>early</b> for facial/airway burns, soot, or stridor before edema makes it impossible, and treat bronchospasm, seizures, and hypotension.<sup>2,4</sup></p>
+      <ol class="reflist">
+        <li>Cyanide, house fires, and when to give hydroxocobalamin — Tampa Emergency Medicine. <a href="https://www.tampaemergencymedicine.org/blog/cyanide-housefires-and-when-to-give-hydroxocobalamin">tampaemergencymedicine.org</a></li>
+        <li>Carbon Monoxide–Cyanide Toxicity (House Fire) — ACEP Toxicology. <a href="https://www.acep.org/toxicology/cases/simulation-cases/carbon-monoxide-cyanide-toxicity-house-fire">acep.org</a></li>
+        <li>Cyanide Toxicity — LITFL. <a href="https://litfl.com/cyanide-toxicity/">litfl.com</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 9.1.2 Cyanide Poisoning (Rev 23, 23 Jan 2025).</li>
+      </ol>
+    </div>
     <div class="src">Source: PHI Sec 9.1.2; ACEP / LITFL / EM literature.</div>
   </div>
 
@@ -283,7 +454,18 @@
     <div class="nm">TCA Overdose</div>
     <div class="row"><b>Treat if:</b> CV instability/hypotension, seizures/coma, wide QRS, prolonged QT, ventricular dysrhythmia.</div>
     <div class="row"><b>Sodium Bicarbonate:</b> adult <span class="dz">50–100 mEq IV over 5–10 min</span> (peds 1–2 mEq/kg); 1 dose standing, repeats need physician order.</div>
-    <div class="src">Source: PHI Sec 9.1.3 TCA Overdose.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>TCAs have a narrow therapeutic index and overdose causes <b>fast sodium-channel blockade</b> (wide QRS, ventricular dysrhythmia), anticholinergic effects, CNS toxicity (seizures, coma), and refractory hypotension — with characteristically <b>rapid</b> deterioration.<sup>1</sup> The <b>ECG is the vital sign</b>: QRS duration predicts toxicity better than dose or level, with QRS &gt; 100 ms predicting seizures and &gt; 160 ms predicting ventricular dysrhythmias, and a terminal R wave in aVR as a supporting clue.<sup>2</sup> Acidosis and hypoxia worsen channel blockade, so oxygenation and ventilation are themselves cardioprotective.<sup>1,2</sup></p>
+      <p><b>Sodium bicarbonate</b> is the cornerstone antidote, working by a sodium load that overcomes channel blockade and alkalinization that reduces free drug — together narrowing the QRS, suppressing dysrhythmias, and supporting BP (adult 50–100 mEq over 5–10 min; peds 1–2 mEq/kg; one dose standing, repeats by physician order).<sup>3,4</sup> Seizures (which cause acidosis and worsen cardiotoxicity) are treated with benzodiazepines — <b>phenytoin is avoided</b> — and Class IA/IC and other QRS-prolonging antiarrhythmics are avoided entirely. Refractory collapse may need lipid emulsion or ECMO at the receiving facility, another reason to expedite transport; contact Poison Control early.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>Body R, et al. (GEMNet). Management of tricyclic antidepressant overdose. <em>Emerg Med J.</em> 2011;28(4):347–368. <a href="https://pubmed.ncbi.nlm.nih.gov/21436332">pubmed.ncbi.nlm.nih.gov/21436332</a></li>
+        <li>Boehnert MT, Lovejoy FH. QRS duration vs serum drug level in predicting seizures and ventricular arrhythmias after TCA overdose. <em>N Engl J Med.</em> 1985;313:474–479. <a href="https://pubmed.ncbi.nlm.nih.gov/4022081">pubmed.ncbi.nlm.nih.gov/4022081</a></li>
+        <li>Bruccoleri RE, Burns MM. Sodium bicarbonate for QRS widening — a literature review. <em>J Med Toxicol.</em> 2016;12(1):121–129. <a href="https://pubmed.ncbi.nlm.nih.gov/26831200">pubmed.ncbi.nlm.nih.gov/26831200</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 9.1.3 TCA Overdose (Rev 23, 23 Jan 2025).</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 9.1.3 TCA Overdose; GEMNet; Boehnert &amp; Lovejoy.</div>
   </div>
 
   <div class="proto">
@@ -292,7 +474,18 @@
     <div class="row"><b>General:</b> mark swelling border + time; immobilize below heart; measure circumference q15 min.</div>
     <div class="row"><b>Pit viper:</b> CroFab <span class="dz">4–6 vials in 250 mL NS</span>; start 25–50 mL/hr ×10 min, then 250 mL/hr.</div>
     <div class="row"><b>Scorpion:</b> Atropine <span class="dz">1 mg (peds 0.02 mg/kg, max 0.5)</span> for secretions; Fentanyl <span class="dz">0.5–2 mcg/kg</span> or Midazolam for clonus/sedation; avoid long-acting opioids/benzos &amp; anticholinergics.</div>
-    <div class="src">Source: PHI Sec 9.2 Envenomation.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Two distinct syndromes are covered. <b>Pit viper (crotalid)</b> venom causes <b>progressive</b> local tissue injury and a venom-induced coagulopathy (thrombocytopenia, hypofibrinogenemia) that can cause systemic bleeding — a bite that looks mild early can become limb- or life-threatening over hours.<sup>1</sup> Antivenom (<b>CroFab</b>, 4–6 vials, started slowly to detect early allergic reaction, then 250 mL/hr) binds and neutralizes circulating venom, halting progression; earlier administration limits tissue loss and reverses coagulopathy. The objective progression marker is <b>limb circumference proximal to the bite measured q15 min</b>.<sup>1,4</sup> Several traditional measures are <b>contraindicated</b> (arterial tourniquets, incision/suction, ice, electrical therapy) because they concentrate venom and worsen tissue loss; do not capture the snake — a photo suffices.<sup>1,2</sup></p>
+      <p><b>Neurotoxic scorpion</b> envenomation is largely supportive: the threats are <b>secretions compromising the airway</b> and severe agitation/myoclonus, especially in children.<sup>1,3</sup> Manage secretions with suction and a single dose of <b>atropine</b>, prepare for early airway, and treat clonus/sedation with <b>short-acting</b> agents (fentanyl preferred, or midazolam), deliberately <b>avoiding long-acting opioids/benzodiazepines and additional anticholinergics</b> because the syndrome is dynamic and a long-acting agent can outlast the venom and cause respiratory depression. Scorpion-specific antivenom rapidly resolves severe pediatric cases (a receiving-facility decision). Contact Poison Control (1-800-222-1222) for both syndromes.<sup>1,3</sup></p>
+      <ol class="reflist">
+        <li>Lavonas EJ, et al. Unified treatment algorithm for crotaline snakebite in the US — evidence-based consensus. <em>BMC Emerg Med.</em> 2011;11:2. <a href="https://pubmed.ncbi.nlm.nih.gov/21291549">pubmed.ncbi.nlm.nih.gov/21291549</a></li>
+        <li>American College of Medical Toxicology — prehospital snakebite first-aid pitfalls (avoid tourniquets, incision, suction, ice). <a href="https://www.acmt.net/">acmt.net</a></li>
+        <li>Boyer LV, et al. Antivenom for critically ill children with scorpion neurotoxicity. <em>N Engl J Med.</em> 2009;360:2090–2098. <a href="https://pubmed.ncbi.nlm.nih.gov/19439743">pubmed.ncbi.nlm.nih.gov/19439743</a></li>
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 9.2 Envenomation (Rev 22–23, 2024–2025).</li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 9.2 Envenomation; Lavonas unified algorithm; Boyer (scorpion antivenom).</div>
   </div>
   </div>
 
