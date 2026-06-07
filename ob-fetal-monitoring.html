@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Fetal Monitoring">
+<meta name="theme-color" content="#0a0f1c">
+<title>Electronic Fetal Monitoring (NICHD) — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .cat1{border-left-color:#22c55e}.cat2{border-left-color:#f59e0b}.cat3{border-left-color:#ef4444}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .pill{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.7rem;color:#0a0f1c;padding:2px 7px;border-radius:6px;margin:0 4px 0 0}
+  .pill.g{background:#86efac}.pill.a{background:#fcd34d}.pill.r{background:#fca5a5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Electronic Fetal Monitoring (NICHD)</h1>
+      <div class="sub">3-tier categories · terminology</div>
+      <div class="cat">TS-OB-007 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">NICHD 3-tier categories</div>
+      <div class="block cat1">
+        <div class="item"><div class="nm"><span class="pill g">CAT I</span> Normal</div><div class="detail"><b class="k">All</b> of: baseline <b class="k">110–160</b>, <b class="k">moderate</b> variability, <b class="k">no</b> late or variable decels. Early decels &amp; accels may be present/absent. → Routine; predicts normal acid-base.</div></div>
+      </div>
+      <div class="block cat2" style="margin-top:10px">
+        <div class="item"><div class="nm"><span class="pill a">CAT II</span> Indeterminate</div><div class="detail">Anything <b class="k">not</b> Cat I or Cat III (e.g., tachycardia, minimal/marked variability, recurrent variables, prolonged decels). → Most tracings; <b class="k">requires surveillance + intrauterine resuscitation</b>.</div></div>
+      </div>
+      <div class="block cat3" style="margin-top:10px">
+        <div class="item"><div class="nm"><span class="pill r">CAT III</span> Abnormal</div><div class="detail"><b class="k">Absent variability</b> with any of: recurrent late decels, recurrent variable decels, bradycardia — <b class="k">or</b> a sinusoidal pattern. → Abnormal acid-base; act now, notify MFM/OB.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Variability (10-min window)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li><b class="k">Absent</b> — undetectable amplitude.</li>
+          <li><b class="k">Minimal</b> — 0–5 bpm.</li>
+          <li><b class="k">Moderate</b> — 6–25 bpm (reassuring).</li>
+          <li><b class="k">Marked</b> — &gt; 25 bpm.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Baseline &amp; accelerations</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Baseline: mean to nearest 5 bpm over 10 min. <b class="k">Brady &lt; 110 · Normal 110–160 · Tachy &gt; 160.</b></li>
+          <li>Acceleration: abrupt rise. <b class="k">≥ 32 wk:</b> ≥ 15 bpm × ≥ 15 sec. <b class="k">&lt; 32 wk:</b> ≥ 10 bpm × ≥ 10 sec.</li>
+          <li>Prolonged accel: ≥ 2 min but &lt; 10 min (≥ 10 min = baseline change).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Decelerations</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Early</div><div class="detail">Gradual (onset→nadir ≥ 30 s); nadir <b class="k">coincides</b> with contraction peak. Head compression — benign.</div></div>
+        <div class="item"><div class="nm">Late</div><div class="detail">Gradual (≥ 30 s); nadir <b class="k">after</b> contraction peak. Uteroplacental insufficiency — concerning.</div></div>
+        <div class="item"><div class="nm">Variable</div><div class="detail">Abrupt (onset→nadir &lt; 30 s); ≥ 15 bpm, ≥ 15 s, &lt; 2 min. Cord compression.</div></div>
+        <div class="item"><div class="nm">Prolonged</div><div class="detail">≥ 15 bpm below baseline, ≥ 2 min but &lt; 10 min (≥ 10 min = baseline change).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Intrauterine resuscitation (Cat II/III)</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Reposition (left/right lateral); <b class="k">O₂ via NRB</b>; IV fluid bolus.</li>
+          <li>Stop/reduce uterotonics; treat maternal hypotension; correct hypoxia.</li>
+          <li>Notify MFM/OB; document category change + time + interventions.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Why a standardized language exists</div>
+      <p class="body-text">Before the NICHD standardized nomenclature, fetal heart-rate strips were described in inconsistent, subjective terms, which made communication between clinicians unreliable and contributed to disagreement and litigation.<sup>1,2</sup> The NICHD workshops (1997, updated 2008) created <b class="k">precise definitions</b> for baseline, variability, accelerations, and the four deceleration types, and the resulting <b class="k">3-tier interpretation system</b> gives every provider — the referring nurse, the transport crew, and the receiving MFM — a shared, reproducible way to say how the fetus is doing.<sup>1,2</sup> For Trauma Star this matters operationally: categorizing the strip with NICHD terms is what lets a phone report to the receiving unit actually mean the same thing on both ends.</p>
+    </section>
+    <section>
+      <div class="sec-h">What the categories actually predict</div>
+      <p class="body-text">The system is built around fetal acid-base status. <b class="k">Category I</b> is strongly predictive of <b class="k">normal fetal acid-base balance</b> at the time observed and needs only routine surveillance.<sup>1,3</sup> <b class="k">Category III</b> is associated with <b class="k">abnormal acid-base status (fetal acidemia/hypoxia)</b> and demands prompt action — intrauterine resuscitation and rapid escalation, because it signals a fetus that is decompensating.<sup>1,3</sup> The crucial honest point is <b class="k">Category II</b>: it is everything in between, it covers the <b class="k">majority</b> of tracings in labor, and it is <b class="k">indeterminate</b> — it neither reassures nor condemns. Category II is therefore a call to <b class="k">watch closely and intervene</b>, not a diagnosis, and a Category II strip that is trending worse (e.g., losing variability, developing recurrent late decelerations) is treated with rising urgency.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Variability is the single most important feature</div>
+      <p class="body-text">Of all the components, <b class="k">moderate baseline variability</b> is the most reassuring single finding, because it reflects an intact fetal autonomic nervous system and is highly predictive of the <b class="k">absence of significant hypoxic acidemia</b>.<sup>1,3</sup> Conversely, <b class="k">absent variability</b> combined with recurrent late or variable decelerations, or with bradycardia, is the core of Category III precisely because it implies the fetus can no longer compensate. This is why the protocol asks the crew to assess variability explicitly and why decelerations are interpreted in the context of variability rather than in isolation. The deceleration types carry mechanistic meaning the crew can act on: <b class="k">early</b> decels (head compression) are benign, <b class="k">variable</b> decels suggest cord compression (often responsive to maternal repositioning), and <b class="k">late</b> decels suggest uteroplacental insufficiency (responsive to oxygen, fluids, and reducing uterine activity).<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">From interpretation to action — intrauterine resuscitation</div>
+      <p class="body-text">A category is only useful if it changes what the crew does. A non-reassuring (Category II with concerning features, or Category III) tracing triggers <b class="k">intrauterine resuscitation</b>, which directly targets the likely mechanisms: <b class="k">maternal lateral repositioning</b> (relieves aortocaval and cord compression), <b class="k">high-flow oxygen</b> (raises the maternal-fetal oxygen gradient), an <b class="k">IV fluid bolus</b> (improves uteroplacental perfusion and treats maternal hypotension), and <b class="k">reducing uterine activity</b> by stopping or decreasing uterotonics.<sup>3</sup> These are the same supportive measures embedded in the OB transport protocol (TS-OB-001), now applied with urgency and documented as a category change with the time and the interventions. The receiving MFM/OB is notified early, because a Category III tracing en route may be the deciding factor in how and where the patient is delivered.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Limits, gestational age, and honest use</div>
+      <p class="body-text">EFM has well-documented limitations — high inter-observer variability for Category II and a high false-positive rate for predicting actual fetal compromise — which is why it is a screening and surveillance tool, not a stand-alone decision-maker, and why clinical context and trend matter more than any single feature.<sup>2,3</sup> Gestational age also changes interpretation: the threshold for an acceleration is lower before 32 weeks, and very preterm fetuses normally show less variability and fewer accelerations, so a strip is read against gestational-age expectations.<sup>1</sup> The PHI transport protocol applies EFM at <b class="k">≥ 23 weeks</b> (or by specific fetal indication), uses it to monitor rate at 18–22 weeks, and falls back to Doppler tones and maternal report of fetal movement when continuous monitoring is not possible — pragmatic rules that match the tool's strengths to the transport environment.<sup>4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 4 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Macones GA, Hankins GD, Spong CY, et al. <span style="color:var(--text-faint)">2008 NICHD Workshop Report on Electronic Fetal Monitoring: definitions, interpretation, research guidelines. <em>Obstet Gynecol.</em> 2008;112(3):661–666.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/18757666">pubmed.ncbi.nlm.nih.gov/18757666</a></li>
+          <li>National Institute of Child Health and Human Development Research Planning Workshop. <span style="color:var(--text-faint)">Electronic fetal heart rate monitoring: research guidelines for interpretation. <em>Am J Obstet Gynecol.</em> 1997;177:1385–1390.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/9423739">pubmed.ncbi.nlm.nih.gov/9423739</a></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 106 &amp; 116: Intrapartum Fetal Heart Rate Monitoring — nomenclature, interpretation, &amp; general management principles. <em>Obstet Gynecol.</em> 2009–2010.</span></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.9 Electronic Fetal Monitoring</b> <span style="color:var(--text-faint)">(Rev 19, 25 May 2023) — NICHD categories, terminology &amp; transport application source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). EFM interpretation supports, not replaces, clinical judgment.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

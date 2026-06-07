@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Preeclampsia">
+<meta name="theme-color" content="#0a0f1c">
+<title>Preeclampsia / Eclampsia / HELLP — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Preeclampsia / Eclampsia / HELLP</h1>
+      <div class="sub">Magnesium · severe-range BP · seizure</div>
+      <div class="cat">TS-OB-005 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize severe features</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Severe-range BP: SBP ≥ 160 or DBP ≥ 110</b> (2 readings in 15 min).</li>
+          <li>Headache, visual changes, RUQ/epigastric pain, SOB, hyperreflexia, <b class="k">clonus</b>.</li>
+          <li><b class="k">Seizure = eclampsia.</b> HELLP = hemolysis, ↑LFTs, low platelets.</li>
+          <li>Reduce stimuli: hearing + vision protection, calm cabin.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Magnesium — seizure prophylaxis (preeclampsia)</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">PIH / Preeclampsia</div>
+          <div class="detail"><span class="dose">4–6 g IV over 20–30 min</span> loading bolus, then <span class="dose">2 g/hr infusion</span>. Increase dose (via medical control) for 4+ reflexes &amp; sustained clonus, edema to hips, headache + visual changes with ↑BP.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Severe-range BP — antihypertensive</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Trigger / target</div><div class="detail">Treat 2× SBP &gt; 160 or DBP &gt; 110 within 15 min; <b class="k">begin within 10–20 min</b>. Target SBP &lt; 160 / DBP &lt; 110. Max out one agent before switching.</div></div>
+        <div class="item"><div class="nm">Labetalol</div><div class="detail"><span class="dose">20 mg IV over 2 min</span> → <span class="dose">40 mg</span> in 10–20 min → <span class="dose">80 mg q10–20 min</span> to <b class="k">max 300 mg</b>.</div></div>
+        <div class="item"><div class="nm">Hydralazine</div><div class="detail"><span class="dose">10 mg IV over 2 min</span> → repeat 10 mg at 20 min → 5 mg at 20 min. Max 30 mg. <b class="k">Hold if HR &gt; 120.</b></div></div>
+        <div class="item"><div class="nm">Nifedipine</div><div class="detail"><span class="dose">10 mg PO</span> → 20 mg at 30 min → 20 mg again PRN. Max 50 mg. Recheck BP q15 min.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Eclamptic seizure</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Airway + O₂; benzodiazepine (choose one): <b class="k">Lorazepam 2 mg</b> IV/IM/NAS (repeat q5 min until controlled) or <b class="k">Midazolam 5 mg</b> IV/IM/NAS.</li>
+          <li><b class="k">Magnesium 6 g IV over 15–20 min</b> load, then <span class="dose">2 g/hr</span>; top up to a total 6 g bolus if &lt; 6 g given PTA.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Supportive</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Total fluids <b class="k">125 mL/hr</b> (↑ only for hypovolemia / intrauterine resuscitation — beware pulmonary edema).</li>
+          <li>Headache: fentanyl 0.5–1 mcg/kg IBW or acetaminophen 650–1000 mg PO.</li>
+          <li>Mag toxicity (DTR loss/weakness/resp depression) → <b class="k">calcium 0.5–1 g IV over 3 min</b>, stop mag.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Serial BPs (2-reading triggers), severe-feature symptoms, reflexes/clonus.</li>
+          <li>Magnesium load + rate; antihypertensive (agent/dose/time/response/HR); seizure + benzo given.</li>
+          <li>Fluid totals; FHR/NICHD trend; medical-control contacts/orders; level-of-care rationale.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a multisystem disease of the placenta</div>
+      <p class="body-text">Preeclampsia is a pregnancy-specific syndrome of new hypertension plus end-organ dysfunction, rooted in <b class="k">abnormal placentation</b>: poorly remodeled spiral arteries lead to placental ischemia, which releases anti-angiogenic factors that injure the maternal vascular endothelium throughout the body.<sup>1,2</sup> That systemic endothelial injury explains the whole picture — hypertension, proteinuria, cerebral edema and seizures (eclampsia), hepatic swelling with RUQ pain, and the microangiopathic <b class="k">HELLP syndrome</b> (Hemolysis, Elevated Liver enzymes, Low Platelets). It is a leading cause of maternal death, and most fatal cases involve a <b class="k">preventable failure to treat severe-range blood pressure promptly</b>.<sup>1,3</sup> The only definitive cure is delivery, so transport exists to control BP, prevent/treat seizures, and reach a facility that can deliver.</p>
+    </section>
+    <section>
+      <div class="sec-h">Magnesium prevents seizures — and it is not an antihypertensive</div>
+      <p class="body-text">The single most important concept is that <b class="k">magnesium sulfate and blood-pressure control are two separate jobs</b>. Magnesium is the proven agent to <b class="k">prevent and treat eclamptic seizures</b>: the Magpie trial showed it more than halves the risk of eclampsia, and the Collaborative Eclampsia Trial showed it is superior to both diazepam and phenytoin for treating eclamptic seizures and preventing recurrence.<sup>4,5</sup> But magnesium does <b class="k">not</b> meaningfully lower blood pressure — a patient can be fully magnesium-loaded and still stroke from uncontrolled hypertension. The protocol therefore runs both pathways in parallel: a magnesium load and infusion for seizure prophylaxis (4–6 g load then 2 g/hr in preeclampsia; 6 g load then 2 g/hr for eclampsia), and a separate antihypertensive for severe-range pressures.<sup>3,6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why severe-range BP is a stroke emergency with a clock</div>
+      <p class="body-text">The leading cause of death in preeclampsia/eclampsia is <b class="k">hemorrhagic stroke</b>, driven by sustained severe-range systolic hypertension overwhelming cerebral autoregulation.<sup>3</sup> This is why ACOG and this protocol define <b class="k">SBP ≥ 160 or DBP ≥ 110 (confirmed over ~15 minutes) as a hypertensive emergency that must be treated within 10–20 minutes</b>, not observed.<sup>3,6</sup> The target is controlled — SBP &lt; 160 / DBP &lt; 110 — not normalization, because an abrupt or excessive drop reduces uteroplacental perfusion and can cause fetal distress. First-line agents are <b class="k">labetalol</b> (IV, avoided in asthma/bradycardia), <b class="k">hydralazine</b> (IV, held for maternal HR &gt; 120 because of reflex tachycardia), and <b class="k">oral nifedipine</b>; the protocol deliberately instructs maxing one agent through its sequence before switching, both to reach target reliably and to avoid stacking effects that cause precipitous hypotension.<sup>6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Managing the eclamptic seizure in the cabin</div>
+      <p class="body-text">Most eclamptic seizures are self-limited, so the immediate priorities are <b class="k">protecting the airway, providing oxygen, and preventing aspiration and injury</b> — not aggressive polypharmacy.<sup>3,5</sup> Magnesium is the definitive agent (a load plus infusion, topped up to a full 6 g if a partial dose was given before arrival), and a benzodiazepine (lorazepam or midazolam) is used to abort an active or refractory convulsion. Because the noise, vibration, and visual stimulation of a helicopter cabin can themselves precipitate seizures in a hyperexcitable preeclamptic brain, the protocol specifically calls for <b class="k">reducing stimuli</b> — hearing protection, eye covering, and a calm environment — as genuine seizure prophylaxis, not a comfort measure.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Fluids, HELLP, and magnesium safety</div>
+      <p class="body-text">Fluid management is deliberately <b class="k">restrictive (≈ 125 mL/hr total)</b> because the leaky endothelium of preeclampsia makes these patients highly prone to <b class="k">pulmonary edema</b>; volume is given only for a clear indication.<sup>3,6</sup> <b class="k">HELLP</b> adds the danger of thrombocytopenia and hepatic injury — including spontaneous hepatic hematoma/rupture suggested by severe RUQ pain — so coagulation status is relayed and the destination must have obstetric and blood-bank capability.<sup>1,2</sup> Finally, because magnesium is being infused, the crew watches continuously for <b class="k">toxicity</b>: loss of deep-tendon reflexes precedes respiratory depression, and <b class="k">IV calcium</b> is the immediate antidote alongside stopping the infusion.<sup>6</sup> The whole protocol is a balance — enough magnesium to prevent seizures, enough antihypertensive to prevent stroke, and enough restraint with fluids and BP-lowering to protect the lungs and the fetus.<sup>3,6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 6 · reviewed Jun 2026</summary>
+        <ol>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 222: Gestational Hypertension and Preeclampsia. <em>Obstet Gynecol.</em> 2020;135:e237–e260.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/32443079">pubmed.ncbi.nlm.nih.gov/32443079</a></li>
+          <li>Cunningham FG, et al. <span style="color:var(--text-faint)">Williams Obstetrics, 26th ed. — hypertensive disorders &amp; HELLP. McGraw-Hill, 2022.</span></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Committee Opinion No. 767: Emergent therapy for acute-onset, severe hypertension during pregnancy/postpartum. <em>Obstet Gynecol.</em> 2019;133:e174–e180.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/30575639">pubmed.ncbi.nlm.nih.gov/30575639</a></li>
+          <li>Altman D, et al. (Magpie Trial). <span style="color:var(--text-faint)">Do women with pre-eclampsia, and their babies, benefit from magnesium sulphate? <em>Lancet.</em> 2002;359:1877–1890.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/12057549">pubmed.ncbi.nlm.nih.gov/12057549</a></li>
+          <li>Eclampsia Trial Collaborative Group. <span style="color:var(--text-faint)">Which anticonvulsant for women with eclampsia? <em>Lancet.</em> 1995;345:1455–1463.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/7769899">pubmed.ncbi.nlm.nih.gov/7769899</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.7 Hypertension, Preeclampsia, Eclampsia, HELLP</b> <span style="color:var(--text-faint)">(Rev 18–23, 2022–2025) — magnesium, antihypertensive &amp; seizure dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

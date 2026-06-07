@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Preterm Labor">
+<meta name="theme-color" content="#0a0f1c">
+<title>Preterm / Active Labor &amp; PROM — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Preterm / Active Labor &amp; PROM</h1>
+      <div class="sub">Tocolysis · terbutaline · magnesium · ketorolac</div>
+      <div class="cat">TS-OB-004 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assess (ask specifically)</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Home meds: <b class="k">nifedipine, terbutaline, progesterone (17P), ibuprofen</b>, antibiotics.</li>
+          <li>Cervical cerclage (+ date); antenatal steroids (+ dates); history of rapid labor.</li>
+          <li>Labs: fetal fibronectin (fFN), GBS, cervical length; time of last exam.</li>
+          <li><b class="k">PROM:</b> time of ROM, fluid color/odor; ferning / AmniSure; AFI; GBS.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Sterile exam — only if indicated</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Sterile speculum/vaginal exam for: urge to push, urge to BM, active labor, bedside-to-bedside time &gt; 30 min.</li>
+          <li><b class="k">Hips elevated</b> if cervical dilation &gt; 3–4 cm.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hydration</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Empiric fluid bolus <b class="k">250–500 mL</b> for suspected dehydration/infection.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Tocolysis — target &lt; 1 contraction / 10 min</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Terbutaline (fast-acting)</div>
+          <div class="detail"><span class="dose">0.25 mg SQ</span>, repeat q20–30 min PRN. Use for contractions more frequent than 1 every 6 min (bridge while mag is prepared). <b class="k">Hold if maternal HR &gt; 120.</b></div>
+        </div>
+        <div class="item">
+          <div class="nm">Magnesium sulfate</div>
+          <div class="detail"><span class="dose">6 g IV over 20–30 min</span> loading bolus, then <span class="dose">3–4 g/hr infusion</span> (titrate q45–60 min, up to 4 g/hr). Top up to a full 6 g bolus if &lt; 6 g given PTA. <b class="k">Contraindicated if nifedipine given within the last hour.</b></div>
+        </div>
+        <div class="item">
+          <div class="nm">Ketorolac (if terbutaline contraindicated)</div>
+          <div class="detail"><span class="dose">30 mg IV over 30–60 sec</span>, may repeat ×1 after 60 min.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Analgesia</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Fentanyl (labor pain unrelieved by tocolysis)</div><div class="detail"><span class="dose">0.5–1 mcg/kg IBW IV over 1 min, IM, NAS</span> q1h PRN. <b class="k">Not if delivery possible within 1 hour.</b></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Magnesium toxicity → calcium</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Loss of DTRs / weakness / respiratory depression → <b class="k">calcium chloride or gluconate 0.5–1 g IV over 3 min</b> (repeat ×1 PRN); stop the mag.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Contact medical control (MFM/OB) if…</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Advancing dilation / labor with possible delivery en route.</li>
+          <li>Strip worsens (Cat I → Cat II/III).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>GA, cerclage, steroid status; contraction frequency/duration + response to tocolytics.</li>
+          <li>PROM: time/color/odor, ferning/AmniSure, GBS; exam findings + indication.</li>
+          <li>All tocolytic/analgesic doses + times + maternal HR; FHR/NICHD trend; MC contacts.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — buying time, not stopping birth forever</div>
+      <p class="body-text">Preterm birth (&lt; 37 weeks) is the leading cause of neonatal death and long-term disability, and the goal of preterm-labor management is not to abolish labor permanently but to <b class="k">buy a defined, high-value window of time</b>.<sup>1,2</sup> Tocolysis typically prolongs pregnancy only by about 48 hours, but those hours are precisely what allow two interventions that genuinely change neonatal outcome: a course of <b class="k">antenatal corticosteroids</b> (which accelerate fetal lung maturity and reduce respiratory distress, intraventricular hemorrhage, and death) and <b class="k">in-utero transfer to a hospital with an appropriate NICU</b>.<sup>1,3</sup> For a Keys transport, that second point is the entire point — moving the fetus while still inside the mother is far safer than transporting a fragile premature neonate after delivery, so quieting the uterus enough to complete the flight has real value.</p>
+    </section>
+    <section>
+      <div class="sec-h">Why these specific tocolytics — and their trade-offs</div>
+      <p class="body-text">No tocolytic is dramatically superior, so the choice is driven by speed and side-effect profile.<sup>1</sup> <b class="k">Terbutaline</b>, a beta-agonist, is fast-acting and useful as a bridge for frequent contractions, but its beta-1 activity causes maternal tachycardia, tremor, and (with prolonged use) the risk of pulmonary edema and arrhythmia — hence the hard stop at <b class="k">HR &gt; 120</b> and its use only as a short bridge.<sup>1</sup> <b class="k">Magnesium sulfate</b> provides smoother, sustained tocolysis and carries an additional, important benefit: at preterm gestations it is <b class="k">fetal neuroprotective</b>, reducing the incidence and severity of cerebral palsy (the BEAM trial).<sup>4</sup> <b class="k">Ketorolac</b> (an NSAID/prostaglandin inhibitor) is an effective alternative when terbutaline is contraindicated, but NSAIDs are avoided near term and with prolonged use because of fetal ductus arteriosus constriction and oligohydramnios.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">A critical drug interaction — magnesium + nifedipine</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Do not start magnesium if nifedipine was given within the last hour.</b> Both lower blood pressure and relax smooth muscle, and the calcium-channel blocker potentiates magnesium's neuromuscular blockade — the combination can cause profound hypotension and respiratory/neuromuscular compromise.<sup>1,5</sup></li>
+          <li>This is why the home-medication history (specifically nifedipine, terbutaline, progesterone, indomethacin/ibuprofen) is gathered before initiating a tocolytic.</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <div class="sec-h">PROM — the bleeding-free emergency of infection and cord</div>
+      <p class="body-text">Premature rupture of membranes (PROM/PPROM) shares this protocol because it frequently precedes preterm labor and changes the risk calculus. Once membranes rupture the principal threats are <b class="k">ascending infection (chorioamnionitis)</b> and, especially with a high presenting part or low fluid, <b class="k">cord prolapse</b>.<sup>1,6</sup> This drives several protocol choices: minimizing digital exams (each exam introduces bacteria and shortens the latency period), confirming rupture by history plus ferning/AmniSure rather than repeated probing, noting GBS status and antenatal steroid/antibiotic administration, and <b class="k">elevating the hips when dilation exceeds 3–4 cm</b> to reduce cord-compression risk during transport. Foul-smelling fluid, maternal fever, or fetal tachycardia suggests infection and must be communicated.<sup>6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">When to stop fighting labor</div>
+      <p class="body-text">Tocolysis is contraindicated or futile in several situations, and recognizing them prevents harm: advanced cervical dilation with imminent delivery, significant hemorrhage or suspected abruption, chorioamnionitis, and a non-reassuring fetal tracing all argue for <b class="k">preparing for delivery</b> rather than suppressing it.<sup>1,5</sup> This is why the protocol pairs tocolysis with explicit triggers to contact MFM/OB — advancing dilation with possible delivery en route, or a strip deteriorating from Category I to II/III — and why the crew documents contraction frequency, duration, and the response to each tocolytic. The judgment of whether to fly, when to fly, and whether to keep tocolyzing is shared with online medical control, because delivering a 28-week neonate in the aircraft is a fundamentally different mission than delivering one in a tertiary L&amp;D.<sup>2,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 6 · reviewed Jun 2026</summary>
+        <ol>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 171: Management of Preterm Labor. <em>Obstet Gynecol.</em> 2016;128:e155–e164.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27661654">pubmed.ncbi.nlm.nih.gov/27661654</a></li>
+          <li>Cunningham FG, et al. <span style="color:var(--text-faint)">Williams Obstetrics, 26th ed. — preterm labor &amp; tocolysis. McGraw-Hill, 2022.</span></li>
+          <li>Roberts D, et al. <span style="color:var(--text-faint)">Antenatal corticosteroids for accelerating fetal lung maturation. <em>Cochrane Database Syst Rev.</em> 2017;3:CD004454.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/28321847">pubmed.ncbi.nlm.nih.gov/28321847</a></li>
+          <li>Rouse DJ, et al. (BEAM). <span style="color:var(--text-faint)">A randomized controlled trial of magnesium sulfate for the prevention of cerebral palsy. <em>N Engl J Med.</em> 2008;359:895–905.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/18753646">pubmed.ncbi.nlm.nih.gov/18753646</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.5 PROM &amp; Sec 10.6 Preterm/Active Labor</b> <span style="color:var(--text-faint)">(Rev 14–22, 2021–2024) — tocolytic &amp; dosing source.</span></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 217: Prelabor Rupture of Membranes. <em>Obstet Gynecol.</em> 2020;135:e80–e97.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/32080050">pubmed.ncbi.nlm.nih.gov/32080050</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

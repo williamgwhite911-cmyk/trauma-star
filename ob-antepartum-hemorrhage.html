@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Antepartum Bleed">
+<meta name="theme-color" content="#0a0f1c">
+<title>Antepartum Hemorrhage — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Antepartum Hemorrhage</h1>
+      <div class="sub">Vaginal bleeding · placenta previa · abruption</div>
+      <div class="cat">TS-OB-002 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Critical first move</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">No digital vaginal exam until placenta previa is ruled out</b> — can provoke catastrophic hemorrhage.</li>
+          <li>Confirm placental location from current ultrasound (previa / abruption / vasa previa) before any exam.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">History &amp; assessment</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Onset/precipitant of bleeding, EBL, color (pink / bright / dark red), clots.</li>
+          <li>Current ultrasound: placental location, abruption, vasa previa.</li>
+          <li>Meds at home; illicit drug use; bleeding disorders; recent ASA/NSAID; RhoGAM given?</li>
+          <li>Labs: blood type, CBC, PT/PTT, fibrinogen. Accurate I&amp;O.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">During transport — resuscitation</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Maternal vitals <b class="k">q15 min</b> (add temp if blood products given).</li>
+          <li><b class="k">Second IV — 18 ga or larger</b> for active bleeding or suspected abruption.</li>
+          <li>Fluid replacement (LR or NS): <b class="k">3 mL per 1 mL EBL</b>; maintain ≥ 125–150 mL/hr.</li>
+          <li>Treat instability/hypotension with fluids, blood products, and TXA per regional practice.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Tocolysis (if contractions)</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Magnesium sulfate</div>
+          <div class="detail"><span class="dose">6 g IV over 20–30 min</span> loading bolus, then <span class="dose">3–4 g/hr infusion</span>. Titrate q45–60 min to achieve &lt; 1 contraction / 10 min.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Contact medical control (MFM/OB) if…</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Concerning hemodynamic changes.</li>
+          <li>Strip worsens (Cat I → Cat II/III).</li>
+          <li>Questions on maternal/fetal stability for transport.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Bleeding onset/EBL/character; ultrasound placental findings; that no digital exam was performed.</li>
+          <li>IV access/size, fluids (type/volume), blood products + TXA, serial vitals + temp.</li>
+          <li>FHR/NICHD category trend; medical-control contacts and orders; level-of-care rationale.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — bleeding from two compartments at once</div>
+      <p class="body-text">Antepartum hemorrhage (bleeding after ~20 weeks) is dangerous because the pregnant uterus receives <b class="k">600–700 mL of blood per minute</b> near term — roughly 15% of cardiac output — so a placental bleed can exsanguinate a mother with frightening speed while simultaneously cutting off fetal oxygen.<sup>1,2</sup> The two classic causes have opposite exam implications: <b class="k">placenta previa</b> (placenta over the cervical os) bleeds painlessly and bright red, and <b class="k">placental abruption</b> (premature separation) bleeds with pain and uterine tenderness — but abruption blood can be partly <b class="k">concealed</b> behind the placenta, so visible blood badly underestimates true loss.<sup>2</sup> A third, rarer entity, <b class="k">vasa previa</b>, is fetal blood and can kill the fetus with even small maternal-appearing bleeding.</p>
+    </section>
+    <section>
+      <div class="sec-h">Why "no digital exam until previa is excluded"</div>
+      <p class="body-text">This is the single most important rule of the protocol. A digital cervical examination in a patient with placenta previa can <b class="k">disrupt the low-lying placenta and trigger torrential hemorrhage</b>.<sup>1,2</sup> Therefore the placental location must be confirmed by current ultrasound before any vaginal examination; if previa cannot be excluded, no digital exam is performed and a sterile speculum exam is deferred to the appropriate setting. This is also why the history specifically seeks the most recent ultrasound result and why the crew documents that no digital exam was done.</p>
+    </section>
+    <section>
+      <div class="sec-h">Recognizing and resuscitating concealed loss</div>
+      <p class="body-text">Because abruption loss is frequently concealed and because healthy young pregnant patients <b class="k">compensate until they crash</b> (the increased blood volume of pregnancy masks loss until ~1500–2000 mL is gone), the crew must resuscitate to the clinical picture and the fetal tracing, not to the visible blood.<sup>2</sup> The protocol places a <b class="k">second large-bore IV</b> for active bleeding or suspected abruption and replaces volume at roughly <b class="k">3 mL of crystalloid per 1 mL of estimated loss</b> while moving early toward <b class="k">blood products</b> for instability — consistent with modern hemorrhage practice that crystalloid is a bridge and that ongoing obstetric hemorrhage needs blood, not endless saline.<sup>3,4</sup> A deteriorating fetal heart-rate category is often the earliest sign that uteroplacental perfusion is failing, sometimes before maternal vitals change.</p>
+    </section>
+    <section>
+      <div class="sec-h">Coagulopathy, TXA, and abruption</div>
+      <p class="body-text">Abruption is the classic obstetric trigger of <b class="k">disseminated intravascular coagulation</b> — thromboplastin from the disrupted decidua activates the clotting cascade and consumes fibrinogen, so a falling fibrinogen is an ominous marker and a reason the crew notes type/CBC/PT-PTT/fibrinogen.<sup>2</sup> <b class="k">Tranexamic acid</b> limits fibrinolysis and is used for instability per regional practice; the strongest obstetric evidence (WOMAN trial) is in postpartum hemorrhage, where early TXA reduces death from bleeding, with greatest benefit when given within 3 hours — the same early-administration principle is applied here.<sup>4</sup> Rh status matters too: an Rh-negative mother who bleeds needs Rh immune globulin, so prior RhoGAM administration is documented.</p>
+    </section>
+    <section>
+      <div class="sec-h">Tocolysis is cautious, not automatic</div>
+      <p class="body-text">When contractions accompany bleeding, magnesium sulfate may be used to quiet the uterus (target &lt; 1 contraction per 10 min), but tocolysis in the setting of hemorrhage is <b class="k">deliberate and physician-guided</b>, because contractions can be the body's response to abruption and because beta-agonist tocolytics cause maternal tachycardia that masks and mimics hemorrhagic shock.<sup>2,5</sup> Magnesium is favored here for its tocolytic effect without that hemodynamic confusion. The unifying theme of this protocol — confirm placental location, never probe a possible previa, resuscitate to the patient and the fetus rather than to visible blood, and involve MFM/OB early — reflects how quickly a stable-appearing antepartum bleed can become a dual-patient emergency in flight.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 234: Antepartum hemorrhage / placenta previa &amp; accreta spectrum. <em>Obstet Gynecol.</em> 2021.</span></li>
+          <li>Cunningham FG, et al. <span style="color:var(--text-faint)">Williams Obstetrics, 26th ed. — obstetrical hemorrhage, abruptio placentae, DIC. McGraw-Hill, 2022.</span></li>
+          <li>Cap AP, et al. (Joint Trauma System). <span style="color:var(--text-faint)">Damage Control Resuscitation — Clinical Practice Guideline. 2019.</span></li>
+          <li>WOMAN Trial Collaborators. <span style="color:var(--text-faint)">Tranexamic acid for treatment of postpartum haemorrhage. <em>Lancet.</em> 2017;389:2105–2116.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/28456509">pubmed.ncbi.nlm.nih.gov/28456509</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.3 Vaginal Bleeding, Placenta Previa, Abruption</b> <span style="color:var(--text-faint)">(Rev 19, 25 May 2023) — assessment, fluid &amp; tocolysis dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

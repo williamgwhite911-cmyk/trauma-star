@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS OB Transport">
+<meta name="theme-color" content="#0a0f1c">
+<title>Standard OB Transport — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Standard OB Transport &amp; Supportive Care</h1>
+      <div class="sub">Obstetrics · assessment · analgesia · antiemesis</div>
+      <div class="cat">TS-OB-001 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assess &amp; prepare</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>OB history: G/P, gestational age, prior pregnancy complications, reason for transport, handover report.</li>
+          <li>Maternal vitals + glucose PRN; <b class="k">uterine tone/activity</b>; FHR/pattern; membrane status; presenting part.</li>
+          <li>EFM strip → categorize with <b class="k">NICHD 3-tier</b> (see TS-OB-007).</li>
+          <li>IV LR <b class="k">50–100 mL/hr</b>; combined intake <b class="k">125–150 mL/hr</b> (count drug infusions).</li>
+          <li><b class="k">Left or right lateral</b> position (uterine displacement); cot straps below the uterus.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">In-flight monitoring</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Maternal SpO₂, RR, HR, BP and uterine tone/activity <b class="k">q15 min</b>.</li>
+          <li>EFM if <b class="k">≥ 23 wk</b> (or per fetal condition); FHR q15 min. 18–22 wk: FHR at referring + receiving. No EFM → Doppler tones + ask re: fetal movement.</li>
+          <li><b class="k">O₂ target SpO₂ 96–99%:</b> NC 2–4 L/min if SpO₂ 96–99% and Category I tracing; NRB 10–12 L/min if SpO₂ &lt; 96%, non-Cat-I, or fetal status unknown.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Analgesia</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Acetaminophen</div><div class="detail"><span class="dose">650–1000 mg PO</span></div></div>
+        <div class="item"><div class="nm">Fentanyl (labor / headache pain)</div><div class="detail"><span class="dose">0.5–1 mcg/kg IBW IV over 1 min, IM, or NAS</span> repeat q1h PRN. <b class="k">Do not give if delivery is possible within 1 hour.</b></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Nausea / vomiting</div>
+      <div class="block" style="--c:#22c55e">
+        <div class="item"><div class="nm">Ondansetron</div><div class="detail"><span class="dose">4 mg IV over 2–5 min</span> may repeat ×1 in 30 min. Max 8 mg/8 h.</div></div>
+        <div class="item"><div class="nm">Promethazine</div><div class="detail"><span class="dose">12.5 mg in 10 mL IV over 2 min</span> or <span class="dose">25 mg deep IM</span>; repeat q4–6h PRN.</div></div>
+        <div class="item"><div class="nm">Note</div><div class="detail">May be given with magnesium to prevent nausea.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Anxiety</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Midazolam</div><div class="detail"><span class="dose">2–5 mg IV over 1–2 min, IM, IN</span> (max single 5 mg). May give 2 mg, observe, then more PRN.</div></div>
+        <div class="item"><div class="nm">Lorazepam</div><div class="detail"><span class="dose">0.5–1 mg IV</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Magnesium toxicity → calcium</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Suspect if <b class="k">loss of deep-tendon reflexes</b>, muscle weakness, or impaired respiration on a mag infusion.</li>
+          <li><b class="k">Calcium chloride</b> <span class="dose">0.5–1 g IV over 3 min</span> (repeat ×1 PRN), or <b class="k">calcium gluconate</b> <span class="dose">0.5–1 g IV over 3 min</span> (repeat ×1 PRN).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Contact medical control (MFM/OB) if…</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Maternal or fetal condition deteriorates from initial report.</li>
+          <li>Transport may be contraindicated (advancing dilation, labor progress, possible delivery en route).</li>
+          <li>Patient needs an intervention available only at the sending facility.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>GA, G/P, reason for transport, indication for level of care / rotor-wing.</li>
+          <li>Serial maternal vitals, uterine activity, FHR/NICHD category q15 min.</li>
+          <li>Position, O₂ rationale (SpO₂ + tracing category), all meds (dose/route/time/response).</li>
+          <li>Medical-control contacts and orders.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — two patients, one transport</div>
+      <p class="body-text">Every obstetric transport is the simultaneous care of <b class="k">two patients</b>, and almost everything that helps the mother's perfusion and oxygenation also helps the fetus. The guiding physiology is uteroplacental: the placenta has essentially no autoregulation, so fetal oxygen delivery tracks <b class="k">maternal cardiac output, oxygen saturation, and the patency of uterine blood flow</b>.<sup>1</sup> This is why the standard bundle — lateral positioning, modest IV fluids, titrated oxygen, and continuous monitoring — is not "routine care" but active fetal resuscitation, and why the crew documents maternal vitals, uterine activity, and fetal heart rate together every 15 minutes.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why left/right lateral positioning</div>
+      <p class="body-text">After roughly 20 weeks the gravid uterus compresses the inferior vena cava and aorta when the patient is supine (<b class="k">aortocaval compression</b>), reducing venous return, maternal cardiac output, and therefore uteroplacental perfusion — sometimes dramatically (supine hypotensive syndrome).<sup>1,2</sup> Lateral or lateral-tilt positioning relieves this and is one of the highest-yield, zero-cost interventions available in the cabin; it is maintained throughout transport, and the cot straps are placed <b class="k">below the uterus</b> to avoid both compression and restraint injury. Fluids are kept deliberately modest (combined intake ~125–150 mL/hr) because many obstetric patients — especially preeclamptics — are prone to pulmonary edema, so volume is given for a reason (hypovolemia, intrauterine resuscitation) rather than by default.<sup>5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Oxygen titrated to the fetal tracing</div>
+      <p class="body-text">Oxygen is dosed to a maternal target of <b class="k">SpO₂ 96–99%</b> and escalated based on the fetal heart-rate category, because the relevant endpoint is fetal oxygenation, not maternal comfort.<sup>1,5</sup> A reassuring (Category I) tracing with adequate maternal saturation needs only low-flow nasal cannula; a non-reassuring tracing, maternal desaturation, or unknown fetal status prompts a non-rebreather as part of intrauterine resuscitation. Routine high-flow oxygen to a well-oxygenated mother with a normal tracing is avoided, consistent with evidence that it provides no fetal benefit and may not be benign. Categorizing the strip with the standardized <b class="k">NICHD 3-tier system</b> (TS-OB-007) gives the crew and the receiving team a shared, reproducible language for fetal status.<sup>3,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Analgesia, antiemesis &amp; anxiety — with fetal caveats</div>
+      <p class="body-text">Pain, nausea, and anxiety all raise maternal catecholamines, which can reduce uterine blood flow, so treating them is part of fetal care — but each agent is chosen with the fetus in mind.<sup>5</sup> Acetaminophen is first-line analgesia; <b class="k">fentanyl</b> is reserved for labor or headache pain and is explicitly <b class="k">withheld if delivery is possible within an hour</b>, because transplacental opioid causes neonatal respiratory depression at birth.<sup>5</sup> Ondansetron and promethazine control nausea (and pre-empt magnesium-related nausea), and short-acting benzodiazepines (midazolam, lorazepam) manage anxiety in small, observed doses. The unifying principle is the lowest effective dose of a short-acting agent, dosed by ideal body weight, with neonatal effects anticipated.</p>
+    </section>
+    <section>
+      <div class="sec-h">Magnesium safety — recognizing toxicity early</div>
+      <p class="body-text">Magnesium is used widely in OB (tocolysis, seizure prophylaxis, fetal neuroprotection), which means the transport crew is frequently managing an active magnesium infusion and must recognize <b class="k">hypermagnesemia</b> before it becomes life-threatening.<sup>5,6</sup> Toxicity progresses in a characteristic order: <b class="k">loss of deep-tendon reflexes</b> first, then muscle weakness and somnolence, then respiratory depression, and finally cardiac effects. Because the reflexes disappear before respiration fails, serial DTR checks are the cheapest early-warning system, and the antidote — <b class="k">IV calcium</b> (chloride or gluconate) — directly antagonizes magnesium at the neuromuscular junction and is given the moment clinically significant toxicity is suspected, alongside stopping the infusion and supporting ventilation.<sup>6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Communication &amp; the Keys context</div>
+      <p class="body-text">The protocol mandates early contact with the medical director / receiving MFM or OB hospitalist whenever the maternal or fetal picture worsens, when delivery en route becomes a real possibility, or when an intervention is needed that only the sending facility can provide.<sup>5</sup> This matters acutely from the Keys, where a several-hour ground option is impractical and the decision to fly an unstable or rapidly-laboring patient must weigh delivery-in-transit against time-to-definitive-care; pre-notifying for neonatal or specialty resources lets the receiving unit be ready on arrival.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 6 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Cunningham FG, et al. <span style="color:var(--text-faint)">Williams Obstetrics, 26th ed. — maternal physiology &amp; uteroplacental perfusion. McGraw-Hill, 2022.</span></li>
+          <li>Higuchi H, et al. <span style="color:var(--text-faint)">Effect of lateral tilt angle on the IVC in pregnancy (aortocaval compression). <em>Anesthesiology.</em> 2015;122:286–293.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/25383568">pubmed.ncbi.nlm.nih.gov/25383568</a></li>
+          <li>Macones GA, et al. <span style="color:var(--text-faint)">2008 NICHD Workshop Report on Electronic Fetal Monitoring. <em>Obstet Gynecol.</em> 2008;112:661–666.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/18757666">pubmed.ncbi.nlm.nih.gov/18757666</a></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 106/116: Intrapartum Fetal Heart Rate Monitoring — nomenclature, interpretation, management.</span></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.1 Standard OB Transport Operations</b> <span style="color:var(--text-faint)">(Rev 19–23, 2023–2025) — assessment, O₂, analgesia/antiemetic/anxiety &amp; magnesium-toxicity dosing source.</span></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 222: Gestational Hypertension and Preeclampsia (magnesium use &amp; toxicity). <em>Obstet Gynecol.</em> 2020;135:e237–e260.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/32443079">pubmed.ncbi.nlm.nih.gov/32443079</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

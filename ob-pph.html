@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS PPH">
+<meta name="theme-color" content="#0a0f1c">
+<title>Postpartum Hemorrhage — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Postpartum Hemorrhage</h1>
+      <div class="sub">Uterine atony · oxytocin · TXA</div>
+      <div class="cat">TS-OB-003 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Define / recognize</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">PPH = &gt; 500 mL after vaginal</b> delivery or <b class="k">&gt; 1000 mL after cesarean</b>.</li>
+          <li>Atony is the most common cause — a <b class="k">boggy, soft uterus</b>.</li>
+          <li>Treat instability/hypotension with IV fluids, blood products, and TXA.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">First actions</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li><b class="k">Fundal massage</b> until firm, then reassess q10 min; note clots and flow.</li>
+          <li><b class="k">Empty the bladder</b> (urinary catheter PRN) — a full bladder prevents contraction.</li>
+          <li>Establish a <b class="k">second IV</b> PRN.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Oxytocin (uterotonic — standing)</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Infusion</div>
+          <div class="detail"><span class="dose">30 units in 500 mL NS/LR (0.06 u/mL)</span> at <span class="dose">500–1000 mL/hr</span>; titrate to sustain contraction / control atony.</div>
+        </div>
+        <div class="item">
+          <div class="nm">No IV?</div>
+          <div class="detail"><span class="dose">10 units IM</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Tranexamic acid (standing)</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Dose</div>
+          <div class="detail"><span class="dose">1 g IV over 10 min</span>; reassess at 30 min — if bleeding continues, <span class="dose">1 g IV over 10 min</span> again.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Timing &amp; cautions</div>
+          <div class="detail"><b class="k">Give first dose within 3 h of bleeding onset.</b> Rule out retained placenta, full bladder, prolapsed uterus first. 2nd dose may be given if bleeding recurs within 24 h. Contact medical control ASAP.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Other uterotonics</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Oxytocin and TXA may be given per guideline; <b class="k">other PPH medications require online medical control.</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">During transport</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Assess <b class="k">fundal height + lochia</b> with each set of vitals (≥ q15 min).</li>
+          <li>Contact MFM/OB for hemodynamic changes or stability questions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>EBL, fundal tone/height, lochia, clots; bladder status / catheter.</li>
+          <li>Oxytocin (concentration/rate), TXA (dose/time, within 3 h?), blood products, serial vitals.</li>
+          <li>Medical-control contacts/orders; level-of-care rationale.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — the leading cause of maternal death worldwide</div>
+      <p class="body-text">Postpartum hemorrhage (PPH) — blood loss &gt; 500 mL after vaginal birth or &gt; 1000 mL after cesarean — is the leading direct cause of maternal mortality globally and a top cause in the United States, and most deaths are judged <b class="k">preventable</b> with timely recognition and treatment.<sup>1,2</sup> The danger is rate: the term uterus carries ~600 mL/min of blood flow, so an atonic uterus can lose a liter in minutes, and the physiologic hypervolemia of pregnancy lets a young patient look deceptively stable until she suddenly decompensates.<sup>2</sup> The transport mandate is to start treatment on recognition, not after shock develops.</p>
+    </section>
+    <section>
+      <div class="sec-h">Why uterine tone comes first ("the 4 T's")</div>
+      <p class="body-text">The causes of PPH are remembered as the <b class="k">4 T's — Tone, Trauma, Tissue, Thrombin</b> — and the overwhelmingly most common is <b class="k">Tone</b> (uterine atony), accounting for ~70–80% of cases.<sup>1,2</sup> The mechanism explains the treatment: after the placenta delivers, the uterus must contract to physically clamp the spiral arteries that fed it (the "living ligature"); when it stays boggy, those vessels bleed freely. That is why the very first maneuvers are <b class="k">mechanical</b> — bimanual/fundal massage to stimulate contraction and <b class="k">emptying the bladder</b>, because a distended bladder mechanically prevents the uterus from contracting down.<sup>2</sup> Persistent bleeding despite a firm, well-contracted fundus shifts suspicion to the other T's (laceration, retained tissue, or coagulopathy), several of which need definitive care at the receiving facility.</p>
+    </section>
+    <section>
+      <div class="sec-h">Oxytocin — the first-line uterotonic</div>
+      <p class="body-text"><b class="k">Oxytocin</b> is first-line because it directly stimulates rhythmic uterine contraction and is both effective and fast, with a favorable safety profile compared with other uterotonics.<sup>1</sup> It is given as a dilute infusion (30 units in 500 mL, titrated 500–1000 mL/hr) so it can be titrated to tone, or 10 units IM when no IV is available. Two practical cautions underlie the dosing: <b class="k">undiluted rapid IV push causes hypotension</b> and tachycardia, and prolonged high-dose oxytocin has mild antidiuretic activity. The protocol restricts standing orders to oxytocin and TXA and requires online medical control for additional uterotonics (e.g., methylergonovine, which is contraindicated in hypertension/preeclampsia, or carboprost, contraindicated in asthma) — precisely because those second-line agents have important contraindications that demand physician judgment.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Tranexamic acid — and why the 3-hour clock matters</div>
+      <p class="body-text"><b class="k">Tranexamic acid (TXA)</b> is an antifibrinolytic that stabilizes formed clot, and the landmark <b class="k">WOMAN trial</b> (~20,000 women) showed that giving TXA for PPH reduces death due to bleeding — with the benefit critically dependent on <b class="k">early administration</b>: treatment within 3 hours of onset helped, while later administration did not, and may even cause harm.<sup>3</sup> This is the basis for the protocol's hard rule to give the first 1 g within 3 hours, to reassess at 30 minutes, and to allow a second dose for recurrence within 24 hours. Before giving TXA the crew confirms the bleeding is not from an <b class="k">easily reversible mechanical cause</b> (retained placenta, full bladder, uterine inversion/prolapse), because an antifibrinolytic will not stop bleeding that needs a physical fix.<sup>3,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Resuscitation, monitoring &amp; the dual goal</div>
+      <p class="body-text">Hemodynamic instability is treated with IV fluids and early <b class="k">blood products</b> rather than crystalloid alone, consistent with damage-control resuscitation — ongoing obstetric hemorrhage is a blood problem, and large-volume crystalloid worsens dilutional coagulopathy and hypothermia.<sup>4</sup> Continuous reassessment of <b class="k">fundal height and lochia</b> with every set of vitals tracks whether the uterus is staying contracted or rebleeding, and a rising fundus with minimal external bleeding can signal clot accumulating in an atonic uterus. The unifying goal is to keep the uterus contracted, replace what is lost, give TXA early, and reach definitive obstetric care quickly — from the Keys, rotor-wing transport is frequently what keeps a hemorrhaging postpartum patient inside the window where these measures still work.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 183: Postpartum Hemorrhage. <em>Obstet Gynecol.</em> 2017;130:e168–e186.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/28937571">pubmed.ncbi.nlm.nih.gov/28937571</a></li>
+          <li>Cunningham FG, et al. <span style="color:var(--text-faint)">Williams Obstetrics, 26th ed. — obstetrical hemorrhage &amp; uterine atony. McGraw-Hill, 2022.</span></li>
+          <li>WOMAN Trial Collaborators. <span style="color:var(--text-faint)">Effect of early tranexamic acid in women with post-partum haemorrhage. <em>Lancet.</em> 2017;389:2105–2116.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/28456509">pubmed.ncbi.nlm.nih.gov/28456509</a></li>
+          <li>Cap AP, et al. (Joint Trauma System). <span style="color:var(--text-faint)">Damage Control Resuscitation — Clinical Practice Guideline. 2019.</span></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.2 &amp; 10.4 Postpartum / Postpartum Hemorrhage</b> <span style="color:var(--text-faint)">(Rev 20–23, 2023–2025) — oxytocin &amp; TXA dosing source.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

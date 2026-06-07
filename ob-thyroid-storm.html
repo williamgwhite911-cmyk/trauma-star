@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Thyroid Storm">
+<meta name="theme-color" content="#0a0f1c">
+<title>Thyroid Storm in Pregnancy — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--pink:#ec4899;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#db2777,#ec4899);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#ec4899)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#ec4899)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--pink);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Thyroid Storm in Pregnancy</h1>
+      <div class="sub">Thyrotoxic crisis · PTU · cooling</div>
+      <div class="cat">TS-OB-006 · Sec 8 Obstetrics</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Fever + tachycardia / dysrhythmia</b> out of proportion, tremor, agitation/AMS, N/V, diarrhea.</li>
+          <li>History: Graves / hyperthyroidism; precipitant (infection, surgery, labor, preeclampsia, DKA).</li>
+          <li>Watch for high-output heart failure and arrhythmia.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Assessment</div>
+      <div class="block" style="--c:#ec4899">
+        <ul class="bul">
+          <li>Baseline vitals incl. <b class="k">temperature</b>; cardiac monitor.</li>
+          <li>Thyroid history, home meds, precipitating event; labs/imaging; accurate I&amp;O.</li>
+          <li>Note fever, dysrhythmia, tremor, mental-status change, N/V.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Propylthiouracil (PTU) — online order</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item">
+          <div class="nm">Loading / maintenance</div>
+          <div class="detail"><span class="dose">300–600 mg PO loading</span>, then <span class="dose">150–200 mg PO q4–6h</span>. <b class="k">Requires an online physician order</b> — discuss with sending/receiving physician.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Fever</div>
+      <div class="block" style="--c:#ec4899">
+        <div class="item"><div class="nm">Acetaminophen</div><div class="detail"><span class="dose">650–1000 mg PO</span> (preferred antipyretic). Add active cooling (wet blankets).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">During transport</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li>Continuous <b class="k">cardiac monitoring</b>; maintain fluid/electrolyte replacement.</li>
+          <li><b class="k">Cooling measures</b> (wet blankets); place NG tube if unable to swallow.</li>
+          <li>Continue fetal monitoring per OB transport protocol.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Contact medical control (MFM/OB) if…</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Major change in condition or for further treatment guidance (incl. beta-blockade / steroids / iodine — physician-directed).</li>
+          <li>Fetal strip worsens (Cat I → Cat II/III).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Temperature, HR/rhythm, mental status, precipitant; thyroid history + home meds.</li>
+          <li>PTU (dose/time + ordering physician), antipyretic, cooling, NG; cardiac monitoring.</li>
+          <li>FHR/NICHD trend; medical-control contacts/orders; level-of-care rationale.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a rare, high-mortality endocrine emergency</div>
+      <p class="body-text">Thyroid storm is the extreme, decompensated end of thyrotoxicosis — an exaggerated systemic response to thyroid hormone that produces hyperthermia, severe tachycardia and arrhythmia, agitation or delirium, vomiting and diarrhea, and ultimately cardiovascular collapse.<sup>1,2</sup> It is uncommon but carries mortality of roughly 10–30% even when treated, and it is a <b class="k">clinical diagnosis</b> (often scored with the Burch-Wartofsky criteria) because confirmatory thyroid labs return far too slowly to wait for — treatment is started on suspicion.<sup>2</sup> In pregnancy the stakes double: maternal thyrotoxicosis threatens both mother (high-output failure, arrhythmia) and fetus, and pregnancy itself (labor, cesarean, infection, preeclampsia) is a common trigger.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Recognize the precipitant — storm is usually "lit" by something</div>
+      <p class="body-text">Thyroid storm rarely arises from stable hyperthyroidism alone; it is typically precipitated by an acute stressor — <b class="k">infection, surgery, trauma, labor and delivery, DKA, preeclampsia, or abrupt withdrawal of antithyroid medication</b>.<sup>2,3</sup> This is why the protocol's history specifically seeks the precipitating event and the medication history: identifying and treating the trigger (e.g., antibiotics for sepsis) is part of definitive therapy, and a missed infection will keep the storm burning despite antithyroid drugs. The hallmark that separates storm from ordinary hyperthyroidism is <b class="k">fever plus disproportionate tachycardia and altered mental status</b> — temperature is therefore a vital sign that must be measured and trended, not assumed.</p>
+    </section>
+    <section>
+      <div class="sec-h">Why PTU is the antithyroid drug chosen in pregnancy</div>
+      <p class="body-text">Definitive therapy attacks the hormone at several points, but the field/transport piece is the thionamide. <b class="k">Propylthiouracil (PTU)</b> both blocks new thyroid-hormone synthesis and, at high doses, inhibits peripheral conversion of T4 to the more active T3 — a useful dual action in crisis.<sup>2</sup> It is the preferred agent <b class="k">in the first trimester</b> because the alternative, methimazole, carries a higher risk of teratogenic embryopathy early in pregnancy; later in pregnancy methimazole is often preferred because PTU carries a rare risk of fulminant hepatotoxicity, which is exactly the kind of risk/benefit judgment that belongs to a physician.<sup>3</sup> That is why this protocol treats PTU as an <b class="k">online-order medication</b> — to be discussed with the sending or receiving physician rather than given on standing order.<sup>4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The supportive bundle and the order of drugs</div>
+      <p class="body-text">Beyond the thionamide, definitive treatment is classically a sequence — a beta-blocker to control the adrenergic storm and arrhythmia, iodine (given <b class="k">after</b> the thionamide to avoid fueling hormone synthesis), and corticosteroids to blunt T4→T3 conversion — but these are physician-directed and often initiated at the receiving facility.<sup>2</sup> The transport role is the <b class="k">supportive core</b>: continuous cardiac monitoring (because tachyarrhythmias and high-output failure are the proximate killers), aggressive <b class="k">cooling and antipyresis with acetaminophen</b>, and fluid/electrolyte replacement for the losses from fever, vomiting, and diarrhea. A key teaching point is to <b class="k">avoid aspirin/salicylates</b> for the fever, because they displace thyroid hormone from binding proteins and raise free hormone — hence acetaminophen is the antipyretic of choice.<sup>2,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Caring for the fetus and the dual transport plan</div>
+      <p class="body-text">Maternal hyperthermia and tachycardia stress the fetus, and fetal tachycardia or a deteriorating tracing is both a sign of maternal severity and an independent reason to escalate, so fetal monitoring continues per the standard OB transport protocol.<sup>4,5</sup> Cooling the mother, controlling her heart rate (under medical direction), and restoring volume all improve uteroplacental conditions. Because thyroid storm needs ICU-level endocrine and cardiac management — and frequently maternal-fetal medicine input on whether and when to deliver — the destination must have those resources, and the crew pre-notifies. From the Keys, rotor-wing transport is what makes timely access to that level of care feasible for a disease measured in hours.<sup>4,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Ross DS, et al. (American Thyroid Association). <span style="color:var(--text-faint)">2016 Guidelines for Diagnosis and Management of Hyperthyroidism &amp; Thyrotoxicosis. <em>Thyroid.</em> 2016;26(10):1343–1421.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/27521067">pubmed.ncbi.nlm.nih.gov/27521067</a></li>
+          <li>Burch HB, Wartofsky L. <span style="color:var(--text-faint)">Life-threatening thyrotoxicosis: thyroid storm (diagnostic criteria &amp; management). <em>Endocrinol Metab Clin North Am.</em> 1993;22(2):263–277.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/8325286">pubmed.ncbi.nlm.nih.gov/8325286</a></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 223: Thyroid Disease in Pregnancy. <em>Obstet Gynecol.</em> 2020;135:e261–e274.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/32443080">pubmed.ncbi.nlm.nih.gov/32443080</a></li>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 10.8 Thyroid Storm</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — PTU &amp; supportive-care source.</span></li>
+          <li>ACOG. <span style="color:var(--text-faint)">Practice Bulletin No. 106/116: Intrapartum Fetal Heart Rate Monitoring (fetal surveillance during maternal illness).</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control (MFM/OB). Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
