@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Vascular">
+<meta name="theme-color" content="#0a0f1c">
+<title>Vascular Emergencies — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Vascular Emergencies</h1>
+      <div class="sub">AAA · aortic dissection · endoleak</div>
+      <div class="cat">TS-MED-010 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">General</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Physician should have a <b class="k">confirmed diagnosis</b> before crew implements these. Large-bore access for resuscitation/blood.</li>
+          <li>Monitor ECG, SpO₂, EtCO₂, NIBP; review 12-lead, labs, imaging.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Ruptured AAA — permissive hypotension</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Cautious</b> fluid/blood resuscitation — titrate to a <b class="k">palpable radial pulse / SBP 80–100</b> &amp; normal mentation. Avoid over-resuscitation.</li>
+          <li>Manage hypothermia/acidosis/coagulopathy. Definitive Rx = <b class="k">emergent vascular surgery</b> — fastest route to the OR.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Aortic dissection — control shear (impulse)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">BP in both arms; treat the higher.</b> Avoid IV in a pulse-deficit limb. Treat pain (opioids) — pain drives BP.</li>
+          <li><b class="k">Goal: lowest HR &amp; SBP that maintains perfusion.</b> Beta-blocker FIRST → then vasodilator.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① Beta-blocker (target HR &lt; 60) — choose one</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Esmolol</div><div class="detail"><span class="dose">500 mcg/kg load over 1 min</span>, then <span class="dose">50 mcg/kg/min</span> (↑q5 min, re-load PRN, max 300 mcg/kg/min).</div></div>
+        <div class="item"><div class="nm">Labetalol</div><div class="detail"><span class="dose">20 mg IV</span> → 40 mg → 80 mg q10–20 min (max 300) or <span class="dose">2 mg/min infusion</span>.</div></div>
+        <div class="item"><div class="nm">Metoprolol</div><div class="detail"><span class="dose">5 mg slow IV</span> q5 min PRN (max 15 mg).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Vasodilator if SBP &gt; 120 after β-blockade</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Only after beta-blockade</b> (vasodilator alone → reflex tachycardia → ↑ shear → false-lumen propagation).</li>
+          <li>Nicardipine (preferred) <span class="dose">5 mg/hr, ↑2.5 q5–15, max 15</span>; Clevidipine <span class="dose">1–2 mg/hr, max 32</span>; Nitroprusside <span class="dose">0.3–10 mcg/kg/min</span> (keep ≤ 2 to avoid toxicity). Target SBP 100–120.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Leaking endovascular (endoleak) / dissection w/ shock</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul" style="--c:#f59e0b">
+          <li>Endoleak SBP &gt; 120: short-acting agents (esmolol/nicardipine/clevidipine), target <b class="k">SBP 90–120, HR 60–80</b>; consult surgeon.</li>
+          <li><b class="k">Dissection + hypotension/shock</b> → manage per CV-instability (impending rupture/tamponade) — be ready to stop antihypertensives &amp; resuscitate.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Diagnosis/imaging; bilateral arm BP + pulse deficits; pain.</li>
+          <li>Drugs (β-blocker then vasodilator) w/ HR/BP response; resuscitation for ruptured AAA.</li>
+          <li>Vascular-surgery destination + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — two opposite hemodynamic problems</div>
+      <p class="body-text">This protocol covers acute aortic catastrophes that are <b class="k">highly time-dependent and surgical</b>. They split into two hemodynamic strategies that are nearly opposite, so getting the diagnosis right matters: the <b class="k">ruptured AAA</b> is a bleeding problem managed with <b class="k">permissive hypotension</b> and rapid transport to the OR, while the <b class="k">intact aortic dissection</b> is a shear-stress problem managed by <b class="k">aggressively lowering heart rate and blood pressure</b>.<sup>1,2</sup> Both require a physician-confirmed diagnosis before the crew applies these therapies, large-bore access, and the fastest feasible route to vascular surgery.</p>
+    </section>
+    <section>
+      <div class="sec-h">Ruptured AAA — don't pop the clot</div>
+      <p class="body-text">A ruptured abdominal aortic aneurysm is exsanguinating into the retroperitoneum, and the only definitive treatment is emergent surgical/endovascular repair — so the transport clock is everything.<sup>1</sup> Resuscitation is deliberately <b class="k">cautious (hypotensive/permissive)</b>: aiming for a palpable radial pulse / SBP ~80–100 and preserved mentation rather than a normal pressure, because aggressively normalizing the blood pressure raises hydrostatic pressure across the contained rupture and <b class="k">blows out the tamponading clot</b>, converting a contained leak into free hemorrhage.<sup>1</sup> The same lethal-triad discipline as trauma applies — manage hypothermia, acidosis, and coagulopathy — and blood products are preferred over crystalloid. The destination is a facility that can take the patient straight to the OR.</p>
+    </section>
+    <section>
+      <div class="sec-h">Aortic dissection — impulse control (dP/dt)</div>
+      <p class="body-text">In aortic dissection, blood tears into the aortic wall creating a false lumen that can propagate, occlude branch vessels, rupture, or cause tamponade.<sup>2</sup> Propagation is driven by the <b class="k">force and rate of the pulse wave hitting the intimal flap</b> — the rate of pressure rise (dP/dt) — not just the peak pressure. This is why the protocol's primary target is the <b class="k">heart rate (&lt; 60)</b> via a <b class="k">beta-blocker FIRST</b>, which reduces both the force of ventricular contraction and the rate, lowering shear stress; then, only if SBP remains &gt; 120, a vasodilator is added to reach an SBP of ~100–120.<sup>2</sup> The order is non-negotiable: giving a <b class="k">vasodilator before beta-blockade causes reflex tachycardia and increased contractile force</b>, paradoxically increasing aortic wall stress and extending the dissection.<sup>2</sup> Pain is treated aggressively because pain itself drives catecholamines and blood pressure.</p>
+    </section>
+    <section>
+      <div class="sec-h">Two limbs, two pressures — and where not to put the IV</div>
+      <p class="body-text">A dissection can compromise flow to one or more arteries, so the blood pressure may differ markedly between arms; the protocol measures <b class="k">both arms and titrates to the higher</b> pressure, because that reflects true central perfusion (the low-reading arm may simply have a compromised subclavian).<sup>2</sup> IV lines and pressure monitoring are <b class="k">avoided in a limb with a pulse deficit</b>, since drug delivery and readings there are unreliable. The drug toolkit favors titratable, short-acting agents — esmolol (very short half-life, easy to back off), labetalol (combined α/β), and metoprolol for beta-blockade; nicardipine (preferred), clevidipine, or nitroprusside for vasodilation — so therapy can be dialed precisely to the "lowest HR and BP that maintains end-organ perfusion."<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">When the dissection patient crashes &amp; endoleaks</div>
+      <p class="body-text">If a dissection patient becomes <b class="k">hypotensive</b>, the situation has changed from "control the pressure" to "impending rupture, tamponade, or severe aortic regurgitation" — the crew must be ready to <b class="k">stop the antihypertensives and resuscitate</b> per the cardiovascular-instability pathway and expedite to surgery.<sup>2</sup> A related entity, the <b class="k">leaking endovascular repair (endoleak)</b>, is managed similarly with short-acting agents to a slightly higher target (SBP 90–120, HR 60–80) and close surgical consultation, always prepared to switch to volume/blood resuscitation if the patient suddenly deteriorates.<sup>1,2</sup> In all of these, the transport mission is to buy time and protect the aorta until the surgeon can.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.13 Vascular Emergencies (AAA, Aortic Dissection, Endoleak)</b> <span style="color:var(--text-faint)">(Rev 22–23, 2024–2025) — targets &amp; drug/dose source.</span></li>
+          <li>Isselbacher EM, et al. (ACC/AHA). <span style="color:var(--text-faint)">2022 Guideline for the Diagnosis and Management of Aortic Disease. <em>Circulation.</em> 2022;146:e334–e482.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/36322642">pubmed.ncbi.nlm.nih.gov/36322642</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

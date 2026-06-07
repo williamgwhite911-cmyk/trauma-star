@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Croup">
+<meta name="theme-color" content="#0a0f1c">
+<title>Croup — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Croup (Laryngotracheobronchitis)</h1>
+      <div class="sub">Pediatric upper airway · steroid + neb epi</div>
+      <div class="cat">TS-MED-008 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Barky/seal-like cough, hoarseness, <b class="k">inspiratory stridor</b>; worse with agitation.</li>
+          <li><b class="k">Keep the child calm</b> &amp; with caregiver; minimize exam that upsets them. Position of comfort.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Oxygen &amp; steroid</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Oxygen</div><div class="detail"><span class="dose">100% FiO₂, humidified</span> (blow-by if mask not tolerated).</div></div>
+        <div class="item"><div class="nm">Methylprednisolone (give before transfer)</div><div class="detail"><span class="dose peds">2 mg/kg IBW IV (max 125 mg)</span>. Dexamethasone / prednisone alternatives under medical control.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Nebulized epinephrine (stridor at rest)</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Racemic epinephrine 2.25%</div><div class="detail">Peds &lt; 15 kg <span class="dose peds">0.25 mL in 3 mL NS</span> (repeat q1–2 h); adult/larger <span class="dose">0.25–0.5 mL in 3 mL NS</span> (repeat q2–4 h).</div></div>
+        <div class="item"><div class="nm">L-epinephrine (1 mg/mL) — alternative</div><div class="detail">Peds <span class="dose peds">0.5 mL/kg (max 5 mL)</span> by SVN; adult <span class="dose">5 mL</span> undiluted by SVN.</div></div>
+        <div class="item"><div class="nm">After neb epi</div><div class="detail"><b class="k">Observe for rebound</b> — effect wanes ~2 h; ensure transport/observation.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">If intubation required</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Use an ETT <b class="k">0.5–1 mm smaller</b> than usual (subglottic narrowing). Avoid intubation if manageable — it can worsen swelling.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Severity (stridor at rest? retractions? SpO₂, mentation); calming measures.</li>
+          <li>Steroid + neb epi (dose/time/response); rebound watch; ETT size if intubated.</li>
+          <li>Destination (pediatric capability).</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a small airway with a big swelling problem</div>
+      <p class="body-text">Croup is a viral (usually parainfluenza) infection causing inflammation and edema of the <b class="k">subglottic airway</b> — the narrowest part of a child's airway, encircled by rigid cricoid cartilage. A few millimeters of swelling there dramatically increases resistance (resistance rises with the fourth power of radius), producing the classic <b class="k">barky cough and inspiratory stridor</b>.<sup>1,2</sup> Most croup is mild and self-limited, but a transported child has been escalated for a reason, so the protocol focuses on reducing airway edema and, above all, <b class="k">not making things worse</b>.</p>
+    </section>
+    <section>
+      <div class="sec-h">Why "keep the child calm" is a treatment</div>
+      <p class="body-text">The single most important and most counter-intuitive principle is that <b class="k">agitation worsens obstruction</b>: crying increases turbulent airflow and dynamic collapse of the inflamed airway, can precipitate complete obstruction, and raises oxygen demand.<sup>1,2</sup> Therefore the crew minimizes upsetting interventions, leaves the child in a <b class="k">position of comfort with the caregiver</b>, defers non-essential exam and IV placement, and delivers oxygen by blow-by if a mask is refused. In croup, a calm child is a safer airway — this is genuine therapy, not just bedside manner.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Steroids and nebulized epinephrine — the two effective drugs</div>
+      <p class="body-text"><b class="k">Corticosteroids</b> (dexamethasone is the classic agent; methylprednisolone per this protocol) reduce airway inflammation and are the mainstay — they shorten symptoms, reduce return visits and intubation, and benefit even mild croup, so a steroid is given before/at transfer.<sup>2,3</sup> <b class="k">Nebulized epinephrine</b> (racemic or L-epinephrine — they are equivalent in effect) provides rapid relief of <b class="k">stridor at rest</b> by α-mediated vasoconstriction that shrinks the swollen mucosa, buying time for the steroid to work.<sup>2,3</sup> Its key transport caveat is the <b class="k">rebound phenomenon</b>: the effect wears off in roughly two hours, and the child can return to (or exceed) baseline obstruction — so a child who received nebulized epinephrine must be observed/transported and never discharged from the crew's attention on the basis of transient improvement.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Intubation, the smaller tube &amp; the dangerous mimics</div>
+      <p class="body-text">Intubation is avoided when the child can be managed medically, because instrumenting an already-swollen subglottis can worsen edema; when it is unavoidable, a tube <b class="k">0.5–1 mm smaller</b> than predicted is selected to pass the narrowed subglottic space.<sup>1,2</sup> The crew also stays alert for croup <b class="k">mimics</b> that change the plan: <b class="k">epiglottitis</b> (toxic, drooling, tripoding, no barky cough — do not agitate, prepare for a difficult airway), <b class="k">bacterial tracheitis</b>, and <b class="k">foreign body</b> (sudden onset, choking history). Recognizing these prevents applying the croup pathway to a different, more dangerous airway emergency.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.11 Respiratory Emergencies (Croup)</b> <span style="color:var(--text-faint)">(Rev 18, 01 Dec 2022) — oxygen, epinephrine &amp; steroid source.</span></li>
+          <li>Bjornson CL, Johnson DW. <span style="color:var(--text-faint)">Croup in children. <em>CMAJ.</em> 2013;185(15):1317–1323.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/23939218">pubmed.ncbi.nlm.nih.gov/23939218</a></li>
+          <li>Gates A, et al. <span style="color:var(--text-faint)">Glucocorticoids for croup in children. <em>Cochrane Database Syst Rev.</em> 2018;8:CD001955.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/30133690">pubmed.ncbi.nlm.nih.gov/30133690</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

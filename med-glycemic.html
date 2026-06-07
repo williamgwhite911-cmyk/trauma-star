@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Glycemic">
+<meta name="theme-color" content="#0a0f1c">
+<title>Glycemic Emergencies — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Glycemic Emergencies</h1>
+      <div class="sub">Hypoglycemia · DKA · HHS</div>
+      <div class="cat">TS-MED-006 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Hypoglycemia — treat straight away</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>BG <b class="k">&lt; 60 mg/dL</b> (adult/peds) or <b class="k">&lt; 50</b> (neonate), or neuro deficit/diaphoresis/pallor.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Dextrose</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Adult</div><div class="detail"><span class="dose">10–25 g IV over 5 min</span>, repeat PRN (see concentration guide).</div></div>
+        <div class="item"><div class="nm">Pediatric</div><div class="detail"><span class="dose peds">0.5–1 g/kg IBW IV over 5 min (max 25 g)</span>, repeat PRN.</div></div>
+        <div class="item"><div class="nm">Concentration guide</div><div class="detail"><b class="k">D50</b> adult &amp; 8–17 yr · <b class="k">D25</b> ≥ 1 yr · <b class="k">D10</b> all incl. neonate. (Use lower concentration in younger children/neonates.)</div></div>
+        <div class="item"><div class="nm">No access / no dextrose → Glucagon</div><div class="detail">Adult <span class="dose">1 mg IM</span> · Peds ≥ 20 kg <span class="dose peds">1 mg IM</span> / &lt; 20 kg <span class="dose peds">0.5 mg IM</span>; repeat in 10 min PRN.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">After correction</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Recheck glucose <b class="k">q15 min until 4 consecutive normal</b> results; feed if able; watch for recurrence (esp. sulfonylureas, long-acting insulin).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">DKA / HHS — medical control directs</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Sending/receiving physician (or PHI MD) is medical control</b> — clarify fluids, electrolytes, insulin BEFORE transport.</li>
+          <li><b class="k">NS</b> for initial resuscitation &amp; CV instability. Insulin only after <b class="k">K⁺ ≥ 3.3</b> (or per physician); verify type/dose/route.</li>
+          <li><b class="k">BG q15 min on an insulin drip</b>; if it falls &gt; 100 mg/dL/hr, <b class="k">stop the drip</b> &amp; recheck. Hourly neuro exams.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Intubating the acidotic patient — caution</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Match the patient's <b class="k">high minute ventilation</b> pre/peri/post intubation — losing their respiratory compensation worsens acidosis and can cause arrest.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Serial glucose + times; dextrose/glucagon dose &amp; response; suspected cause/agent.</li>
+          <li>DKA/HHS: physician orders (fluids/insulin/K), drip rate, q15 glucose, neuro exams.</li>
+          <li>Ventilation strategy if intubated; destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — one too low, two too high</div>
+      <p class="body-text">This protocol covers the three glucose emergencies: <b class="k">hypoglycemia</b> (the fastest reversible cause of altered mental status and a true "can't-miss"), and the two hyperglycemic crises — <b class="k">diabetic ketoacidosis (DKA)</b> and <b class="k">hyperosmolar hyperglycemic state (HHS)</b>.<sup>1,2</sup> Hypoglycemia is fixed in seconds at the bedside; DKA/HHS are slow, complex derangements of fluid, electrolytes, and acid-base that are <b class="k">managed collaboratively under physician control</b> during transport rather than by standing order.</p>
+    </section>
+    <section>
+      <div class="sec-h">Hypoglycemia — fast, but match the sugar to the patient</div>
+      <p class="body-text">Because the brain runs almost exclusively on glucose, hypoglycemia rapidly causes confusion, seizures, focal deficits (a classic stroke mimic), and death — so <b class="k">any altered patient gets a glucose check</b> and is treated immediately if low.<sup>1,2</sup> The dextrose <b class="k">concentration guide</b> matters: concentrated D50 is appropriate for adults but is hyperosmolar and vein/tissue-toxic in small children and neonates, so progressively <b class="k">more dilute solutions (D25, D10) are used as age decreases</b>, with D10 safe for all including neonates.<sup>1</sup> When there is no IV access, <b class="k">IM glucagon</b> mobilizes hepatic glycogen — but it works slowly and fails in glycogen-depleted patients (alcoholics, malnourished, prolonged fasting), so it is a bridge to dextrose, not a substitute.<sup>1</sup> Critically, hypoglycemia from <b class="k">long-acting insulin or sulfonylureas recurs</b>, so glucose is rechecked until four consecutive normal values and the patient is fed and observed.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">DKA/HHS — why this is a physician-directed transport</div>
+      <p class="body-text">DKA and HHS involve profound dehydration (often 5–10 L deficits), total-body potassium depletion, and, in DKA, an anion-gap metabolic acidosis from ketones.<sup>2</sup> The protocol makes these <b class="k">medical-control-directed</b> because the management has dangerous nuances best decided with a physician: fluids first (<b class="k">normal saline</b> for initial resuscitation), and insulin only after potassium is confirmed adequate. The clarifications required before transport — fluids, electrolytes, insulin type/dose — exist precisely so the crew is not improvising a complex ICU-level regimen in the aircraft.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The potassium and "drop-rate" rules</div>
+      <p class="body-text">Two specific safety rules anchor DKA management. First, <b class="k">insulin is withheld until serum K⁺ is ≥ 3.3 mEq/L</b> (or the physician's threshold): although the measured potassium is often high initially, total-body potassium is depleted, and insulin drives K⁺ into cells — giving insulin to a hypokalemic patient can precipitate <b class="k">fatal arrhythmia</b>.<sup>2</sup> Second, glucose is checked <b class="k">every 15 minutes on an insulin drip</b>, and if it falls faster than ~100 mg/dL/hr the drip is stopped — too-rapid correction of glucose (and osmolality) risks <b class="k">cerebral edema</b>, which is especially feared in children.<sup>2</sup> Hourly neurologic exams watch for that complication.</p>
+    </section>
+    <section>
+      <div class="sec-h">The intubation trap in metabolic acidosis</div>
+      <p class="body-text">The most dangerous moment in a severely acidotic DKA patient is <b class="k">intubation</b>. These patients survive by breathing fast and deep (Kussmaul respirations) to blow off CO₂ and compensate for their acidosis; their minute ventilation may be two to three times normal.<sup>2</sup> If the crew sedates/paralyzes them and then under-ventilates (a "normal" rate of 12–16), the pH crashes and the patient can arrest on the table. The protocol therefore demands <b class="k">matching the patient's high minute ventilation</b> before, during, and after intubation — a reason many experienced clinicians try hard to avoid intubating DKA at all and instead treat the underlying acidosis aggressively.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.8 Diabetic Crisis &amp; Sec 6.9 Hypoglycemia</b> <span style="color:var(--text-faint)">(Rev 22, 2024) — dextrose/glucagon &amp; DKA/HHS management source.</span></li>
+          <li>ADA / Kitabchi AE, et al. <span style="color:var(--text-faint)">Hyperglycemic crises in adult patients with diabetes (DKA/HHS consensus). <em>Diabetes Care.</em> 2009;32(7):1335–1343.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/19564476">pubmed.ncbi.nlm.nih.gov/19564476</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

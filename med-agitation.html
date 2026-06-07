@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Agitation">
+<meta name="theme-color" content="#0a0f1c">
+<title>Agitation & Chemical Restraint — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Agitation &amp; Chemical Restraint</h1>
+      <div class="sub">In-flight safety · droperidol · ketamine</div>
+      <div class="cat">TS-MED-001 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assess &amp; pre-empt (treat before loading)</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Risk factors: prior violence, intoxication/withdrawal, delirium/psychosis, cognitive impairment.</li>
+          <li>Score with <b class="k">SAS or RASS</b>; reassess. Treat agitation <b class="k">before loading</b> when possible; consider notifying the pilot.</li>
+          <li><b class="k">Prep HOB:</b> I-gel, BVM, meds, full airway kit — agitation can escalate to dangerous at any time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">At-risk / anxious — Droperidol first-line (physician order)</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item">
+          <div class="nm">Droperidol (adult, preferred)</div>
+          <div class="detail"><span class="dose">2.5 mg IV/IM/IO</span>, repeat in 3 min PRN, <b class="k">max 10 mg</b>. Peak 20–30 min. Mono or with a benzo. <b class="k">50% reduction</b> in elderly/comorbid. Haloperidol = alternative.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Midazolam (adult, co-therapy)</div>
+          <div class="detail"><span class="dose">5 mg IV/IM/IO</span>, repeat in 5 min PRN. 50% reduction elderly/comorbid.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Note</div>
+          <div class="detail">Alcohol-withdrawal / stimulant-intoxicated: prefer <b class="k">benzo q5 min + antipsychotic</b> (ketamine less effective). No pediatric standing orders — physician order required.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Dangerous agitation → CLINICAL MAYDAY</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">DECLARE A CLINICAL MAYDAY — NOTIFY PILOT</b> (request land / stop) for uncontrolled agitation that threatens flight safety.</li>
+          <li>Rapid control with a <b class="k">dissociative dose of ketamine</b>; establish SpO₂, ECG, NIBP, waveform capnography, RR ASAP.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Ketamine — dissociative (chemical restraint)</div>
+      <div class="block warn">
+        <div class="item">
+          <div class="nm">Adult &amp; Pediatric</div>
+          <div class="detail"><span class="dose">3 mg/kg IBW IV/IO push</span> OR <span class="dose">4 mg/kg IBW IM</span> (most concentrated form). Give the <b class="k">full calculated dose</b> regardless of comorbidity/intoxicants.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Immediately follow with infusion</div>
+          <div class="detail">Adult <span class="dose">4 mg/kg/hr</span> · Peds <span class="dose peds">2 mg/kg/hr</span>. Prepare airway/ventilation <b class="k">before</b> dosing; ondansetron PRN.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Paralysis (adult only; if needed w/ ketamine)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Rocuronium <span class="dose">1.5 mg/kg IBW IV/IO</span> or <span class="dose">2 mg/kg IM</span> (onset 5 min).</li>
+          <li>Succinylcholine <span class="dose">4 mg/kg IM</span> (onset 3–4 min). <b class="k">Airway management mandatory</b> with any NMB.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Physical restraint</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Least-restrictive method; <b class="k">quick-release</b>, full care access, airway control + monitoring preserved. Verbal de-escalation first; consult medical control where practicable.</li>
+          <li><b class="k">Refuse air transport</b> (use ground) if the patient cannot be safely controlled.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Risk assessment + SAS/RASS scores/times; de-escalation attempts.</li>
+          <li>Meds (drug/dose/route/time/response); monitoring established; airway readiness.</li>
+          <li>Restraint type + neurovascular checks; clinical mayday; physician orders.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — agitation is a flight-safety emergency</div>
+      <p class="body-text">In the confined, single-pilot rotor-wing cabin, an agitated patient is not only a clinical problem but a <b class="k">flight-safety emergency</b>: an unrestrained, combative patient can strike the crew, dislodge lines and the airway, or destabilize the aircraft.<sup>1,5</sup> The protocol therefore treats agitation proactively — assessing risk and treating <b class="k">before loading</b> whenever possible — and uses objective scales (Riker SAS or RASS) so that severity and the response to treatment are tracked the same way by every crew member and the receiving team.<sup>2</sup> The unifying principle is to control agitation early and adequately, because a half-treated patient who escalates mid-flight is far more dangerous than one fully managed on the ground.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Find the cause — agitation is a symptom</div>
+      <p class="body-text">Dangerous agitation is frequently driven by a <b class="k">reversible medical cause</b>, and missing it is both a clinical and a safety error. Hypoxia, hypoglycemia, hypotension/shock, head injury, pain, sepsis, and drug or alcohol intoxication/withdrawal all present as agitation, so the workup includes glucose, oxygenation, and a search for occult injury or illness rather than assuming a primary psychiatric cause.<sup>1</sup> This matters for drug choice too: the protocol notes that <b class="k">ketamine may be less effective in the alcohol-withdrawal or acutely stimulant-intoxicated patient</b>, where escalating benzodiazepines (treating the underlying GABA deficit of withdrawal) plus an antipsychotic are preferred.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why droperidol first for the at-risk patient</div>
+      <p class="body-text">For the anxious or at-risk-but-not-yet-dangerous patient, <b class="k">droperidol</b> is first-line because it provides reliable antipsychotic sedation with a favorable profile and a large body of emergency-department evidence supporting its efficacy and safety for acute agitation; the historical QT "black box" concern has not borne out at these doses in ED studies.<sup>3</sup> It can be used alone or combined with a benzodiazepine, and the dose is <b class="k">reduced by half in the elderly or comorbid</b> to limit respiratory depression and over-sedation. Because its peak effect can take 20–30 minutes, the crew must avoid dose-stacking impatiently. All of this is delivered under a physician order (no pediatric standing order), reflecting that calming a patient is a medical act with real airway risk.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Dissociative ketamine for true dangerous agitation</div>
+      <p class="body-text">When agitation becomes <b class="k">dangerous</b> — an immediate threat to the flight — the priority shifts to <b class="k">rapid, reliable control</b>, and a dissociative dose of ketamine (3 mg/kg IV/IO or 4 mg/kg IM) achieves this faster and more predictably than titrated sedation, while largely preserving airway reflexes and respiratory drive.<sup>1,4</sup> The protocol's instruction to give the <b class="k">full calculated dose regardless of comorbidity or intoxicants</b> reflects a deliberate safety trade-off: an under-dosed, still-combative patient at altitude is the greater danger. Because dissociative ketamine can cause transient laryngospasm, hypersalivation, hypertension, and (rarely) apnea, full monitoring and airway readiness are established before dosing, an infusion follows the bolus to prevent re-emergence, and the event triggers a <b class="k">clinical mayday</b> so the pilot can land or the driver can stop.<sup>1,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Paralysis, physical restraint &amp; refusing transport</div>
+      <p class="body-text">If chemical sedation is insufficient and a definitive airway is required, a neuromuscular blocker may be added (adult only) — but <b class="k">any paralytic mandates immediate airway management</b>, because a paralyzed patient cannot breathe.<sup>1</sup> Physical restraints are used only as needed and always with <b class="k">least-restrictive technique, quick release, and preserved access to the airway and monitoring</b>, never in a position (e.g., prone hog-tie) that risks positional asphyxia.<sup>1,5</sup> Finally, the protocol explicitly permits <b class="k">refusing air transport</b> in favor of ground if the patient cannot be controlled to a level safe for flight — recognizing that the safest decision is sometimes not to fly.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.2–6.3 Behavior Disturbances / Dangerous Agitation / Restraint</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — drug/dose &amp; restraint source.</span></li>
+          <li>Sessler CN, et al. <span style="color:var(--text-faint)">The Richmond Agitation–Sedation Scale (RASS). <em>Am J Respir Crit Care Med.</em> 2002;166:1338–1344.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/12421743">pubmed.ncbi.nlm.nih.gov/12421743</a></li>
+          <li>Perkins J, et al. <span style="color:var(--text-faint)">American Academy of EM position: safety of droperidol for acute agitation/sedation. <em>J Emerg Med.</em> 2015;49(1):91–97.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/25837231">pubmed.ncbi.nlm.nih.gov/25837231</a></li>
+          <li>Cole JB, et al. <span style="color:var(--text-faint)">A prospective study of ketamine for prehospital severe agitation. <em>Am J Emerg Med.</em> 2018;36(5):789–796.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/29033344">pubmed.ncbi.nlm.nih.gov/29033344</a></li>
+          <li>Air Medical / ASTNA. <span style="color:var(--text-faint)">Patient transport: principles &amp; practice — restraint &amp; crew safety in HEMS.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

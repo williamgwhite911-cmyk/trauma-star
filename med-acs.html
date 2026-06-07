@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS ACS">
+<meta name="theme-color" content="#0a0f1c">
+<title>Acute Coronary Syndrome / STEMI — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Acute Coronary Syndrome / STEMI</h1>
+      <div class="sub">12-lead · Sgarbossa · ASA / NTG / heparin</div>
+      <div class="cat">TS-MED-002 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assess / ECG</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Apply multifunction/AED pads empirically — <b class="k">anterior-posterior</b> preferred (anticipate arrhythmia).</li>
+          <li>12-lead: rate, rhythm, axis, ischemia/injury/infarct location. <b class="k">Inferior MI → right-sided V4R</b> for RVMI.</li>
+          <li>Posterior leads (V7–V9) if inferior/lateral ischemia, anterior ST depression, or tall R in V2–V3.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">STEMI criteria / Sgarbossa</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">STEMI:</b> ST elevation ≥ 0.1 mV in ≥ 2 contiguous leads, or new LBBB. Treat timely per system.</li>
+          <li><b class="k">Sgarbossa (LBBB/paced), ≥ 3 pts = likely MI:</b> concordant STE ≥ 1 mm (5) · concordant ST depression V1–V3 (3) · discordant STE ≥ 5 mm (2).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Treatment</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Aspirin</div><div class="detail"><span class="dose">162–324 mg chewed</span> (2–4 baby ASA).</div></div>
+        <div class="item"><div class="nm">Oxygen</div><div class="detail">Only if <b class="k">SpO₂ &lt; 90%</b> → titrate to <b class="k">90–95%</b>.</div></div>
+        <div class="item"><div class="nm">Nitroglycerin</div><div class="detail">SL <span class="dose">0.4 mg</span> repeat PRN; or infusion <span class="dose">40–200 mcg/min</span> (titrate 20–50 mcg/min q3–5 min).</div></div>
+        <div class="item"><div class="nm">RVMI / SBP &lt; 110 (inferior MI)</div><div class="detail">NS bolus <span class="dose">100–500 mL</span>, repeat to maintain vitals if lungs clear.</div></div>
+        <div class="item"><div class="nm">Heparin</div><div class="detail"><span class="dose">60 u/kg bolus (max 4,000)</span>, then <span class="dose">12 u/kg/hr (max 1,000/hr)</span>.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Nitro — do NOT give if…</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>PDE5 inhibitor: <b class="k">avanafil &lt; 12 h, sildenafil/vardenafil &lt; 24 h, tadalafil &lt; 48 h</b> (severe hypotension).</li>
+          <li>Caution: inferior/RV MI (preload-dependent), nitrate-naïve, elderly, hypotension. Treat hypotension with supine + fluids.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Reperfusion / IFT</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Fibrinolytics (alteplase/tenecteplase) + antiplatelets (clopidogrel/ticagrelor) may be given before/at referral — collaborative with sending/receiving.</li>
+          <li>Post-fibrinolytic: anticipate reperfusion arrhythmias &amp; bleeding; serial neuro exam.</li>
+          <li>Manage reperfusion arrhythmias with standard measures; recurrent VT/VF may signal ongoing occlusion.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Pain onset/character; serial 12-leads (+ V4R/posterior); STEMI/Sgarbossa findings.</li>
+          <li>ASA/NTG/heparin (dose/time); PDE5i screen; fluids for RVMI; fibrinolytic status + neuro exam.</li>
+          <li>PCI-capable destination + pre-notification; arrhythmias/defib.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — time is myocardium</div>
+      <p class="body-text">Acute coronary syndrome spans unstable angina, NSTEMI, and <b class="k">STEMI</b> — the last being an acute total coronary occlusion in which "time is myocardium." Outcome is driven by the interval to reperfusion, so the transport mission is to <b class="k">diagnose early, give the time-critical drugs, prevent/treat lethal arrhythmia, and deliver to a PCI-capable center</b> with advance notification.<sup>1,5</sup> From the Keys, the air-vs-ground differential is frequently what keeps a STEMI patient inside the window for primary PCI.</p>
+    </section>
+    <section>
+      <div class="sec-h">The ECG — finding the occlusion others miss</div>
+      <p class="body-text">A single 12-lead is a snapshot, so the protocol uses <b class="k">serial and extended ECGs</b>. Every inferior MI gets a <b class="k">right-sided V4R</b> because up to ~40% involve the right ventricle, which changes management dramatically.<sup>2</sup> <b class="k">Posterior leads (V7–V9)</b> are added when the standard ECG hints at a posterior infarct (anterior ST depression, tall R in V2–V3) that would otherwise be missed.<sup>3</sup> In <b class="k">LBBB or paced rhythms</b>, ordinary ST criteria fail, so the <b class="k">Sgarbossa criteria</b> (concordance is the key concept — ST shifts in the same direction as the QRS) identify MI that would otherwise be electrocardiographically silent.<sup>4</sup> Multifunction pads are placed pre-emptively in anterior-posterior position because these patients can arrest from VF without warning.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Aspirin and the oxygen reversal</div>
+      <p class="body-text"><b class="k">Aspirin</b> is the highest-yield drug in ACS — chewed for rapid antiplatelet effect, it reduces mortality and is given to essentially all suspected ACS.<sup>1,5</sup> <b class="k">Oxygen</b>, by contrast, is a deliberate reversal of old teaching: routine supplemental oxygen in the non-hypoxic ACS patient confers no benefit and may cause harm through coronary vasoconstriction and reperfusion injury (AVOID-trial era evidence), so it is given <b class="k">only for SpO₂ &lt; 90%</b> and titrated to 90–95%.<sup>5</sup> This "treat the number, not the diagnosis" approach is now standard.</p>
+    </section>
+    <section>
+      <div class="sec-h">Nitroglycerin — and the two dangerous traps</div>
+      <p class="body-text">Nitroglycerin relieves ischemic pain by venodilation (reducing preload and wall stress) and some coronary dilation, but it carries two field-defining contraindications.<sup>1</sup> First, with recent <b class="k">PDE5 inhibitors</b> (sildenafil/vardenafil &lt; 24 h, tadalafil &lt; 48 h, avanafil &lt; 12 h) the combination causes profound, refractory hypotension. Second, in <b class="k">right-ventricular / inferior MI</b> the failing RV is <b class="k">preload-dependent</b>, so nitrate-induced venodilation can drop cardiac output catastrophically — which is exactly why every inferior MI gets a V4R and why RVMI hypotension is treated with <b class="k">fluid boluses</b> rather than nitrates.<sup>1,2</sup> These are the reasons the protocol pairs nitro with an explicit screen and a fluid pathway.</p>
+    </section>
+    <section>
+      <div class="sec-h">Anticoagulation, reperfusion &amp; the IFT context</div>
+      <p class="body-text"><b class="k">Heparin</b> (and, for many STEMIs being moved for PCI, antiplatelets and sometimes fibrinolytics already given at the referring hospital) prevents clot propagation while the patient travels to definitive care.<sup>1,5</sup> Because many Trauma Star ACS runs are <b class="k">interfacility transfers</b>, care is explicitly collaborative with the sending and receiving physicians, particularly around thrombolytic/anticoagulant timing. After fibrinolytics the crew anticipates <b class="k">reperfusion arrhythmias and bleeding</b> and performs serial neuro exams to detect intracranial hemorrhage; recurrent VT/VF can signal ongoing occlusion (failed reperfusion) and is managed with standard ACLS while expediting to PCI.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.4 Acute Coronary Syndrome</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — ECG, drug/dose source.</span></li>
+          <li>Warner MJ, Tivakaran VS. <span style="color:var(--text-faint)">Inferior Myocardial Infarction / RVMI. <em>StatPearls.</em> 2024.</span> <a href="https://www.ncbi.nlm.nih.gov/books/NBK470572/">ncbi.nlm.nih.gov/books/NBK470572</a></li>
+          <li>Lizzo JM, Chowdhury YS. <span style="color:var(--text-faint)">Posterior Myocardial Infarction. <em>StatPearls.</em> 2024.</span> <a href="https://www.ncbi.nlm.nih.gov/books/NBK553168/">ncbi.nlm.nih.gov/books/NBK553168</a></li>
+          <li>Sgarbossa EB, et al. <span style="color:var(--text-faint)">ECG diagnosis of evolving acute MI with LBBB. <em>N Engl J Med.</em> 1996;334:481–487.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/8559200">pubmed.ncbi.nlm.nih.gov/8559200</a></li>
+          <li>O'Gara PT, et al. (ACC/AHA). <span style="color:var(--text-faint)">Guideline for the Management of ST-Elevation Myocardial Infarction. <em>Circulation.</em> 2013;127:e362–e425.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/23247304">pubmed.ncbi.nlm.nih.gov/23247304</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

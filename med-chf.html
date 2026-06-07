@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS CHF/APE">
+<meta name="theme-color" content="#0a0f1c">
+<title>CHF / Acute Pulmonary Edema — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>CHF / Acute Pulmonary Edema</h1>
+      <div class="sub">NIV · high-dose nitroglycerin</div>
+      <div class="cat">TS-MED-003 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Recognize</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li>Dyspnea, rales, S3/S4, tachypnea, tachycardia, oliguria; hypoxia.</li>
+          <li>Triggers: ischemia/MI, dysrhythmia, med/diet noncompliance, valvular, hypertensive crisis.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Ventilation &amp; oxygen — first</div>
+      <div class="block" style="--c:#14b8a6">
+        <ul class="bul">
+          <li><b class="k">Start NIV (CPAP/BiPAP) as soon as practicable</b>; escalate to intubation PRN.</li>
+          <li>Oxygen <span class="dose">2–25 L/min</span> titrated to <b class="k">SpO₂ 93–99%</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Nitroglycerin (afterload/preload reduction)</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Infusion (preferred)</div><div class="detail"><span class="dose">40–200 mcg/min IV</span>; titrate 20–50 mcg/min q3–5 min to effect.</div></div>
+        <div class="item"><div class="nm">SL (if infusion not ready)</div><div class="detail"><span class="dose">0.4 mg SL</span>, repeat PRN.</div></div>
+        <div class="item"><div class="nm">Cautions</div><div class="detail">Hold for PDE5 inhibitors; caution if hypotensive or RV/inferior MI. SBP-dependent.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hypotension / poor perfusion</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Do NOT give nitro if hypotensive. Treat poor perfusion / cardiogenic shock per <b class="k">Shock &amp; CV Instability</b> (pressors, not large fluid boluses).</li>
+          <li>Distinguish from sepsis/hypovolemia — wet lungs + hypotension suggests cardiogenic shock.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Work of breathing, lung exam, SpO₂; NIV settings + response; 12-lead (ischemic trigger?).</li>
+          <li>NTG dose/route/titration; BP trend; pressors if cardiogenic shock.</li>
+          <li>Suspected precipitant; destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a pump-and-pressure problem, not a fluid problem</div>
+      <p class="body-text">Acute cardiogenic pulmonary edema is failure of the left ventricle to move blood forward, causing pressure to back up into the lungs and flood the alveoli. The patient is drowning in their own plasma, but is usually <b class="k">total-body fluid overloaded or merely redistributed</b> — not volume depleted — so the treatment is the opposite of most shock: <b class="k">reduce the load on the heart and open the alveoli</b>, not give fluids.<sup>1,3</sup> The two interventions that reverse the crisis fastest in the field are <b class="k">non-invasive ventilation</b> and <b class="k">nitroglycerin</b>.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why NIV is the single highest-yield move</div>
+      <p class="body-text"><b class="k">CPAP/BiPAP</b> works through several mechanisms at once: positive intrathoracic pressure pushes alveolar fluid back into the capillaries and recruits collapsed alveoli (improving oxygenation), and it <b class="k">reduces both preload and LV afterload</b>, directly unloading the failing ventricle.<sup>2</sup> Strong evidence shows NIV in acute cardiogenic pulmonary edema improves dyspnea and oxygenation and <b class="k">reduces the need for intubation</b> (and likely mortality), which is why the protocol starts it "as soon as practicable" rather than watching the patient tire toward intubation.<sup>2</sup> In the transport environment, avoiding intubation is especially valuable, and NIV buys time for the pharmacology to work. Intubation is reserved for NIV failure or the patient who can no longer protect the airway.</p>
+    </section>
+    <section>
+      <div class="sec-h">High-dose nitroglycerin and the oxygen target</div>
+      <p class="body-text"><b class="k">Nitroglycerin</b> is the pharmacologic workhorse: at low doses it venodilates (reducing preload), and at the higher infusion doses used in acute pulmonary edema it also reduces <b class="k">afterload</b>, which is often the dominant problem in the hypertensive "flash" pulmonary edema patient.<sup>1,3</sup> The protocol allows generous titration (40–200 mcg/min) because the well-perfused, hypertensive APE patient tolerates and benefits from aggressive afterload reduction. The same nitrate cautions apply as in ACS — recent PDE5 inhibitors and preload-dependent RV/inferior MI — and nitro is withheld if the patient is hypotensive.<sup>1</sup> Oxygen is titrated to SpO₂ 93–99% rather than run wide open, consistent with avoiding hyperoxia.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The critical fork — APE vs cardiogenic shock</div>
+      <p class="body-text">The decisive bedside distinction is <b class="k">blood pressure</b>. The hypertensive APE patient is treated with NIV and aggressive nitrates and improves rapidly. The <b class="k">hypotensive</b> patient with pulmonary edema is in <b class="k">cardiogenic shock</b> — the pump is failing — and giving nitrates or large fluid boluses there is dangerous; these patients need inotropic/vasopressor support per the Shock &amp; Cardiovascular Instability pathway and rapid transport to a center capable of advanced cardiac care (cath lab, mechanical support).<sup>1,3</sup> Recognizing which patient is in front of you — wet lungs with high vs low pressure — is the most important judgment in this protocol. A 12-lead is obtained because acute MI is a common precipitant that changes destination.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.5 Congestive Heart Failure</b> <span style="color:var(--text-faint)">(Rev 20, 05 Sep 2023) — O₂, NIV &amp; nitroglycerin source.</span></li>
+          <li>Vital FMR, et al. <span style="color:var(--text-faint)">Non-invasive positive pressure ventilation for cardiogenic pulmonary oedema. <em>Cochrane Database Syst Rev.</em> 2013;5:CD005351.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/23728654">pubmed.ncbi.nlm.nih.gov/23728654</a></li>
+          <li>Heidenreich PA, et al. (AHA/ACC/HFSA). <span style="color:var(--text-faint)">2022 Guideline for the Management of Heart Failure. <em>Circulation.</em> 2022;145:e895–e1032.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/35363499">pubmed.ncbi.nlm.nih.gov/35363499</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

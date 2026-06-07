@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS HyperK">
+<meta name="theme-color" content="#0a0f1c">
+<title>Hyperkalemia — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--md:#14b8a6;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#0d9488,#14b8a6);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#14b8a6)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#14b8a6)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--md);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Hyperkalemia</h1>
+      <div class="sub">Stabilize → shift → (eliminate)</div>
+      <div class="cat">TS-MED-007 · Sec 10 Medical</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Treat immediately if…</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">K⁺ &gt; 5.5</b> with <b class="k">ECG changes</b> (peaked T, ↓/loss of P, wide QRS, sine wave), OR</li>
+          <li><b class="k">K⁺ &gt; 6.0</b> with or without ECG changes. Also consider in crush, renal failure/missed dialysis, DKA.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① Stabilize the myocardium — Calcium</div>
+      <div class="block warn">
+        <div class="item"><div class="nm">Calcium chloride</div><div class="detail">Adult <span class="dose">1 g IV over 2–10 min</span> · Peds <span class="dose peds">20 mg/kg (max 1 g)</span>; repeat q10 min ×3 PRN. (Faster in arrest/instability.) Flush line.</div></div>
+        <div class="item"><div class="nm">Calcium gluconate</div><div class="detail">Adult <span class="dose">3 g IV over 2–10 min</span> · Peds <span class="dose peds">60 mg/kg (max 3 g)</span>; repeat q10 min ×3 PRN. Flush line.</div></div>
+        <div class="item"><div class="nm">Cautions</div><div class="detail">Don't mix calcium with bicarb (precipitates) — separate lines/flush. Watch digoxin patients; rapid push → brady/hypotension.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Shift K⁺ into cells</div>
+      <div class="block" style="--c:#14b8a6">
+        <div class="item"><div class="nm">Albuterol</div><div class="detail"><span class="dose">5 mg neb</span>, repeat q20 min ×3 PRN.</div></div>
+        <div class="item"><div class="nm">Sodium bicarbonate (if acidosis / arrest)</div><div class="detail">Adult <span class="dose">50 mEq IV over 5–10 min</span> · Peds <span class="dose peds">1 mEq/kg IBW (max 50)</span>. IV push in arrest. 1 dose; repeats need physician order. <b class="k">Not routine in arrest unless hyperK.</b></div></div>
+        <div class="item"><div class="nm">Insulin + glucose</div><div class="detail">Per attending physician — clarify glucose &amp; insulin type/dose/route before transport.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>K⁺ value + source (cause: renal/dialysis, crush, DKA); ECG changes + trend.</li>
+          <li>Calcium (type/dose/time/repeats), albuterol, bicarb, insulin/glucose orders.</li>
+          <li>Rhythm response; dialysis-capable destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a silent, ECG-diagnosed killer</div>
+      <p class="body-text">Hyperkalemia is one of the few electrolyte derangements that kills suddenly, by inducing <b class="k">ventricular dysrhythmia and asystole</b>. In transport there is usually no lab to follow, so it is recognized and treated by the <b class="k">clinical context plus the ECG</b>: the high-risk patient is the one with renal failure or a missed dialysis session, crush injury (see TS-TR-005), or DKA, and the trigger to treat is a K⁺ &gt; 5.5 with ECG changes or &gt; 6.0 regardless.<sup>1,2</sup> Treatment follows a fixed three-step logic — <b class="k">stabilize the heart, shift the potassium into cells, then eliminate it</b> — with only the first two achievable in the field.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Read the ECG — it is the severity meter</div>
+      <p class="body-text">Because the danger is cardiac membrane instability, the <b class="k">ECG is both the diagnostic and the severity tool</b>. The classic progression is <b class="k">peaked T waves → PR prolongation and loss of P waves → QRS widening → a sine-wave pattern → VF/asystole</b>.<sup>1,2</sup> Any of these changes in a high-risk patient is treated as life-threatening hyperkalemia immediately, without waiting for a number. A widening QRS or sine wave is a peri-arrest finding demanding instant calcium.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Step 1 — calcium stabilizes, it does not lower K⁺</div>
+      <p class="body-text"><b class="k">Calcium</b> (chloride or gluconate) is the first and most important drug: it raises the cardiac myocyte threshold potential, antagonizing potassium's destabilizing effect and <b class="k">protecting against arrhythmia within minutes</b> — but it does <b class="k">not</b> lower the serum potassium, and its effect is temporary, so the shifting agents must follow.<sup>2</sup> Calcium chloride contains ~3× the elemental calcium of gluconate (hence the 1 g vs 3 g dosing) and is preferred in arrest/instability but is more sclerosing, ideally given through a secure/central line. Two safety points: calcium <b class="k">precipitates with bicarbonate</b> in the same line (flush between), and it must be used cautiously in <b class="k">digoxin</b> toxicity.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Step 2 — shifting K⁺ into cells</div>
+      <p class="body-text">The temporizing measures move potassium from blood into cells while definitive removal (dialysis) is arranged.<sup>2</sup> <b class="k">Albuterol</b> (β-2 agonist) drives potassium intracellularly and is easy to deliver by nebulizer. <b class="k">Insulin with glucose</b> is the most reliable shifter (insulin pushes K⁺ into cells; glucose prevents hypoglycemia) — given here under physician direction because it requires glucose co-administration and monitoring. <b class="k">Sodium bicarbonate</b> helps when there is a metabolic acidosis (it shifts K⁺ as pH rises) and is specifically indicated in <b class="k">hyperkalemic cardiac arrest</b>; the protocol notes bicarbonate is otherwise <b class="k">not</b> routine in arrest, reserving it for the hyperkalemic (and acidotic) patient.<sup>1,2</sup> None of these remove potassium from the body — that requires dialysis or potassium-binders at the receiving facility, which is the destination driver.</p>
+    </section>
+    <section>
+      <div class="sec-h">The crush and renal connections</div>
+      <p class="body-text">This protocol is the medical counterpart to the trauma <b class="k">crush syndrome</b> pathway (TS-TR-005), where reperfusion dumps potassium into the circulation and the same calcium/shift therapy is anticipated at the moment of extrication.<sup>2</sup> The most common transport scenario, though, is the <b class="k">dialysis-dependent renal patient</b> who missed a session — recognizing this population and pre-emptively monitoring the ECG allows treatment before the arrhythmia, and routing to a dialysis-capable facility. Because the field can only stabilize and shift, the clock to definitive potassium removal is part of the urgency.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 6.10 Hyperkalemia</b> <span style="color:var(--text-faint)">(Rev 21, 08 Jan 2024) — drug/dose source.</span></li>
+          <li>Lindner G, et al. <span style="color:var(--text-faint)">Acute hyperkalemia in the emergency department — management. <em>Eur J Emerg Med.</em> 2020;27(5):329–337.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/32852924">pubmed.ncbi.nlm.nih.gov/32852924</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
