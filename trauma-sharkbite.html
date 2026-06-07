@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Shark Bite">
+<meta name="theme-color" content="#0a0f1c">
+<title>Shark Bite / Marine Bite — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Shark Bite / Marine Bite</h1>
+      <div class="sub">Hemorrhage control + marine-organism antibiotics</div>
+      <div class="cat">TS-TR-012 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Priorities — hemorrhage kills first</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Control catastrophic hemorrhage immediately</b> — shark bites cause arterial/major soft-tissue loss; bleeding (often an extremity) is the leading cause of death.</li>
+          <li>Get the patient <b class="k">out of the water</b>; blood loss is grossly underestimated in water. Beware concurrent <b class="k">drowning, immersion hypothermia, C-spine</b>.</li>
+          <li>Then MARCH / ABCDE (TS-TR-001).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hemorrhage control — in order</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li><b class="k">Tourniquet</b> (CAT/SOF-TT) high &amp; tight for any life-threatening extremity bleed — apply early, <b class="k">record the time</b>. Second tourniquet above the first if not controlled.</li>
+          <li><b class="k">Wound packing</b> + hemostatic gauze for junctional/deep wounds; firm direct pressure.</li>
+          <li><b class="k">Pelvic binder</b> if pelvis involved; <b class="k">splint</b> mangled/fractured limbs.</li>
+          <li><b class="k">Amputation:</b> control stump bleeding; wrap part in saline-damp gauze → sealed bag → on ice water (not frozen) — see TS-TR-004.</li>
+          <li>Embedded teeth = impaled object — <b class="k">stabilize, do not remove</b> (may tamponade).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Resuscitation</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li><b class="k">Blood products preferred</b> (TS-HD-002); permissive hypotension <b class="k">SBP ~90</b> (100–110 if TBI). Transfuse on shock index ≥ 0.8.</li>
+          <li><b class="k">TXA</b> &lt; 3 h — ≥ 12 yr <span class="dose">2 g IV over 10 min</span>; &lt; 12 yr <span class="dose">15 mg/kg (max 1 g)</span>.</li>
+          <li>Two large-bore IV/IO; high-flow O₂; <b class="k">keep warm</b> (prevent lethal triad).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Antibiotics — give early (marine wound)</div>
+      <div class="block warn">
+        <div class="item">
+          <div class="nm">Ceftriaxone (Rocephin) — broad cover</div>
+          <div class="detail">Adult/≥ 40 kg <span class="dose">2 g in 50 mL NS IV over 10 min</span> · Peds &gt; 28 d <span class="dose peds">50 mg/kg (max 2 g)</span>.</div>
+        </div>
+        <div class="item">
+          <div class="nm">PLUS Doxycycline — covers <em>Vibrio</em> / <em>Aeromonas</em></div>
+          <div class="detail">Adult <span class="dose">100 mg IV</span>. <b class="k">Ordinary cephalosporins/cefazolin do NOT cover Vibrio vulnificus</b> — add doxycycline (or a fluoroquinolone). Peds &lt; 8 yr: doxycycline per medical control (benefit outweighs risk in serious Vibrio).</div>
+        </div>
+        <div class="item">
+          <div class="nm">Cephalosporin allergy</div>
+          <div class="detail"><span class="dose">Ciprofloxacin 400 mg IV</span> (or levofloxacin) + <span class="dose">Clindamycin 900 mg IV</span> (peds 10 mg/kg, max 900).</div>
+        </div>
+        <div class="item">
+          <div class="nm">Wound</div>
+          <div class="detail">Irrigate gross debris; cover with <b class="k">saline-moistened sterile dressing</b>. Tetanus update at receiving. Relay to receiving for surgical washout.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Transport</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li><b class="k">Highest-level trauma center</b> (vascular/ortho/plastics + washout); pre-notify, activate massive transfusion for shock.</li>
+          <li>Serial exam &amp; tourniquet reassessment; from the Keys, rotor-wing removes 3+ h of ground time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Mechanism, water environment (salt/brackish), time in water, estimated blood loss.</li>
+          <li>Tourniquet time(s), packing, blood/TXA, access; <b class="k">antibiotics (drug/dose/time)</b>; amputated-part care.</li>
+          <li>Serial vitals/shock index; trauma-center destination + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — two problems in one wound</div>
+      <p class="body-text">A shark bite is simultaneously a <b class="k">massive-hemorrhage / mangled-extremity injury</b> and a <b class="k">heavily contaminated marine wound</b>. The immediate killer is exsanguination — large, serrated teeth shred muscle and divide major arteries, and most shark-attack deaths are from hemorrhagic shock, frequently from a femoral or other extremity vessel.<sup>1,2</sup> The delayed killer is <b class="k">infection</b> with unusual marine organisms. The protocol therefore stacks two priorities onto the core trauma pathway (TS-TR-001, TS-HD-002): <b class="k">aggressive hemorrhage control and damage-control resuscitation first, then early broad antibiotics that specifically cover marine bacteria</b>.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Hemorrhage control is the priority</div>
+      <p class="body-text">As with any major extremity hemorrhage, the evidence-based ladder applies and the <b class="k">tourniquet goes on early and high</b> for life-threatening limb bleeding — battlefield and civilian data show early tourniquets save lives with rare limb loss, and a second tourniquet is added above the first if bleeding continues.<sup>2,4</sup> Junctional and deep wounds are packed with hemostatic gauze; a pelvic binder is applied for pelvic involvement; and mangled limbs are splinted. Two water-specific traps matter: <b class="k">blood loss is grossly underestimated in water</b> (it disperses and dilutes), so the crew resuscitates to the clinical picture and shock index rather than the visible loss; and the patient may have <b class="k">drowned, become hypothermic, or sustained C-spine injury</b> from the attack or rescue, so a full survey and active warming are essential. Embedded shark teeth are treated as impaled objects — stabilized, not removed, since they may be tamponading a vessel.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Damage-control resuscitation</div>
+      <p class="body-text">Resuscitation follows the whole-blood pathway: <b class="k">blood products over crystalloid</b>, permissive hypotension to a radial pulse / SBP ~90 (100–110 with concurrent TBI), <b class="k">TXA within 3 hours</b>, calcium with transfusion, and aggressive warming to counter the lethal triad.<sup>2,4</sup> Because beta-blocked patients and immersion-cooled patients may not mount a tachycardia, the crew uses the <b class="k">shock index (≥ 0.8) and perfusion</b> rather than heart rate alone to trigger transfusion, and activates massive transfusion early. The single highest-yield disposition decision is rapid delivery to a trauma center with vascular, orthopedic, and plastic-surgery capability and an OR — from the Keys, the helicopter collapses the multi-hour ground option.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why marine wounds need special antibiotics</div>
+      <p class="body-text">This is the teaching point that distinguishes a shark bite from a land injury: shark and other marine wounds are contaminated with <b class="k">marine bacteria — chiefly <em>Vibrio</em> species (notably <em>Vibrio vulnificus</em>) and <em>Aeromonas</em></b>, in addition to ordinary skin flora.<sup>3,5</sup> <em>Vibrio vulnificus</em> in particular can cause fulminant necrotizing soft-tissue infection and septic shock with high mortality, especially in patients with liver disease, diabetes, or immunocompromise.<sup>5</sup> Crucially, the <b class="k">first-generation cephalosporins used for routine open fractures (cefazolin/Ancef) do NOT reliably cover Vibrio</b>. Marine-wound guidance therefore adds an agent active against <em>Vibrio</em>/<em>Aeromonas</em> — a <b class="k">third-generation cephalosporin (ceftriaxone) PLUS doxycycline</b> (or a fluoroquinolone) — given early because time-to-antibiotic drives infection outcome.<sup>3,5</sup> In children under 8, doxycycline is normally avoided, but for serious suspected <em>Vibrio</em> infection its benefit outweighs the dental-staining risk and it is used under medical control; a fluoroquinolone is an alternative.<sup>5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Wound care, tetanus &amp; definitive treatment</div>
+      <p class="body-text">In the field the wound is <b class="k">irrigated of gross debris and covered with a saline-moistened sterile dressing</b> — definitive irrigation, debridement, and vascular/soft-tissue repair occur in the operating room, so the crew does not attempt deep cleaning or closure.<sup>1,3</sup> Tetanus status is addressed at the receiving facility. Amputated parts are preserved per the standard method (saline-damp gauze, sealed bag, on ice water — never frozen; TS-TR-004) in case replantation is feasible. The combination of early hemorrhage control, blood-based resuscitation, marine-spectrum antibiotics, and rapid transport to definitive surgical care is what converts a historically lethal injury into a survivable one.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Caldicott DGE, et al. <span style="color:var(--text-faint)">Management of shark attack injuries / "the shark-attack pack." <em>Resuscitation / Emerg Med.</em></span> <a href="https://pubmed.ncbi.nlm.nih.gov/11719149">pubmed.ncbi.nlm.nih.gov/11719149</a></li>
+          <li>Committee on Tactical Combat Casualty Care (CoTCCC). <span style="color:var(--text-faint)">TCCC Guidelines — tourniquets, hemorrhage control, damage-control resuscitation. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>Wilderness Medical Society. <span style="color:var(--text-faint)">Clinical Practice Guidelines for marine envenomation &amp; wound management (marine bite antibiotics). <em>Wilderness Environ Med.</em></span> <a href="https://pubmed.ncbi.nlm.nih.gov/30617003">pubmed.ncbi.nlm.nih.gov/30617003</a></li>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">ATLS, 10th ed. — mangled extremity, hemorrhage, damage-control resuscitation. 2018.</span></li>
+          <li>CDC / IDSA. <span style="color:var(--text-faint)"><em>Vibrio vulnificus</em> wound infection — doxycycline + ceftriaxone (or fluoroquinolone); skin &amp; soft-tissue infection guidance.</span> <a href="https://www.cdc.gov/vibrio/">cdc.gov/vibrio</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose &amp; allergy before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

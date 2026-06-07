@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS IABP">
+<meta name="theme-color" content="#0a0f1c">
+<title>Intra-Aortic Balloon Pump Transfer — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--hd:#38bdf8;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#38bdf8)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--hd);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Intra-Aortic Balloon Pump Transfer</h1>
+      <div class="sub">IABP counterpulsation · MCS interfacility</div>
+      <div class="cat">TS-HD-004 · Sec 2 Hemodynamics &amp; Shock</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Keep it pumping — never let it sit idle</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Never stop augmentation for more than a few minutes</b> — a stationary balloon forms thrombus. If the console fails, switch to backup/battery; if it cannot pump, the balloon must be manually fluttered (per console) <b class="k">every ~5 min</b> or removed at the sending facility.</li>
+          <li>Confirm <b class="k">trigger, timing, and augmentation</b> are correct before leaving and again after every move (loading, lift-off).</li>
+          <li>Bring a <b class="k">fully charged console + spare battery and a full helium tank</b> (+ backup).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">How it works (set-up check)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li><b class="k">Inflates in diastole</b> (↑ coronary perfusion — augmented diastolic pressure) and <b class="k">deflates just before systole</b> (↓ afterload, ↓ myocardial O₂ demand).</li>
+          <li><b class="k">Trigger:</b> ECG (R-wave, preferred) or arterial pressure. Ensure a clean ECG + a good arterial waveform.</li>
+          <li><b class="k">Ratio:</b> 1:1 (every beat) typical; 1:2/1:3 for weaning. Confirm augmentation is set to the ordered ratio &amp; %.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Catheter &amp; positioning</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>Femoral insertion: <b class="k">keep the leg straight</b> (knee immobilizer); <b class="k">HOB ≤ 30°</b>; do not flex the hip — kinking stops augmentation.</li>
+          <li><b class="k">Check distal pulses, color, temp of the cannulated leg</b> frequently (limb ischemia).</li>
+          <li>Position-sensitive: too high → may occlude the left subclavian (lost left radial pulse) or mesenteric/renal flow (↓ urine); too low → ineffective. Don't reposition in the field — note &amp; relay.</li>
+          <li><b class="k">Do NOT flush the balloon (gas) lumen.</b> Maintain the arterial line for waveform.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Emergencies</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Blood in the balloon tubing / loss of augmentation</b> = possible <b class="k">balloon rupture</b> → <b class="k">STOP the pump, clamp the catheter, place patient left-lateral/Trendelenburg, notify receiving/cardiology immediately</b> (gas/clot embolism risk). Prepare for removal at a facility.</li>
+          <li><b class="k">Console/power failure</b> → switch to backup/battery; if it can't pump, manually inflate/deflate per console q5 min — do not leave idle.</li>
+          <li><b class="k">Cardiac arrest:</b> CPR as indicated; many consoles can switch trigger to "pressure"/internal — follow console arrest mode; defibrillate normally.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hemodynamics &amp; anticoagulation</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>The IABP <b class="k">augments — it does not replace volume or inotropy</b>. Treat hypotension/shock with fluids, pressors/inotropes per medical control (and Shock/CV-instability).</li>
+          <li>Patient usually on a <b class="k">heparin infusion</b> — continue per orders; watch the femoral site for bleeding/hematoma and for thrombocytopenia.</li>
+          <li>Monitor: arterial waveform (augmented diastolic), ECG trigger, distal limb perfusion, urine output, MAP.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Indication, trigger source, ratio &amp; augmentation %, MAP/augmented pressures, timing checks (incl. after each move).</li>
+          <li>Distal pulses/leg checks, urine output, heparin, site; any alarms/rupture response.</li>
+          <li>Console/gas status &amp; backups; receiving cardiac center + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — counterpulsation, and the duty to keep it running</div>
+      <p class="body-text">The intra-aortic balloon pump (IABP) is a catheter-mounted balloon sitting in the descending aorta that performs <b class="k">counterpulsation</b>: it <b class="k">inflates during diastole</b> to push blood back toward the coronaries (raising coronary perfusion) and <b class="k">deflates just before systole</b> to create a vacuum that reduces the afterload the heart must eject against (lowering myocardial oxygen demand and modestly improving forward output).<sup>1,2</sup> It is used for cardiogenic shock, refractory ischemia, mechanical complications of MI, and as a bridge. The transport mission is essentially <b class="k">to keep the device pumping correctly and the patient stable</b> while moving to a cardiac center — the IABP itself does the therapy, and the crew's job is to protect it.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why an idle balloon is dangerous</div>
+      <p class="body-text">The single most important transport rule is that the balloon <b class="k">must not sit motionless in the aorta</b>: a stationary balloon rapidly accumulates thrombus on its surface, which can then embolize.<sup>1,2</sup> Therefore augmentation is never paused for more than a few minutes; if the console fails it is switched to backup or battery power, and if it truly cannot pump, the balloon is <b class="k">manually inflated/deflated (per the console) about every five minutes</b> or removed at the sending facility before transport. This is why the crew brings a <b class="k">charged console with a spare battery and a full helium gas tank (plus backup)</b> and confirms the trigger, timing, and augmentation are correct before departure and again after every patient move, since transfers and lift-off can disturb leads and waveforms.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Timing, triggering &amp; the catheter position</div>
+      <p class="body-text">Effective counterpulsation depends on correct <b class="k">timing</b> relative to the cardiac cycle, driven by a <b class="k">trigger</b> — usually the ECG R-wave (preferred) or the arterial pressure waveform — so a clean ECG and a good arterial line are prerequisites, and arrhythmias or a poor signal degrade augmentation.<sup>1,2</sup> The catheter's <b class="k">position is critical and fragile</b>: its tip sits just distal to the left subclavian artery, so migration <b class="k">upward</b> can occlude the left subclavian (loss of the left radial pulse) or the mesenteric/renal vessels (falling urine output), and migration <b class="k">downward</b> makes it ineffective. The crew protects position by keeping the <b class="k">cannulated leg straight</b> (knee immobilizer), the head of bed at ≤ 30°, and the hip un-flexed — kinking the catheter stops augmentation — and does not reposition it in the field, instead noting and relaying any concern.<sup>2</sup> The gas (balloon) lumen is never flushed.</p>
+    </section>
+    <section>
+      <div class="sec-h">Recognizing the emergencies</div>
+      <p class="body-text">Two failures must be recognized instantly. <b class="k">Balloon rupture</b> presents as <b class="k">blood in the balloon/gas tubing</b> (and loss of augmentation); because helium or clot can embolize, the response is to <b class="k">stop the pump, clamp the catheter, place the patient left-lateral and head-down, and notify the receiving cardiology/surgical team immediately</b> for urgent removal.<sup>1,2</sup> <b class="k">Limb ischemia</b> from the large femoral catheter is the most common complication, so distal pulses, color, and temperature of the cannulated leg are checked frequently. Console or power failure triggers the switch to backup/battery and, if needed, manual fluttering. In cardiac arrest, CPR proceeds and defibrillation is performed normally; most consoles offer a pressure/internal trigger or arrest mode to maintain some counterpulsation, which the crew selects per the device.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The IABP is an adjunct, not a substitute</div>
+      <p class="body-text">A crucial conceptual point is that the balloon pump <b class="k">augments the circulation but does not replace volume or contractility</b>: a hypovolemic or profoundly failing patient still needs fluids, blood, and pressors/inotropes, managed per the Shock &amp; Cardiovascular Instability pathway and online medical control.<sup>1,2</sup> Patients are typically on a <b class="k">heparin infusion</b> to prevent catheter thrombosis, which is continued per orders while the crew watches the femoral site for bleeding/hematoma and monitors for thrombocytopenia. Continuous monitoring of the augmented arterial waveform, the ECG trigger, distal limb perfusion, urine output, and MAP tells the crew both how the patient and how the device are doing. The destination is a cardiac center capable of definitive management (cath lab, cardiac surgery), and from the Keys the rotor-wing collapses the multi-hour ground option for these unstable patients.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Krishna M, Zacharowski K. <span style="color:var(--text-faint)">Principles of intra-aortic balloon pump counterpulsation. <em>Contin Educ Anaesth Crit Care Pain.</em> 2009;9(1):24–28.</span> <a href="https://academic.oup.com/bjaed/article/9/1/24/325092">academic.oup.com/bjaed</a></li>
+          <li>Critical-care transport / manufacturer IABP guidance (e.g., ASTNA Patient Transport; Getinge/Maquet &amp; Teleflex console field guides). <span style="color:var(--text-faint)">Trigger/timing, position, balloon-rupture &amp; idle-balloon precautions, limb monitoring.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol, the console manufacturer's field guide, the sending intensivist/cardiology, and online medical control. Verify every setting and dose before transport.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

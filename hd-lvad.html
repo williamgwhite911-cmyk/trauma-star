@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS LVAD">
+<meta name="theme-color" content="#0a0f1c">
+<title>LVAD Transport — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--hd:#38bdf8;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  .callout{display:flex;align-items:center;gap:12px;background:#0c2436;border:1px solid #13507a;border-radius:14px;padding:13px 15px;margin-bottom:16px}
+  .callout .ico{font-size:1.4rem}.callout .t{font-weight:800;font-size:.92rem;color:#7dd3fc}.callout .d{font-size:.78rem;color:var(--text-dim);margin-top:2px}.callout a{color:#7dd3fc;text-decoration:none;font-weight:700;font-family:var(--mono)}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#38bdf8)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--hd);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>LVAD Transport</h1>
+      <div class="sub">Continuous-flow LVAD · MCS interfacility</div>
+      <div class="cat">TS-HD-003 · Sec 2 Hemodynamics &amp; Shock</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <div class="callout">
+      <div class="ico">☎️</div>
+      <div><div class="t">CALL the patient's VAD Coordinator / implanting center FIRST</div><div class="d">They guide device troubleshooting &amp; parameters — get the number from the patient/family/sending facility.</div></div>
+    </div>
+
+    <section>
+      <div class="sec-h">Before you move — bring ALL equipment</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Controller (on patient) + BACKUP controller</b>, ≥ 2 <b class="k">fully charged batteries</b> + spares, power module/AC cables, and the patient's <b class="k">VAD travel bag</b>. Never separate the patient from the controller.</li>
+          <li><b class="k">Keep the pump powered &amp; running at all times.</b> Do not disconnect the driveline. Secure connections against vibration.</li>
+          <li>Bring the patient's device type, baseline parameters, and the coordinator number.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Assess — continuous flow = no normal pulse</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li><b class="k">Often NO palpable pulse; SpO₂ &amp; NIBP unreliable.</b> Confirm the pump is running by <b class="k">auscultating a continuous "hum" over the chest</b>.</li>
+          <li><b class="k">BP = MAP by Doppler</b> (manual cuff + Doppler over brachial/radial — first sound = MAP). <b class="k">Target MAP 70–90</b> (avoid &gt; 90).</li>
+          <li>Judge perfusion by <b class="k">mentation, skin, cap refill, EtCO₂</b>, urine output — not pulse.</li>
+          <li>Read the controller: <b class="k">speed (RPM), flow (L/min), power (W), pulsatility index (PI)</b>, and any alarms.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Troubleshoot alarms (call coordinator)</div>
+      <div class="block" style="--c:#38bdf8">
+        <div class="item"><div class="nm">Low flow / low PI · "suction" alarm</div><div class="detail">Usually <b class="k">hypovolemia</b> (bleeding, dehydration) or RV failure → <b class="k">give IV fluid/blood</b>; coordinator may lower pump speed. Check for tamponade.</div></div>
+        <div class="item"><div class="nm">High power / dark (tea-colored) urine</div><div class="detail">Suggests <b class="k">pump thrombosis / hemolysis</b> — notify coordinator + receiving; expedite.</div></div>
+        <div class="item"><div class="nm">Power / controller alarm</div><div class="detail">Swap to charged battery / AC power; if controller fault → <b class="k">change to backup controller per the device's procedure</b> (coordinator-guided).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Common problems &amp; treatment</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li><b class="k">Bleeding</b> — patients are anticoagulated (warfarin ± antiplatelet); GI/intracranial bleed common. Resuscitate with blood (TS-HD-002); relay to receiving.</li>
+          <li><b class="k">Arrhythmias</b> (VT/VF) may be surprisingly tolerated (LVAD maintains flow) — treat per ACLS; <b class="k">you MAY defibrillate</b> (pads anterior-posterior, clear of the device). Treat reversible causes.</li>
+          <li><b class="k">RV failure</b> — supports filling: cautious fluids, pressor/inotrope per medical control; avoid hypoxia/acidosis.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">CPR / arrest</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">First confirm the pump is running</b> (hum) and powered, and fix any device cause — most "arrests" are device/power problems.</li>
+          <li>If <b class="k">no signs of life</b> (unresponsive, no perfusion, EtCO₂ low/absent) AND the pump cannot be restarted → <b class="k">start chest compressions</b>. Do NOT withhold CPR from a truly arrested, non-perfusing LVAD patient.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Device type, baseline + transport parameters (RPM/flow/power/PI), alarms &amp; actions; coordinator contact.</li>
+          <li>Doppler MAP trend, perfusion signs; meds/fluids/blood; anticoagulation status.</li>
+          <li>Equipment carried (controller/backup/batteries); destination (implanting/VAD center).</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a pump that changes the rules</div>
+      <p class="body-text">A continuous-flow left ventricular assist device (LVAD — e.g., HeartMate 3, HeartMate II, HeartWare) is a surgically implanted pump that draws blood from the left ventricle and propels it into the aorta in a <b class="k">continuous, largely non-pulsatile stream</b>.<sup>1,2</sup> That single fact upends normal assessment: there is often <b class="k">no palpable pulse</b>, and pulse oximetry and standard automated blood-pressure cuffs frequently fail. The transport mission is to <b class="k">keep the pump running and powered, assess perfusion by other means, troubleshoot device alarms with the patient's VAD center, and treat the patient's physiology</b> — bleeding, arrhythmia, RV failure — while moving to definitive care.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">First call the VAD coordinator — and bring everything</div>
+      <p class="body-text">The patient's <b class="k">VAD coordinator / implanting center</b> knows the device, its baseline parameters, and its specific troubleshooting steps, so contacting them early is the highest-yield action and is built into the protocol.<sup>1</sup> Equally important is <b class="k">equipment</b>: the patient must never be separated from the <b class="k">controller</b>, and the crew brings the <b class="k">backup controller, multiple fully charged batteries, power cables, and the patient's travel bag</b> — a dead battery with no spare is a preventable arrest. All connections are secured against the vibration of flight, and the driveline is never disconnected. Keeping the pump running and powered is the non-negotiable foundation of every other step.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Assessing the non-pulsatile patient</div>
+      <p class="body-text">Because there is no reliable pulse, the crew confirms the pump is working by <b class="k">auscultating the continuous mechanical hum</b> over the precordium, and measures blood pressure as a <b class="k">mean arterial pressure using a manual cuff and a Doppler</b> (the pressure at which flow first returns over the brachial/radial artery approximates the MAP).<sup>1,2</sup> The usual target is a <b class="k">MAP of about 70–90 mmHg</b>; hypertension (MAP &gt; 90) increases afterload and stroke risk and is avoided. Perfusion is judged clinically — <b class="k">mental status, skin, capillary refill, end-tidal CO₂, and urine output</b> — and the controller display is read for <b class="k">speed, flow, power, and pulsatility index</b>, the numbers that reveal what the pump is doing.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Reading the alarms — what the numbers mean</div>
+      <p class="body-text">Two patterns are worth knowing. A <b class="k">low-flow / low-PI or "suction" alarm</b> usually means the pump is out-running its filling — most often from <b class="k">hypovolemia</b> (bleeding, dehydration) or right-ventricular failure — so the response is volume (fluid or blood) and, on coordinator guidance, reducing pump speed, while excluding tamponade.<sup>1,2</sup> <b class="k">High power</b>, especially with <b class="k">dark, tea-colored urine</b> (hemolysis), suggests <b class="k">pump thrombosis</b>, an emergency that is relayed to the coordinator and receiving center. Power and controller alarms are addressed by switching to a charged battery/AC power or, for a controller fault, exchanging to the backup controller per the device's procedure. The unifying principle: <b class="k">most LVAD "arrests" are device or power problems</b>, and fixing the device restores the patient.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Bleeding, arrhythmia, RV failure &amp; the CPR question</div>
+      <p class="body-text">LVAD physiology shapes the medical care. Patients are <b class="k">anticoagulated</b>, so GI and intracranial hemorrhage are common and are resuscitated with blood products.<sup>1</sup> <b class="k">Ventricular arrhythmias may be remarkably well tolerated</b> because the pump keeps flowing, but they still need treatment, and <b class="k">defibrillation is permitted</b> (pads placed clear of the device).<sup>2</sup> Right-heart failure is managed by supporting RV filling and contractility and avoiding hypoxia/acidosis. The historically fraught question of <b class="k">chest compressions</b> has a current answer: first confirm the pump is running and powered and correct any device cause, but if the patient has <b class="k">no signs of life and the pump cannot be restarted, chest compressions are performed</b> — withholding CPR from a truly arrested, non-perfusing patient over a theoretical risk of dislodging the device is not supported.<sup>2,3</sup> Throughout, the patient is taken to a VAD-capable / implanting center.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Peberdy MA, et al. (AHA Scientific Statement). <span style="color:var(--text-faint)">Cardiopulmonary Resuscitation in Adults &amp; Children With Mechanical Circulatory Support. <em>Circulation.</em> 2017;135:e1115–e1134.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/28533303">pubmed.ncbi.nlm.nih.gov/28533303</a></li>
+          <li>MCS / VAD field-guide &amp; EMS guidance (MyLVAD / manufacturer field guides). <span style="color:var(--text-faint)">Assessment of the non-pulsatile patient, Doppler MAP, alarms, equipment.</span> <a href="https://www.mylvad.com/">mylvad.com</a></li>
+          <li>Givertz MM, et al. <span style="color:var(--text-faint)">Management of patients with continuous-flow LVADs. <em>Circulation.</em> 2017.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/29133602">pubmed.ncbi.nlm.nih.gov/29133602</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol, the device manufacturer's field guide, the patient's VAD center, and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
