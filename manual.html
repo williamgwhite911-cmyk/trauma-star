@@ -57,6 +57,18 @@
 
   .disc{font-size:.78rem;color:var(--faint);margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
 
+  html{scroll-behavior:smooth}
+  .proto,h2{scroll-margin-top:64px}
+  /* quick links on the title page */
+  .quick{margin:14px 0 6px;border:1px solid var(--line);border-radius:8px;background:#f9fafb;padding:12px 14px}
+  .quick .qh{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--dim);margin-bottom:8px}
+  .quick .qrow{display:flex;flex-wrap:wrap;gap:6px}
+  .quick a{display:inline-block;font-size:.8rem;font-weight:600;color:var(--blue);text-decoration:none;border:1px solid #bfdbfe;background:#eff6ff;border-radius:999px;padding:4px 11px}
+  .quick a:hover{background:#dbeafe}
+  td.c a.jump{color:var(--blue);text-decoration:none;font-weight:700}
+  td.c a.jump:hover{text-decoration:underline}
+  .backtop{display:block;font-size:.74rem;color:var(--faint);text-decoration:none;margin-top:8px}
+
   @media print{
     body{background:#fff}
     .toolbar{display:none}
@@ -64,6 +76,8 @@
     .sec{break-before:page}
     .proto{break-inside:auto}
     a{color:var(--ink);text-decoration:none}
+    .quick{display:none}
+    .backtop{display:none}
   }
 </style>
 </head>
@@ -77,8 +91,13 @@
 
 <div class="page">
 
-  <h1>Trauma Star Clinical Care Guidelines</h1>
+  <h1 id="top">Trauma Star Clinical Care Guidelines</h1>
   <div class="subt">TS-CCG · Critical Care Transport · Medical Director Approval Manual</div>
+
+  <div class="quick" id="quicklinks">
+    <div class="qh">Quick links — jump to section</div>
+    <div class="qrow" id="qsections"></div>
+  </div>
 
   <div class="doc-meta">
     <div><b>Service:</b> Monroe County Fire Rescue — Trauma Star (AW139, rotor-wing)</div>
@@ -1098,5 +1117,43 @@
   </div>
 
 </div>
+
+<script>
+  // Quick-link wiring: section nav on the title page + clickable catalog index → each protocol.
+  (function(){
+    // 1) Give each protocol an id from its catalog number (e.g., TS-AW-001)
+    document.querySelectorAll('.proto').forEach(function(p){
+      var cat = p.querySelector('.cat');
+      if(cat){ p.id = cat.textContent.trim(); }
+    });
+    // 2) Section anchors + build the "jump to section" bar
+    var qs = document.getElementById('qsections');
+    document.querySelectorAll('.sec > h2').forEach(function(h,i){
+      var id = 'sec-' + (i+1);
+      h.id = id;
+      // short label: text up to the em-dash
+      var label = h.textContent.split('—')[0].trim();
+      var a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = label;
+      qs.appendChild(a);
+    });
+    // 3) Make each catalog number in the Document-Control index a jump link
+    document.querySelectorAll('table td.c').forEach(function(td){
+      var code = td.textContent.trim();
+      if(document.getElementById(code)){
+        td.innerHTML = '<a class="jump" href="#' + code + '">' + code + '</a>';
+      }
+    });
+    // 4) Add a "↑ Top" link at the end of each section
+    document.querySelectorAll('.sec').forEach(function(s){
+      var b = document.createElement('a');
+      b.className = 'backtop';
+      b.href = '#top';
+      b.textContent = '↑ Back to top / quick links';
+      s.appendChild(b);
+    });
+  })();
+</script>
 </body>
 </html>
