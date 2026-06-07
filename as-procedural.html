@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Proc Sedation">
+<meta name="theme-color" content="#0a0f1c">
+<title>Procedural Sedation — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--as:#6366f1;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#4f46e5,#6366f1);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#6366f1)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#6366f1)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:#818cf8;font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Procedural Sedation</h1>
+      <div class="sub">Ketamine · etomidate · monitoring</div>
+      <div class="cat">TS-AS-003 · Sec 11 Analgesia &amp; Sedation</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Before you start — mandatory</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Establish <b class="k">SpO₂, cardiac rhythm, NIBP, continuous waveform capnography, RR</b> first.</li>
+          <li>Have airway/ventilation + CV-instability equipment &amp; drugs <b class="k">ready</b>. Be prepared to manage apnea (esp. dissociative ketamine).</li>
+          <li>Provide analgesia (TS-AS-002) for painful procedures — sedation ≠ analgesia.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Indications (short, unpleasant procedures)</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li>Cardioversion · tube/simple thoracostomy · fracture realignment &amp; splinting · extrication/disentanglement.</li>
+          <li>(CPR-induced consciousness is also an indication for sedation.)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Ketamine — preferred</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item">
+          <div class="nm">Adult &amp; Pediatric</div>
+          <div class="detail"><span class="dose">1–2 mg/kg IBW IV over 30–60 sec</span> or <span class="dose">4 mg/kg IBW IM</span>. <b class="k">Use lower dose if hemodynamically unstable.</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Etomidate — alternate (very brief procedures)</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item">
+          <div class="nm">Adult &amp; Pediatric</div>
+          <div class="detail"><span class="dose">0.1 mg/kg TBW IV over 30–60 sec</span>, repeat <span class="dose">0.05 mg/kg</span> q3–5 min PRN (max single adult 30 mg / peds 20 mg). Pretreat ondansetron PRN.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Cautions</div>
+          <div class="detail">Caution in adrenal insufficiency; <b class="k">not for prolonged or post-intubation sedation</b>; expect <b class="k">myoclonus</b> (involuntary jerks).</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li>Indication/procedure; monitoring established (incl. capnography); pre-procedure airway plan.</li>
+          <li>Agent/dose/route/time; depth achieved; analgesia given; complications (apnea, myoclonus, laryngospasm) &amp; management.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — controlled depression of consciousness for a discrete task</div>
+      <p class="body-text">Procedural sedation deliberately depresses consciousness so a patient can tolerate a <b class="k">short, painful, or distressing procedure</b> — cardioversion, chest-tube/thoracostomy, fracture/dislocation reduction, or extrication — and then recovers.<sup>1,2</sup> Because the same drugs that blunt awareness also blunt airway reflexes and respiratory drive, the defining feature of safe procedural sedation is not the drug but the <b class="k">preparation and monitoring</b> around it: the crew must be ready to rescue an airway at any moment.</p>
+    </section>
+    <section>
+      <div class="sec-h">Monitoring is the protocol</div>
+      <p class="body-text">Full monitoring — <b class="k">SpO₂, ECG, NIBP, respiratory rate, and continuous waveform capnography</b> — is established <b class="k">before</b> any drug is given, and oxygenation/ventilation and cardiovascular-rescue equipment and medications are laid out ready.<sup>1</sup> <b>Capnography is the key early-warning monitor</b>: it detects hypoventilation and apnea seconds-to-minutes before pulse oximetry falls (especially in a pre-oxygenated patient), giving the crew time to stimulate, reposition, or assist ventilation before desaturation. In the dissociated patient the crew must specifically anticipate <b class="k">apnea, laryngospasm, and airway compromise</b> and be prepared to manage them.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why ketamine is preferred</div>
+      <p class="body-text"><b class="k">Ketamine</b> is the preferred procedural-sedation agent for transport because it provides <b class="k">dissociative sedation plus profound analgesia while largely preserving airway reflexes, respiratory drive, and blood pressure</b> — a uniquely favorable combination when an airway emergency mid-procedure would be catastrophic.<sup>1,2</sup> It even supports hemodynamics through sympathetic stimulation, so it is favored in the unstable patient (at a <b class="k">reduced dose</b>, since a catecholamine-depleted patient can still drop pressure). Its trade-offs — transient laryngospasm, hypersalivation, emergence phenomena, and dissociation — are anticipated and managed, and analgesia is still addressed separately for painful procedures because sedation depth and pain control are distinct goals.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Etomidate's niche and its caveats</div>
+      <p class="body-text"><b class="k">Etomidate</b> is the alternative for <b class="k">very brief</b> procedures (classically cardioversion) because it has a rapid onset, short duration, and excellent hemodynamic stability.<sup>1</sup> But it carries specific limits: it provides <b class="k">no analgesia</b> (pair with an opioid for painful procedures), it causes <b class="k">myoclonus</b> (involuntary jerking that can be mistaken for seizure or distress, and that can interfere with a delicate procedure), and a single dose transiently suppresses cortisol — hence the cautions in adrenal insufficiency and the explicit prohibition on using it for <b class="k">prolonged or post-intubation sedation</b>, where repeated/continuous exposure could cause clinically significant adrenal suppression.<sup>1</sup> Dosing is by total body weight, and ondansetron pre-treatment reduces associated nausea.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 5.2 Procedural Sedation</b> <span style="color:var(--text-faint)">(Rev 23, 23 Jan 2025) — ketamine/etomidate dosing &amp; monitoring source.</span></li>
+          <li>Godwin SA, et al. (ACEP). <span style="color:var(--text-faint)">Clinical Policy: Procedural Sedation and Analgesia in the Emergency Department. <em>Ann Emerg Med.</em> 2014;63(2):247–258.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/24438649">pubmed.ncbi.nlm.nih.gov/24438649</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

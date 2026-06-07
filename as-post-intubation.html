@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Post-Intub">
+<meta name="theme-color" content="#0a0f1c">
+<title>Post-Intubation Analgesia & Sedation — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--as:#6366f1;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#4f46e5,#6366f1);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#6366f1)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#6366f1)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:#818cf8;font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Post-Intubation Analgesia &amp; Sedation</h1>
+      <div class="sub">Analgesia-first · RASS −1 to −5</div>
+      <div class="cat">TS-AS-004 · Sec 11 Analgesia &amp; Sedation</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Principles</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Never leave a paralyzed/intubated patient unsedated.</b> Establish capnography, SpO₂, ECG, NIBP, RR.</li>
+          <li>Set a goal (<b class="k">RASS −1 to −5</b>); assess with RASS/SAS/CPOT/BPS. <b class="k">Analgesia first</b>, then sedation.</li>
+          <li>Bolus to goal → then scheduled bolus/infusion; treat pain/agitation <b class="k">pre-emptively</b>. Push IV agents slowly over 1–2 min.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Stratify the patient</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li><b class="k">Can assess</b> (responds, no NMB) → titrate to scale.</li>
+          <li><b class="k">Cannot assess</b> (NMB/unassessable) → <b class="k">empiric targeted dosing</b> (scales invalid).</li>
+          <li><b class="k">Hemodynamically unstable</b> (hypotension, SI ≥ 1) → ketamine preferred; reduce other sedatives by ½–¼.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">First-line (use ONE; optimize before adding)</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item"><div class="nm">Fentanyl (analgesia + light sedation)</div><div class="detail"><span class="dose">0.5–2 mcg/kg IBW IV</span> q10 min, or <span class="dose">1–2 mcg/kg/hr infusion</span>. Titrate to goal.</div></div>
+        <div class="item"><div class="nm">Ketamine (preferred if unstable)</div><div class="detail"><b class="k">Bolus 1–2 mg/kg IBW IV</b> first, then <span class="dose">1–4 mg/kg/hr infusion</span> (or rebolus q20–30 min). <b class="k">Bolus before infusion</b> or under-sedation/dysphoria.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Add ONE sedative if RASS goal unmet (pain controlled)</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item"><div class="nm">Propofol (no analgesia — keep opioid running)</div><div class="detail"><span class="dose">5–100 mcg/kg/min</span> (titrate 5–10 q5 min; &gt;100 needs physician). Bolus 0.5–1 mg/kg w/ infusion. Anticipate hypotension (fluids/pressors).</div></div>
+        <div class="item"><div class="nm">Midazolam (preferred if seizure risk masked by NMB)</div><div class="detail"><span class="dose">0.025–0.05 mg/kg IV</span> q10 min, or <span class="dose">0.05–0.2 mg/kg/hr</span>.</div></div>
+        <div class="item"><div class="nm">Dexmedetomidine</div><div class="detail"><span class="dose">0.2–1.5 mcg/kg/hr</span> (titrate 0.2 q30 min). Lorazepam if no midazolam (0.025–0.1 mg/kg, max 2).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Controlled-substance infusions</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Do not take possession of another facility's controlled-substance infusion</b> — prepare a NEW infusion with PHI/Trauma Star drugs.</li>
+          <li>Waste &amp; document residual controlled substances after handoff.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li>RASS/pain goal &amp; serial scores; stratification category; capnography.</li>
+          <li>Analgesic + sedative (agent/dose/infusion/time/response); ketamine bolus-before-infusion; hemodynamic support.</li>
+          <li>Controlled-substance waste; receiving handoff.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — the intubated patient is awake-able and in pain</div>
+      <p class="body-text">An endotracheal tube is intensely noxious, and transport adds noise, vibration, movement, and procedures. The cardinal rule is that <b class="k">no intubated — and especially no paralyzed — patient is ever left without analgesia and sedation</b>; awareness during paralysis is a devastating, preventable harm.<sup>1,2</sup> The protocol's structure is <b class="k">analgesia-first, then sedation</b>, titrated to a defined target (RASS −1 to −5), because much of what looks like "agitation" in an intubated patient is actually <b class="k">pain</b>, and treating pain first often achieves the sedation goal with less sedative.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Analgesia-first (A1) and avoiding over-sedation</div>
+      <p class="body-text">Modern ICU practice (the SCCM PADIS guidelines) favors an <b class="k">analgesia-first / analgosedation</b> approach and targeting <b class="k">light</b> sedation when possible, because deep sedation prolongs ventilation, causes hypotension, and worsens outcomes.<sup>2</sup> The protocol mirrors this: choose <b class="k">one agent and optimize it</b> before adding a second (alternating/stacking agents causes adverse events and confusion), use <b class="k">fentanyl</b> for analgesia ± light sedation, and add a dedicated sedative only when an adequate opioid controls pain but the RASS goal still isn't met.<sup>1,2</sup> Drugs are pushed slowly (1–2 min) and titrated by repeat bolus to goal, then maintained by scheduled bolus or infusion, with pre-emptive dosing before predictable stimulation (moving the patient, turbulence).<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Stratify — and why the unstable patient gets ketamine</div>
+      <p class="body-text">The protocol stratifies into three groups.<sup>1</sup> The patient who <b class="k">can be assessed</b> is titrated to a scale. The patient who <b class="k">cannot</b> (paralyzed/unassessable) gets <b class="k">empiric targeted-dose</b> therapy, because behavioral scales are meaningless under paralysis (see TS-AS-001). The <b class="k">hemodynamically unstable</b> patient (hypotension, shock index ≥ 1) is the one in whom drug choice matters most: most sedatives (propofol, benzodiazepines, even opioids) drop blood pressure, so their doses are <b class="k">reduced by one-half to one-quarter</b> — with the deliberate exception of <b class="k">ketamine</b>, which supports hemodynamics and is therefore the preferred agent for post-intubation analgosedation in shock.<sup>1</sup> The ketamine-specific teaching point is to give a <b class="k">dissociative bolus before starting the infusion</b>; an infusion alone ramps up too slowly and leaves the patient under-sedated and dysphoric.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Choosing the second-agent sedative</div>
+      <p class="body-text">When a sedative must be added, the choice is matched to the clinical situation.<sup>1,2</sup> <b class="k">Propofol</b> gives rapidly titratable deep sedation but <b class="k">no analgesia</b> (the opioid must keep running) and causes dose-dependent <b class="k">hypotension</b>, so fluids/pressors are anticipated and high doses need a physician. <b class="k">Midazolam</b> is the preferred sedative when there is a <b class="k">risk of seizure masked by a paralytic</b> (it is also an anticonvulsant) — an important link to the seizure protocol, since a paralyzed status patient shows no convulsions. <b class="k">Dexmedetomidine</b> provides cooperative sedation with minimal respiratory depression (useful for lighter targets) but can cause bradycardia/hypotension and cannot achieve deep sedation alone. Lorazepam substitutes for midazolam when needed.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Controlled-substance chain of custody</div>
+      <p class="body-text">A non-clinical but mandatory element: the crew <b class="k">may not take possession of, continue, or leave behind another facility's controlled-substance infusion</b>. If an infusion (e.g., fentanyl, midazolam, ketamine) is to be continued, a <b class="k">new infusion is prepared with the program's own controlled substances</b>, and any residual is wasted and documented after handoff.<sup>1</sup> This protects the chain of custody and the crew legally, and it is built into the workflow so that continuing sedation across the transfer is planned rather than improvised. The overarching aim throughout is a comfortable, safely sedated patient at the lightest effective depth, with the airway and hemodynamics protected the entire flight.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 2 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 5.3 Post-Intubation Analgesia and Sedation</b> <span style="color:var(--text-faint)">(Rev 19–23, 2023–2025) — stratification, drug/dose &amp; controlled-substance source.</span></li>
+          <li>Devlin JW, et al. (SCCM). <span style="color:var(--text-faint)">Clinical Practice Guidelines for Pain, Agitation/Sedation, Delirium, Immobility &amp; Sleep (PADIS). <em>Crit Care Med.</em> 2018;46(9):e825–e873.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/30113379">pubmed.ncbi.nlm.nih.gov/30113379</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

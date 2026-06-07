@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Pain Scales">
+<meta name="theme-color" content="#0a0f1c">
+<title>Pain & Sedation Scales — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--as:#6366f1;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#4f46e5,#6366f1);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#6366f1)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#6366f1)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:#818cf8;font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Pain &amp; Sedation Scales</h1>
+      <div class="sub">CPOT · BPS · RASS · SAS</div>
+      <div class="cat">TS-AS-001 · Sec 11 Analgesia &amp; Sedation</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Which scale to use</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li><b class="k">Pain — can self-report:</b> 0–10 numeric scale.</li>
+          <li><b class="k">Pain — cannot self-report:</b> CPOT (0–8) or BPS (3–12).</li>
+          <li><b class="k">Sedation/agitation:</b> RASS (−5 to +4) or SAS (1–7).</li>
+          <li>Assess &amp; document <b class="k">before and after</b> every analgesic/sedative; set a target (e.g., post-intubation RASS −1 to −5).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">CPOT (0–8) — 4 categories, 0–2 each</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item"><div class="nm">Facial expression</div><div class="detail">0 relaxed · 1 tense (frown) · 2 grimacing (+ eyes shut).</div></div>
+        <div class="item"><div class="nm">Body movements</div><div class="detail">0 absence/relaxed · 1 protection (guarding/rubbing) · 2 restlessness (thrashing, striking).</div></div>
+        <div class="item"><div class="nm">Muscle tension</div><div class="detail">0 relaxed · 1 tense/rigid · 2 very rigid (can't complete passive movement).</div></div>
+        <div class="item"><div class="nm">Ventilator compliance (intubated) / Vocalization (not)</div><div class="detail">0 tolerating / normal tone · 1 coughs but tolerates / sighing-moaning · 2 fighting vent / crying out.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">BPS (3–12) — 3 items, 1–4 each</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li><b class="k">Facial:</b> 1 relaxed → 4 grimacing.</li>
+          <li><b class="k">Upper limbs:</b> 1 no movement → 4 permanently retracted.</li>
+          <li><b class="k">Ventilator compliance:</b> 1 tolerating → 4 unable to control.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">RASS (−5 to +4)</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li><b class="k">+4</b> combative · <b class="k">+3</b> very agitated · <b class="k">+2</b> agitated · <b class="k">+1</b> restless · <b class="k">0</b> alert &amp; calm.</li>
+          <li><b class="k">−1</b> drowsy · <b class="k">−2</b> light · <b class="k">−3</b> moderate · <b class="k">−4</b> deep · <b class="k">−5</b> unarousable.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">SAS (1–7)</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li><b class="k">7</b> dangerous agitation · <b class="k">6</b> very agitated · <b class="k">5</b> agitated · <b class="k">4</b> calm/cooperative · <b class="k">3</b> sedated · <b class="k">2</b> very sedated · <b class="k">1</b> unarousable.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Why scales — you can't titrate what you don't measure</div>
+      <p class="body-text">Pain and sedation are subjective, and in the loud, vibrating, time-pressured transport cabin they are easy to under- or over-treat. Validated scales convert a vague impression into a <b class="k">reproducible number</b> that any crew member or the receiving team interprets the same way, which is the basis for titrating drugs to a defined target and for detecting trends.<sup>1,2</sup> The principle that anchors the analgesia/sedation protocols is simple: <b class="k">assess, set a goal, treat, reassess</b> — and document the score before and after each medication.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Matching the tool to the patient</div>
+      <p class="body-text">The correct scale depends on what the patient can do. An awake patient <b class="k">self-reports</b> on a 0–10 numeric scale — the gold standard, because pain is whatever the patient says it is.<sup>1</sup> A patient who cannot self-report (intubated, sedated, delirious) is assessed with an <b class="k">observational behavioral pain scale</b> — the <b class="k">CPOT</b> or <b class="k">BPS</b> — which score facial expression, movement/muscle tension, and ventilator interaction, all validated against the patient's true pain state.<sup>2</sup> Separately, depth of <b class="k">sedation/agitation</b> is measured with <b class="k">RASS</b> or <b class="k">SAS</b>, which run from dangerous agitation through calm to unarousable.<sup>3</sup> Pain and sedation are distinct axes — a patient can be deeply sedated yet in pain — which is why both a pain scale and a sedation scale are used together in the intubated patient.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The critical limitation — paralysis erases the score</div>
+      <p class="body-text">Every behavioral scale measures <b class="k">behaviors a paralyzed patient cannot display</b>. A patient who has received a neuromuscular blocker may be wide awake and in agony yet score a perfect "comfortable" on CPOT/BPS/RASS/SAS because they physically cannot frown, move, or fight the ventilator.<sup>1,2</sup> This is one of the most important safety concepts in transport sedation: in the paralyzed or otherwise unassessable patient, scales are <b class="k">invalid</b>, and the crew must instead provide <b class="k">empiric, targeted-dose analgesia and sedation</b> rather than waiting for signs that can never appear (see TS-AS-004). Recognizing when a score is meaningless is as important as knowing how to calculate it.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Targets &amp; trends</div>
+      <p class="body-text">Scales also define the <b class="k">goal</b> of therapy. For post-intubation care the protocol targets a <b class="k">RASS of −1 to −5</b> (calm-to-deep depending on the clinical need), titrating drugs up or down to hold that target rather than chasing a moving picture.<sup>1,3</sup> Trends matter more than single values — a rising RASS or CPOT predicts impending agitation and prompts pre-emptive treatment before a patient becomes dangerous in flight, while an over-deep score prompts lightening sedation to avoid hypotension and prolonged recovery. Used this way, the scales are not paperwork; they are the control loop for safe, effective analgesia and sedation.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 5.1.1 Pain and Sedation Scales</b> <span style="color:var(--text-faint)">(Rev 17, 27 Jun 2022) — CPOT/BPS/RASS/SAS source.</span></li>
+          <li>Devlin JW, et al. (SCCM). <span style="color:var(--text-faint)">PADIS Guidelines — assessment of pain, agitation/sedation in adult ICU patients. <em>Crit Care Med.</em> 2018;46(9):e825–e873.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/30113379">pubmed.ncbi.nlm.nih.gov/30113379</a></li>
+          <li>Sessler CN, et al. <span style="color:var(--text-faint)">The Richmond Agitation–Sedation Scale (RASS). <em>Am J Respir Crit Care Med.</em> 2002;166:1338–1344.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/12421743">pubmed.ncbi.nlm.nih.gov/12421743</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

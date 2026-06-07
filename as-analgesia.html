@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Analgesia">
+<meta name="theme-color" content="#0a0f1c">
+<title>Analgesia & Anxiolysis — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--as:#6366f1;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#4f46e5,#6366f1);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#6366f1)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .block.star{border-left-color:#22c55e;background:#0c2a1a;border-color:#1c5237}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.block.star .item{border-top-color:#1c5237}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0a0f1c;background:#22c55e;padding:2px 6px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#6366f1)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  .block.star ul.bul li::before{background:#22c55e}.block.star ul.bul li{border-top-color:#1c5237}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:#818cf8;font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Analgesia &amp; Anxiolysis</h1>
+      <div class="sub">Multimodal · IV Tylenol first · opioid-sparing</div>
+      <div class="cat">TS-AS-002 · Sec 11 Analgesia &amp; Sedation</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assess &amp; goal</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li>Assess pain frequently with an age-appropriate scale (0–10 / CPOT / BPS — see TS-AS-001).</li>
+          <li>Treat to the <b class="k">lowest reasonable pain level balanced with cardiovascular stability</b> &amp; the patient's goal.</li>
+          <li>Monitor SpO₂, EtCO₂ (capnography), RR, BP when giving opioids/sedatives.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① Non-opioid FIRST — multimodal <span class="tag">TS addition</span></div>
+      <div class="block star">
+        <div class="item">
+          <div class="nm">IV Acetaminophen (Tylenol / Ofirmev) — give before narcotics</div>
+          <div class="detail">Adult ≥ 50 kg <span class="dose">1000 mg IV over 15 min</span> q6h · &lt; 50 kg / peds <span class="dose peds">15 mg/kg IV over 15 min (max 1000 mg)</span> q6h. <b class="k">Max 4 g/24 h</b> (3 g/24 h if hepatic risk/elderly/malnourished).</div>
+        </div>
+        <div class="item">
+          <div class="nm">Ketorolac (NSAID adjunct, if not contraindicated)</div>
+          <div class="detail">Adult <span class="dose">15 mg IV over 30–60 sec</span> · Peds <span class="dose peds">0.5 mg/kg (max 15 mg)</span>. Avoid in bleeding/renal injury/known fracture-nonunion concern/pregnancy.</div>
+        </div>
+        <div class="item">
+          <div class="nm">Why</div>
+          <div class="detail"><b class="k">Give the non-opioid first/alongside to reduce opioid requirement</b> (opioid-sparing multimodal analgesia). Acetaminophen does not cause respiratory/hemodynamic depression — valuable in flight. <i>Trauma Star / Medical-Director addition to the PHI ladder.</i></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Opioids — titrate to pain goal</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item"><div class="nm">Fentanyl (preferred if unstable — hemodynamically neutral)</div><div class="detail"><span class="dose">0.5–2 mcg/kg IBW IV over 1 min, IM, NAS</span> (peds same); repeat q10 min PRN.</div></div>
+        <div class="item"><div class="nm">Morphine</div><div class="detail">Adult <span class="dose">2–10 mg IV over 1–2 min, IM</span> q20 min · Peds <span class="dose peds">0.05–0.2 mg/kg (max 10 mg)</span> q10 min.</div></div>
+        <div class="item"><div class="nm">Hydromorphone</div><div class="detail">Adult <span class="dose">0.2–1 mg IV over 2 min, IM</span> q15 min (max total 4 mg) · Peds <span class="dose peds">0.01–0.02 mg/kg (max single 1 mg, total 4 mg)</span>.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">③ Adjunct — sub-dissociative ketamine</div>
+      <div class="block" style="--c:#6366f1">
+        <div class="item">
+          <div class="nm">Ketamine (analgesic dose)</div>
+          <div class="detail"><span class="dose">0.1–0.3 mg/kg IBW IV over 1–2 min, IM, NAS</span> (max single 30 mg); repeat q10–20 min PRN. <b class="k">Give slowly</b> (fast push → partial dissociation/agitation).</div>
+        </div>
+        <div class="item">
+          <div class="nm">Use for</div>
+          <div class="detail">Opioid-refractory pain; patients on <b class="k">buprenorphine or naltrexone</b> (opioids won't work). Avoid in active psychosis.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Anxiolysis — only AFTER pain controlled</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Treat pain first; add a benzo for true anxiety. <b class="k">Benzo + opioid = extreme caution</b> (synergistic respiratory depression) — monitor capnography.</li>
+          <li>Midazolam: adult <span class="dose">0.5–5 mg</span> q5 min · peds <span class="dose peds">0.05–0.1 mg/kg (max 5)</span>. Lorazepam: adult <span class="dose">0.5–2 mg</span> · peds <span class="dose peds">0.05–0.1 mg/kg (max 2)</span>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Therapeutic opioid reversal (over-sedation)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Naloxone <span class="dose">0.001–0.01 mg/kg IV/IM/IN</span>, repeat q2–10 min, <b class="k">titrate to restore breathing</b> (not full arousal — preserves analgesia). Airway support may be preferable to reversal.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#6366f1">
+        <ul class="bul">
+          <li>Pain score before/after; goal set; SpO₂/EtCO₂/RR with opioids.</li>
+          <li><b class="k">IV acetaminophen (dose/time)</b> and other non-opioids given before/with opioids.</li>
+          <li>Each opioid/ketamine/benzo (dose/route/time/response); reversal if used.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — treat pain, and treat it smartly</div>
+      <p class="body-text">Pain is both a humane priority and a physiologic one: untreated pain drives a catecholamine surge that raises heart rate, blood pressure, myocardial oxygen demand, and intracranial pressure, and worsens shock.<sup>1</sup> The protocol's goal is the <b class="k">lowest reasonable pain level balanced against cardiovascular stability</b> — fully obtunding a hypotensive trauma patient with opioids can be as harmful as leaving them in agony. The modern approach to achieve good analgesia <b class="k">while minimizing the dangers of opioids</b> is <b class="k">multimodal analgesia</b>: combining agents with different mechanisms so each can be used at a lower, safer dose.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why IV acetaminophen goes first (Trauma Star addition)</div>
+      <p class="body-text">This protocol adds <b class="k">IV acetaminophen as the first rung of the ladder, given before (or together with) opioids</b> — a Trauma Star / Medical-Director enhancement to the PHI analgesia guideline. The rationale is <b class="k">opioid-sparing</b>: IV acetaminophen provides reliable baseline analgesia with a rapid onset, and trials show it <b class="k">reduces opioid requirements and opioid-related side effects</b>.<sup>3,4</sup> Critically for the aircraft, acetaminophen has <b class="k">no respiratory depression, no sedation, and no hemodynamic effect</b> — so it lowers the total opioid the patient needs without adding the very risks (apnea, hypotension) that make opioid titration in a noisy cabin hazardous.<sup>3,4</sup> Dosing is weight-based (1000 mg ≥ 50 kg; 15 mg/kg if smaller) with a hard 4 g/24 h ceiling (3 g in the elderly, malnourished, or hepatically impaired), and it is paired where appropriate with the NSAID <b class="k">ketorolac</b> as a second non-opioid — both reducing how much narcotic is required to reach the pain goal.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Opioids — choosing and titrating</div>
+      <p class="body-text">When opioids are needed, they are <b class="k">titrated in small, repeated doses to the pain goal</b> rather than given as a single large dose, checking vitals between doses.<sup>1</sup> <b>Fentanyl</b> is often preferred in the unstable patient because it is the most <b class="k">hemodynamically neutral</b> opioid (little histamine release) and is fast and short-acting; <b>morphine</b> causes more histamine-mediated vasodilation (avoid in hypotension/shock); <b>hydromorphone</b> is a potent alternative with a defined ceiling. All are dosed by ideal body weight and demand continuous monitoring of respiratory rate and capnography, since the dominant risk is respiratory depression — now reduced by the non-opioid first step.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sub-dissociative ketamine — the opioid-sparing adjunct</div>
+      <p class="body-text"><b class="k">Sub-dissociative (analgesic-dose) ketamine</b> provides potent analgesia through a different (NMDA) mechanism, so it is additive to opioids and useful for <b class="k">opioid-refractory pain</b> and for opioid-sparing.<sup>2,3</sup> It is specifically valuable in patients on <b class="k">buprenorphine or naltrexone</b>, whose opioid receptors are blocked so conventional opioids fail. The key technical caveat is that it <b class="k">must be given slowly</b> (over 1–2 minutes or as a short infusion): a rapid push produces <b class="k">partial dissociation</b> — a distressing, hallucinatory, agitated state — whereas slow administration gives clean analgesia without dissociation. It is avoided in active psychosis.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Anxiolysis after analgesia, and reversing over-sedation</div>
+      <p class="body-text">A frightened patient is often a patient in pain, so the protocol treats <b class="k">pain first</b> and adds a benzodiazepine only for genuine anxiety once analgesia is adequate.<sup>1</sup> The combination of a <b class="k">benzodiazepine plus an opioid</b> is flagged for extreme caution because their respiratory-depressant effects are <b class="k">synergistic</b> — the leading cause of iatrogenic apnea — mandating capnography and airway readiness. Finally, when therapeutic opioids cause excessive respiratory depression, naloxone is used in <b class="k">small titrated doses to restore breathing, not to fully reverse</b> (which would dump the patient into pain and withdrawal); often, simply supporting the airway and ventilation while the opioid wears off is preferable to reversal, especially since naloxone's duration may be shorter than the opioid it is reversing.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 4 · reviewed Jun 2026</summary>
+        <ol>
+          <li><b style="color:var(--text-dim)">PHI Air Medical — Clinical Care Guidelines, Sec 5.1.2–5.1.4 Analgesia, Opioid Reversal &amp; Anxiolysis</b> <span style="color:var(--text-faint)">(Rev 20–23, 2023–2025) — opioid, ketamine, ketorolac, naloxone &amp; benzo dosing source.</span></li>
+          <li>Motov S, et al. <span style="color:var(--text-faint)">Multimodal &amp; opioid-sparing analgesia in the emergency department. <em>Ann Emerg Med.</em> 2016/2018 (sub-dissociative ketamine).</span> <a href="https://pubmed.ncbi.nlm.nih.gov/25817884">pubmed.ncbi.nlm.nih.gov/25817884</a></li>
+          <li>Sin B, et al. <span style="color:var(--text-faint)">IV acetaminophen for pain in the ED — opioid-sparing effect (review). <em>Am J Emerg Med.</em></span> <a href="https://pubmed.ncbi.nlm.nih.gov/27475042">pubmed.ncbi.nlm.nih.gov/27475042</a></li>
+          <li>IV acetaminophen (Ofirmev) prescribing information. <span style="color:var(--text-faint)">Weight-based dosing &amp; max 4 g/24 h (3 g if hepatic risk). <i>Trauma Star / Medical-Director addition to the PHI analgesia ladder.</i></span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. IV acetaminophen-first step is a Trauma Star / Medical-Director addition pending local approval. Verify every dose &amp; max daily limit before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

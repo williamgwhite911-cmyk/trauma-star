@@ -86,7 +86,7 @@
     <div><b>Edition / version:</b> ______________</div>
     <div><b>Effective date:</b> ______________</div>
     <div><b>Next review:</b> ______________ (annual)</div>
-    <div><b>Total protocols:</b> 41 (this edition)</div>
+    <div><b>Total protocols:</b> 45 (this edition)</div>
   </div>
 
   <div class="stmt">
@@ -151,6 +151,10 @@
       <tr><td class="c">TS-MED-009</td><td>Sepsis &amp; Septic Shock</td><td>Sec 10 Medical</td><td>PHI Sec 6.12 / SSC</td></tr>
       <tr><td class="c">TS-MED-010</td><td>Vascular Emergencies (AAA / Dissection)</td><td>Sec 10 Medical</td><td>PHI Sec 6.13 / ACC-AHA</td></tr>
       <tr><td class="c">TS-MED-011</td><td>Nausea / Vomiting &amp; EPS</td><td>Sec 10 Medical</td><td>PHI Sec 6.14–6.15</td></tr>
+      <tr><td class="c">TS-AS-001</td><td>Pain &amp; Sedation Scales (CPOT/BPS/RASS/SAS)</td><td>Sec 11 Analgesia &amp; Sedation</td><td>PHI Sec 5.1.1</td></tr>
+      <tr><td class="c">TS-AS-002</td><td>Analgesia &amp; Anxiolysis (IV Tylenol-first)</td><td>Sec 11 Analgesia &amp; Sedation</td><td>PHI Sec 5.1.2–5.1.4 + TS add</td></tr>
+      <tr><td class="c">TS-AS-003</td><td>Procedural Sedation</td><td>Sec 11 Analgesia &amp; Sedation</td><td>PHI Sec 5.2 / ACEP</td></tr>
+      <tr><td class="c">TS-AS-004</td><td>Post-Intubation Analgesia &amp; Sedation</td><td>Sec 11 Analgesia &amp; Sedation</td><td>PHI Sec 5.3 / PADIS</td></tr>
     </tbody>
   </table>
   <p class="muted">Each protocol is reviewed and approved as part of this manual. Initials of approval may be placed beside each catalog number if individual sign-off is required.</p>
@@ -1011,6 +1015,79 @@
       </ol>
     </div>
     <div class="src">Source: PHI Sec 6.14–6.15.</div>
+  </div>
+  </div>
+
+  <!-- ================= ANALGESIA & SEDATION ================= -->
+  <div class="sec">
+  <h2>Sec 11 — Analgesia &amp; Sedation</h2>
+
+  <div class="proto">
+    <div class="cat">TS-AS-001</div>
+    <div class="nm">Pain &amp; Sedation Scales</div>
+    <div class="row"><b>Pain:</b> 0–10 (self-report) · CPOT 0–8 or BPS 3–12 (cannot self-report). <b>Sedation/agitation:</b> RASS −5 to +4 · SAS 1–7. Assess/document before &amp; after every analgesic/sedative; target post-intubation RASS −1 to −5.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Validated scales turn subjective pain/sedation into a reproducible number, enabling titration to a defined target and detection of trends.<sup>1,2</sup> The tool is matched to the patient (self-report 0–10; CPOT/BPS when unable; RASS/SAS for sedation depth), and pain and sedation are tracked as separate axes.<sup>2</sup> The critical limitation: behavioral scales measure behaviors a <b>paralyzed patient cannot display</b> — under NMB they are invalid and empiric targeted dosing is required (TS-AS-004).<sup>1</sup></p>
+      <ol class="reflist">
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 5.1.1 Pain &amp; Sedation Scales (Rev 17).</li>
+        <li>Devlin JW, et al. (SCCM) PADIS Guidelines. <em>Crit Care Med.</em> 2018;46:e825–e873. <a href="https://pubmed.ncbi.nlm.nih.gov/30113379">pubmed.ncbi.nlm.nih.gov/30113379</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 5.1.1; SCCM PADIS.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-AS-002</div>
+    <div class="nm">Analgesia &amp; Anxiolysis <span style="font-size:.7rem;color:var(--blue)">(IV acetaminophen-first — TS/MD addition)</span></div>
+    <div class="row"><b>① Non-opioid FIRST (multimodal):</b> <b>IV Acetaminophen</b> ≥ 50 kg <span class="dz">1000 mg IV over 15 min</span> / &lt; 50 kg <span class="dz">15 mg/kg (max 1000)</span>, q6h, <b>max 4 g/24 h</b> (3 g if hepatic risk); ± Ketorolac <span class="dz">15 mg IV</span> (peds 0.5 mg/kg, max 15). <i>Give before/with narcotics to reduce opioid requirement.</i></div>
+    <div class="row"><b>② Opioids (titrate):</b> Fentanyl <span class="dz">0.5–2 mcg/kg IBW</span> (q10); Morphine <span class="dz">2–10 mg</span> (peds 0.05–0.2 mg/kg); Hydromorphone <span class="dz">0.2–1 mg</span> (peds 0.01–0.02; max total 4 mg).</div>
+    <div class="row"><b>③ Adjunct:</b> sub-dissociative Ketamine <span class="dz">0.1–0.3 mg/kg (max 30 mg)</span> slow — opioid-refractory or buprenorphine/naltrexone; avoid psychosis.</div>
+    <div class="row"><b>Anxiolysis (after pain):</b> Midazolam <span class="dz">0.5–5 mg</span> / Lorazepam <span class="dz">0.5–2 mg</span> — benzo+opioid = extreme caution (capnography). <b>Reversal:</b> Naloxone <span class="dz">0.001–0.01 mg/kg</span> titrated to breathing.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Untreated pain drives catecholamines (↑HR/BP, ↑myocardial &amp; intracranial demand), so analgesia is treated to the lowest reasonable level balanced with hemodynamics.<sup>1</sup> This protocol adds <b>IV acetaminophen as the first rung, before opioids</b> — a Medical-Director enhancement to the PHI ladder — because it is <b>opioid-sparing</b> and, unlike opioids, causes <b>no respiratory depression, sedation, or hypotension</b>, lowering total narcotic need without adding the risks that make opioid titration hazardous in flight.<sup>3,4</sup> Opioids are then titrated in small repeat doses (fentanyl preferred if unstable — hemodynamically neutral; morphine releases histamine; avoid in shock).<sup>1</sup> <b>Sub-dissociative ketamine</b> adds NMDA-mechanism analgesia (opioid-sparing; works when receptors are blocked by buprenorphine/naltrexone) and must be pushed slowly to avoid distressing partial dissociation.<sup>2</sup> Benzodiazepine + opioid is synergistically respiratory-depressant; naloxone is titrated to restore breathing, not full reversal.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 5.1.2–5.1.4 (Rev 20–23).</li>
+        <li>Motov S, et al. Sub-dissociative ketamine / multimodal ED analgesia. <em>Ann Emerg Med.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/25817884">pubmed.ncbi.nlm.nih.gov/25817884</a></li>
+        <li>Sin B, et al. IV acetaminophen opioid-sparing effect. <em>Am J Emerg Med.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/27475042">pubmed.ncbi.nlm.nih.gov/27475042</a></li>
+        <li>IV acetaminophen (Ofirmev) PI — weight-based dosing, max 4 g/24 h (3 g hepatic risk). <i>TS/MD addition to PHI ladder.</i></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 5.1.2–5.1.4; IV acetaminophen-first = Trauma Star / Medical-Director addition (pending local approval).</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-AS-003</div>
+    <div class="nm">Procedural Sedation</div>
+    <div class="row"><b>Before:</b> SpO₂, ECG, NIBP, <b>continuous capnography</b>, RR; airway + CV rescue ready. Indications: cardioversion, thoracostomy, fracture reduction, extrication.</div>
+    <div class="row"><b>Ketamine (preferred):</b> <span class="dz">1–2 mg/kg IBW IV</span> or <span class="dz">4 mg/kg IM</span> (lower dose if unstable). <b>Etomidate (brief):</b> <span class="dz">0.1 mg/kg TBW IV</span>, repeat 0.05 mg/kg (max 30 adult / 20 peds); no analgesia, expect myoclonus, not for prolonged/post-intubation.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Procedural sedation depresses consciousness for a discrete painful task; the safety lies in <b>preparation and monitoring</b>, with <b>capnography</b> detecting hypoventilation before desaturation.<sup>1,2</sup> <b>Ketamine</b> is preferred because it provides dissociation + analgesia while preserving airway reflexes, respiratory drive, and blood pressure (reduced dose if unstable).<sup>1</sup> <b>Etomidate</b> suits very brief procedures (hemodynamically stable) but gives no analgesia, causes myoclonus, and transiently suppresses cortisol — so it is not used for prolonged/post-intubation sedation.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 5.2 Procedural Sedation (Rev 23).</li>
+        <li>Godwin SA, et al. (ACEP) Procedural Sedation Clinical Policy. <em>Ann Emerg Med.</em> 2014;63:247–258. <a href="https://pubmed.ncbi.nlm.nih.gov/24438649">pubmed.ncbi.nlm.nih.gov/24438649</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 5.2; ACEP.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-AS-004</div>
+    <div class="nm">Post-Intubation Analgesia &amp; Sedation</div>
+    <div class="row"><b>Never leave an intubated/paralyzed patient unsedated.</b> Goal RASS −1 to −5; <b>analgesia first</b>; optimize ONE agent before adding. Stratify: assessable → titrate; NMB/unassessable → empiric; unstable → ketamine, reduce other sedatives ½–¼.</div>
+    <div class="row"><b>First-line:</b> Fentanyl <span class="dz">0.5–2 mcg/kg IBW</span> or <span class="dz">1–2 mcg/kg/hr</span>; Ketamine <b>bolus 1–2 mg/kg</b> then <span class="dz">1–4 mg/kg/hr</span> (bolus before infusion). <b>Add one sedative:</b> Propofol <span class="dz">5–100 mcg/kg/min</span> (no analgesia; hypotension), Midazolam <span class="dz">0.05–0.2 mg/kg/hr</span> (preferred if seizure masked by NMB), or Dexmedetomidine <span class="dz">0.2–1.5 mcg/kg/hr</span>.</div>
+    <div class="row"><b>Controlled substances:</b> do NOT continue another facility's infusion — prepare a new one with program drugs; waste &amp; document residual.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>The ETT is noxious and awareness under paralysis is a devastating, preventable harm — so sedation is never omitted.<sup>1,2</sup> The structure is <b>analgesia-first</b> at the <b>lightest effective depth</b> (PADIS: light sedation/analgosedation improves outcomes), choosing and optimizing one agent rather than stacking.<sup>2</sup> The <b>unstable</b> patient gets <b>ketamine</b> (hemodynamically supportive) with all other sedatives reduced ½–¼; ketamine needs a dissociative <b>bolus before the infusion</b> or it under-sedates.<sup>1</sup> Sedative choice is situational: propofol = titratable but no analgesia and hypotensive; <b>midazolam preferred when a paralytic could mask seizure</b>; dexmedetomidine for cooperative light sedation. Controlled-substance chain-of-custody requires preparing a fresh program infusion and wasting residual.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>PHI Air Medical — Clinical Care Guidelines, Sec 5.3 Post-Intubation Analgesia &amp; Sedation (Rev 19–23).</li>
+        <li>Devlin JW, et al. (SCCM) PADIS Guidelines. <em>Crit Care Med.</em> 2018;46:e825–e873. <a href="https://pubmed.ncbi.nlm.nih.gov/30113379">pubmed.ncbi.nlm.nih.gov/30113379</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: PHI Sec 5.3; SCCM PADIS.</div>
   </div>
   </div>
 
