@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Stab">
+<meta name="theme-color" content="#0a0f1c">
+<title>Stab / Impalement — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  .peds{background:linear-gradient(135deg,#86efac,#22c55e)}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Stab Wounds &amp; Impalement</h1>
+      <div class="sub">Penetrating · impaled object · evisceration</div>
+      <div class="cat">TS-TR-009 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Scene &amp; priorities</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Scene safety</b> — assailant/weapon accounted for; stage for law enforcement. Preserve evidence.</li>
+          <li>Catastrophic hemorrhage first → MARCH/ABCDE (TS-TR-001). <b class="k">Fully expose</b> &amp; count all wounds (back, axillae, groin, scalp).</li>
+          <li><b class="k">Depth/trajectory is unknown</b> — a small skin wound can hide major vascular, chest, abdominal, or cardiac injury. Treat the cavity at risk.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Impaled object</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Do NOT remove</b> the object — it may be tamponading a vessel; removal can cause uncontrolled hemorrhage.</li>
+          <li><b class="k">Stabilize in place</b> with bulky dressings; shorten only if required for transport/extrication and safe to do so.</li>
+          <li><b class="k">Exception:</b> object obstructing the airway or preventing chest compressions in arrest.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Hemorrhage control</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Direct pressure / wound packing + hemostatic gauze; tourniquet for life-threatening extremity bleeding (record time).</li>
+          <li><b class="k">Neck:</b> direct pressure only (no circumferential wrap); secure airway early for expanding hematoma.</li>
+          <li><b class="k">Do not blindly probe</b> wounds or remove clot.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Chest / abdomen</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Chest:</b> vented chest seal; watch for tension pneumothorax → decompress (TS-TR-003). <b class="k">Box/precordial stab → suspect cardiac tamponade</b> (Beck's: ↓BP, JVD, muffled tones) — expedite.</li>
+          <li><b class="k">Abdomen / evisceration:</b> cover bowel with <b class="k">saline-soaked gauze</b>; do NOT reduce. Assume internal hemorrhage.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Resuscitation &amp; transport</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Blood products preferred (TS-HD-002); permissive hypotension <b class="k">SBP ~90</b> (100–110 if TBI). TXA &lt; 3 h — ≥ 12 yr <span class="dose">2 g</span> / &lt; 12 yr <span class="dose">15 mg/kg (max 1 g)</span>.</li>
+          <li>Two large-bore IV/IO; high-flow O₂; keep warm. <b class="k">Load &amp; go</b> to highest-level trauma center; pre-notify.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Number/location/size of wounds; weapon/length if known; impaled-object handling.</li>
+          <li>Hemorrhage control (tourniquet time), chest seal/decompression, blood/TXA, access, serial vitals.</li>
+          <li>Trauma-center destination + pre-notification; evidence handling.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — small wound, potentially huge injury</div>
+      <p class="body-text">Stab wounds are penetrating trauma where the danger lies beneath an often unimpressive skin wound. Unlike gunshots there is no cavitation, but the <b class="k">depth and trajectory are unknown</b>, and a single small wound can divide a major artery, enter the chest or abdomen, or pierce the heart.<sup>1</sup> The transport approach mirrors the GSW/penetrating pathway: scene safety, catastrophic-hemorrhage control first, full exposure and wound count, treat the <b class="k">body cavity at risk</b>, replace blood, and load-and-go to a trauma center (TS-TR-001, TS-HD-002).<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why impaled objects stay in</div>
+      <p class="body-text">The cardinal rule is that an <b class="k">impaled object is left in place and stabilized</b>, never removed in the field.<sup>1,2</sup> The object may be directly tamponading a lacerated vessel or organ; pulling it out converts a controlled situation into uncontrolled internal hemorrhage that cannot be managed outside an operating room, and the surgeon needs to remove it under direct vision with proximal control. The object is secured with bulky dressings to prevent motion (which causes further injury), and shortened only if its length genuinely prevents transport or extrication and doing so is safe. The narrow exceptions are an object <b class="k">obstructing the airway</b> or one preventing effective chest compressions in cardiac arrest.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The chest box &amp; cardiac tamponade</div>
+      <p class="body-text">A stab to the <b class="k">"cardiac box"</b> (roughly the precordium/epigastrium between the nipples, sternal notch, and costal margins) raises immediate concern for cardiac injury and <b class="k">pericardial tamponade</b>, in which blood fills the pericardium and prevents the heart from filling.<sup>1</sup> The clue is <b class="k">Beck's triad</b> — hypotension, distended neck veins, and muffled heart tones — though all three are often not present. Tamponade is rapidly fatal and the only fix is surgical (pericardial decompression/thoracotomy), so a precordial stab with shock is a <b class="k">maximal-urgency load-and-go</b> to a trauma center, with blood en route. Any chest stab also risks pneumothorax/hemothorax: an open wound gets a vented seal and the crew watches for tension physiology to decompress (TS-TR-003).<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Neck, abdomen &amp; evisceration</div>
+      <p class="body-text"><b class="k">Neck</b> stabs threaten the airway (expanding hematoma can compress and distort it — secure early), major vessels (direct pressure, never a circumferential wrap that could occlude the airway or the opposite carotid), and the aerodigestive tract.<sup>1</sup> <b class="k">Abdominal</b> stabs are treated as internal hemorrhage until proven otherwise; <b class="k">evisceration</b> (bowel protruding) is <b class="k">not reduced</b> — it is covered with saline-soaked gauze to keep it moist and protected, because pushing contaminated bowel back risks infection and further injury, and reduction is a surgical decision. Thoraco-abdominal wounds may have crossed the diaphragm, injuring both cavities.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Resuscitation, serial exam &amp; disposition</div>
+      <p class="body-text">Resuscitation is damage-control: <b class="k">blood over crystalloid</b>, permissive hypotension to a radial pulse / SBP ~90 (100–110 with TBI), TXA within 3 hours, and warming.<sup>2,3</sup> Because penetrating injuries <b class="k">evolve</b>, the crew reassesses wounds, lung sounds, and abdomen in transit — a patient stable at the scene can deteriorate as bleeding continues. As with all penetrating truncal trauma, the decisive intervention is <b class="k">minimal scene time and rapid delivery to a surgeon</b>; the crew pre-notifies the trauma team and, when indicated, triggers massive-transfusion activation.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">ATLS, 10th ed. — penetrating neck/chest/abdominal trauma, impaled objects, cardiac tamponade. 2018.</span></li>
+          <li>Committee on Tactical Combat Casualty Care (CoTCCC). <span style="color:var(--text-faint)">TCCC Guidelines — hemorrhage control &amp; damage-control resuscitation. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>CRASH-2 collaborators. <span style="color:var(--text-faint)">Tranexamic acid in trauma haemorrhage. <em>Lancet.</em> 2010;376:23–32.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/20554319">pubmed.ncbi.nlm.nih.gov/20554319</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — follow current MCFR / Trauma Star protocol and online medical control. Verify every dose before administration.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
