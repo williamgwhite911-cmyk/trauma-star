@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Chest Decompress">
+<meta name="theme-color" content="#0a0f1c">
+<title>Pneumothorax & Chest Decompression — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--tr:#f43f5e;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b91c1c,#f43f5e);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f43f5e)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ol.steps{list-style:none;counter-reset:s;padding:6px 0}
+  ol.steps li{position:relative;padding:10px 16px 10px 44px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ol.steps li:first-child{border-top:none}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:20px;height:20px;border-radius:50%;background:var(--c,#f43f5e);color:#0a0f1c;font-family:var(--mono);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f43f5e)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--tr);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Pneumothorax &amp; Chest Decompression</h1>
+      <div class="sub">Needle · finger thoracostomy · chest tube</div>
+      <div class="cat">TS-TR-013 · Sec 9 Trauma</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Decompress NOW for tension — any of these</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Compatible MOI</b> (chest trauma, rib fx, blast, barotrauma, <b class="k">positive-pressure ventilation</b>) PLUS</li>
+          <li><b class="k">Respiratory distress</b> / difficulty ventilating (rising peak pressures on the vent), and/or</li>
+          <li><b class="k">Falling SpO₂ (hypoxia)</b>, and/or <b class="k">hypotension</b> / shock (obstructive), with</li>
+          <li><b class="k">↓ or absent breath sounds</b> on the affected side ± hyperresonance, subcutaneous emphysema.</li>
+          <li><b class="k">Late / unreliable signs</b> (do NOT wait for them): <b class="k">tracheal deviation, distended neck veins (JVD), muffled heart tones</b>, cyanosis.</li>
+          <li><b class="k">Ventilated trauma patient who suddenly desats then drops BP = tension until proven otherwise</b> — decompress.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① Needle decompression (fastest)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Site:</b> 5th intercostal space, anterior-to-mid axillary line (nipple level) — preferred; OR 2nd ICS mid-clavicular line. Use a <b class="k">long catheter (≥ 8 cm / 14 G)</b>.</li>
+          <li>Over the TOP of the rib (avoid the neurovascular bundle under each rib). Listen/feel for the rush of air.</li>
+          <li><b class="k">Remove the NEEDLE, LEAVE THE CATHETER</b> in place, open to air; secure it. <b class="k">Never reinsert the needle into the catheter.</b></li>
+          <li>Reassess — needle decompression frequently fails (kinks, clots, too short, wrong space). If no improvement or it recurs → <b class="k">finger thoracostomy</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Finger thoracostomy (definitive field decompression)</div>
+      <div class="block" style="--c:#f43f5e">
+        <ol class="steps">
+          <li><b class="k">Site:</b> 5th ICS, anterior/mid-axillary line (the "triangle of safety"), affected side. Prep skin; analgesia/sedation if responsive.</li>
+          <li>2–3 cm incision <b class="k">over the top of the 6th rib</b> (above the rib below).</li>
+          <li>Blunt-dissect with a clamp through muscle/pleura; <b class="k">pop through the parietal pleura</b> — gush of air/blood confirms entry.</li>
+          <li>Insert a <b class="k">gloved finger</b>, sweep to confirm pleural space &amp; clear adhesions/lung. Leave open (or to a chest seal/tube).</li>
+          <li>Reassess ventilation/SpO₂/BP; cover the wound; prepare for tube thoracostomy / monitor for re-accumulation.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">③ Tube thoracostomy (chest tube)</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Through the finger-thoracostomy tract (5th ICS, mid-axillary). Adult <b class="k">28–32 Fr</b> (hemothorax) or smaller for simple PTX.</li>
+          <li>Direct the tube <b class="k">posteriorly &amp; superiorly</b>; advance until all drainage holes are inside the pleura.</li>
+          <li>Connect to a <b class="k">one-way (Heimlich) valve</b> or chest-drain unit; secure with suture + occlusive dressing.</li>
+          <li><b class="k">Massive hemothorax</b> (immediate ≥ 1–1.5 L or ongoing ≥ 200 mL/hr) → resuscitate with blood (TS-HD-002), expedite to OR.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Open ("sucking") chest wound</div>
+      <div class="block" style="--c:#f43f5e">
+        <ul class="bul">
+          <li>Apply a <b class="k">vented chest seal</b> (or 3-sided dressing). After sealing, <b class="k">watch for tension</b> → burp/lift the seal or decompress.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Indication (MOI + distress/hypoxia/hypotension + exam), side, time.</li>
+          <li>Procedure(s) done, site, catheter/tube size, air/blood return, response; <b class="k">catheter left in after needle</b>.</li>
+          <li>Re-accumulation/reassessment; blood given for hemothorax; trauma-center destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — recognize the pressure, relieve it</div>
+      <p class="body-text">A pneumothorax is air in the pleural space; a <b class="k">tension pneumothorax</b> is a one-way leak that progressively raises intrapleural pressure, collapses the lung, shifts the mediastinum, and obstructs venous return — causing <b class="k">obstructive shock and arrest</b> if not relieved.<sup>1,2</sup> It is a <b class="k">clinical diagnosis treated immediately</b>; there is no time or imaging in the field to confirm it. This protocol defines clear indications to decompress and a procedural ladder — <b class="k">needle → finger thoracostomy → chest tube</b> — chosen by speed, reliability, and the patient's situation.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The indications — don't wait for the classic signs</div>
+      <p class="body-text">The decision to decompress rests on <b class="k">mechanism + physiology + exam</b>, not on the textbook late findings. A compatible mechanism (chest trauma, rib fractures, blast/barotrauma, and especially a patient on <b class="k">positive-pressure ventilation</b>) plus <b class="k">respiratory distress, hypoxia (falling SpO₂), or hypotension</b>, with decreased breath sounds on one side, is enough to act.<sup>1,2</sup> The "classic" triad — <b class="k">tracheal deviation, distended neck veins, and muffled heart tones</b> (the latter two overlapping with tamponade) plus hyperresonance — are <b class="k">late, insensitive, and often absent before arrest</b>, so the protocol explicitly lists them but instructs the crew not to wait for them.<sup>2</sup> The single most useful field rule is the ventilated-patient axiom: <b class="k">sudden desaturation followed by hypotension and rising airway pressures in a ventilated trauma patient is tension until proven otherwise</b>, because positive pressure both causes and accelerates it.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Needle decompression — and why the catheter stays</div>
+      <p class="body-text">Needle decompression is the fastest first step. Evidence favors the <b class="k">5th intercostal space at the anterior/mid-axillary line</b> (and a <b class="k">longer, ≥ 8 cm catheter</b>) over the traditional 2nd-ICS mid-clavicular site, because the lateral chest wall is thinner and the older site frequently fails to reach the pleura in adults.<sup>1,3</sup> The needle is passed <b class="k">over the top of the rib</b> to avoid the neurovascular bundle that runs along each rib's lower margin. Crucially, after the air rushes out the <b class="k">needle is withdrawn and the plastic catheter is left in place</b> open to air: the rigid needle, if left in, will lacerate lung or vessels and will kink/clot — and it must <b class="k">never be reinserted through the catheter</b> (shears off and embolizes plastic).<sup>1</sup> Needle decompression <b class="k">often fails or is temporary</b> (kinks, clots, displacement), so the crew reassesses and escalates to finger thoracostomy if there is no improvement or the tension recurs.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Finger thoracostomy — the reliable field procedure</div>
+      <p class="body-text"><b class="k">Finger (simple) thoracostomy</b> is more reliable than a needle, especially in the ventilated patient, and is increasingly the procedure of choice in HEMS/critical-care transport.<sup>2,3</sup> Through the <b class="k">"triangle of safety"</b> (5th ICS, anterior to mid-axillary line — bordered by the pectoralis, latissimus, and a line at the nipple) the operator makes a 2–3 cm incision <b class="k">over the top of the rib</b>, blunt-dissects through the intercostal muscles, and deliberately <b class="k">punctures the parietal pleura</b> (confirmed by a gush of air or blood), then sweeps a finger to confirm the pleural space and clear adhesions.<sup>2</sup> It immediately and durably relieves a tension and, unlike a needle, will also begin to drain a hemothorax. In the awake patient, analgesia/sedation is provided. It is left open to air (or connected to a seal/tube) and is the direct precursor to placing a chest tube.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Tube thoracostomy, hemothorax &amp; the open wound</div>
+      <p class="body-text">A <b class="k">chest tube</b> placed through the thoracostomy tract provides definitive, continuous drainage for transport: an adult hemothorax takes a larger tube (28–32 Fr), directed <b class="k">posteriorly and superiorly</b>, with all drainage holes inside the pleura, connected to a Heimlich valve or drain unit and secured.<sup>1</sup> A <b class="k">massive hemothorax</b> — roughly ≥ 1–1.5 L of immediate output or ongoing ≥ 200 mL/hr — signals major intrathoracic bleeding requiring blood-based resuscitation (TS-HD-002) and rapid surgical care, and over-rapid drainage of a large hemothorax can worsen hemorrhage by releasing tamponade.<sup>1</sup> An <b class="k">open ("sucking") chest wound</b> is sealed with a vented chest seal, then watched for conversion to a tension (burp or decompress).<sup>1,2</sup> Throughout, the procedures are documented with side, site, return, and response, and the patient goes to a trauma center.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">ATLS, 10th ed. — tension pneumothorax, needle decompression site, tube thoracostomy, massive hemothorax. 2018.</span></li>
+          <li>Leigh-Smith S, Harris T. <span style="color:var(--text-faint)">Tension pneumothorax — time for a re-think. <em>Emerg Med J.</em> 2005;22(1):8–16.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/15611534">pubmed.ncbi.nlm.nih.gov/15611534</a></li>
+          <li>Committee on TCCC. <span style="color:var(--text-faint)">TCCC Guidelines — needle decompression (5th ICS AAL, ≥ 8 cm catheter) &amp; finger thoracostomy. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — perform only within your scope of practice and current MCFR / Trauma Star protocol and online medical control. After needle decompression, leave the catheter and never reinsert the needle.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

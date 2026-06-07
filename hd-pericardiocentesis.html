@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Pericardio">
+<meta name="theme-color" content="#0a0f1c">
+<title>Pericardiocentesis — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--hd:#38bdf8;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ol.steps{list-style:none;counter-reset:s;padding:6px 0}
+  ol.steps li{position:relative;padding:10px 16px 10px 44px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ol.steps li:first-child{border-top:none}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:20px;height:20px;border-radius:50%;background:var(--c,#38bdf8);color:#0a0f1c;font-family:var(--mono);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#38bdf8)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--hd);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Pericardiocentesis</h1>
+      <div class="sub">Cardiac tamponade · last-resort temporizing</div>
+      <div class="cat">TS-HD-006 · Sec 2 Hemodynamics &amp; Shock</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Indications — severe cases only (online medical control)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Cardiac tamponade with hemodynamic collapse / peri-arrest</b>: unexplained/obstructive hypotension not responding to fluids.</li>
+          <li><b class="k">PEA arrest with no other reversible cause</b> identified (tamponade is one of the H's &amp; T's) — esp. narrow-complex PEA.</li>
+          <li><b class="k">Beck's triad:</b> hypotension + JVD + <b class="k">muffled heart tones</b> (often incomplete). Pulsus paradoxus, tachycardia.</li>
+          <li>Suspect after <b class="k">penetrating "cardiac box" trauma</b> (TS-TR-009/008), post-MI rupture, aortic dissection, pericarditis/effusion, post-cardiac surgery.</li>
+          <li><b class="k">Ultrasound-confirmed effusion</b> with tamponade physiology, if available. This is a <b class="k">temporizing bridge</b> to definitive surgical care.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Equipment</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li><b class="k">Long needle</b> — 18 G spinal/over-needle catheter, 8–12 cm (or pericardiocentesis kit).</li>
+          <li><b class="k">Large syringe</b> 20–60 mL + <b class="k">3-way stopcock</b>; extension tubing.</li>
+          <li>Chlorhexidine, sterile gloves/drape; <b class="k">cardiac monitor</b>; <b class="k">point-of-care ultrasound (preferred)</b>.</li>
+          <li>Catheter-over-needle (or Seldinger kit) to leave an indwelling drain for re-aspiration.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Subxiphoid approach — landmarks &amp; procedure</div>
+      <div class="block" style="--c:#38bdf8">
+        <ol class="steps">
+          <li>Patient supine, HOB up ~30–45° if tolerated. Monitor + (ideally) US. Prep the subxiphoid area.</li>
+          <li><b class="k">Entry point:</b> 1–2 cm <b class="k">inferior &amp; just left of the xiphoid process</b> (angle between xiphoid &amp; left costal margin).</li>
+          <li>Insert at <b class="k">30–45° to the skin</b>, <b class="k">aim toward the LEFT shoulder (tip of left scapula)</b>, advance slowly with <b class="k">continuous aspiration</b>.</li>
+          <li><b class="k">Non-clotting blood / fluid returns → you are in the pericardium.</b> Aspirate; even <b class="k">10–20 mL</b> can restore perfusion.</li>
+          <li><b class="k">ECG watch:</b> ST elevation / ectopy / PVCs = needle touching myocardium → <b class="k">withdraw slightly</b> until they resolve.</li>
+          <li>Thread the catheter, remove the needle, attach stopcock; secure for <b class="k">repeat aspiration</b> if tamponade re-accumulates.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Cautions</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Traumatic tamponade is often clotted</b> — may not aspirate; do NOT delay transport to a surgeon (needs thoracotomy / pericardial window). Pericardiocentesis is temporizing.</li>
+          <li>Risks: coronary/myocardial/ventricular laceration, new hemopericardium, pneumothorax, dysrhythmia. <b class="k">Ultrasound guidance markedly reduces complications</b> — use it if available.</li>
+          <li>Continue resuscitation (fluids/blood, pressors) — pericardiocentesis does not replace volume/airway.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Indication (tamponade signs / PEA cause exclusion), US findings, medical-control order.</li>
+          <li>Approach, needle, fluid volume/character aspirated, hemodynamic response, ECG changes.</li>
+          <li>Catheter left in place? complications; cardiac-surgical destination + pre-notification.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — relieving the squeeze on the heart</div>
+      <p class="body-text">Cardiac tamponade is accumulation of fluid (blood, effusion) in the pericardial sac under enough pressure to <b class="k">prevent the ventricles from filling</b>, producing obstructive shock and, untreated, pulseless electrical activity and death.<sup>1,2</sup> Pericardiocentesis — needle aspiration of that fluid — is a <b class="k">last-resort, life-saving temporizing procedure</b> performed only in severe cases under online medical control, to buy time to a surgeon. Because even a small reduction in pericardial pressure can dramatically improve filling, <b class="k">aspirating as little as 10–20 mL</b> can restore a pulse.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">When to do it — the severe-case indications</div>
+      <p class="body-text">The protocol restricts this to genuine emergencies: <b class="k">tamponade with hemodynamic collapse</b> — unexplained obstructive hypotension that doesn't respond to fluids — and <b class="k">PEA arrest in which no other reversible cause is found</b>, since tamponade is one of the classic "H's and T's" of PEA and is especially suggested by a <b class="k">narrow-complex PEA</b>.<sup>3</sup> The exam clue is <b class="k">Beck's triad — hypotension, distended neck veins, and muffled heart tones</b> — though all three are frequently not present, so the crew also weighs the context: penetrating <b class="k">"cardiac box" trauma</b> (stab/GSW — TS-TR-009/008), recent MI (free-wall rupture), aortic dissection, pericarditis/malignant effusion, or post-cardiac-surgery bleeding.<sup>1,2</sup> Where <b class="k">point-of-care ultrasound</b> is available, confirming an effusion with tamponade physiology both supports the indication and guides the needle.</p>
+    </section>
+    <section>
+      <div class="sec-h">Equipment &amp; the subxiphoid landmarks</div>
+      <p class="body-text">The kit is simple: a <b class="k">long (8–12 cm) over-the-needle catheter or spinal needle</b>, a <b class="k">large syringe with a 3-way stopcock</b>, antiseptic and sterile gear, a cardiac monitor, and — ideally — ultrasound.<sup>1,2</sup> The classic blind approach is <b class="k">subxiphoid</b>: enter <b class="k">1–2 cm inferior and just left of the xiphoid process</b>, hold the needle at <b class="k">30–45° to the skin</b>, and <b class="k">aim toward the left shoulder</b> while aspirating continuously. Return of <b class="k">non-clotting blood or fluid</b> indicates the pericardial space (clotted blood usually means the ventricle). A catheter is then advanced and the needle removed so the line can be left for <b class="k">repeat aspiration</b> if the effusion re-accumulates during transport.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Avoiding the heart — and the ECG cue</div>
+      <p class="body-text">The chief danger is advancing into the <b class="k">myocardium or a coronary vessel</b>, causing laceration and worsening hemopericardium. A key safety cue in the blind technique is the <b class="k">ECG</b>: ST-segment elevation, injury current, or new ventricular ectopy/PVCs mean the needle tip is <b class="k">touching the epicardium</b> — the operator <b class="k">withdraws slightly</b> until they resolve.<sup>1</sup> Other risks include pneumothorax, dysrhythmia, and hepatic injury. <b class="k">Ultrasound guidance substantially lowers these complication rates</b> and is used whenever available; it shows the largest, closest fluid pocket and the needle path in real time, which is why image-guided pericardiocentesis is now standard wherever feasible.<sup>2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">A bridge, not a cure — and which protocols it serves</div>
+      <p class="body-text">A crucial limitation: in <b class="k">traumatic tamponade the blood is often clotted</b> and cannot be aspirated, so a "negative" pericardiocentesis does not exclude tamponade, and definitive treatment is surgical (emergency thoracotomy / pericardial window).<sup>1,2</sup> The crew therefore does <b class="k">not delay transport to a cardiac-surgical center</b> to attempt the procedure, and continues full resuscitation — fluids/blood and pressors — because pericardiocentesis relieves the obstruction but does not replace volume or airway support. This procedure is the shared rescue step for several pathways: <b class="k">PEA cardiac arrest</b> (reversible-cause "T"), <b class="k">penetrating chest trauma</b> with a cardiac-box wound (TS-TR-008/009), and <b class="k">medical tamponade</b> (post-MI rupture, dissection, effusion) — all of which point here when tamponade is the suspected killer.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">ATLS, 10th ed. — cardiac tamponade, pericardiocentesis, penetrating cardiac injury. 2018.</span></li>
+          <li>Adler Y, et al. (ESC). <span style="color:var(--text-faint)">Guidelines for the Diagnosis &amp; Management of Pericardial Diseases — tamponade &amp; (echo-guided) pericardiocentesis. <em>Eur Heart J.</em> 2015;36:2921–2964.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/26320112">pubmed.ncbi.nlm.nih.gov/26320112</a></li>
+          <li>Panchal AR, et al. (AHA). <span style="color:var(--text-faint)">2020 ACLS Guidelines — PEA reversible causes (H's &amp; T's, tamponade). <em>Circulation.</em> 2020.</span> <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000916">CIR.0000000000000916</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — high-risk procedure; perform only within scope, under online medical control, ideally ultrasound-guided. Do not delay transport to definitive surgical care. Continue resuscitation.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

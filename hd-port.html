@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Port">
+<meta name="theme-color" content="#0a0f1c">
+<title>Implanted Port (Port-a-Cath) Access — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--hd:#38bdf8;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#2563eb,#38bdf8);color:#fff}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#38bdf8)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:2px 7px;border-radius:6px;margin:3px 4px 0 0;white-space:nowrap}
+  ol.steps{list-style:none;counter-reset:s;padding:6px 0}
+  ol.steps li{position:relative;padding:10px 16px 10px 44px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ol.steps li:first-child{border-top:none}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:20px;height:20px;border-radius:50%;background:var(--c,#38bdf8);color:#0a0f1c;font-family:var(--mono);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#38bdf8)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--hd);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Implanted Port (Port-a-Cath) Access</h1>
+      <div class="sub">Central venous port · non-coring (Huber) needle</div>
+      <div class="cat">TS-HD-005 · Sec 2 Hemodynamics &amp; Shock</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Use / not</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>Access an existing implanted port when central venous access is needed (meds, fluids, blood) and within scope/protocol.</li>
+          <li><b class="k">Emergency &amp; no other access:</b> a port is a central line — use it; if untrained/out of scope, use <b class="k">IO</b> instead (don't delay resuscitation).</li>
+          <li>Identify port type — <b class="k">power-injectable "PowerPort"</b> required for power contrast injection; single vs double lumen.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Two hard rules</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">ONLY a non-coring (Huber) needle</b> — a standard needle cores &amp; destroys the septum. Pick a length that reaches the base without tenting (deeper port/obese → longer).</li>
+          <li><b class="k">10 mL (or larger) syringes ONLY</b> — small syringes generate high PSI that can <b class="k">rupture the catheter</b>. <b class="k">Never force against resistance.</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Procedure — sterile (ANTT)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ol class="steps">
+          <li><b class="k">Mask patient &amp; provider</b>; hand hygiene; gather kit. Prime Huber needle + extension set with NS; clamp.</li>
+          <li>Palpate &amp; locate the port and septum; assess overlying skin (no infection/breakdown).</li>
+          <li><b class="k">Chlorhexidine</b> scrub (back-and-forth 30 s); air-dry fully. Sterile gloves; maintain a sterile field.</li>
+          <li><b class="k">Stabilize the port</b> with non-dominant thumb &amp; fingers (triangulate). Insert the Huber <b class="k">perpendicular (90°)</b> through skin &amp; septum until it <b class="k">stops at the back plate</b>. Do not rock/tilt.</li>
+          <li><b class="k">Aspirate for blood return</b> to confirm patency/placement; withdraw &amp; discard ~5–10 mL (or per policy) if drawing labs/before flush.</li>
+          <li><b class="k">Flush 10–20 mL NS</b> (≥ 10 mL syringe, push-pause). Brisk flush, no resistance, no swelling/pain = good.</li>
+          <li>Secure the needle with support; apply <b class="k">transparent occlusive dressing</b>; connect the line. Clamp when not infusing (air-embolism precaution).</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">No blood return or resistance</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Resistance to flush → STOP</b> (occlusion / fibrin sheath / malposition) — do NOT force (rupture/embolism risk).</li>
+          <li>No blood return but flushes easily: reposition patient (raise arm, turn head, cough, sit up), re-confirm needle is fully seated. If still none, <b class="k">do not give vesicants</b>; use cautiously for crystalloid per medical control, or use another access.</li>
+          <li>Swelling/pain over the port on flush = infiltration (needle not in septum) — <b class="k">stop, remove, reaccess</b>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Locking / de-access (after use)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul">
+          <li>Flush with <b class="k">NS 10–20 mL</b>, then lock per policy: typically <b class="k">heparin 100 units/mL, 5 mL</b> (saline-only per device IFU). Use <b class="k">positive-pressure</b> technique (clamp while injecting last mL).</li>
+          <li>De-access: stabilize port, withdraw the Huber straight out, apply pressure + small dressing.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation — medically necessary</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Port type (power-injectable?), site, Huber needle gauge/length, number of attempts.</li>
+          <li><b class="k">Blood return</b> (yes/no), flush volume &amp; ease, dressing; any complication &amp; action.</li>
+          <li>Meds/fluids given via port; lock solution &amp; volume.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a central line under the skin</div>
+      <p class="body-text">An implanted port (Port-a-Cath, MediPort, PowerPort) is a <b class="k">totally implanted central venous catheter</b>: a reservoir with a self-sealing silicone septum sits in a subcutaneous pocket (usually upper chest), with the catheter tip in the SVC/cavoatrial junction.<sup>1</sup> It is a true central line, so it offers reliable access for medications, fluids, and blood in patients (oncology, frequent infusion, poor peripheral access) — but it carries the same <b class="k">central-line infection and air-embolism risks</b> and demands strict aseptic technique and correct equipment.<sup>1,3</sup> For the transport crew the protocol answers two questions: <b class="k">when</b> to use it and <b class="k">how</b> to access it safely.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">When to use it (and when not)</div>
+      <p class="body-text">If a patient with a port needs vascular access and accessing it is within the crew's scope and protocol, the port is an excellent route.<sup>1,2</sup> In a <b class="k">true emergency with no other access</b>, an already-accessed port can be used immediately; if it is not accessed and the provider is not trained/credentialed to access it, the right move is <b class="k">intraosseous access</b> rather than delaying resuscitation to attempt a sterile port stick.<sup>2</sup> Before accessing, the crew identifies the device — single vs double lumen and, importantly, whether it is a <b class="k">power-injectable port</b> (required if a CT contrast power injection is anticipated); non-power ports must not be power-injected.<sup>1</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The two equipment rules that prevent disasters</div>
+      <p class="body-text">Two rules are absolute. First, <b class="k">only a non-coring (Huber) needle</b> may pierce the septum — a standard hollow needle <b class="k">cores</b> a plug of silicone out of the septum, destroying its self-sealing ability and shortening the port's life; the Huber's deflected tip parts the silicone without coring.<sup>1</sup> The needle length is chosen so the hub sits flush without tenting the skin (deeper or obese patients need a longer needle). Second, <b class="k">use only 10 mL or larger syringes</b>: a small-barrel syringe generates very high pressure (PSI rises as barrel diameter falls), which can <b class="k">rupture the catheter or dislodge a clot</b>; the larger syringe limits the achievable pressure.<sup>1,2</sup> The corollary — <b class="k">never force against resistance</b> — is the most important safety habit in the whole procedure.</p>
+    </section>
+    <section>
+      <div class="sec-h">Aseptic access &amp; confirming the line</div>
+      <p class="body-text">Because the port is central, access uses <b class="k">aseptic non-touch technique</b>: mask the patient and provider, chlorhexidine skin antisepsis with full dry time, and sterile gloves/field — central-line bloodstream infections are serious and largely preventable by technique.<sup>3</sup> The crew <b class="k">stabilizes (triangulates) the port</b> and inserts the primed Huber <b class="k">perpendicular through the septum until it bottoms out</b> on the back plate, then <b class="k">aspirates for blood return</b> to confirm the needle is in the reservoir and the line is patent, and <b class="k">flushes briskly with normal saline</b> watching for resistance, swelling, or pain.<sup>1,2</sup> A line that draws blood and flushes freely without pain is confirmed; the needle is then secured and covered with a transparent occlusive dressing, and clamped when not infusing to prevent air entrainment.</p>
+    </section>
+    <section>
+      <div class="sec-h">Troubleshooting, locking &amp; complications</div>
+      <p class="body-text">A <b class="k">withdrawal occlusion</b> (flushes but won't draw blood) is common and usually a <b class="k">fibrin sheath</b> or tip position; repositioning the patient (raising the arm, turning the head, coughing, sitting up) often restores return.<sup>1</sup> If it still won't draw, vesicants/irritants are withheld and another access is considered. <b class="k">Resistance to flushing means stop</b> — forcing risks catheter rupture and embolism. Pain or swelling over the pocket signals the needle is not in the septum (infiltration) — remove and reaccess. After use the line is flushed and <b class="k">locked per policy</b> (commonly heparin 100 units/mL, 5 mL, or saline for newer devices) using positive-pressure technique to prevent reflux clot.<sup>1,2</sup> The crew remains alert for the central-line complications — infection, air embolism (clamp/position precautions), and catheter/port damage — and documents port type, needle, blood return, flush, and any issue for the receiving team.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Infusion Nurses Society. <span style="color:var(--text-faint)">Infusion Therapy Standards of Practice — implanted ports: non-coring needles, ≥10 mL syringes, access &amp; flushing/locking. <em>J Infus Nurs.</em> 2021.</span></li>
+          <li>Manufacturer Instructions for Use (e.g., Bard PowerPort). <span style="color:var(--text-faint)">Huber needle selection, power-injection identification, access &amp; lock technique.</span></li>
+          <li>CDC / HICPAC. <span style="color:var(--text-faint)">Guidelines for the Prevention of Intravascular Catheter-Related Infections — aseptic technique, chlorhexidine, maximal barriers.</span> <a href="https://www.cdc.gov/infection-control/hcp/intravascular-catheter-related-infection/">cdc.gov</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Reference only — access only within your scope of practice and current MCFR / Trauma Star policy; follow the device IFU and online medical control. Verify port type before power injection; never force against resistance.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
