@@ -1,5 +1,5 @@
 // Trauma Star launcher — offline cache
-const CACHE = 'trauma-star-v38';
+const CACHE = 'trauma-star-v39';
 const ASSETS = ['./', './index.html', './protocols.html', './manual.html', './airway-ketamine.html', './ibw.html', './pressors.html', './peds.html', './wholeblood.html', './bends.html', './stroke-ischemic.html', './stroke-hemorrhagic.html', './stroke-undetermined.html', './seizures.html', './herniation.html', './cns-infection.html', './opioid-overdose.html', './cyanide.html', './tca-overdose.html', './envenomation.html', './transport-times.html', './ob-transport.html', './ob-antepartum-hemorrhage.html', './ob-pph.html', './ob-preterm-labor.html', './ob-preeclampsia.html', './ob-thyroid-storm.html', './ob-fetal-monitoring.html', './trauma-assessment.html', './trauma-tbi.html', './trauma-chest.html', './trauma-msk.html', './trauma-crush.html', './trauma-burns.html', './trauma-hypothermia.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (e) => {
