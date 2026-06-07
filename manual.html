@@ -67,6 +67,8 @@
   .quick a:hover{background:#dbeafe}
   td.c a.jump{color:var(--blue);text-decoration:none;font-weight:700}
   td.c a.jump:hover{text-decoration:underline}
+  a.pagelink{color:var(--blue);text-decoration:none;font-weight:600}
+  a.pagelink:hover{text-decoration:underline}
   .backtop{display:block;font-size:.74rem;color:var(--faint);text-decoration:none;margin-top:8px}
 
   @media print{
@@ -184,7 +186,7 @@
       <tr><td class="c">TS-AS-004</td><td>Post-Intubation Analgesia &amp; Sedation</td><td>Sec 11 Analgesia &amp; Sedation</td><td>PHI Sec 5.3 / PADIS</td></tr>
     </tbody>
   </table>
-  <p class="muted">Each protocol is reviewed and approved as part of this manual. Initials of approval may be placed beside each catalog number if individual sign-off is required.</p>
+  <p class="muted">Tip: tap a <b>catalog number</b> to jump to that protocol's entry in this manual, or tap the <b>protocol name ↗</b> to open its live quick-card page. Each protocol is reviewed and approved as part of this manual; initials of approval may be placed beside each catalog number if individual sign-off is required.</p>
 
   <!-- ================= AIRWAY ================= -->
   <div class="sec">
@@ -1149,11 +1151,30 @@
       a.textContent = label;
       qs.appendChild(a);
     });
-    // 3) Make each catalog number in the Document-Control index a jump link
+    // 3) Index hotlinks: catalog # jumps within the manual; protocol NAME opens the live page
+    var PAGES = {
+      'TS-AW-001':'airway-ketamine.html','TS-HD-001':'pressors.html','TS-HD-002':'wholeblood.html',
+      'TS-PED-001':'peds.html','TS-OPS-001':'transport-times.html','TS-ENV-001':'bends.html',
+      'TS-NEU-001':'stroke-ischemic.html','TS-NEU-002':'stroke-hemorrhagic.html','TS-NEU-003':'stroke-undetermined.html',
+      'TS-NEU-004':'seizures.html','TS-NEU-005':'herniation.html','TS-NEU-006':'cns-infection.html',
+      'TS-TOX-001':'opioid-overdose.html','TS-TOX-002':'cyanide.html','TS-TOX-003':'tca-overdose.html','TS-TOX-004':'envenomation.html',
+      'TS-OB-001':'ob-transport.html','TS-OB-002':'ob-antepartum-hemorrhage.html','TS-OB-003':'ob-pph.html',
+      'TS-OB-004':'ob-preterm-labor.html','TS-OB-005':'ob-preeclampsia.html','TS-OB-006':'ob-thyroid-storm.html','TS-OB-007':'ob-fetal-monitoring.html',
+      'TS-TR-001':'trauma-assessment.html','TS-TR-002':'trauma-tbi.html','TS-TR-003':'trauma-chest.html','TS-TR-004':'trauma-msk.html',
+      'TS-TR-005':'trauma-crush.html','TS-TR-006':'trauma-burns.html','TS-TR-007':'trauma-hypothermia.html',
+      'TS-MED-001':'med-agitation.html','TS-MED-002':'med-acs.html','TS-MED-003':'med-chf.html','TS-MED-004':'med-anaphylaxis.html',
+      'TS-MED-005':'med-asthma.html','TS-MED-006':'med-glycemic.html','TS-MED-007':'med-hyperkalemia.html','TS-MED-008':'med-croup.html',
+      'TS-MED-009':'med-sepsis.html','TS-MED-010':'med-vascular.html','TS-MED-011':'med-nausea.html',
+      'TS-AS-001':'as-scales.html','TS-AS-002':'as-analgesia.html','TS-AS-003':'as-procedural.html','TS-AS-004':'as-post-intubation.html'
+    };
     document.querySelectorAll('table td.c').forEach(function(td){
       var code = td.textContent.trim();
+      var nameTd = td.nextElementSibling;
       if(document.getElementById(code)){
         td.innerHTML = '<a class="jump" href="#' + code + '">' + code + '</a>';
+      }
+      if(PAGES[code] && nameTd){
+        nameTd.innerHTML = '<a class="pagelink" href="' + PAGES[code] + '">' + nameTd.innerHTML + ' ↗</a>';
       }
     });
     // 4) Add a "↑ Top" link at the end of each section
