@@ -74,6 +74,11 @@
   .item.soon .badge{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);border:1px solid var(--line-bright);border-radius:999px;padding:2px 7px;flex-shrink:0}
   .item.ready .nm{font-weight:700}
   .item .star{color:var(--gold);flex-shrink:0}
+  .item .nm{padding:2px 0}
+  .item .ssub{font-family:var(--mono);font-size:.56rem;font-weight:400;color:var(--text-faint);letter-spacing:.02em;margin-top:3px;white-space:normal;line-height:1.4}
+  details.cat-card>summary .bd .nm{color:var(--c,#e6edf8)}
+  .list .item .star,.list .item .arrow{color:var(--c,#38bdf8)}
+  .list .item .pg{color:var(--c,#5f7596);opacity:.85}
 
   .empty{text-align:center;color:var(--text-faint);font-family:var(--mono);font-size:.8rem;padding:30px 10px;display:none}
   .empty.show{display:block}
@@ -156,42 +161,43 @@
     { ic:'PROC', name:'Procedural Sedation', sub:'Ketamine · etomidate · monitoring', href:'as-procedural.html', sec:'Sec 11 Analgesia & Sedation', cat:'TS-AS-003' },
     { ic:'PISx', name:'Post-Intubation Analgesia & Sedation', sub:'Analgesia-first · RASS −1 to −5', href:'as-post-intubation.html', sec:'Sec 11 Analgesia & Sedation', cat:'TS-AS-004' },
   ];
-  const DATA = [];
+  // Categories (in order) — each a distinct color matching its section's page theme
+  const SECTIONS = [
+    { key:'Sec 1',  ic:'AW',  title:'Airway & Ventilation',     c:'#38bdf8' },
+    { key:'Sec 2',  ic:'HD',  title:'Hemodynamics & Shock',     c:'#ef4444' },
+    { key:'Sec 3',  ic:'PED', title:'Pediatrics',               c:'#22c55e' },
+    { key:'Sec 4',  ic:'OPS', title:'Operations & Transport',   c:'#f59e0b' },
+    { key:'Sec 5',  ic:'ENV', title:'Environmental & Diving',   c:'#06b6d4' },
+    { key:'Sec 6',  ic:'NEU', title:'Neurology',                c:'#a855f7' },
+    { key:'Sec 7',  ic:'TOX', title:'Toxicology',               c:'#84cc16' },
+    { key:'Sec 8',  ic:'OB',  title:'Obstetrics',               c:'#ec4899' },
+    { key:'Sec 9',  ic:'TR',  title:'Trauma',                   c:'#f43f5e' },
+    { key:'Sec 10', ic:'MED', title:'Medical',                  c:'#14b8a6' },
+    { key:'Sec 11', ic:'A&S', title:'Analgesia & Sedation',     c:'#6366f1' },
+  ];
 
-  // Featured built tools
-  const feat = document.getElementById('featured');
-  FEATURED.forEach(t => {
-    const a = document.createElement('a');
-    a.className = 'proto-card';
-    a.href = t.href;
-    a.dataset.name = t.name.toLowerCase();
-    a.innerHTML = `<div class="ic">${t.ic}</div><div class="bd"><div class="nm">${t.name}</div><div class="sub">${t.sub}</div>${t.cat ? `<div class="catref">${t.cat} · ${t.sec}</div>` : ''}</div><div class="chev">›</div>`;
-    feat.appendChild(a);
-  });
-
-  // Category cards (accordion)
+  document.getElementById('sectLbl').textContent = 'All protocols — by category';
   const root = document.getElementById('cats');
-  if (!DATA.length) document.getElementById('sectLbl').style.display = 'none';
-  DATA.forEach(cat => {
+
+  SECTIONS.forEach(s => {
+    const items = FEATURED.filter(t => t.sec.indexOf(s.key + ' ') === 0);
+    if (!items.length) return;
     const det = document.createElement('details');
     det.className = 'cat-card';
-    det.style.setProperty('--c', cat.c);
+    det.style.setProperty('--c', s.c);
     const sum = document.createElement('summary');
-    sum.innerHTML = `<div class="ic">${cat.ic}</div><div class="bd"><div class="nm">${cat.name}</div><div class="count">${cat.items.length} protocols</div></div><div class="chev">›</div>`;
+    sum.innerHTML = `<div class="ic">${s.ic}</div><div class="bd"><div class="nm">${s.key} · ${s.title}</div><div class="count">${items.length} protocol${items.length>1?'s':''}</div></div><div class="chev">›</div>`;
     det.appendChild(sum);
     const list = document.createElement('div');
     list.className = 'list';
-    list.style.setProperty('--c', cat.c);
-    cat.items.forEach(it => {
-      const el = document.createElement(it.href ? 'a' : 'div');
-      el.className = 'item ' + (it.href ? 'ready' : 'soon');
-      el.dataset.name = it.name.toLowerCase();
-      if (it.href) el.href = it.href;
-      const pg = it.p ? `<span class="pg">p.${it.p}</span>` : '';
-      el.innerHTML = it.href
-        ? `<span class="star">★</span><span class="nm">${it.name}</span>${pg}<span class="arrow">›</span>`
-        : `<span class="nm">${it.name}</span>${pg}<span class="badge">soon</span>`;
-      list.appendChild(el);
+    list.style.setProperty('--c', s.c);
+    items.forEach(t => {
+      const a = document.createElement('a');
+      a.className = 'item ready';
+      a.href = t.href;
+      a.dataset.name = (t.name + ' ' + t.sub + ' ' + t.cat).toLowerCase();
+      a.innerHTML = `<span class="star">★</span><div class="nm"><div>${t.name}</div><div class="ssub">${t.sub}</div></div><span class="pg">${t.cat.replace(/^TS-/,'')}</span><span class="arrow">›</span>`;
+      list.appendChild(a);
     });
     det.appendChild(list);
     root.appendChild(det);
