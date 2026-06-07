@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulary Addition — IV Acetaminophen (Trauma Star)</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111827;--dim:#374151;--faint:#6b7280;--line:#d1d5db;--accent:#b91c1c;--blue:#1d4ed8;--green:#15803d;--bg:#f3f4f6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Outfit",system-ui,sans-serif;line-height:1.5}
+  .toolbar{position:sticky;top:0;z-index:10;background:#0a0f1c;color:#fff;display:flex;gap:10px;align-items:center;padding:10px 16px}
+  .toolbar a{color:#9fb2cf;text-decoration:none;font-size:1.3rem}
+  .toolbar .t{font-weight:700;font-size:.9rem}
+  .toolbar button{margin-left:auto;background:#2563eb;color:#fff;border:none;border-radius:8px;padding:9px 14px;font-weight:700;font-family:inherit;cursor:pointer}
+  .page{max-width:820px;margin:18px auto;background:#fff;padding:48px 56px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+  h1{font-size:1.55rem;font-weight:900;margin:0 0 4px;letter-spacing:-.02em}
+  .subt{color:var(--faint);font-weight:600;margin-bottom:18px}
+  h2{font-size:1.02rem;font-weight:800;margin:24px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--ink)}
+  h3{font-size:.92rem;font-weight:800;margin:14px 0 4px;color:var(--accent)}
+  p{margin:7px 0;font-size:.9rem}
+  .muted{color:var(--faint);font-size:.85rem}
+  .doc-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:.85rem;margin:10px 0 6px}
+  .doc-meta b{color:var(--dim)}
+  .stmt{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);border-radius:6px;padding:12px 14px;font-size:.9rem;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:.84rem;margin:10px 0}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#f3f4f6;font-weight:700}
+  td.c{font-family:ui-monospace,monospace;white-space:nowrap}
+  ul{margin:7px 0;padding-left:20px}
+  li{font-size:.88rem;margin:4px 0}
+  .dz{font-family:ui-monospace,monospace;font-size:.82rem;background:#fef3c7;border:1px solid #fde68a;border-radius:4px;padding:1px 5px;white-space:nowrap}
+  .reflist{padding-left:20px}.reflist li{font-size:.78rem;color:var(--faint)}
+  .reflist a{color:var(--blue);text-decoration:none;word-break:break-word}
+  .sign{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;margin-top:14px}
+  .sigbox{margin-top:22px}
+  .sigline{border-bottom:1.5px solid var(--ink);height:32px}
+  .siglabel{font-size:.78rem;color:var(--faint);margin-top:3px}
+  .disc{font-size:.78rem;color:var(--faint);margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
+  @media print{body{background:#fff}.toolbar{display:none}.page{box-shadow:none;margin:0;max-width:none;padding:0 8px}a{color:var(--ink);text-decoration:none}}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="as-analgesia.html" aria-label="Back">‹</a>
+  <span class="t">Formulary Addition — IV Acetaminophen</span>
+  <button onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<div class="page">
+
+  <h1>Proposed Formulary Addition &amp; Protocol Change</h1>
+  <div class="subt">IV Acetaminophen (acetaminophen injection / Ofirmev) — multimodal, opioid-sparing analgesia</div>
+
+  <div class="doc-meta">
+    <div><b>Program:</b> Monroe County Fire Rescue — Trauma Star (AW139, rotor-wing)</div>
+    <div><b>Affects protocol:</b> TS-AS-002 Analgesia &amp; Anxiolysis (Sec 11)</div>
+    <div><b>Drug class:</b> Non-opioid analgesic / antipyretic</div>
+    <div><b>Schedule:</b> Non-controlled</div>
+    <div><b>Submitted by:</b> William White, Flight Nurse</div>
+    <div><b>Date:</b> ______________</div>
+    <div><b>Submitted to:</b> Antonio Gandia, MD, FACEP — Medical Director · Jeff Lauraitis, EMS Chief</div>
+    <div><b>Status:</b> DRAFT — pending Medical Director approval</div>
+  </div>
+
+  <div class="stmt">
+    <b>Request.</b> Add <b>IV acetaminophen</b> to the Trauma Star formulary and incorporate it as the <b>first-line, non-opioid step of the analgesia ladder — given before (or together with) opioids</b> — to provide multimodal, opioid-sparing pain control. Not for clinical use until approved.
+  </div>
+
+  <h2>1. Proposed Dosing (TS-AS-002, Step ①)</h2>
+  <table>
+    <thead><tr><th>Population</th><th>Dose</th><th>Interval / Max</th></tr></thead>
+    <tbody>
+      <tr><td>Adult / adolescent <b>≥ 50 kg</b></td><td class="c">1000 mg IV over 15 min</td><td>q6h (or 650 mg q4h) · <b>max 4 g/24 h</b></td></tr>
+      <tr><td>Patient <b>&lt; 50 kg</b> / pediatric (≥ 2 yr)</td><td class="c">12.5–15 mg/kg IV over 15 min</td><td>q6h · max 75 mg/kg/day (≤ 3.75 g)</td></tr>
+      <tr><td><b>Reduce max to 3 g/24 h</b></td><td colspan="2">Hepatic impairment / chronic alcohol use, malnutrition/low weight, advanced age, or dehydration.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Administration:</b> IV infusion over 15 minutes. May be given concurrently with opioids and/or ketorolac as part of multimodal analgesia. Counts toward the patient's total 24-hour acetaminophen ceiling — <b>reconcile with acetaminophen given prior to arrival</b> (PO/PR/IV, including combination products).</p>
+  <h3>Contraindications / cautions</h3>
+  <ul>
+    <li>Known acetaminophen hypersensitivity.</li>
+    <li>Severe hepatic impairment / active liver disease (relative — reduce or avoid).</li>
+    <li>Verify cumulative 24-hour acetaminophen dose before administration (avoid stacking with PTA doses / combination analgesics).</li>
+  </ul>
+
+  <h2>2. Clinical Rationale</h2>
+  <p><b>Opioid-sparing multimodal analgesia.</b> Giving a non-opioid first reduces the total opioid required to reach the pain goal. Randomized and emergency-department data show IV acetaminophen provides effective analgesia and <b>reduces opioid consumption and opioid-related adverse effects</b>.<sup>1,2</sup></p>
+  <p><b>Safety profile favorable for flight.</b> Unlike opioids, acetaminophen causes <b>no respiratory depression, no sedation, and no hemodynamic effect</b> — so it lowers opioid requirement without adding the very risks (apnea, hypotension) that make opioid titration hazardous in the noisy, vibrating, single-pilot cabin.<sup>2</sup></p>
+  <p><b>Rapid, reliable onset.</b> The IV route gives predictable plasma levels and faster onset than oral, useful when patients are NPO, vomiting, or in shock with unreliable GI absorption.<sup>1,2</sup></p>
+  <p><b>Consistent with national pain-management direction</b> (CDC/ACEP opioid-stewardship and multimodal analgesia guidance).<sup>3</sup></p>
+
+  <h2>3. Where It Fits the Protocol</h2>
+  <p>TS-AS-002 is amended so the analgesia ladder reads: <b>① non-opioid first (IV acetaminophen ± ketorolac) → ② opioid titrated to goal → ③ sub-dissociative ketamine adjunct</b>, with anxiolysis only after pain is controlled. IV acetaminophen does not replace opioids for moderate-severe pain; it lowers the opioid dose needed and is the default first analgesic when not contraindicated.</p>
+
+  <h2>4. Formulary &amp; Implementation Impact</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Stock</td><td><b>NEW</b> formulary item — acetaminophen injection 1000 mg/100 mL (10 mg/mL) ready-to-use vials. Non-controlled (no CS handling burden).</td></tr>
+      <tr><td>Equipment</td><td>Administered via existing IV pump/15-min infusion; no new equipment.</td></tr>
+      <tr><td>Storage</td><td>Room temperature; protect from light per labeling; check expiry in kit rotation.</td></tr>
+      <tr><td>Training / QI</td><td>Brief crews on "non-opioid first," weight-based dosing, the 4 g (3 g high-risk) ceiling, and PTA-dose reconciliation. Track opioid-dose-per-transport and pain-score change pre/post adoption.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5. References</h2>
+  <ol class="reflist">
+    <li>Sin B, et al. The use of intravenous acetaminophen for acute pain in the emergency department. <em>Am J Emerg Med.</em> 2016. <a href="https://pubmed.ncbi.nlm.nih.gov/27475042">pubmed.ncbi.nlm.nih.gov/27475042</a></li>
+    <li>IV acetaminophen (Ofirmev) Prescribing Information — dosing, max 4 g/24 h (3 g with hepatic risk), 15-min infusion, no respiratory depression.</li>
+    <li>Motov S, et al. Multimodal &amp; opioid-sparing analgesia in the ED; CDC/ACEP opioid-stewardship guidance. <em>Ann Emerg Med.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/25817884">pubmed.ncbi.nlm.nih.gov/25817884</a></li>
+  </ol>
+
+  <h2>6. Review &amp; Approval</h2>
+  <p class="muted">By signing below, the undersigned approve adding IV acetaminophen to the Trauma Star formulary and the corresponding amendment to TS-AS-002, effective the date noted.</p>
+  <div class="sign">
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Antonio Gandia, MD, FACEP — Medical Director (signature)</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Date</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Jeff Lauraitis — EMS Chief (signature)</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Date</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">William White, Flight Nurse — submitting author</div></div>
+    <div class="sigbox"><div class="sigline"></div><div class="siglabel">Effective date</div></div>
+  </div>
+
+  <div class="disc">
+    DRAFT proposal for Medical Director review — not authorized for clinical use until signed. Verify every dose and the cumulative 24-hour acetaminophen limit before administration. Generated from the Trauma Star protocol app (TS-CCG).
+  </div>
+
+</div>
+</body>
+</html>
