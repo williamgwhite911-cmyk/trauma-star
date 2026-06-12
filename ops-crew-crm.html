@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Crew CRM">
+<meta name="theme-color" content="#0a0f1c">
+<title>Crew Roles & CRM (RN + Medic) — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--op:#f59e0b;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b45309,#f59e0b);color:#0a0f1c}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f59e0b)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .nm{font-weight:700;font-size:.9rem}.item .detail{font-size:.82rem;color:var(--text-dim);margin-top:4px;line-height:1.5}
+  .role{display:flex;gap:8px;margin-top:6px}
+  .role .col{flex:1;font-size:.78rem;color:var(--text-dim);line-height:1.45;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .rb{display:inline-block;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-bottom:4px;color:#0a0f1c}
+  .rb.p1{background:#7dd3fc}.rb.p2{background:#86efac}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f59e0b)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--op);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Crew Roles &amp; CRM (RN + Medic)</h1>
+      <div class="sub">2-person team · role assignment · closed-loop</div>
+      <div class="cat">TS-OPS-002 · Sec 4 Operations &amp; Transport</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">The two roles — assign BEFORE every call</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="item">
+          <div class="nm">Default split (swap each call to stay sharp)</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1 · Airway / Procedures</span> "Head of the bed." Airway/RSI, cric, chest decompression, POCUS. <b class="k">Calls the plan.</b></div>
+            <div class="col"><span class="rb p2">P2 · Circulation / Resus</span> Access (IV/IO/port), blood/TXA/calcium, drips &amp; pumps, pushes meds on command, monitor, <b class="k">times &amp; documents</b>, talks to medical control.</div>
+          </div>
+        </div>
+        <div class="item"><div class="detail"><b class="k">Two-deep rule:</b> BOTH providers must independently run an RSI, hang blood, decompress a chest, run POCUS, and manage the vent/pumps. RN or medic can be P1 or P2.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Pre-flight brief (60 seconds, every launch)</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li><b class="k">Roles:</b> "You're P1 airway, I'm P2 resus." State the working diagnosis &amp; the plan.</li>
+          <li><b class="k">Contingencies out loud:</b> "If the airway fails → cric, you cut, I bag." "If they code → you airway, I compressions + blood."</li>
+          <li><b class="k">Gear staged:</b> airway/RSI kit + suction at HOB; blood warm &amp; checked; drugs drawn &amp; labeled; IO ready; monitor/capnography on.</li>
+          <li><b class="k">Go/No-Go:</b> weight/altitude/weather; <b class="k">can we control this patient for flight?</b> (agitation → TS-MED-001). Extra hands needed?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Closed-loop communication (always)</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Order → read-back → confirmation:</b> "Push 100 of fentanyl" → "Pushing 100 of fentanyl" → "Fentanyl in."</li>
+          <li><b class="k">Name the receiver</b> for every order; no "anonymous" tasks. State drug + dose + route.</li>
+          <li><b class="k">Think out loud</b> — shared mental model. Verbalize vitals trends &amp; concerns.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Speak up — flattened hierarchy</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Either provider can &amp; must challenge. Use a graded assertion: <b class="k">"I'm concerned… I'm uncomfortable… this is unsafe — STOP."</b></li>
+          <li><b class="k">10-for-10:</b> on a big decision, stop, take 10 sec, re-confirm the plan together.</li>
+          <li>No rank in the back — the safer plan wins, regardless of who said it.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Task-load management (only 2 hands ×2)</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li><b class="k">Pre-task on the ground</b> — draw drugs, prime lines, set the vent, stage the airway before moving.</li>
+          <li><b class="k">One problem at a time;</b> load-and-go for time-critical surgical disease.</li>
+          <li><b class="k">Call early</b> — online medical control + receiving pre-notification; request a 3rd set of hands (fire/ground) when high workload is predictable (entrapment, MTP, combative).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">After every significant call</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li><b class="k">AAR (after-action review):</b> what went well, what to fix, one thing to drill. Restock; reset roles.</li>
+          <li>Flag QA/M&amp;M items to the Medical Director.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — making two providers move like four</div>
+      <p class="body-text">A two-person RN + paramedic crew can deliver special-operations-grade critical care, but only by importing the discipline that lets small elite teams perform: <b class="k">fixed role assignment, relentless cross-training, closed-loop communication, and rehearsed drills</b>.<sup>1,2</sup> With only two providers there is <b class="k">no slack</b> — every critical skill must live in both heads (the "two-deep" rule), and every high-acuity event must be <b class="k">choreographed in advance</b> so two sets of hands accomplish what would otherwise take four.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why pre-assigned roles (the "battle drill")</div>
+      <p class="body-text">The most common failure mode of a two-person resuscitation is <b class="k">both providers reaching for the same task while no one watches the airway or the bleeding</b>. Assigning <b class="k">P1 (airway/procedures) and P2 (circulation/resuscitation) before every call</b> — and swapping each call so both stay current — eliminates that, the same way special-operations and aviation teams run pre-briefed role drills.<sup>1,2</sup> The roles are a default, not a cage: whoever is free takes the next emergent task, but the default prevents collisions and gaps. Crucially, the split is <b class="k">function-based, not title-based</b> — the medic or the nurse can be P1 or P2, because both are trained to do everything.<sup>3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Closed-loop communication &amp; the shared mental model</div>
+      <p class="body-text">Borrowed directly from aviation crew-resource-management and surgical-team science, <b class="k">closed-loop communication</b> (directed order → read-back → confirmation) is the single highest-yield habit for preventing medication and task errors in a noisy cabin.<sup>2,4</sup> Pairing it with <b class="k">thinking out loud</b> builds a shared mental model so both providers anticipate the next step rather than waiting to be told. High-reliability teams also <b class="k">flatten the hierarchy</b>: any team member can stop the line, using graded-assertiveness language ("I'm concerned → I'm uncomfortable → this is unsafe, stop"), because in a two-person crew the junior provider's catch may be the only catch.<sup>2,4</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Working within two-person limits</div>
+      <p class="body-text">Two people physically cannot do everything at once in flight, so elite dyads win by <b class="k">front-loading work</b>: drawing and labeling drugs, priming lines, setting the ventilator, warming and checking blood, and staging the airway on the ground before movement.<sup>3</sup> They <b class="k">triage to one problem at a time</b>, accept load-and-go for time-critical surgical disease, and aggressively use external resources — early online medical control, receiving-facility pre-notification, and requesting a third set of hands when a high-workload scenario (entrapment, massive transfusion, a combative patient) is predictable. This is the same scalability principle the military uses to push small surgical slices forward (see the Army's ERST concept): <b class="k">a small team stabilizes and hands off rather than trying to be definitive</b>.<sup>1,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Training, cohesion &amp; the after-action review</div>
+      <p class="body-text">Capability comes from <b class="k">standards and repetition</b>, not headcount. Fixed crews trained together develop the wordless coordination characteristic of special-operations units; recurrent, no-notice simulation of the scripted drills (RSI, massive transfusion, traumatic arrest, the violent patient) keeps both providers two-deep on every skill.<sup>1,3</sup> Every significant call ends with an <b class="k">after-action review</b> — what went well, what to fix, one thing to drill next — feeding a tight QA/M&amp;M loop with the Medical Director. The protocols, the drills, and the AAR together are what convert a nurse-and-medic into a single high-performing unit.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 5 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Committee on Tactical Combat Casualty Care (CoTCCC). <span style="color:var(--text-faint)">TCCC Guidelines — role-based casualty care &amp; the forward continuum. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>Salas E, et al. <span style="color:var(--text-faint)">Crew Resource Management / team-training &amp; TeamSTEPPS in healthcare. <em>AHRQ TeamSTEPPS.</em></span> <a href="https://www.ahrq.gov/teamstepps/">ahrq.gov/teamstepps</a></li>
+          <li>ASTNA. <span style="color:var(--text-faint)">Patient Transport: Principles &amp; Practice — air-medical crew configuration, scope &amp; safety.</span></li>
+          <li>Hicks CM, Petrosoniak A. <span style="color:var(--text-faint)">The dynamic lexicon of trauma resuscitation — closed-loop communication &amp; teamwork. <em>Emerg Med Clin North Am.</em> 2018;36:1–17.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/29132576">pubmed.ncbi.nlm.nih.gov/29132576</a></li>
+          <li>U.S. Army. <span style="color:var(--text-faint)">Expeditionary Resuscitative Surgical Team (ERST) &amp; Damage-Control Resuscitation/Surgery doctrine (Role 2 forward).</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Operational reference for crew coordination — adapt to MCFR / Trauma Star SOPs, scope of practice, and your Medical Director.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

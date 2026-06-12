@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Trauma Arrest">
+<meta name="theme-color" content="#0a0f1c">
+<title>Traumatic Arrest Drill — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--op:#f59e0b;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b45309,#f59e0b);color:#0a0f1c}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f59e0b)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .rstep{padding:11px 16px;border-top:1px solid var(--line)}.rstep:first-child{border-top:none}
+  .rstep .rn{font-weight:700;font-size:.88rem}
+  .role{display:flex;gap:8px;margin-top:6px}
+  .role .col{flex:1;font-size:.78rem;color:var(--text-dim);line-height:1.45;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .rb{display:inline-block;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-bottom:4px;color:#0a0f1c}
+  .rb.p1{background:#7dd3fc}.rb.p2{background:#86efac}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .detail{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f59e0b)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--op);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Traumatic Arrest Drill</h1>
+      <div class="sub">Treat the cause (HOTT) · not standard ACLS</div>
+      <div class="cat">TS-OPS-005 · Sec 4 Operations &amp; Transport</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Principle — fix reversible causes FIRST</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Traumatic arrest ≠ medical arrest. <b class="k">CPR &amp; epinephrine are low-yield</b> until the reversible cause is fixed. Address <b class="k">H · O · T · T</b> in parallel within the first minute.</li>
+          <li><b class="k">Hypovolemia · Oxygenation/airway · Tension pneumothorax · Tamponade.</b> Hypoxia &amp; hemorrhage cause most traumatic arrests.</li>
+          <li>Best survival: <b class="k">witnessed, short downtime, signs of life, penetrating chest</b>. Blunt arrest with prolonged downtime/asystole = poor — consider termination per protocol/medical control.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">The drill — both providers, simultaneously</div>
+      <div class="block warn">
+        <div class="rstep">
+          <div class="rn">First 60 seconds (HOTT)</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1 · Airway + chest</span> Open/secure airway, oxygenate (BVM/SGA/ETT). <b class="k">Bilateral finger thoracostomy</b> (decompress both sides) — TS-TR-013.</div>
+            <div class="col"><span class="rb p2">P2 · Bleeding + volume</span> <b class="k">Control external hemorrhage</b> (tourniquet/packing); <b class="k">pelvic binder</b>; IV/IO ×2; start <b class="k">blood</b> (TS-HD-002) + calcium + TXA.</div>
+          </div>
+        </div>
+        <div class="item"><div class="detail">If signs of life return → continue resuscitation; if pulse → titrate blood to radial pulse / SBP ~90 (100–110 TBI).</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Tamponade (penetrating chest / box)</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li>Suspect with penetrating cardiac-box wound + arrest/PEA → <b class="k">pericardiocentesis</b> (TS-HD-006) if no other cause and within scope/medical control. Definitive = thoracotomy at the trauma center.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Then (after HOTT addressed)</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li>High-quality chest compressions &amp; rhythm check — but compressions are <b class="k">secondary</b> to fixing the cause in trauma (poor output against an empty tank).</li>
+          <li><b class="k">Epinephrine is de-emphasized</b> in traumatic arrest (squeezing an empty tank) — volume/blood is the priority; give per medical control.</li>
+          <li>Treat hypothermia; correct hyperkalemia if crush (TS-TR-005); glucose.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Disposition</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li>ROSC or signs of life → <b class="k">load-and-go</b>, trauma center, MTP activated, pre-notify.</li>
+          <li>No response despite HOTT, prolonged downtime/asystole in blunt trauma → consider <b class="k">termination</b> per protocol/medical control. EtCO₂ trend informs prognosis.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Downtime, witnessed?, signs of life, mechanism; HOTT interventions + times (decompression sites, blood, hemorrhage control).</li>
+          <li>Rhythm, EtCO₂ trend, ROSC; medical-control contact; termination decision if applicable.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — a different arrest</div>
+      <p class="body-text">Traumatic cardiac arrest is mechanistically different from medical arrest: the heart usually stops because it has <b class="k">no blood to pump, no oxygen, or is being mechanically obstructed</b>, not because of a primary dysrhythmia.<sup>1,2</sup> Standard ACLS — chest compressions and epinephrine — is therefore <b class="k">low-yield until the reversible cause is corrected</b>, and the entire drill reorders priorities around fixing those causes <b class="k">first and simultaneously</b>. With two providers this is only possible as a rehearsed, role-split drill.<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">HOTT — the reversible causes, in parallel</div>
+      <p class="body-text">The mnemonic <b class="k">HOTT — Hypovolemia, Oxygenation, Tension pneumothorax, Tamponade</b> — captures the treatable causes, and the choreography assigns them to two providers working at once.<sup>2</sup> <b class="k">P1 owns oxygenation and the chest</b>: securing the airway and performing <b class="k">bilateral finger thoracostomy</b> (decompressing both sides empirically, since tension is common and you can't reliably exclude it in arrest). <b class="k">P2 owns hemorrhage and volume</b>: external hemorrhage control, a pelvic binder, vascular access, and <b class="k">blood</b> with calcium and TXA. Because hypoxia and hemorrhage cause most traumatic arrests, these two providers' tasks are the actual resuscitation; compressions are secondary.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Why epinephrine and compressions take a back seat</div>
+      <p class="body-text">In a patient who is empty and obstructed, <b class="k">chest compressions generate little forward flow</b> and <b class="k">epinephrine squeezes an empty tank</b>, raising afterload without addressing the cause — both are de-emphasized in traumatic arrest in favor of <b class="k">filling the tank (blood), opening the chest (decompression), and oxygenating</b>.<sup>1,2</sup> This is a deliberate departure from medical-arrest reflexes and is one of the most important mindset shifts the drill trains. Tamponade — especially after a penetrating cardiac-box wound — is addressed with <b class="k">pericardiocentesis</b> as a temporizing measure (TS-HD-006) where it is the suspected cause, recognizing that definitive treatment is surgical (thoracotomy).<sup>2,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Who survives — and when to stop</div>
+      <p class="body-text">Outcomes guide effort. The best survival is in the <b class="k">witnessed arrest with a short downtime, retained signs of life, and a penetrating chest injury</b> (the classic candidate for an ED thoracotomy), where aggressive HOTT and rapid transport can work.<sup>1,2</sup> Conversely, <b class="k">blunt traumatic arrest with prolonged downtime and asystole has a dismal prognosis</b>, and the drill explicitly includes <b class="k">termination of resuscitation</b> per protocol and medical control as an appropriate, evidence-based decision — with the end-tidal CO₂ trend as a useful prognostic input.<sup>2</sup> For the salvageable patient, the team load-and-goes with the trauma center's massive-transfusion protocol activated; the helicopter exists to collapse the time to a surgeon.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Lott C, et al. (ERC). <span style="color:var(--text-faint)">Cardiac arrest in special circumstances — traumatic cardiac arrest (treat reversible causes; de-emphasize CPR/adrenaline). <em>Resuscitation.</em> 2021;161:152–219.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/33773826">pubmed.ncbi.nlm.nih.gov/33773826</a></li>
+          <li>Committee on TCCC / Joint Trauma System. <span style="color:var(--text-faint)">Traumatic arrest &amp; HOTT — hemorrhage control, bilateral decompression, blood, pericardial decompression. 2023.</span> <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+          <li>American College of Surgeons. <span style="color:var(--text-faint)">ATLS, 10th ed. — traumatic arrest, resuscitative thoracotomy indications. 2018.</span></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Operational reference — perform within scope &amp; MCFR / Trauma Star protocol and medical control. Termination of resuscitation per local protocol.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

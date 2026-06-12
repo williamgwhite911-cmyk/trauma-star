@@ -107,7 +107,7 @@
     <div><b>Edition / version:</b> ______________</div>
     <div><b>Effective date:</b> ______________</div>
     <div><b>Next review:</b> ______________ (annual)</div>
-    <div><b>Total protocols:</b> 55 (this edition)</div>
+    <div><b>Total protocols:</b> 59 (this edition)</div>
   </div>
 
   <div class="stmt">
@@ -148,6 +148,10 @@
       <tr><td class="c">TS-HD-006</td><td>Pericardiocentesis</td><td>Sec 2 Hemodynamics</td><td>ATLS / ESC / AHA ACLS</td></tr>
       <tr><td class="c">TS-PED-001</td><td>Pediatric Resuscitation (Broselow / Handtevy)</td><td>Sec 3 Pediatrics</td><td>PALS weight-based</td></tr>
       <tr><td class="c">TS-OPS-001</td><td>IFT Transport Times (ground vs AW139)</td><td>Sec 4 Operations</td><td>Operational reference</td></tr>
+      <tr><td class="c">TS-OPS-002</td><td>Crew Roles &amp; CRM (RN + Medic)</td><td>Sec 4 Operations</td><td>CRM / TeamSTEPPS / ASTNA</td></tr>
+      <tr><td class="c">TS-OPS-003</td><td>Two-Person RSI Choreography</td><td>Sec 4 Operations</td><td>Walls airway / CRM</td></tr>
+      <tr><td class="c">TS-OPS-004</td><td>Massive Transfusion Role Card</td><td>Sec 4 Operations</td><td>JTS DCR / THOR-AABB</td></tr>
+      <tr><td class="c">TS-OPS-005</td><td>Traumatic Arrest Drill (HOTT)</td><td>Sec 4 Operations</td><td>ERC / TCCC / ATLS</td></tr>
       <tr><td class="c">TS-ENV-001</td><td>Decompression Sickness (Bends)</td><td>Sec 5 Environmental</td><td>DAN / UHMS / DCI consensus</td></tr>
       <tr><td class="c">TS-NEU-001</td><td>Stroke — Ischemic</td><td>Sec 6 Neurology</td><td>PHI Sec 7.2 / AHA-ASA</td></tr>
       <tr><td class="c">TS-NEU-002</td><td>Stroke — Hemorrhagic (ICH)</td><td>Sec 6 Neurology</td><td>PHI Sec 7.3 / AHA-ASA</td></tr>
@@ -392,6 +396,81 @@
       </ol>
     </div>
     <div class="src">Source: operational planning reference (estimates); air-medical outcomes literature.</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-OPS-002</div>
+    <div class="nm">Crew Roles &amp; CRM (RN + Medic)</div>
+    <div class="row"><b>Assign roles before every call:</b> P1 = airway/procedures (calls the plan), P2 = circulation/resus (access, blood, drugs, monitor, times/documents). <b>Two-deep rule:</b> RN &amp; medic both independently do RSI, blood, chest decompression, POCUS, vent — roles are function-based, swap each call.</div>
+    <div class="row"><b>Pre-flight brief (60 s):</b> roles, working dx, contingencies out loud (failed airway → cric: who cuts/who bags), gear staged, go/no-go (control the patient?). <b>Closed-loop comms</b> (order → read-back → confirm); flattened hierarchy (graded assertion "concerned → uncomfortable → unsafe, stop"); 10-for-10.</div>
+    <div class="row"><b>Task-load:</b> pre-task on the ground, one problem at a time, call medical control + pre-notify early, request a 3rd hand when high workload predictable. <b>AAR</b> after every significant call.</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>A two-person crew reaches special-operations capability through fixed roles, cross-training, closed-loop communication, and rehearsed drills — there is no slack, so every skill must be two-deep and every high-acuity event pre-choreographed.<sup>1,2</sup> Pre-assigned P1/P2 prevents the classic failure (both reach for the same task, no one watches the airway/bleeding).<sup>2,4</sup> Closed-loop communication is the highest-yield error-prevention habit; a flattened hierarchy lets the only other provider catch the error.<sup>2,4</sup> Two people front-load work and use external resources — the same "stabilize-and-hand-off" scalability the military uses pushing small surgical slices (ERST) forward.<sup>1,5</sup></p>
+      <ol class="reflist">
+        <li>Committee on TCCC. TCCC Guidelines — role-based casualty care. 2023. <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+        <li>AHRQ TeamSTEPPS — CRM, role clarity, closed-loop. <a href="https://www.ahrq.gov/teamstepps/">ahrq.gov/teamstepps</a></li>
+        <li>ASTNA. Patient Transport: Principles &amp; Practice — crew configuration/scope.</li>
+        <li>Hicks CM, Petrosoniak A. Teamwork in resuscitation. <em>Emerg Med Clin North Am.</em> 2018;36:1–17. <a href="https://pubmed.ncbi.nlm.nih.gov/29132576">pubmed.ncbi.nlm.nih.gov/29132576</a></li>
+        <li>U.S. Army — Expeditionary Resuscitative Surgical Team (ERST) / DCR-DCS doctrine.</li>
+      </ol>
+    </div>
+    <div class="src">Source: TCCC; TeamSTEPPS/CRM; ASTNA. (Companion to TS-OPS-003/004/005.)</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-OPS-003</div>
+    <div class="nm">Two-Person RSI Choreography</div>
+    <div class="row"><b>Resuscitate before you intubate.</b> P1 (airway): pre-oxygenate + apneic O₂, position, intubate, confirm. P2 (resus): 2 lines, fix BP (push-dose/blood), draw+label drugs incl. <b>post-intubation sedation ready before the push</b>, monitor, push on command (closed-loop).</div>
+    <div class="row"><b>Push:</b> Ketamine <span class="dz">1–2 mg/kg</span> (0.5–1 if shock) → Rocuronium <span class="dz">1–1.2 mg/kg</span> (read-back each). First-pass focus; ≤ 2–3 attempts → SGA → cric. <b>Confirm waveform EtCO₂.</b></div>
+    <div class="row"><b>Post-intubation: NEVER paralyzed &amp; aware</b> — start analgesia+sedation immediately (TS-AS-004), target RASS −1 to −5; treat post-intubation hypotension. (Doses per TS-AW-001.)</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>RSI has the least error margin and most simultaneous tasks, so it's the prime two-person drill.<sup>1,2</sup> Inducing a hypotensive/hypoxic patient can cause arrest, so P2's first job is optimizing physiology before any drug; ketamine is dose-reduced in shock and a pressor/blood staged for post-intubation hypotension.<sup>1,3</sup> Closed-loop drug delivery prevents the dose/wrong-drug errors that cluster around RSI; a dedicated monitor calls the sat aloud and bag-rescues.<sup>2,4</sup> Rocuronium outlasts one induction dose — sedation must be running before the patient could be awake.<sup>1</sup></p>
+      <ol class="reflist">
+        <li>Brown CA, et al. The Walls Manual of Emergency Airway Management, 6th ed.</li>
+        <li>Hicks CM, Petrosoniak A. <em>Emerg Med Clin North Am.</em> 2018;36:1–17. <a href="https://pubmed.ncbi.nlm.nih.gov/29132576">pubmed.ncbi.nlm.nih.gov/29132576</a></li>
+        <li>Heffner AC, et al. Peri-intubation arrest. <em>Resuscitation.</em> 2013;84:1500–1504. <a href="https://pubmed.ncbi.nlm.nih.gov/23911630">pubmed.ncbi.nlm.nih.gov/23911630</a></li>
+        <li>AHRQ TeamSTEPPS — closed-loop communication. <a href="https://www.ahrq.gov/teamstepps/">ahrq.gov/teamstepps</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: Walls airway; CRM. (Doses TS-AW-001; sedation TS-AS-004.)</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-OPS-004</div>
+    <div class="nm">Massive Transfusion Role Card</div>
+    <div class="row"><b>Trigger:</b> SBP &lt; 90, HR ≥ 110, <b>shock index ≥ 0.8</b>, class III–IV (β/CCB-blocked → trust SI/perfusion). Call "Massive transfusion — go," assign roles, activate receiving MTP. <b>P1</b> stop the bleeding + airway; <b>P2</b> give the blood.</div>
+    <div class="row"><b>P2 blood:</b> two-person verify, <b>warm ≤ 42 °C</b>, <b>NaCl-only line</b> (no LR/calcium), infuse via warmer to radial pulse / SBP ~90 (100–110 TBI); adult 1 unit / peds 10–20 mL/kg.</div>
+    <div class="row"><b>With-blood bundle:</b> Calcium with 1st unit (CaCl₂ <span class="dz">1 g</span> / peds 20 mg/kg or gluconate <span class="dz">3 g</span> / peds 60 mg/kg); TXA ≥ 12 yr <span class="dz">2 g</span> / &lt; 12 yr <span class="dz">15 mg/kg (max 1 g)</span>; warm everything; permissive hypotension; pelvic binder; minimize crystalloid. <b>Load-and-go.</b></div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Massive hemorrhage is won by doing several things at once — the card splits hemorrhage control/airway (P1) from giving blood (P2) so a two-person crew works in parallel.<sup>1,2</sup> Early activation on objective triggers (esp. shock index ≥ 0.8, which precedes a falling SBP and is falsely reassuring in β/CCB-blocked or hypothermic patients) starts balanced resuscitation sooner.<sup>1,3</sup> The card hard-codes the safety steps that get dropped under pressure — two-person verify, warming, NaCl-only line — and the with-blood bundle (calcium, TXA, warmth) that treats the lethal diamond. Blood is a bridge to the OR.<sup>1,2</sup></p>
+      <ol class="reflist">
+        <li>Cap AP, et al. (JTS). Damage Control Resuscitation CPG. 2019.</li>
+        <li>Yazer MH, Spinella PC, et al. (THOR-AABB) prehospital whole blood. <em>Transfusion.</em> 2022. <a href="https://pubmed.ncbi.nlm.nih.gov/34669564">pubmed.ncbi.nlm.nih.gov/34669564</a></li>
+        <li>El-Menyar A, et al. Shock index in trauma. <em>J Surg Res.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/30401358">pubmed.ncbi.nlm.nih.gov/30401358</a></li>
+      </ol>
+    </div>
+    <div class="src">Source: JTS DCR; THOR-AABB. (Doses TS-HD-002.)</div>
+  </div>
+
+  <div class="proto">
+    <div class="cat">TS-OPS-005</div>
+    <div class="nm">Traumatic Arrest Drill (HOTT)</div>
+    <div class="row"><b>Treat the cause first</b> — CPR/epinephrine are low-yield until reversible causes fixed. Address <b>H·O·T·T</b> in parallel: Hypovolemia, Oxygenation/airway, Tension pneumothorax, Tamponade.</div>
+    <div class="row"><b>First 60 s:</b> P1 — airway/oxygenate + <b>bilateral finger thoracostomy</b> (TS-TR-013). P2 — external hemorrhage control + pelvic binder + IV/IO + <b>blood</b> (TS-HD-002) + calcium + TXA. Tamponade (penetrating box) → pericardiocentesis (TS-HD-006).</div>
+    <div class="row"><b>Then</b> compressions/rhythm (secondary in trauma); epinephrine de-emphasized (empty tank). Best survival: witnessed, short downtime, signs of life, penetrating chest. Blunt + prolonged downtime/asystole → consider <b>termination</b> per protocol/medical control (EtCO₂ informs).</div>
+    <div class="rationale">
+      <h4>Clinical rationale &amp; evidence</h4>
+      <p>Traumatic arrest is usually mechanical/hypovolemic, not a primary dysrhythmia, so standard ACLS is low-yield until the cause is fixed — the drill reorders priorities to HOTT done first and simultaneously.<sup>1,2</sup> P1 owns oxygenation + bilateral decompression (tension can't be excluded in arrest); P2 owns hemorrhage + blood. Compressions generate little flow and epinephrine squeezes an empty tank, so both are de-emphasized in favor of filling/opening/oxygenating.<sup>1,2</sup> Penetrating-box tamponade gets temporizing pericardiocentesis (definitive = thoracotomy). Blunt arrest with prolonged downtime/asystole is dismal — termination is appropriate per protocol.<sup>1,2</sup></p>
+      <ol class="reflist">
+        <li>Lott C, et al. (ERC). Traumatic cardiac arrest. <em>Resuscitation.</em> 2021;161:152–219. <a href="https://pubmed.ncbi.nlm.nih.gov/33773826">pubmed.ncbi.nlm.nih.gov/33773826</a></li>
+        <li>Committee on TCCC / JTS — traumatic arrest &amp; HOTT. 2023. <a href="https://www.deployedmedicine.com/">deployedmedicine.com</a></li>
+        <li>American College of Surgeons. ATLS, 10th ed. 2018.</li>
+      </ol>
+    </div>
+    <div class="src">Source: ERC; TCCC; ATLS. (See TS-TR-013, TS-HD-002/006.)</div>
   </div>
   </div>
 
@@ -1349,7 +1428,7 @@
     // 3) Index hotlinks: catalog # jumps within the manual; protocol NAME opens the live page
     var PAGES = {
       'TS-AW-001':'airway-ketamine.html','TS-HD-001':'pressors.html','TS-HD-002':'wholeblood.html','TS-HD-003':'hd-lvad.html','TS-HD-004':'hd-iabp.html','TS-HD-005':'hd-port.html','TS-HD-006':'hd-pericardiocentesis.html',
-      'TS-PED-001':'peds.html','TS-OPS-001':'transport-times.html','TS-ENV-001':'bends.html',
+      'TS-PED-001':'peds.html','TS-OPS-001':'transport-times.html','TS-OPS-002':'ops-crew-crm.html','TS-OPS-003':'ops-rsi-choreography.html','TS-OPS-004':'ops-mtp.html','TS-OPS-005':'ops-traumatic-arrest.html','TS-ENV-001':'bends.html',
       'TS-NEU-001':'stroke-ischemic.html','TS-NEU-002':'stroke-hemorrhagic.html','TS-NEU-003':'stroke-undetermined.html',
       'TS-NEU-004':'seizures.html','TS-NEU-005':'herniation.html','TS-NEU-006':'cns-infection.html',
       'TS-TOX-001':'opioid-overdose.html','TS-TOX-002':'cyanide.html','TS-TOX-003':'tca-overdose.html','TS-TOX-004':'envenomation.html',

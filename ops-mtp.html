@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS MTP Crew">
+<meta name="theme-color" content="#0a0f1c">
+<title>Massive Transfusion Role Card — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--op:#f59e0b;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b45309,#f59e0b);color:#0a0f1c}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f59e0b)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .rstep{padding:11px 16px;border-top:1px solid var(--line)}.rstep:first-child{border-top:none}
+  .rstep .rn{font-weight:700;font-size:.88rem}
+  .role{display:flex;gap:8px;margin-top:6px}
+  .role .col{flex:1;font-size:.78rem;color:var(--text-dim);line-height:1.45;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .rb{display:inline-block;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-bottom:4px;color:#0a0f1c}
+  .rb.p1{background:#7dd3fc}.rb.p2{background:#86efac}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.76rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:1px 6px;border-radius:5px;margin:2px 3px 0 0;white-space:nowrap}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .detail{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f59e0b)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--op);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Massive Transfusion Role Card</h1>
+      <div class="sub">Whole blood · 2-person choreography</div>
+      <div class="cat">TS-OPS-004 · Sec 4 Operations &amp; Transport</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Trigger / activate</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Hemorrhagic shock: SBP &lt; 90, HR ≥ 110, <b class="k">shock index ≥ 0.8</b>, class III–IV, or major ongoing loss (TS-HD-002). Blocked HR (β/CCB) → trust SI/perfusion.</li>
+          <li><b class="k">Call it out: "Massive transfusion — go."</b> Assign roles; pre-notify receiving + activate their MTP.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Split the work</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="rstep">
+          <div class="rn">Simultaneous, not sequential</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1 · Stop the bleeding + airway</span> Tourniquet / wound packing / pelvic binder / splint (TS-TR-001); airway &amp; oxygenation; chest decompression if needed.</div>
+            <div class="col"><span class="rb p2">P2 · Give the blood</span> Two large-bore IV/IO; verify, warm, spike, infuse blood; push calcium &amp; TXA; monitor &amp; time.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">P2 — blood sequence</div>
+      <div class="block warn">
+        <div class="rstep">
+          <div class="rn">Run it right</div>
+          <div class="role">
+            <div class="col"><span class="rb p2">P2</span> <b class="k">Two-person verify</b> unit (LTOWB, group O, unit/segment #, ABO/Rh, expiry, integrity). <b class="k">Warm ≤ 42 °C.</b> <b class="k">NaCl-only line — NEVER LR or calcium in the same line.</b></div>
+            <div class="col"><span class="rb p2">P2</span> Infuse via warmer ± pressure bag; titrate to <b class="k">radial pulse / SBP ~90</b> (<b class="k">100–110 if TBI</b>). Adult 1 unit / peds 10–20 mL/kg; repeat.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">The "with-blood" bundle — don't forget</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="item"><div class="detail"><b class="k">Calcium with the 1st unit:</b> CaCl₂ <span class="dose">1 g</span> (peds 20 mg/kg) or Ca gluconate <span class="dose">3 g</span> (peds 60 mg/kg) IV/IO.</div></div>
+        <div class="item"><div class="detail"><b class="k">TXA &lt; 3 h:</b> ≥ 12 yr <span class="dose">2 g over 10 min</span> · &lt; 12 yr <span class="dose">15 mg/kg (max 1 g)</span> + 2 mg/kg/hr.</div></div>
+        <div class="item"><div class="detail"><b class="k">Warm everything</b> (patient + product); <b class="k">permissive hypotension</b>; pelvic binder; minimize crystalloid.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Reassess &amp; handoff</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li>Reassess perfusion (pulse, mentation, EtCO₂) after each unit; watch for transfusion reaction → stop if suspected.</li>
+          <li>Track units, calcium doses, TXA time; relay running totals to the receiving trauma team.</li>
+          <li><b class="k">Load-and-go</b> — the patient needs the OR; the blood is a bridge.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Trigger (SI/vitals), hemorrhage-control devices + times, unit #s, two-person verify.</li>
+          <li>Calcium, TXA (time), warming, responses; MTP activation &amp; destination.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — speed + sequence win the bleeding patient</div>
+      <p class="body-text">Massive hemorrhage is a race the crew wins by doing several things <b class="k">at once</b>, which is exactly what a two-person team struggles to do without a script.<sup>1,2</sup> This role card splits the work so that <b class="k">hemorrhage control and airway (P1)</b> happen in parallel with <b class="k">getting blood into the patient (P2)</b>, rather than one provider trying to do both serially. The clinical content lives in the whole-blood protocol (TS-HD-002); this is the <b class="k">choreography</b> that makes it fast and error-free.</p>
+    </section>
+    <section>
+      <div class="sec-h">Recognize early — including the blunted patient</div>
+      <p class="body-text">Outcomes track how early balanced resuscitation starts, so the team activates on objective triggers — SBP &lt; 90, HR ≥ 110, and especially <b class="k">shock index ≥ 0.8</b>, which detects occult hemorrhage before the systolic pressure falls.<sup>1,3</sup> A key trap the card flags is the patient on <b class="k">beta- or calcium-channel blockers</b> (or hypothermic) who cannot mount a tachycardia: the heart rate and shock index are falsely reassuring, so the crew transfuses on perfusion and suspicion, not on a "normal" pulse.<sup>3</sup> Calling "massive transfusion — go" out loud and activating the receiving MTP turns individual effort into a coordinated response.</p>
+    </section>
+    <section>
+      <div class="sec-h">The blood sequence &amp; the safety steps that get skipped</div>
+      <p class="body-text">Whole blood replaces what is lost in physiologic proportion, but the procedure has <b class="k">safety steps that are easy to drop under pressure</b> and are therefore assigned explicitly to P2: a <b class="k">two-person unit verification</b> (catastrophic if wrong), <b class="k">warming</b> (cold blood worsens the coagulopathy it is meant to fix), and a <b class="k">normal-saline-only line</b> — LR or calcium in the same line clots citrated blood.<sup>2</sup> Resuscitation is titrated to <b class="k">permissive hypotension</b> (radial pulse / SBP ~90, higher with TBI) to avoid popping the clot, and crystalloid is minimized.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">The "with-blood" bundle — calcium, TXA, warmth</div>
+      <p class="body-text">Three adjuncts must travel with the blood and are the items most often forgotten by a busy two-person crew, so the card hard-codes them: <b class="k">calcium with the first unit</b> (citrate chelates ionized calcium, which is essential to clotting and cardiac function), <b class="k">TXA within 3 hours</b> (reduces death from bleeding; pediatric weight-based with a 1 g cap), and <b class="k">aggressive warming</b> of both patient and product to defeat the hypothermia corner of the lethal triad.<sup>2,3</sup> Treating the lethal diamond — coagulopathy, acidosis, hypothermia, hypocalcemia — is as important as the volume itself.</p>
+    </section>
+    <section>
+      <div class="sec-h">Reassess, account, and go</div>
+      <p class="body-text">After each unit the team reassesses perfusion (pulse, mentation, end-tidal CO₂) and watches for a transfusion reaction, while keeping a running tally of <b class="k">units, calcium doses, and the TXA time</b> to hand to the receiving trauma team — accurate accounting changes hospital decisions.<sup>2</sup> Above all, the card reinforces that <b class="k">blood is a bridge, not a destination</b>: the bleeding patient needs a surgeon, so the crew minimizes scene time and load-and-goes to the highest-level trauma center with the MTP activated. From the Keys, the rotor-wing is what makes that timeline survivable.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 3 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Cap AP, et al. (Joint Trauma System). <span style="color:var(--text-faint)">Damage Control Resuscitation — Clinical Practice Guideline. 2019.</span></li>
+          <li>Yazer MH, Spinella PC, et al. <span style="color:var(--text-faint)">THOR-AABB prehospital whole-blood recommendations. <em>Transfusion.</em> 2022.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/34669564">pubmed.ncbi.nlm.nih.gov/34669564</a></li>
+          <li>El-Menyar A, et al. <span style="color:var(--text-faint)">Shock index in trauma — early prediction of transfusion/mortality. <em>J Surg Res.</em></span> <a href="https://pubmed.ncbi.nlm.nih.gov/30401358">pubmed.ncbi.nlm.nih.gov/30401358</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Operational reference — doses per TS-HD-002; follow MCFR / Trauma Star protocol, blood-product SOP, and medical control.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

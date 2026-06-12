@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS RSI Crew">
+<meta name="theme-color" content="#0a0f1c">
+<title>Two-Person RSI Choreography — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--op:#f59e0b;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b45309,#f59e0b);color:#0a0f1c}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f59e0b)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .rstep{padding:11px 16px;border-top:1px solid var(--line)}.rstep:first-child{border-top:none}
+  .rstep .rn{font-weight:700;font-size:.88rem}
+  .role{display:flex;gap:8px;margin-top:6px}
+  .role .col{flex:1;font-size:.78rem;color:var(--text-dim);line-height:1.45;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .rb{display:inline-block;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-bottom:4px;color:#0a0f1c}
+  .rb.p1{background:#7dd3fc}.rb.p2{background:#86efac}
+  .dose{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.76rem;color:#0a0f1c;background:linear-gradient(135deg,#fcd34d,#f59e0b);padding:1px 6px;border-radius:5px;margin:2px 3px 0 0;white-space:nowrap}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .detail{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f59e0b)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--op);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Two-Person RSI Choreography</h1>
+      <div class="sub">RN + Medic · P1 airway / P2 resus</div>
+      <div class="cat">TS-OPS-003 · Sec 4 Operations &amp; Transport</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Assign &amp; brief first</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">P1 = Airway/Procedures lead</b> (head of bed, intubates, calls the plan). <b class="k">P2 = Resus</b> (access, drugs, monitor, times). Verbalize the plan + the failed-airway plan (cric: who cuts, who bags).</li>
+          <li><b class="k">Resuscitate BEFORE you intubate</b> — fix hypotension/hypoxia first; induction can arrest a shocked patient (TS-AW-001).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">① Resuscitate &amp; pre-oxygenate</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="rstep">
+          <div class="rn">Optimize the patient</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1</span> Pre-oxygenate (NRB + nasal cannula apneic O₂); position (ear-to-sternal-notch / ramp); assess for difficult airway (LEMON).</div>
+            <div class="col"><span class="rb p2">P2</span> <b class="k">Two</b> patent IV/IO; treat hypotension (push-dose epi/phenylephrine, blood — TS-HD-001/002); SpO₂/ETCO₂/NIBP/ECG on.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">② Prepare — gear, drugs, plan</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="rstep">
+          <div class="rn">Set up (out loud)</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1</span> Check laryngoscope/video, 2 tube sizes + stylet, bougie, suction (on, at HOB), BVM + PEEP, supraglottic + cric kit ready.</div>
+            <div class="col"><span class="rb p2">P2</span> Draw &amp; <b class="k">label</b>: induction + paralytic + <b class="k">post-intubation sedation/analgesia ready before the push</b>; vent set; pressor/blood at hand.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">③ Push &amp; intubate (closed-loop)</div>
+      <div class="block warn">
+        <div class="rstep">
+          <div class="rn">On P1's command</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1</span> "Push induction, then paralytic." Laryngoscopy at apnea/relaxation; intubate; inflate cuff. Verbalize view/attempt #.</div>
+            <div class="col"><span class="rb p2">P2</span> Induction: Ketamine <span class="dose">1–2 mg/kg</span> (<span class="dose">0.5–1 if shock</span>) → Rocuronium <span class="dose">1–1.2 mg/kg</span>. <b class="k">Read back each</b>; watch SpO₂, call "90%/85%" aloud; ready BVM rescue.</div>
+          </div>
+        </div>
+        <div class="item"><div class="detail"><b class="k">First-pass focus.</b> Desat → stop, BVM to recover, reattempt or escalate. <b class="k">≤ 2–3 attempts → supraglottic → surgical cric.</b></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">④ Confirm &amp; secure</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="rstep">
+          <div class="rn">Confirm placement</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1</span> <b class="k">Waveform EtCO₂</b> (gold standard) + bilateral sounds + chest rise; note depth; secure tube.</div>
+            <div class="col"><span class="rb p2">P2</span> Connect vent (lung-protective); confirm EtCO₂ trace; recheck BP (anticipate post-intubation hypotension → fluid/pressor).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">⑤ Post-intubation — NEVER paralyzed &amp; aware</div>
+      <div class="block warn">
+        <div class="rstep">
+          <div class="rn">Sedate / analgese immediately</div>
+          <div class="role">
+            <div class="col"><span class="rb p1">P1</span> Confirm sedation running before paralysis wears off; ongoing airway/vent watch; ETT depth secure for transport.</div>
+            <div class="col"><span class="rb p2">P2</span> Start analgesia + sedation (TS-AS-004): Fentanyl + Ketamine/Propofol/Midazolam; target RASS −1 to −5; document drugs/times.</div>
+          </div>
+        </div>
+        <div class="item"><div class="detail"><b class="k">Rocuronium outlasts a single induction dose</b> — sedation must be running before the patient could be awake. Re-dose paralytic only with deep sedation.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Indication, pre-ox/resus, drugs (dose/time), attempts/grade, EtCO₂ confirmation, ETT size/depth.</li>
+          <li>Post-intubation sedation, vent settings, BP response; rescue steps if used.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — the highest-risk thing two people do</div>
+      <p class="body-text">Prehospital RSI is the procedure with the least margin for error and the most simultaneous tasks, which makes it the prime candidate for a <b class="k">scripted two-person choreography</b>. By pre-assigning <b class="k">P1 (airway/procedures)</b> and <b class="k">P2 (resuscitation/drugs)</b>, the crew converts a chaotic flurry into a sequenced drill where the airway is never unwatched and no drug is pushed without a read-back.<sup>1,2</sup> The doses live in the airway protocol (TS-AW-001); this card is the <b class="k">teamwork layer</b> that makes them safe with only two providers.</p>
+    </section>
+    <section>
+      <div class="sec-h">Resuscitate before you intubate</div>
+      <p class="body-text">The most lethal RSI error is inducing a <b class="k">hypotensive or hypoxic</b> patient: induction agents blunt sympathetic tone and positive-pressure ventilation drops preload, so a marginal patient can arrest on the push.<sup>1,3</sup> The choreography therefore makes P2's first job <b class="k">optimizing physiology — two lines, correcting blood pressure (push-dose pressor/blood) and pre-oxygenation/apneic oxygenation — before any drug is drawn into the patient</b>. Ketamine is dose-reduced in shock, and a pressor/blood is staged for the predictable post-intubation hypotension.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Closed-loop drug administration &amp; first-pass success</div>
+      <p class="body-text">Every drug in the sequence is delivered by <b class="k">closed loop</b> — P1 names the drug and dose, P2 reads it back and confirms when in — which is the proven defense against the dose and wrong-drug errors that cluster around RSI.<sup>2,4</sup> P2 also serves as the <b class="k">dedicated monitor</b>, calling the saturation aloud so P1 isn't distracted from the larynx, and standing ready to bag-rescue. The whole drill is organized around <b class="k">first-pass success</b>: optimal positioning, the best device, a bougie, and a hard limit on attempts before escalating to a supraglottic airway and then a surgical cric — predeclared so the failed-airway plan is executed, not invented.<sup>1,2</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Confirmation &amp; the cardinal post-intubation rule</div>
+      <p class="body-text">Placement is confirmed with <b class="k">waveform capnography</b> (the gold standard) plus auscultation and chest rise, and the tube depth is secured for the vibration of transport.<sup>1</sup> The single most important post-intubation safety rule the choreography enforces is that <b class="k">analgesia and sedation are running before the paralytic could wear off</b> — rocuronium outlasts one dose of induction agent, and an awake-but-paralyzed patient is a catastrophic, preventable harm. P2 starts the post-intubation analgosedation regimen (TS-AS-004) immediately and documents it, while P1 keeps the airway and ventilator under continuous watch. Anticipating and treating post-intubation hypotension closes the loop.<sup>1,3</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 4 · reviewed Jun 2026</summary>
+        <ol>
+          <li>Brown CA, et al. <span style="color:var(--text-faint)">The Walls Manual of Emergency Airway Management — RSI, resuscitation before intubation, failed-airway algorithm. 6th ed.</span></li>
+          <li>Hicks CM, Petrosoniak A. <span style="color:var(--text-faint)">Teamwork &amp; closed-loop communication in trauma/airway resuscitation. <em>Emerg Med Clin North Am.</em> 2018;36:1–17.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/29132576">pubmed.ncbi.nlm.nih.gov/29132576</a></li>
+          <li>Heffner AC, et al. <span style="color:var(--text-faint)">Peri-intubation hypotension &amp; cardiac arrest. <em>Resuscitation.</em> 2013;84:1500–1504.</span> <a href="https://pubmed.ncbi.nlm.nih.gov/23911630">pubmed.ncbi.nlm.nih.gov/23911630</a></li>
+          <li>AHRQ TeamSTEPPS. <span style="color:var(--text-faint)">Closed-loop communication, role clarity, shared mental model.</span> <a href="https://www.ahrq.gov/teamstepps/">ahrq.gov/teamstepps</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">Operational reference — doses per TS-AW-001 / TS-AS-004; perform within scope &amp; MCFR / Trauma Star protocol and medical control.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
