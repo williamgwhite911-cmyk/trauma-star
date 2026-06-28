@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TS Divert">
+<meta name="theme-color" content="#0a0f1c">
+<title>Divert &amp; Destination Decisions — Trauma Star</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0f1c;--bg-soft:#0f1626;--card:#121b2e;--line:#21304c;--line-bright:#33476e;--text:#e6edf8;--text-dim:#9fb2cf;--text-faint:#5f7596;--blue:#38bdf8;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--red-bg:#2a1212;--red-line:#5b2330;--gold:#f59e0b;--op:#f59e0b;--mono:"IBM Plex Mono",ui-monospace,monospace;--body:"Outfit",system-ui,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .top{position:sticky;top:0;z-index:30;background:rgba(10,15,28,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .back{color:var(--text-dim);text-decoration:none;font-size:1.5rem;line-height:1;flex-shrink:0}
+  .top h1{font-size:1.02rem;font-weight:800;line-height:1.15}
+  .top .sub{font-family:var(--mono);font-size:.58rem;color:var(--text-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+  .top .cat{font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+  .draft-tag{display:inline-block;font-family:var(--mono);font-size:.5rem;font-weight:700;letter-spacing:.08em;color:#0a0f1c;background:var(--red);padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  .seg{display:flex;margin:12px 0 0;border:1px solid var(--line-bright);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg-soft);border:none;color:var(--text-dim);font-family:var(--body);font-weight:700;font-size:.82rem;padding:10px;cursor:pointer}
+  .seg button.on{background:linear-gradient(145deg,#b45309,#f59e0b);color:#0a0f1c}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom))}
+  section{margin-bottom:16px}
+  .sec-h{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin:0 2px 9px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 0;overflow:hidden;border-left:4px solid var(--c,#f59e0b)}
+  .block.warn{border-left-color:var(--red);background:var(--red-bg);border-color:var(--red-line)}
+  .rstep{padding:11px 16px;border-top:1px solid var(--line)}.rstep:first-child{border-top:none}
+  .rstep .rn{font-weight:700;font-size:.88rem}
+  .role{display:flex;gap:8px;margin-top:6px}
+  .role .col{flex:1;font-size:.78rem;color:var(--text-dim);line-height:1.45;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .rb{display:inline-block;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-bottom:4px;color:#0a0f1c}
+  .rb.p1{background:#7dd3fc}.rb.p2{background:#86efac}
+  .item{padding:11px 16px;border-top:1px solid var(--line)}.block.warn .item{border-top-color:var(--red-line)}.item:first-child{border-top:none}
+  .item .detail{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+  ul.bul{list-style:none;padding:6px 0}
+  ul.bul li{position:relative;padding:9px 16px 9px 34px;border-top:1px solid var(--line);font-size:.85rem;line-height:1.5}
+  ul.bul li:first-child{border-top:none}
+  ul.bul li::before{content:"";position:absolute;left:16px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--c,#f59e0b)}
+  .block.warn ul.bul li::before{background:var(--red)}.block.warn ul.bul li{border-top-color:var(--red-line)}
+  b.k{color:var(--text)}
+  p.body-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;padding:0 2px;margin-bottom:10px}
+  .tbl{width:100%;border-collapse:collapse;font-size:.76rem}
+  .tbl th,.tbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;color:var(--text-dim);line-height:1.4}
+  .tbl th{background:var(--bg-soft);color:var(--text);font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em}
+  details.refs{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.refs>summary{padding:13px 16px;cursor:pointer;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);list-style:none}
+  details.refs>summary::-webkit-details-marker{display:none}
+  details.refs ol{padding:4px 18px 14px 34px;margin:0}details.refs li{font-size:.74rem;color:var(--text-dim);line-height:1.55;margin:8px 0}
+  details.refs a{color:#7dd3fc;text-decoration:none;word-break:break-word}
+  sup{color:var(--op);font-weight:700;font-size:.7em}
+  .disc{margin-top:16px;font-size:.7rem;color:var(--text-faint);line-height:1.55;text-align:center;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-row">
+    <a class="back" href="protocols.html" aria-label="Back">‹</a>
+    <div>
+      <h1>Divert &amp; Destination Decisions<span class="draft-tag">DRAFT</span></h1>
+      <div class="sub">When to divert · closest appropriate facility · scene vs IFT</div>
+      <div class="cat">TS-OPS-006 · Sec 4 Operations &amp; Transport · pending MD approval</div>
+    </div>
+  </div>
+  <div class="seg">
+    <button id="tabCard" class="on" onclick="showView('card')">⚡ Quick Card</button>
+    <button id="tabBg" onclick="showView('bg')">📖 Background &amp; Evidence</button>
+  </div>
+</div>
+<div class="wrap">
+  <div id="cardView">
+
+    <section>
+      <div class="sec-h">Principle — default is CONTINUE</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li>Trauma Star exists to <b class="k">bypass community EDs</b> and deliver to definitive care. A stop at a community / critical-access ED is the <b class="k">exception</b>, not the reflex.</li>
+          <li><b class="k">Closest appropriate facility</b> = nearest hospital that can provide immediate airway, circulation, and emergency interventions — <b class="k">even if not a trauma or pediatric center</b>.</li>
+          <li><b class="k">Unstable or arresting → closest appropriate facility</b> for resuscitation, then secondary transfer. <b class="k">Maintained but sick → continue</b> to the specialty center.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Divert activation — any of these</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="item"><div class="detail"><b class="k">Patient:</b> worsening shock despite max therapy · respiratory failure / impending arrest unmanageable in flight · cardiac arrest / peri-arrest · rapid neuro decline (GCS fall, status, herniation) · any imminent decompensation if flight continues.</div></div>
+        <div class="item"><div class="detail"><b class="k">System:</b> original destination on trauma divert / internal disaster · loss of critical capability (CT, OR, ICU, blood, peds) · weather / airspace / mechanical making continued flight unsafe.</div></div>
+        <div class="item"><div class="detail"><b class="k">EMS may DECLINE a divert</b> and deliver anyway when the patient has an uncontrollable life threat and diverting further would increase morbidity/mortality.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Stabilization stop vs. continue</div>
+      <div class="block warn">
+        <div class="rstep">
+          <div class="rn">Stop at closest facility only if ALL THREE</div>
+          <ul class="bul" style="padding-top:4px">
+            <li><b class="k">1 ·</b> Immediate in-flight threat the crew <b class="k">cannot control</b> in the aircraft (failed airway / can't oxygenate-ventilate; sustained arrest needing ongoing CPR — a moving cabin is a poor compression platform).</li>
+            <li><b class="k">2 ·</b> The closest facility can <b class="k">plausibly fix or temporize</b> that specific problem (definitive/surgical airway, blood, decompression, code on a stable platform).</li>
+            <li><b class="k">3 ·</b> Incremental time to the specialty center is <b class="k">large</b> enough that continuing would reasonably cause death/arrest en route.</li>
+          </ul>
+        </div>
+        <div class="item"><div class="detail"><b class="k">Continue</b> when the patient is being maintained, when the threat is <b class="k">surgical bleeding</b> the closest ED can't operate on (stopping adds time without the fix), or when the time difference is <b class="k">small (≤ 10 min air)</b>.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Time thresholds (incremental AIR time, wheels-up → bedside)</div>
+      <div class="block" style="--c:#38bdf8">
+        <ul class="bul" style="--c:#38bdf8">
+          <li><b class="k">Small ≤ 10 min</b> — acceptable for a NOT-unstable patient; reaching definitive resources usually worth it.</li>
+          <li><b class="k">Large &gt; 10 min</b> (≈20 min presumptively large) — favors the closest appropriate facility when trajectory is uncertain/worsening.</li>
+          <li>Guidelines, not hard limits — weigh against actual trajectory and the crew's ability to hold ABC for the longer leg. <b class="k">Document any departure.</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Scene call vs. IFT</div>
+      <div class="block" style="--c:#f59e0b">
+        <div class="rstep">
+          <div class="role">
+            <div class="col"><span class="rb p1">SCENE</span> No sending facility — <b class="k">only forward options</b> (closest appropriate vs. continue). Broad standing-order autonomy under field triage; often before medical control is established.</div>
+            <div class="col"><span class="rb p2">IFT</span> <b class="k">Three options</b> — return to sender (early decline, sender can fix it) · continue to accepting · closest appropriate. <b class="k">Stabilize at sender FIRST</b> — don't fly the uncontrolled. Acceptance doesn't bind the crew.</div>
+          </div>
+        </div>
+        <div class="item"><div class="detail"><b class="k">IFT rule:</b> compare wheels-up-to-bedside time to (a) sending, (b) accepting, (c) closest appropriate — pick whichever delivers temporizing/definitive care fastest for the actual problem. Notify <b class="k">both</b> sending and accepting physicians on any divert.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Pediatric</div>
+      <div class="block" style="--c:#86efac">
+        <ul class="bul" style="--c:#86efac">
+          <li><b class="k">Arrest / peri-arrest → nearest hospital capable of pediatric resuscitation</b>, regardless of designation; secondary transfer after ROSC/stabilization.</li>
+          <li>Still-perfusing, peds expertise critical: small time difference &amp; child tolerating → <b class="k">Nicklaus</b>; large difference or worsening → closest appropriate, then transfer.</li>
+          <li>Community-ED delivery for a peds arrest is a <b class="k">resuscitation stop only</b> — start transfer to the designated pediatric center (<b class="k">Nicklaus Children's</b>) ASAP.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">LUCAS — adults only, NOT for kids</div>
+      <div class="block warn">
+        <ul class="bul">
+          <li><b class="k">Do NOT use LUCAS on infants/children.</b> Fit limits (LUCAS 3): chest height <b class="k">170–303 mm</b>, width ≤ 449 mm. A too-small patient triggers <b class="k">three fast beeps</b> and won't enter ACTIVE mode — do not defeat it.</li>
+          <li>Only a <b class="k">large adolescent with an adult-sized chest</b> who physically fits may be run as an adult. Otherwise <b class="k">manual PALS compressions</b>.</li>
+          <li>No mechanical-CPR option for a small child → effective compressions need a <b class="k">stable ground platform</b>, which <b class="k">favors diverting</b> a peds arrest to the nearest capable ED.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">No medical control available</div>
+      <div class="block" style="--c:#f59e0b">
+        <ul class="bul">
+          <li>If medical control can't be reached and there's an imminent threat to life, the crew may <b class="k">divert to the closest appropriate facility under standing orders</b> without prior physician approval.</li>
+          <li><b class="k">Document</b> every failed contact attempt (times/methods); state the divert was made under the "no medical control" provision; notify both facilities when comms return.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h">Documentation</div>
+      <div class="block" style="--c:#a855f7">
+        <ul class="bul" style="--c:#a855f7">
+          <li>Time &amp; reason for divert · patient condition before/after · medical-control involvement (or documented failure) · destination rationale.</li>
+          <li>Both sending &amp; receiving notified (IFT) · outcome at receiving facility. All diverts → QA/QI; "no medical control" cases flagged.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="bgView" class="hidden">
+    <section>
+      <div class="sec-h">Overview — divert is the exception</div>
+      <p class="body-text">An air medical program exists to <b class="k">collapse the time to definitive care</b> by bypassing community emergency departments, so the operating default for a Trauma Star patient is to <b class="k">continue to the planned specialty destination</b>.<sup>1,2</sup> A divert — changing destination en route or just before departure — is reserved for the situations where continuing the original plan is reasonably expected to harm the patient: an uncontrollable in-flight emergency, or a destination that can no longer safely receive or definitively treat the patient.<sup>3,4</sup> The governing idea throughout is the <b class="k">closest appropriate facility</b>: the nearest hospital that can deliver immediate resuscitation and stabilization, which for an unstable or arresting patient outranks an ideal but more distant specialty center.<sup>5,6</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Closest appropriate facility &amp; the time thresholds</div>
+      <p class="body-text">When divert criteria are met the crew weighs the patient's trajectory against the <b class="k">incremental transport time</b> — the additional wheels-up-to-bedside time to reach the specialty center instead of the nearest capable ED.<sup>5</sup> A <b class="k">small time difference (≤ 10 min by air)</b> is generally acceptable for a patient who is not unstable, so reaching definitive resources is usually worth it; a <b class="k">large time difference (&gt; 10 min)</b> shifts the balance toward the closest facility when the trajectory is uncertain or worsening.<sup>4,5</sup> These are decision aids, not hard limits: a deteriorating patient may warrant the closest ED even at a small difference, and a rock-stable patient may tolerate more — the crew documents the rationale whenever it departs from the threshold. The single most important judgment is captured by the <b class="k">stabilization-stop-vs-continue</b> rule: stop only when an in-flight threat is genuinely uncontrollable in the cabin, the nearest facility can actually fix or temporize that problem, and the time saved is large enough to matter; otherwise continue, because stopping at a hospital that cannot provide the needed intervention (e.g., a surgeon for torso hemorrhage) only adds time.<sup>3,5</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Scene calls vs. interfacility transfers</div>
+      <p class="body-text">The decision structure differs by mission type. On a <b class="k">scene call</b> there is no sending facility and no accepted plan: the crew works under standing orders and field trauma-triage criteria, frequently before online medical control is established, so divert authority is broad but the only choices are <b class="k">forward</b> — closest appropriate vs. continue.<sup>2,7</sup> On an <b class="k">interfacility transfer</b> the patient is already stabilized at a sending hospital and accepted by a receiving physician under an EMTALA-compliant transfer, which adds a third option: <b class="k">returning to the sending facility</b> when deterioration occurs early in transport and that facility can address the problem.<sup>4,8</sup> The IFT decision compares time to the sending, accepting, and closest-appropriate facilities and selects whichever delivers temporizing or definitive care fastest. Two IFT principles matter most: <b class="k">stabilize at the sending facility before launch</b> rather than flying an uncontrolled emergency, and recognize that a receiving physician's acceptance <b class="k">does not bind the crew</b> to fly past a closer life-saving option when the patient has an uncontrollable threat.<sup>4,8</sup> Any divert from an accepted plan is communicated to both the sending and accepting physicians and documented.</p>
+    </section>
+    <section>
+      <div class="sec-h">Pediatrics &amp; the LUCAS limitation</div>
+      <p class="body-text">Critically ill children magnify the closest-appropriate principle, because timely stabilization supersedes the ideal specialty destination when delay increases risk.<sup>9,10</sup> A child in <b class="k">cardiac arrest or peri-arrest is taken to the nearest hospital capable of pediatric resuscitation</b> regardless of trauma designation, with secondary transfer to the designated pediatric center (Nicklaus Children's) once return of spontaneous circulation or adequate stabilization is achieved; a still-perfusing child for whom pediatric expertise is critical may continue to the pediatric center when the time difference is small and the child tolerates it.<sup>9,11</sup> A decisive operational constraint is that <b class="k">mechanical CPR (LUCAS) is an adult-only device</b> governed by physical size limits, not age: the LUCAS 3 fits a chest height of 170–303 mm and self-rejects a patient who is too small, so <b class="k">it cannot be used on infants and small children</b>, for whom manual PALS compressions remain standard.<sup>12</sup> Because effective manual compressions are nearly impossible in a vibrating cabin and no mechanical option exists for a small child, a pediatric arrest <b class="k">favors diverting to the nearest capable ED for resuscitation on a stable platform</b> — only a large adolescent who physically fits the device can be managed with mechanical CPR and a continued flight.<sup>12</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Authority, no-medical-control, and review</div>
+      <p class="body-text">Any crew member may initiate an urgent divert request; the senior medical crew member makes the clinical destination decision when medical control cannot be reached, and the pilot-in-command retains final authority over aviation-safety diversions.<sup>13,7</sup> Air-medical medical-direction frameworks and regional destination protocols explicitly authorize crews to act under <b class="k">standing orders</b> when real-time medical control is unavailable, provided they document the failed-contact attempts and rationale — a provision built for the long over-water and remote legs of Keys operations.<sup>13,8</sup> Every divert is logged and reviewed by the program's QA/QI process, with all "no medical control" cases specifically flagged, so that destination decisions can be audited against the regional trauma system and crew education refined.<sup>14,4</sup> Florida sets the regulatory framework (Ch. 64J-1 air-ambulance and 64J-2 trauma-system rules), while the operative divert procedures are implemented at the county/regional and hospital level — this protocol is the Trauma Star expression of that framework.<sup>15</sup></p>
+    </section>
+    <section>
+      <div class="sec-h">Florida Keys destinations (planning-grade — verify)</div>
+      <table class="tbl">
+        <tr><th>Facility</th><th>Role for Trauma Star</th></tr>
+        <tr><td>Lower Keys Medical Center — Key West (MM 5)</td><td>Community ED — stabilization stop</td></tr>
+        <tr><td>Fishermen's Community Hospital — Marathon (MM 48)</td><td>Critical-access ED, trauma room, 2 ICU beds — stabilization stop</td></tr>
+        <tr><td>Mariners Hospital — Tavernier (MM 91)</td><td>Critical-access ED — stabilization stop</td></tr>
+        <tr><td>Jackson South — Palmetto Bay</td><td>Adult trauma destination</td></tr>
+        <tr><td>Ryder / JMH-Holtz — Miami</td><td>Designated adult/pediatric surgical trauma</td></tr>
+        <tr><td><b class="k">★ Nicklaus Children's — Miami</b></td><td><b class="k">Designated pediatric definitive center — default peds destination</b></td></tr>
+      </table>
+      <p class="body-text" style="margin-top:10px"><b class="k">Worked example.</b> Intubated child, Key West → Nicklaus; full arrest 15 min out (≈ overhead Marathon). <b class="k">Divert to Fishermen's:</b> arrest can't be effectively run in the cabin, the child is too small for LUCAS, Fishermen's can run a full PALS code, and incremental time to Nicklaus is large (~35–40 min). Airway is already secured, so a community ED is not a downgrade for the arrest. On ROSC → re-launch to Nicklaus.</p>
+    </section>
+    <section>
+      <div class="sec-h">Sources &amp; evidence (footnotes)</div>
+      <details class="refs" open>
+        <summary>Cited sources — 15 · reviewed Jun 2026 · DRAFT pending MD approval</summary>
+        <ol>
+          <li>American Academy of Pediatrics. <span style="color:var(--text-faint)">Guidelines for Air and Ground Transport of Neonatal and Pediatric Patients, 4th ed. 2015.</span></li>
+          <li>AAP / Committee on Hospital Care. <span style="color:var(--text-faint)">Guidelines for air and ground transportation of pediatric patients.</span></li>
+          <li>Brown JB, et al. <span style="color:var(--text-faint)">Evidence-based guideline for the air medical transportation of prehospital trauma patients — closest appropriate facility, minimize out-of-hospital time. <em>Prehosp Emerg Care.</em></span> <a href="https://www.bcm.edu/sites/default/files/2014/b4/air-transportation-prehospital-trauma-patients.pdf">bcm.edu</a></li>
+          <li>Minnesota Dept. of Health. <span style="color:var(--text-faint)">Sample Level 3 Trauma Diversion Policy — divert on saturation, frequent review, EMS may decline divert.</span> <a href="https://www.health.state.mn.us/facilities/traumasystem/documents/resource_manual/divert_guideline_l3.pdf">health.state.mn.us</a></li>
+          <li>Colorado DPHE. <span style="color:var(--text-faint)">6 CCR 1015-4-101 — Prehospital Care (triage algorithms, bypass/divert prioritizing patient interest).</span> <a href="https://www.law.cornell.edu/regulations/colorado/6-CCR-1015-4-101">law.cornell.edu</a></li>
+          <li>San Diego County EMS. <span style="color:var(--text-faint)">Emergency Department Ambulance Diversion (S-010) — don't honor divert for uncontrollable life threats; most accessible facility.</span> <a href="https://www.sandiegocounty.gov/content/dam/sdc/ems/Policies_Protocols/EMS_S-010.pdf">sandiegocounty.gov</a></li>
+          <li>Virginia DOH. <span style="color:var(--text-faint)">Guidelines for Air Medical Dispatch — unstable trauma/peds, expeditious movement to definitive care.</span> <a href="https://www.vdh.virginia.gov/content/uploads/sites/23/2017/04/ACEPGuidelinesForAirMedDisp.6.pdf">vdh.virginia.gov</a></li>
+          <li>NEMMCA. <span style="color:var(--text-faint)">Transport Destination and Diversion (8.3) — alternate destination on clinical judgment, document failed medical-control contact.</span> <a href="http://nemmca.com/images/_Protocols/08_System_Protocols/8.3_Transport_Desination_and_Diversion.pdf">nemmca.com</a></li>
+          <li>Dilli D, et al. <span style="color:var(--text-faint)">Neonatal and Pediatric Transport: A Contemporary Review. <em>Front Pediatr.</em> 2026.</span> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12939317/">pmc.ncbi.nlm.nih.gov</a></li>
+          <li>Chomoncik B, et al. <span style="color:var(--text-faint)">Initial Evaluation and Key Principles of the Critically-Ill Pediatric Patient. <em>Pediatr Emerg Care.</em></span> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5543523/">pmc.ncbi.nlm.nih.gov</a></li>
+          <li>Nascene D, et al. <span style="color:var(--text-faint)">Decision-Making in Pediatric Transport Team Dispatch Using Script Theory. <em>Pediatr Crit Care Med.</em></span> <a href="https://pubmed.ncbi.nlm.nih.gov/28922270/">pubmed.ncbi.nlm.nih.gov/28922270</a></li>
+          <li>Stryker. <span style="color:var(--text-faint)">LUCAS 3, v3.1 Chest Compression System — Instructions for Use (adult indication; chest height 170–303 mm; self-rejects too-small patients).</span> <a href="https://www.lucas-cpr.com/files/1757365_101034-00%20Rev%20G%20LUCAS%203%20IFU%20US_lowres.pdf">lucas-cpr.com</a></li>
+          <li>AAMS / AMPA. <span style="color:var(--text-faint)">Medical Direction &amp; Medical Control of Air Medical Services — standing orders when real-time control unavailable.</span> <a href="https://www.ampa.org/assets/docs/positionpapers/position_statements_med_control.pdf">ampa.org</a></li>
+          <li>ACS COT / AAST / Pediatric Trauma Society. <span style="color:var(--text-faint)">Trauma Protocols Repository — standardize care, track divert events, performance improvement.</span> <a href="https://www.facs.org/quality-programs/trauma/quality/pips/trauma-protocols-repository/">facs.org</a></li>
+          <li>Fla. Admin. Code R. 64J-1.005 (Air Ambulances) &amp; Ch. 64J-2 (Trauma System). <span style="color:var(--text-faint)">State framework; divert implemented regionally.</span> <a href="https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64J-1-005">law.cornell.edu</a></li>
+        </ol>
+      </details>
+    </section>
+  </div>
+
+  <div class="disc">DRAFT — pending Medical Director (Dr. Gandia) approval. Not for clinical use until approved. Perform within scope &amp; MCFR / Trauma Star protocol and medical control.</div>
+</div>
+<script>
+  function showView(v){const c=v==='card';document.getElementById('cardView').classList.toggle('hidden',!c);document.getElementById('bgView').classList.toggle('hidden',c);document.getElementById('tabCard').classList.toggle('on',c);document.getElementById('tabBg').classList.toggle('on',!c);window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
