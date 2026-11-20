@@ -336,7 +336,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r16";
+var BUILD = "2026-11-20 r17";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -567,12 +567,16 @@ The protocol gives these pressures and no ventilator setup steps.
    printed numbers, and the PDF opens at the same number, so p. 35 in the app is
    PDF page 35. The book runs to p. 144, and its formulary (pp. 137-143) is the
    short one the current formulary supersedes, so only protocol pages link here. */
-var BOOK = { file:"mcfr-protocols-2025-v42.pdf", last:136, name:"2025 MCFR Protocols V4.2" };
+/* Single-page extracts of the published book, book/p001.pdf .. book/p144.pdf.
+   last stays at 136: the book's pp. 137-143 are the OLD short formulary that the
+   current Medication Formulary supersedes, so nothing links a reader into them. */
+var BOOK = { dir:"book/", last:136, pages:144, name:"2025 MCFR Protocols V4.2" };
+function bookURL(p){ return BOOK.dir + "p" + ("00" + p).slice(-3) + ".pdf"; }
 var BOOKOK = null;
 function bookCheck(){
   if (BOOKOK !== null || location.protocol === "file:") return;
   BOOKOK = "checking";
-  fetch(BOOK.file, { method:"HEAD" }).then(function(r){
+  fetch(bookURL(1), { method:"HEAD" }).then(function(r){
     BOOKOK = !!r.ok; if (!r.ok) bookPaint();
   }).catch(function(){ BOOKOK = false; bookPaint(); });
 }
@@ -581,8 +585,8 @@ function bookPaint(){
   if (c && BOOKOK === false){
     c.className = "card warncard";
     c.innerHTML = '<h2>The book is not in this app yet</h2><p class="note">' + esc(BOOK.name) +
-      " has not been added to the site, so these buttons have nothing to open. Everything else is unaffected: the protocol text above is the book\u2019s, with its page numbers. Adding " +
-      esc(BOOK.file) + " to the repository makes the buttons work.</p>";
+      " has not been added to the site, so these buttons have nothing to open. Everything else is unaffected: the protocol text above is the book\u2019s, with its page numbers. Adding the " +
+      esc(BOOK.dir) + " pages to the repository makes the buttons work.</p>";
   }
 }
 function bookBtns(pages){
@@ -590,8 +594,8 @@ function bookBtns(pages){
   if (!ps.length) return "";
   if (BOOKOK === false) return '<section class="card warncard" id="bookcard"><h2>The book is not in this app yet</h2><p class="note">' + esc(BOOK.name) + " has not been added to the site, so there is nothing to open. The protocol text above is the book\u2019s, with its page numbers \u2014 this one is printed on p. " + ps.join(" and p. ") + ".</p></section>";
   return '<section class="card bookcard" id="bookcard"><h2>See it in the book</h2>' +
-    ps.map(function(p){ return '<a class="linkbtn" href="' + BOOK.file + '#page=' + p + '" target="_blank" rel="noopener">Open ' + BOOK.name + ' at p. ' + p + "</a>"; }).join("") +
-    '<p class="note">Opens the protocol book as published, at the page this protocol is printed on. Some PDF viewers, Safari on iPhone among them, ignore the page jump and open at the front \u2014 scroll to the page in the button if that happens. The book downloads once and is then kept on the device with the rest of the app.</p></section>';
+    ps.map(function(p){ return '<a class="linkbtn" href="' + bookURL(p) + '" target="_blank" rel="noopener">Open p. ' + p + " of the book</a>"; }).join("") +
+    '<p class="note">Opens that single page of the book as published \u2014 one page, not the whole volume, so it loads straight to what you want and no viewer can scroll you to the front instead. A page you have opened once is kept on the device and opens again without a signal.</p></section>';
 }
 var OBLINE = /pregnan|gestation|trimester|postpartum|obstetric|eclamps|fetal|fetus|uterine|tocolysis|active labor|preterm labor|perimortem/i;
 var PROTOS = [];
@@ -1227,7 +1231,7 @@ function autoMedCard(p){
       (r.body ? '<div class="medbody">' + rich(p.nodes, r.i, r.pop) + "</div>" : "") + "</div>";
   });
   h += '<div class="actfoot"><button type="button" class="linkbtn" data-quick="0">Full protocol text</button>' +
-    (p.pages.length && p.pages[0] <= BOOK.last ? '<a class="linkbtn" href="' + BOOK.file + "#page=" + p.pages[0] + '" target="_blank" rel="noopener">See it in the book, p. ' + p.pages[0] + "</a>" : "") +
+    (p.pages.length && p.pages[0] <= BOOK.last ? '<a class="linkbtn" href="' + bookURL(p.pages[0]) + '" target="_blank" rel="noopener">See it in the book, p. ' + p.pages[0] + "</a>" : "") +
     "</div></section>";
   return h;
 }
@@ -1241,7 +1245,7 @@ function actCard(p){
       (x.p ? '<span class="pgm">MCFR p. ' + esc(x.p) + "</span>" : x.ref ? '<span class="src ref">NOT IN PROTOCOL</span>' : "") + "</div>";
   }).join("");
   h += '<div class="actfoot"><button type="button" class="linkbtn" data-quick="0">Full protocol text</button>' +
-    (p.pages.length && p.pages[0] <= BOOK.last ? '<a class="linkbtn" href="' + BOOK.file + "#page=" + p.pages[0] + '" target="_blank" rel="noopener">See it in the book, p. ' + p.pages[0] + "</a>" : "") +
+    (p.pages.length && p.pages[0] <= BOOK.last ? '<a class="linkbtn" href="' + bookURL(p.pages[0]) + '" target="_blank" rel="noopener">See it in the book, p. ' + p.pages[0] + "</a>" : "") +
     "</div></section>";
   if (p.dest){
     h += '<section class="card"><h2>Where it goes</h2><div class="phones">' +
