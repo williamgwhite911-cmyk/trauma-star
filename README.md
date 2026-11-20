@@ -31,9 +31,25 @@ page, works offline, installs to a phone or iPad home screen.
   questions. It then flags what it heard — drugs, allergies, code status, drips,
   anticoagulants, last doses, labs, airway, access, weight — against a checklist
   of what a receiving crew needs. The transcript stays on the device.
+- **The book itself** — every protocol page carries a button that opens the
+  published *2025 MCFR Protocols V4.2* PDF at the page it is printed on. Page
+  numbers in this app are the book's own, and the PDF opens at the same number.
 - **Tools** — trauma alert and sepsis alert checks, pediatric minimum systolic
   BP, burn fluid rates, the phone numbers in the protocol, procedure pages, and
   transport distance and flight time between the bases and the hospitals.
+
+## The formulary pages
+
+Each medication card is the formulary page as written: Information, Indications
+with its Mechanism line, adult and pediatric dosage, administration
+considerations, contraindications, adverse effects and special considerations.
+33 of the 43 carry all of that; the other 10 have everything except the three
+narrative fields (Information, Mechanism, Adverse effects) and say so on the
+card.
+
+The published V4.2 book in this repository carries the *older* short formulary
+on its pp. 137–143, so the medication cards do not link into it. The protocol
+pages do.
 
 ## Where the pediatric colours come from
 
