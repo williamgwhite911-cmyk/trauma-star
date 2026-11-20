@@ -317,7 +317,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r13";
+var BUILD = "2026-11-20 r14";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1648,7 +1648,7 @@ function traumaItems(title){
 /* AIRVO 2 high-flow on the aircraft LOX. Oxygen drawn from the dewar is only the
    O2 bled into the AIRVO, not its total gas flow: the rest is entrained room air.
    Qo2 = Q x (FiO2 - 0.2095) / 0.7905 */
-var LOX = { cap:null, pct:100, flow:40, fio2:60, other:0, res:20, conv:860 };
+var LOX = { g:9, floor:4.5, lpp:1, flow:40, fio2:60, other:0, conv:860 };
 try { var lxv = JSON.parse(localStorage.getItem("mcfr-lox") || "null"); if (lxv) for (var lk in LOX) if (lk in lxv) LOX[lk] = lxv[lk]; } catch(e){}
 function loxSave(){ try { localStorage.setItem("mcfr-lox", JSON.stringify(LOX)); } catch(e){} }
 function o2Draw(flow, fio2){ var q = (flow || 0) * ((fio2/100) - 0.2095) / 0.7905; return q > 0 ? q : 0; }
@@ -1662,40 +1662,46 @@ function hhmm(min){
 function loxCard(){
   return '<section class="card"><h2>AIRVO on LOX — how long the oxygen lasts <span class="src ref">CALCULATOR, NOT IN PROTOCOL</span></h2>' +
     '<div class="grid">' +
-    '<div class="field"><label for="lx-cap">Dewar capacity (L liquid)</label><input id="lx-cap" inputmode="decimal" autocomplete="off" placeholder="liters" value="' + (LOX.cap != null ? fmt(LOX.cap) : "") + '"></div>' +
-    '<div class="field"><label for="lx-pct">Gauge (% full)</label><input id="lx-pct" inputmode="decimal" autocomplete="off" placeholder="%" value="' + (LOX.pct != null ? fmt(LOX.pct) : "") + '"></div>' +
+    '<div class="field"><label for="lx-g">Gauge now (9.00 full – 1.00)</label><input id="lx-g" inputmode="decimal" autocomplete="off" placeholder="9.00" value="' + (LOX.g != null ? fmt(LOX.g) : "") + '"></div>' +
+    '<div class="field"><label for="lx-floor">Near empty at</label><input id="lx-floor" inputmode="decimal" autocomplete="off" placeholder="4.50" value="' + (LOX.floor != null ? fmt(LOX.floor) : "") + '"></div>' +
     '<div class="field"><label for="lx-flow">AIRVO flow (L/min)</label><input id="lx-flow" inputmode="decimal" autocomplete="off" placeholder="10–60" value="' + (LOX.flow != null ? fmt(LOX.flow) : "") + '"></div>' +
     '<div class="field"><label for="lx-fio2">FiO2 (%)</label><input id="lx-fio2" inputmode="decimal" autocomplete="off" placeholder="21–100" value="' + (LOX.fio2 != null ? fmt(LOX.fio2) : "") + '"></div>' +
     '<div class="field"><label for="lx-other">Other O2 use (L/min)</label><input id="lx-other" inputmode="decimal" autocomplete="off" placeholder="vent, etc." value="' + (LOX.other ? fmt(LOX.other) : "") + '"></div>' +
-    '<div class="field"><label for="lx-res">Reserve to leave (%)</label><input id="lx-res" inputmode="decimal" autocomplete="off" placeholder="%" value="' + (LOX.res != null ? fmt(LOX.res) : "") + '"></div>' +
+    '<div class="field"><label for="lx-lpp">Liters of liquid per gauge point</label><input id="lx-lpp" inputmode="decimal" autocomplete="off" placeholder="1.0" value="' + (LOX.lpp != null ? fmt(LOX.lpp) : "") + '"></div>' +
     '</div><div id="lx-out"></div>' +
-    '<p class="note">The AIRVO entrains room air, so the dewar only gives up the oxygen fraction above room air: <b>O2 drawn = flow × (FiO2 − 21%) ÷ 79%</b>. At 1 L of liquid oxygen ≈ ' + LOX.conv + ' L of gas. ' +
-    'This does <b>not</b> account for the dewar’s normal evaporation loss, which continues whether or not anyone is breathing off it, nor for cooling the plumbing on a cold start, nor for what the ventilator and any other outlet take unless you type that in the Other box. ' +
-    'Confirm the capacity, the gauge and the actual O2 inlet on the AIRVO before you plan a flight around this number. AIRVO 2 takes a maximum of 60 L/min at its oxygen inlet, and a high FiO2 at a high flow may exceed what the aircraft can deliver. Not in the MCFR protocol.</p></section>';
+    '<p class="note">The gauge reads <b>9.00 full down to 1.00</b>, and <b>' + fmt(LOX.floor) + ' is near empty</b> — the clock below runs to that mark, not to zero. ' +
+    'The AIRVO entrains room air, so the dewar only gives up the oxygen fraction above room air: <b>O2 drawn = flow × (FiO2 − 21%) ÷ 79%</b>. One liter of liquid oxygen makes about ' + LOX.conv + ' liters of gas.</p>' +
+    '<p class="note"><b>Confirm the liters-per-gauge-point.</b> It is set to 1.0, which assumes the gauge reads liters of liquid. If the scale is something else, change that box once and it is saved. ' +
+    'This does not account for the dewar’s normal evaporation loss, which continues whether or not anyone is breathing off it, nor for a cold start, nor for the ventilator and any other outlet unless you type that in the Other box. ' +
+    'AIRVO 2 takes a maximum of 60 L/min at its oxygen inlet. Not in the MCFR protocol — it is a planning figure, and the gauge in flight is the real answer.</p></section>';
 }
 function loxOut(){
   var o = $("lx-out"); if (!o) return;
-  var cap = LOX.cap, pct = LOX.pct, flow = LOX.flow, f = LOX.fio2, res = LOX.res == null ? 0 : LOX.res, h = "";
-  if (!(cap > 0)) { o.innerHTML = '<div class="need">Enter the dewar’s liquid capacity in liters — it is stamped on the unit. It is saved for next time.</div>'; return; }
-  if (!(pct > 0)) { o.innerHTML = '<div class="need">Enter the gauge reading.</div>'; return; }
+  var g = LOX.g, fl = LOX.floor == null ? 0 : LOX.floor, lpp = LOX.lpp, flow = LOX.flow, f = LOX.fio2, h = "";
+  if (!(g >= 1 && g <= 9)) { o.innerHTML = '<div class="need">Read the gauge and enter it — the scale runs 9.00 down to 1.00.</div>'; return; }
+  if (!(lpp > 0)) { o.innerHTML = '<div class="need">Enter how many liters of liquid one gauge point is worth.</div>'; return; }
   if (!(f >= 21 && f <= 100)) { o.innerHTML = '<div class="need">FiO2 must be between 21 and 100%.</div>'; return; }
   if (!(flow > 0)) { o.innerHTML = '<div class="need">Enter the AIRVO flow in L/min.</div>'; return; }
-  var liq = cap * pct / 100, gas = liq * LOX.conv, usable = gas * (1 - (res > 0 ? res/100 : 0));
+  var pts = g - fl, liq = pts * lpp, gas = liq * LOX.conv;
   var draw = o2Draw(flow, f), tot = draw + (LOX.other || 0);
+  if (pts <= 0){
+    h += '<div class="n-w">Gauge ' + fmt(g) + ' is at or below the ' + fmt(fl) + ' near-empty mark. There is no usable oxygen to plan a transport on. Swap or top off before you launch.</div>';
+    o.innerHTML = h; return;
+  }
   h += '<div class="big">' +
     '<div class="tile"><div class="k">O2 drawn</div><div class="v">' + r1(draw) + ' <small>L/min</small></div></div>' +
-    '<div class="tile"><div class="k">Usable gas</div><div class="v">' + Math.round(usable).toLocaleString() + ' <small>L</small></div></div>' +
-    '<div class="tile hit"><div class="k">Time remaining</div><div class="v">' + hhmm(tot > 0 ? usable/tot : Infinity) + '</div></div>' +
+    '<div class="tile"><div class="k">Usable gas</div><div class="v">' + Math.round(gas).toLocaleString() + ' <small>L</small></div></div>' +
+    '<div class="tile hit"><div class="k">To ' + fmt(fl) + ' on the gauge</div><div class="v">' + hhmm(tot > 0 ? gas/tot : Infinity) + '</div></div>' +
     '</div>';
   if (flow > 60) h += '<div class="n-w">' + fmt(flow) + ' L/min is above the AIRVO 2 maximum of 60 L/min.</div>';
   if (draw > 60) h += '<div class="n-w">This setting needs ' + r1(draw) + ' L/min into the oxygen inlet. The AIRVO 2 inlet takes 60 L/min. You will not reach this FiO2 at this flow.</div>';
   if (LOX.other) h += '<p class="note">Total draw ' + r1(tot) + ' L/min: AIRVO ' + r1(draw) + ' plus ' + r1(LOX.other) + ' you entered.</p>';
-  h += '<table><thead><tr><th>FiO2 at ' + fmt(flow) + ' L/min</th><th>O2 draw</th><th>Lasts</th></tr></thead><tbody>' +
+  h += '<table><thead><tr><th>FiO2 at ' + fmt(flow) + ' L/min</th><th>O2 draw</th><th>To ' + fmt(fl) + '</th></tr></thead><tbody>' +
     [30,40,50,60,70,80,90,100].map(function(x){
       var dq = o2Draw(flow, x), tq = dq + (LOX.other || 0);
-      return '<tr class="' + (Math.round(f) === x ? "hit" : "") + '"><td>' + x + '%</td><td>' + r1(dq) + ' L/min</td><td>' + hhmm(tq > 0 ? usable/tq : Infinity) + "</td></tr>";
+      return '<tr class="' + (Math.round(f) === x ? "hit" : "") + '"><td>' + x + '%</td><td>' + r1(dq) + ' L/min</td><td>' + hhmm(tq > 0 ? gas/tq : Infinity) + "</td></tr>";
     }).join("") + "</tbody></table>";
-  h += '<p class="note">' + fmt(liq) + ' L liquid × ' + LOX.conv + ' = ' + Math.round(gas).toLocaleString() + ' L gas' + (res > 0 ? ', less a ' + fmt(res) + '% reserve' : ', with no reserve held back') + '. Reassess the gauge in flight — this is a planning figure, not a fuel gauge.</p>';
+  h += '<p class="note">Gauge ' + fmt(g) + ' − ' + fmt(fl) + ' = <b>' + r1(pts) + ' usable</b> × ' + fmt(lpp) + ' L = ' + r1(liq) + ' L liquid × ' + LOX.conv + ' = ' + Math.round(gas).toLocaleString() + ' L of gas. Check the gauge again in flight.</p>';
   o.innerHTML = h;
 }
 
@@ -2222,7 +2228,7 @@ document.addEventListener("input", function(ev){
   if (id === "dq"){ state.dq = t.value; return listDrips(); }
   if (id === "bp-i" || id === "bp-e"){ BP[id === "bp-i" ? "i" : "e"] = num(t.value); $("bp-out").innerHTML = bpOut(); return; }
   if (id.indexOf("lx-") === 0){
-    var lv = num(t.value), lkey = { "lx-cap":"cap", "lx-pct":"pct", "lx-flow":"flow", "lx-fio2":"fio2", "lx-other":"other", "lx-res":"res" }[id];
+    var lv = num(t.value), lkey = { "lx-g":"g", "lx-floor":"floor", "lx-lpp":"lpp", "lx-flow":"flow", "lx-fio2":"fio2", "lx-other":"other" }[id];
     if (lkey){ LOX[lkey] = lv; loxSave(); return loxOut(); }
   }
   if (id === "tx-kt"){ TX.kt = num(t.value) || 0; txSave(); return txOut(); }
