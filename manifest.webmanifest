@@ -1,0 +1,17 @@
+{
+  "name": "Trauma Star — MCFR Protocols",
+  "short_name": "Trauma Star",
+  "description": "Monroe County Fire Rescue EMS protocols, the current medication formulary, drip and pump setup, and flight crew tools. Unofficial reference.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#16324a",
+  "theme_color": "#16324a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

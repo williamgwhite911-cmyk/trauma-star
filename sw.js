@@ -1,6 +1,10 @@
-// Trauma Star launcher — offline cache
-const CACHE = 'trauma-star-v68';
-const ASSETS = ['./', './index.html', './protocols.html', './manual.html', './airway-ketamine.html', './ibw.html', './pressors.html', './peds.html', './wholeblood.html', './bends.html', './stroke-ischemic.html', './stroke-hemorrhagic.html', './stroke-undetermined.html', './seizures.html', './herniation.html', './cns-infection.html', './opioid-overdose.html', './cyanide.html', './tca-overdose.html', './envenomation.html', './transport-times.html', './ops-crew-crm.html', './ops-rsi-choreography.html', './ops-mtp.html', './ops-traumatic-arrest.html', './ops-divert.html', './ts-ops-006-divert-protocol.pdf', './ob-transport.html', './ob-antepartum-hemorrhage.html', './ob-pph.html', './ob-preterm-labor.html', './ob-preeclampsia.html', './ob-thyroid-storm.html', './ob-fetal-monitoring.html', './trauma-assessment.html', './trauma-tbi.html', './trauma-chest.html', './trauma-msk.html', './trauma-crush.html', './trauma-burns.html', './trauma-hypothermia.html', './trauma-gsw.html', './trauma-stab.html', './trauma-pwc.html', './trauma-mvc.html', './trauma-sharkbite.html', './trauma-chest-decompression.html', './hd-lvad.html', './hd-iabp.html', './hd-port.html', './hd-pericardiocentesis.html', './med-agitation.html', './med-acs.html', './med-chf.html', './med-anaphylaxis.html', './med-asthma.html', './med-glycemic.html', './med-hyperkalemia.html', './med-croup.html', './med-sepsis.html', './med-vascular.html', './med-nausea.html', './as-scales.html', './as-analgesia.html', './as-procedural.html', './as-post-intubation.html', './formulary-iv-acetaminophen.html', './drug-index.html', './manifest.json', './icon.svg'];
+/* Trauma Star — offline cache.
+   The whole app is index.html, so the install step caches that plus the icons
+   and the manifest. Bump CACHE on every deploy: the activate step deletes the
+   older caches, so a crew that opens the app after a deploy gets the new build. */
+const CACHE = 'trauma-star-2026-11-19-r1';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg',
+                './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -14,17 +18,17 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+/* Network first, cache as the fallback: a crew on the ground with signal gets the
+   current build, and the same app opens with no signal in the aircraft. */
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
-  // Cache-first for same-origin; network for everything else (e.g., the H&P builder link).
   let sameOrigin = false;
   try { sameOrigin = new URL(e.request.url).origin === self.location.origin; } catch (_) {}
   if (!sameOrigin) return;
   e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE).then((c) => c.put(e.request, copy));
+    fetch(e.request).then((res) => {
+      if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); }
       return res;
-    }).catch(() => cached))
+    }).catch(() => caches.match(e.request).then((cached) => cached || caches.match('./index.html')))
   );
 });
