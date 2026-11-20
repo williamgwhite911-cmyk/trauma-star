@@ -20,9 +20,48 @@ page, works offline, installs to a phone or iPad home screen.
   body weight, lung-protective tidal volume, i-gel and ET tube sizing, advanced
   airway and pain-management doses. Entering a weight calculates every per-kg
   dose in the app, honouring the maximums and minimums the protocol prints.
+- **Peds** — tap the colour your Broselow tape lands on, or an age, or enter a
+  measured weight, and every pediatric dose in the MCFR protocols is calculated
+  at once: arrest drugs, defibrillation and cardioversion energies, RSI,
+  analgesia, seizure, allergy, fluids, trauma, toxicology. A colour is a weight
+  band, so each dose comes back as a range across that band; a measured weight
+  gives a single number. Every row shows the per-kg dose and the page it is on.
+- **Report** — a microphone for the report you are *given* at the sending
+  facility. Record, and the phone writes it down while you listen and ask
+  questions. It then flags what it heard — drugs, allergies, code status, drips,
+  anticoagulants, last doses, labs, airway, access, weight — against a checklist
+  of what a receiving crew needs. The transcript stays on the device.
 - **Tools** — trauma alert and sepsis alert checks, pediatric minimum systolic
   BP, burn fluid rates, the phone numbers in the protocol, procedure pages, and
   transport distance and flight time between the bases and the hospitals.
+
+## Where the pediatric colours come from
+
+The MCFR book prints no colour/weight table. It names the Handtevy system once,
+for pediatric whole blood and TXA criteria (p. 120), and otherwise leaves the
+weight to the tape or to the Handtevy app.
+
+So the Peds tab does not try to be the tape. You read the colour off your tape;
+it gives you the **MCFR** dose for that weight. The colour bands are the
+published Broselow-Luten zones, marked `STANDARD REFERENCE` — confirm them
+against the tape you carry. The age chips are a rough weight-for-age estimate
+(about 2 × age + 8 kg), **not** the Handtevy table; Handtevy's weights are its
+own and live in the Handtevy Mobile app the service licenses. A measured weight
+beats both.
+
+No dose on that tab comes from the tape's printed doses or from Handtevy. Every
+one is a per-kg value printed in the MCFR protocols or formulary, multiplied by
+the weight, with the protocol's own maximums and minimums applied, and the page
+shown beside it.
+
+## The report microphone and patient information
+
+The transcript is held on the device and this app sends it nowhere. The speech
+recognition, though, is the phone's own: on iPhone and on Android the audio goes
+to Apple or Google to be turned into text. That is the platform, not this app,
+and it sits outside the county's agreements. Until the HIPAA arrangement with
+Monroe County is settled, keep names, dates of birth and record numbers out of
+it and clear the report at the end of the run. The app says so on the page.
 
 ## Patient types
 
