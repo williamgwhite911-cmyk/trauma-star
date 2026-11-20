@@ -125,7 +125,7 @@ GitHub Pages serves this directly from the repository root — no build step.
     index.html              the whole app
     manifest.webmanifest    install metadata
     sw.js                   offline cache
-    icon*.png, icon.svg     app icons
+    icon*.png              app icons (Trauma Star AW139)
 
 After pushing a change, **bump `CACHE` in `sw.js`**. The activate step deletes
 older caches, so a crew that opens the app after a deploy picks up the new
