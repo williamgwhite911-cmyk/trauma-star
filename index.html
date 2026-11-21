@@ -295,6 +295,8 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 .linkbtn.tiny{display:inline-block;width:auto;margin:0 0 0 6px;padding:5px 9px;font-size:12px}
 textarea.syn{width:100%;box-sizing:border-box;padding:8px;font-size:15px;line-height:1.35;
   border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);resize:vertical}
+.synread{margin:4px 0 10px;padding:12px;border-radius:10px;background:var(--surface2);
+  border-left:3px solid var(--accent);font-size:16px;line-height:1.45}
 </style>
 </head>
 <body>
@@ -341,7 +343,7 @@ textarea.syn{width:100%;box-sizing:border-box;padding:8px;font-size:15px;line-he
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r23";
+var BUILD = "2026-11-20 r24";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1001,6 +1003,10 @@ function viewPatient(){
     '<label class="linkbtn" for="idcam">Take a photo of the back of the card</label><input class="vh" id="idcam" type="file" accept="image/*" capture="environment">' +
     '<label class="linkbtn" for="idpick" style="color:var(--muted)">Choose a photo already taken</label><input class="vh" id="idpick" type="file" accept="image/*">' +
     '<div id="scanbox"></div>' +
+    '<h3>No barcode on the card?</h3>' +
+    '<label class="linkbtn" for="idfront" style="color:var(--muted)">Photograph the front instead</label><input class="vh" id="idfront" type="file" accept="image/*" capture="environment">' +
+    '<div id="frontbox"></div>' +
+    '<p class="note"><b>The front is a photograph, not a read.</b> Insurance cards, passports and older IDs carry no barcode, so the front photo is kept with the run\u2019s records for you to read off, and you type the details in yourself. Nothing on this phone reads text out of a picture and nothing is sent anywhere to have it read. The back barcode is the accurate route whenever the card has one: it carries the data as data, so there is no misreading a worn digit.</p>' +
     '<p class="note">Reads the wide striped barcode on the back of US and Canadian licenses and state IDs, then shows you what it found before anything is filled in. It takes name, date of birth, sex, height and, where the card carries it, weight. The license number and address are not kept. The photo is read on this phone, is not saved and is not sent anywhere. Name and date of birth are held only until you clear the patient or close the app.</p></section>';
   h += '<div id="calc"></div>';
   h += '<section class="card foot"><div><b>About this app.</b> Built from the Monroe County Fire Rescue EMS Protocols, 2025 Version (144-page file, V42). Protocol text is carried over as written, and the Medication Formulary pages are the current edition, ' + DATA.formulary.range + ' (one drug per page), which supersedes the short formulary on pp. 136–143 of the older V4(2) file. Items marked <span class="src ref">STANDARD REFERENCE</span> (ideal body weight, tidal volume, i-gel and ET tube sizing) are not in the MCFR protocol and come from general published references. The Procedures pages pair the protocol\u2019s own wording with standard reference steps. Trade names and the drip mixes marked <span class="src ref">NOT IN PROTOCOL</span> were also added and are editable starting points. Amber values are simple arithmetic on the weight you entered. This is an unofficial aid and does not replace the official protocol, medical direction or clinical judgment.</div><div>Build ' + BUILD + '. Works offline once installed to the home screen.</div></section>';
@@ -1884,6 +1890,8 @@ function dispText(){
   if (syn.length){
     out.push("");
     out.push("SYNOPSIS");
+    out.push(synText());
+    out.push("");
     syn.forEach(function(f){ out.push(f.l + ": " + DISP.syn[f.k]); });
   }
   if (P.kg != null) out.push("Weight: " + fmt(P.kg) + " kg");
@@ -1994,6 +2002,40 @@ var SYNF = [
   { k:"labs",  l:"Last labs and imaging",     ph:"the abnormal ones" },
   { k:"code",  l:"Code status and decision-maker", ph:"and who to call" }
 ];
+function synText(){
+  var bits = [], S = DISP.syn || {};
+  var a = (typeof SCAN !== "undefined" && SCAN && SCAN.dob) ? ageFrom(SCAN.dob) : null;
+  var who = [];
+  if (a) who.push(a.y >= 2 ? a.y + "-year-old" : (a.y * 12 + a.m) + "-month-old");
+  else if (P.ageY != null) who.push(P.ageY + "-year-old");
+  if (P.sex) who.push(P.sex === "F" ? "female" : "male");
+  if (P.kg != null) who.push(fmt(P.kg) + " kg");
+  if (P.type === "OB") who.push("obstetric");
+  var lead = who.length ? who.join(" ") : "Patient";
+  if (S.why) lead += ", " + S.why.replace(/\.$/, "");
+  else if (DISP.dx) lead += ", " + DISP.dx.replace(/\.$/, "");
+  var al = (typeof ALERTS !== "undefined" ? ALERTS : []).filter(function(x){ return DISP.alerts[x.k]; }).map(function(x){ return x.l; });
+  if (al.length) lead += " \u2014 " + al.join(" and ");
+  bits.push(lead + ".");
+  if (S.hx) bits.push("History: " + S.hx.replace(/\.$/, "") + ".");
+  bits.push("Allergies: " + (S.allerg ? S.allerg.replace(/\.$/, "") : "not recorded") + ".");
+  if (S.given) bits.push("Sending facility gave " + S.given.replace(/\.$/, "") + ".");
+  if (S.access) bits.push("Access: " + S.access.replace(/\.$/, "") + ".");
+  if (S.drips) bits.push("Running " + S.drips.replace(/\.$/, "") + ".");
+  if (S.labs) bits.push("Labs and imaging: " + S.labs.replace(/\.$/, "") + ".");
+  if (S.code) bits.push(S.code.replace(/\.$/, "") + ".");
+  var fr = DISP.call === "ift" && DISP.send ? site(DISP.send) : null, to = DISP.recv ? site(DISP.recv) : null;
+  if (fr || to) bits.push("Flying " + (fr ? fr.name + (DISP.unit ? " " + DISP.unit : "") : "scene") + (to ? " to " + to.name : "") + ".");
+  return bits.join(" ");
+}
+function synOut(){
+  var S = DISP.syn || {}, any = SYNF.some(function(f){ return S[f.k]; });
+  if (!any && !DISP.dx) return "";
+  return '<section class="card"><h2>Read this on handover</h2>' +
+    '<p class="synread">' + esc(synText()) + "</p>" +
+    '<button type="button" class="linkbtn" id="syn-copy">Copy the synopsis</button><span class="copied" id="syn-copied"></span>' +
+    '<p class="note">Built from what you entered above, the patient details and the two ends of the run. It is not read out of the attached records \u2014 nothing on this phone reads those, and nothing is sent anywhere to have them read.</p></section>';
+}
 function synCard(){
   return '<section class="card"><h2>Handoff synopsis</h2>' +
     SYNF.map(function(f){
@@ -2067,7 +2109,7 @@ function viewDispatch(){
     (P.kg != null ? '<p class="note">This is the same weight the Patient tab uses, so every per-kg dose in Protocols and Meds is calculated for it.</p>' : "") +
     "</section>";
 
-  h += recCard() + synCard();
+  h += recCard() + synCard() + synOut();
   h += dispProtos();
 
   /* ---- times ---- */
@@ -2115,12 +2157,12 @@ function dispDist(){
     '<div class="tile"><div class="k">Flight statute</div><div class="v">' + r1(L.sm) + ' <small>mi</small></div></div>' +
     '<div class="tile"><div class="k">Nautical</div><div class="v">' + r1(L.nm) + ' <small>NM</small></div></div>' +
     '<div class="tile hit"><div class="k">Flight time</div><div class="v">' + mins(Math.round(fmin)) + "</div></div>" +
-    '<div class="tile"><div class="k">Road miles</div><div class="v">' + (L.road ? r1(L.road) + ' <small>mi</small>' : "—") + "</div></div>" +
     '<div class="tile"><div class="k">Drive time</div><div class="v">' + (dmin != null ? mins(Math.round(dmin)) : "—") + "</div></div>" +
     "</div>" +
     '<div class="grid">' +
     '<div class="field"><label for="dp-kt">Cruise ground speed (kt)</label><input id="dp-kt" inputmode="decimal" autocomplete="off" value="' + kt + '"></div>' +
     '<div class="field"><label for="dp-road">Road miles</label><input id="dp-road" inputmode="decimal" autocomplete="off" placeholder="' + (roadEst(L.a, L.b) ? "about " + r1(roadEst(L.a, L.b)) : "enter miles") + '" value="' + esc(DISP.road) + '"></div>' +
+
     "</div>" +
     '<p class="note">Straight-line between helipad positions, so it leaves out start-up, lift-off, approach, wind and routing. Road miles are an approximation from US-1 mile markers; type the real figure when you know it. Drive time uses ' + mph + ' mph, set on the Tools tab.</p></section>';
 }
@@ -2703,6 +2745,20 @@ function go(h){ if (location.hash === "#" + h) route(); else location.hash = h; 
 var clearArmed = false, clearTimer = null;
 window.addEventListener("hashchange", route);
 document.addEventListener("change", function(ev){ var t = ev.target;
+  if (t.id === "idfront"){
+    var ff = t.files && t.files[0];
+    if (ff){
+      recAdd(ff, function(okd){
+        var fb = document.getElementById("frontbox");
+        if (fb) fb.innerHTML = okd
+          ? '<div class="need">Front of the card saved with this run\u2019s records, on the Dispatch tab. Read the details off it and type them in above.</div>'
+          : '<div class="need">This phone would not store the photo.</div>';
+        recPaint();
+      });
+    }
+    t.value = "";
+    return;
+  }
   if (t.id === "rec-f"){
     var fs = t.files ? [].slice.call(t.files) : [], left = fs.length;
     if (!left) return;
@@ -2771,6 +2827,11 @@ document.addEventListener("click", function(ev){
   }
   if (t.dataset.recdel){ recDel(+t.dataset.recdel, function(){ recPaint(); }); return; }
   if (t.id === "rec-wipe"){ recClear(function(){ recPaint(); }); return; }
+  if (t.id === "syn-copy"){
+    var sv = synText(), sc2 = $("syn-copied");
+    if (navigator.clipboard) navigator.clipboard.writeText(sv).then(function(){ if (sc2) sc2.textContent = "Copied."; }).catch(function(){ if (sc2) sc2.textContent = "Could not copy."; });
+    return;
+  }
   if (t.id === "dp-copy"){
     var dta = $("dp-ta"); if (!dta) return;
     dta.removeAttribute("readonly"); dta.select(); dta.setSelectionRange(0, 99999);
@@ -2837,7 +2898,13 @@ document.addEventListener("input", function(ev){
     return;
   }
   if (id === "dp-rider"){ DISP.rider = t.value; dispSave(); return dispTA(); }
-  if (id.indexOf("sy-") === 0){ DISP.syn[id.slice(3)] = t.value; dispSave(); return dispTA(); }
+  if (id.indexOf("sy-") === 0){
+    DISP.syn[id.slice(3)] = t.value; dispSave(); dispTA();
+    var sr = document.querySelector(".synread");
+    if (sr) sr.textContent = synText();
+    else { var sc = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sc; var f2 = $(id); if (f2){ f2.focus(); f2.setSelectionRange(f2.value.length, f2.value.length); } }
+    return;
+  }
   if (id === "dp-dx"){ DISP.dx = t.value; dispSave(); var sc0 = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sc0; var dxf = $("dp-dx"); if (dxf){ dxf.focus(); dxf.setSelectionRange(dxf.value.length, dxf.value.length); } return; }
   if (id === "dp-kg"){ P.kg = num(t.value) || null; save(); dispTA(); return; }
   if (id === "dp-kt"){ TX.kt = num(t.value) || 0; txSave(); var sc1 = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sc1; return; }
