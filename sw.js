@@ -2,7 +2,7 @@
    The whole app is index.html, so the install step caches that plus the icons
    and the manifest. Bump CACHE on every deploy: the activate step deletes the
    older caches, so a crew that opens the app after a deploy gets the new build. */
-const CACHE = 'trauma-star-2026-11-20-r48';
+const CACHE = 'trauma-star-2026-11-20-r49';
 /* The book pages and the reference pages are kept in their own cache, named for
    the book edition rather than the build, so shipping an app update does not
    throw away the 18 MB a crew already downloaded. */

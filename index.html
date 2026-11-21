@@ -429,7 +429,7 @@ body.pvopen{overflow:hidden}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r48";
+var BUILD = "2026-11-20 r49";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -3554,7 +3554,8 @@ var RADIO = ["Age and sex","Chief complaint","Current condition","Vital signs","
    reading at the start says nothing about what the patient sat in. */
 var FLF = [
   { k:"glu",  l:"Glucose", n:"glucose",            ph:"mg/dL" },
-  { k:"temp", l:"Patient temperature", ph:"\u00b0F or \u00b0C" },
+  { k:"temp",  l:"Patient temperature, first",  n:"first patient temperature",  ph:"\u00b0F or \u00b0C" },
+  { k:"temp2", l:"Patient temperature, second", n:"second patient temperature", ph:"\u00b0F or \u00b0C" },
   { k:"cab1", l:"Cabin temperature, first", n:"first cabin temperature",  ph:"\u00b0F" },
   { k:"cab2", l:"Cabin temperature, second", n:"second cabin temperature", ph:"\u00b0F" },
   { k:"alt",  l:"Cruise altitude", n:"cruise altitude",     ph:"ft" }
