@@ -336,7 +336,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r20";
+var BUILD = "2026-11-20 r21";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1052,13 +1052,17 @@ function calcCards(){
     "<li>Asthma: watch for auto-PEEP. If the blood pressure drops, disconnect and let the chest empty.</li></ul>" +
     '<button type="button" class="linkbtn" data-go="' + proto("Ventilatory Assistance").slug + '">Ventilatory Assistance protocol</button>' +
     '<button type="button" class="linkbtn" data-go="' + proto(adultDose() ? "Adult Advanced Airway" : "Pediatric Advanced Airway").slug + '">' + (adultDose() ? "Adult" : "Pediatric") + ' Advanced Airway</button></section>';
+  if (P.type === "P" && w){ h += equipCard(w, age(), ZONE ? ZONE.c : null) + vitalsCard(w, age()); }
+  else if (w){ h += vitalsCard(w, age()); }
   /* i-gel */
   h += '<section class="card"><h2>i-gel size <span class="src ref">STANDARD REFERENCE</span></h2>';
   var hits = w ? IGEL.filter(function(r){ return w >= r[3] && w <= r[4]; }) : [];
   if (hits.length) h += '<div class="big">' + hits.map(function(r){ return '<div class="tile"><div class="k">' + r[1] + '</div><div class="v">Size ' + r[0] + "</div></div>"; }).join("") + "</div>";
   else h += '<div class="need">' + (w ? "No i-gel size covers " + fmt(w) + " kg." : "Enter weight above to highlight the i-gel size.") + "</div>";
-  h += '<div class="tscroll"><table><thead><tr><th>Size</th><th>Patient</th><th>Weight</th><th>Max gastric tube (Fr)</th></tr></thead><tbody>' +
+  h += (hits.length ? '<details class="sizes"><summary>Every i-gel size</summary>' : "") +
+    '<div class="tscroll"><table><thead><tr><th>Size</th><th>Patient</th><th>Weight</th><th>Max gastric tube (Fr)</th></tr></thead><tbody>' +
     IGEL.map(function(r){ return '<tr class="' + (w && w >= r[3] && w <= r[4] ? "hit" : "") + '"><td>' + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td><td>" + r[5] + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+    (hits.length ? "</details>" : "") +
     '<p class="note">Manufacturer weight guide. Ranges overlap, so pick by weight and anatomy. Confirm against the package and your Handtevy or length-based system for children.</p>' +
     '<h3>From the MCFR protocol <span class="src mcfr">MCFR</span></h3><ul class="plain"><li>Supraglottic airway contraindications: caustic substance ingestion, airway burns, angioedema, drowning (p. 19).</li><li>Failed airway: reattempt ETT placement once, then insert i-gel. If unable to oxygenate or ventilate, use BVM, then surgical cricothyrotomy (pp. 97–98).</li></ul></section>';
   /* ETT */
@@ -1066,8 +1070,11 @@ function calcCards(){
   h += '<section class="card"><h2>ET tube size <span class="src ref">STANDARD REFERENCE</span></h2>';
   if (e.calc) h += '<div class="big"><div class="tile" style="flex-basis:100%"><div class="k">For this patient</div><div class="v" style="font-size:18px">' + e.calc + "</div></div></div>";
   else if (P.type === "P" && age() == null) h += '<div class="need">Enter the child’s age above to highlight a tube size.</div>';
-  h += '<div class="tscroll"><table><thead><tr><th>Patient</th><th>Tube size (mm ID)</th><th>Depth</th></tr></thead><tbody>' +
+  var ettKnown = !!e.calc || (P.type === "P" && w);
+  h += (ettKnown ? '<details class="sizes"><summary>Every tube size</summary>' : "") +
+    '<div class="tscroll"><table><thead><tr><th>Patient</th><th>Tube size (mm ID)</th><th>Depth</th></tr></thead><tbody>' +
     e.rows.map(function(r){ return '<tr class="' + (r[3] ? "hit" : "") + '"><td>' + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+    (ettKnown ? "</details>" : "") +
     '<p class="note">General sizing formulas (PALS and NRP conventions, common adult practice). Keep tubes 0.5 mm smaller and larger ready, and confirm children against your Handtevy or length-based system. The MCFR protocol does not list tube sizes.</p></section>';
   /* RSI */
   var ad = adultDose(), pr = proto(ad ? "Adult Advanced Airway" : "Pediatric Advanced Airway");
@@ -2250,6 +2257,100 @@ function zoneChip(z){
     '><span class="zc">' + z.c + '</span><span class="zk">' + z.lo + "–" + z.hi + " kg</span></button>";
 }
 
+/* Broselow-Luten zone equipment and PALS vital-sign norms.
+   STANDARD REFERENCE: none of this is printed in the MCFR protocol book.
+   Confirm every size against the tape and the kit actually on the aircraft. */
+var ZEQUIP = {
+  "Grey":   { ett:"3.0–3.5 uncuffed", blade:"Miller 0–1", igel:"1",   suct:"8 Fr",     ng:"5–8 Fr",   io:"15 mm", ct:"10–12 Fr", bvm:"Infant" },
+  "Pink":   { ett:"3.5 uncuffed",          blade:"Miller 1",       igel:"1.5", suct:"8 Fr",     ng:"8 Fr",          io:"15 mm", ct:"10–12 Fr", bvm:"Infant" },
+  "Red":    { ett:"3.5 uncuffed",          blade:"Miller 1",       igel:"1.5", suct:"8–10 Fr", ng:"8–10 Fr", io:"15 mm", ct:"12–16 Fr", bvm:"Infant" },
+  "Purple": { ett:"4.0 uncuffed",          blade:"Miller 1–2", igel:"2",  suct:"10 Fr",    ng:"10 Fr",         io:"15 mm", ct:"16–20 Fr", bvm:"Child" },
+  "Yellow": { ett:"4.5 uncuffed",          blade:"Miller 2",       igel:"2",   suct:"10 Fr",    ng:"10 Fr",         io:"15 mm", ct:"20–22 Fr", bvm:"Child" },
+  "White":  { ett:"5.0 uncuffed",          blade:"Miller 2",       igel:"2",   suct:"10 Fr",    ng:"12 Fr",         io:"15 mm", ct:"20–24 Fr", bvm:"Child" },
+  "Blue":   { ett:"5.5 uncuffed",          blade:"Mac 2",          igel:"2.5", suct:"10 Fr",    ng:"12 Fr",         io:"15 mm", ct:"24–28 Fr", bvm:"Child" },
+  "Orange": { ett:"6.0 cuffed",            blade:"Mac 2–3",   igel:"2.5", suct:"10 Fr",    ng:"14 Fr",         io:"15 mm", ct:"28–32 Fr", bvm:"Child" },
+  "Green":  { ett:"6.5 cuffed",            blade:"Mac 3",          igel:"3",   suct:"12 Fr",    ng:"14–18 Fr", io:"25 mm", ct:"32–38 Fr", bvm:"Adult" }
+};
+
+/* PALS normal ranges, awake. hypo = the SBP at or below which the child is
+   hypotensive. Chosen by age where an age is known, otherwise by weight. */
+var VITALS = [
+  { lbl:"Neonate",            maxY:0.08, kg:[0,4.5],   hr:"100–180", rr:"30–60", sbp:"60–90",   hypo:"under 60" },
+  { lbl:"Infant",             maxY:1,    kg:[4.5,10],  hr:"100–160", rr:"30–53", sbp:"70–100",  hypo:"under 70" },
+  { lbl:"Toddler, 1–2",  maxY:3,    kg:[10,14],   hr:"90–150",  rr:"22–37", sbp:"72–104",  hypo:"under 70 + 2 × age" },
+  { lbl:"Preschool, 3–5",maxY:6,    kg:[14,20],   hr:"80–140",  rr:"20–28", sbp:"76–112",  hypo:"under 70 + 2 × age" },
+  { lbl:"School age, 6–11", maxY:12, kg:[20,40],  hr:"70–120",  rr:"18–25", sbp:"84–120",  hypo:"under 70 + 2 × age, or under 90 over 10 yr" },
+  { lbl:"Adolescent, 12–15", maxY:16, kg:[40,70], hr:"60–100",  rr:"12–20", sbp:"94–140",  hypo:"under 90" },
+  { lbl:"Adult",              maxY:999,  kg:[70,999],  hr:"60–100",  rr:"12–20", sbp:"90–140",  hypo:"under 90" }
+];
+function vitalsFor(w, ageY){
+  if (ageY != null) { for (var i=0;i<VITALS.length;i++) if (ageY <= VITALS[i].maxY) return VITALS[i]; }
+  if (w == null) return null;
+  for (var j=0;j<VITALS.length;j++) if (w >= VITALS[j].kg[0] && w < VITALS[j].kg[1]) return VITALS[j];
+  return VITALS[VITALS.length-1];
+}
+function hypoSBP(ageY){
+  if (ageY == null) return null;
+  if (ageY < 0.083) return 60;
+  if (ageY < 1) return 70;
+  if (ageY <= 10) return Math.round(70 + 2*ageY);
+  return 90;
+}
+/* one patient, one set of sizes */
+function equipCard(w, ageY, zoneName){
+  if (w == null) return "";
+  var z = null;
+  if (zoneName && ZEQUIP[zoneName]){
+    /* only trust the named zone if this weight really falls in it */
+    for (var q=0;q<BROSELOW.length;q++)
+      if (BROSELOW[q].c === zoneName && w >= BROSELOW[q].lo && w <= BROSELOW[q].hi){ z = ZEQUIP[zoneName]; break; }
+    if (!z) zoneName = null;
+  }
+  if (!z){
+    for (var i=0;i<BROSELOW.length;i++) if (w >= BROSELOW[i].lo && w <= BROSELOW[i].hi){ z = ZEQUIP[BROSELOW[i].c]; zoneName = BROSELOW[i].c; break; }
+  }
+  var ig = IGEL.filter(function(r){ return w >= r[3] && w <= r[4]; });
+  var rows = [];
+  if (z){
+    rows.push(["ET tube", z.ett]);
+    rows.push(["Tube depth at the lip", (parseFloat(z.ett) * 3).toFixed(1).replace(/\.0$/, "") + " cm"]);
+    rows.push(["Laryngoscope blade", z.blade]);
+  }
+  rows.push(["i-gel", ig.length ? ig.map(function(r){ return "Size " + r[0]; }).join(" or ") : (z ? "Size " + z.igel : "—")]);
+  if (z){
+    rows.push(["Suction catheter", z.suct]);
+    rows.push(["NG / OG tube", z.ng]);
+    rows.push(["IO needle", z.io]);
+    rows.push(["Chest tube", z.ct]);
+    rows.push(["BVM", z.bvm]);
+  } else {
+    rows.push(["IO needle", w >= 40 ? "25 mm" : "15 mm"]);
+    rows.push(["BVM", "Adult"]);
+  }
+  rows.push(["Tidal volume 6–8 mL/kg", Math.round(w*6) + "–" + Math.round(w*8) + " mL"]);
+  rows.push(["Defibrillation", fmt(w*2) + " J first, then " + fmt(w*4) + " J"]);
+  rows.push(["Synchronized cardioversion", fmt(w*0.5) + "–" + fmt(w) + " J, then " + fmt(w*2) + " J"]);
+  rows.push(["Fluid bolus 20 mL/kg", Math.round(w*20) + " mL"]);
+  return '<section class="card"><h2>Sizes for this patient <span class="src ref">STANDARD REFERENCE</span></h2>' +
+    '<table><tbody>' + rows.map(function(r){ return "<tr><td>" + esc(r[0]) + '</td><td class="rt"><b>' + esc(r[1]) + "</b></td></tr>"; }).join("") + "</tbody></table>" +
+    '<p class="note">One set of sizes, for ' + fmt(w) + ' kg' + (zoneName ? ' (' + esc(zoneName) + ' zone)' : "") +
+    ' — not a table of every category. Broselow-Luten equipment conventions and PALS energy doses; <b>the MCFR book prints none of this</b>. Confirm against the tape and the kit on the aircraft. Keep a tube half a size either way within reach.</p></section>';
+}
+function vitalsCard(w, ageY){
+  var v = vitalsFor(w, ageY);
+  if (!v) return "";
+  var hs = hypoSBP(ageY);
+  return '<section class="card"><h2>Vital sign norms <span class="src ref">STANDARD REFERENCE</span></h2>' +
+    '<div class="big">' +
+    '<div class="tile"><div class="k">Heart rate</div><div class="v">' + v.hr + "</div></div>" +
+    '<div class="tile"><div class="k">Respiratory rate</div><div class="v">' + v.rr + "</div></div>" +
+    '<div class="tile"><div class="k">Systolic BP</div><div class="v">' + v.sbp + "</div></div>" +
+    '<div class="tile hit"><div class="k">Hypotensive at</div><div class="v">' + (hs != null ? "under " + hs : v.hypo) + "</div></div>" +
+    "</div>" +
+    '<p class="note">' + esc(v.lbl) + (ageY != null ? ", from the age entered" : ", from the weight") +
+    '. Awake, at rest; a sleeping child runs lower and a frightened or febrile one higher. PALS reference ranges — <b>not printed in the MCFR book</b>. The protocol’s own warning stands: a single episode of hypotension or hypoxia in a brain-injured patient may increase mortality (p. 117).</p></section>';
+}
+
 function viewPeds(){
   var w = zoneKg(), h = "";
 
@@ -2282,12 +2383,10 @@ function viewPeds(){
       : "A zone is a weight band, so each dose is a range across " + band + ". The per-kg dose and page are shown under each one. Enter a measured weight above for a single number.") +
     " Verify every dose before administration.</p></section>";
 
-  /* equipment, from the Patient tab's own calculations */
-  var e = ettRows(), ig = BROSELOW && w ? IGEL.filter(function(r){ return w.hi >= r[3] && w.lo <= r[4]; }) : [];
-  h += '<section class="card"><h2>Airway sizes <span class="src ref">STANDARD REFERENCE</span></h2><div class="big">' +
-    '<div class="tile"><div class="k">i-gel</div><div class="v">' + (ig.length ? ig.map(function(r){ return "Size " + r[0]; }).join(" / ") : "—") + "</div></div>" +
-    '<div class="tile"><div class="k">Tidal volume 6–8 mL/kg</div><div class="v">' + Math.round(w.lo*6) + "–" + Math.round(w.hi*8) + ' <small>mL</small></div></div></div>' +
-    '<p class="note">Tube sizing is age-based, so it is on the Patient tab once an age is entered. Confirm sizes against your tape.</p></section>';
+  /* one patient, one set of sizes and one set of norms */
+  var mid = w.exact ? w.lo : Math.round(((w.lo + w.hi) / 2) * 10) / 10;
+  h += equipCard(mid, age(), ZONE && ZONE.hex ? ZONE.c : null);
+  h += vitalsCard(mid, age());
 
   PEDSHEET.forEach(function(gp){
     h += '<section class="card"><h2>' + esc(gp.g) + (gp.j ? ' <span class="src mcfr">MCFR</span>' : "") + "</h2>" +
