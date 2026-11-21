@@ -208,6 +208,9 @@ nav button svg{width:20px;height:20px}
   #printout .pfoot{margin-top:18px;font-size:10px;color:#444}
 }
 .hitt{margin-left:6px;opacity:.65;font-variant-numeric:tabular-nums;font-size:11px}
+.ubtn.norm{border-style:dashed}
+.ubtn.norm[aria-pressed="true"]{border-style:solid}
+details.vent.sub{margin-top:6px;padding-left:2px}
 .ubtn.sm{font-size:13px;padding:7px 9px}
 .vtab input.vcell{width:100%;min-width:52px;font-size:15px;padding:7px 6px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink)}
 .vtab th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
@@ -429,7 +432,7 @@ body.pvopen{overflow:hidden}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r49";
+var BUILD = "2026-11-21 r50";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -3490,20 +3493,25 @@ function shotCard(){
    phone does not lose what was tapped. */
 var CAL = ["Abrasion", "Contusion", "Laceration"];
 var PUPIL = ["1","2","3","4","5","6","7","8","Reactive","Sluggish","Fixed"];
+/* A pupil has one size and one response. Tapping 4 after 3 should mean the
+   crew changed their mind, not that the pupil is both. Each inner list is a
+   group where only one can stand at a time; anything not in a group stays
+   multi-select, because a chest really can be both flail and crepitant. */
+var PUPEX = [["1","2","3","4","5","6","7","8"], ["Reactive","Sluggish","Fixed"]];
 var ASSESS = [
-  { k:"head",  l:"Head",   o:["Atraumatic"].concat(CAL, ["Hematoma","Depression","Battle\u2019s sign","Raccoon eyes"]) },
-  { k:"pupR",  l:"Right pupil (mm)", o:PUPIL },
-  { k:"pupL",  l:"Left pupil (mm)",  o:PUPIL },
-  { k:"mouth", l:"Mouth, nose and face", o:["Clear","Blood","Vomit","Packing","Loose teeth"].concat(CAL) },
-  { k:"neck",  l:"Neck",   o:["Trachea midline","Trachea deviated","JVD","No JVD","Collar on","Subcutaneous air"] },
-  { k:"chest", l:"Chest",  o:["Equal rise and fall","Unequal rise","Paradoxical","Flail","Crepitus on palpation"].concat(CAL, ["Wound sealed","Decompressed","Pacemaker","ICD","Port"]) },
-  { k:"lungR", l:"Lung sounds, right", o:["Clear","Diminished","Absent","Wheezes","Crackles","Rhonchi","Not assessed"] },
-  { k:"lungL", l:"Lung sounds, left",  o:["Clear","Diminished","Absent","Wheezes","Crackles","Rhonchi","Not assessed"] },
-  { k:"heart", l:"Heart sounds", o:["Not listened to","Normal S1 S2","Muffled","Murmur","Irregular"] },
-  { k:"abd",   l:"Abdomen", o:["Soft","Distended","Rigid","Tender","Surgical","Not examined"] },
-  { k:"limbs", l:"Pelvis and limbs", o:["Pelvis stable","Binder on","Splinted","Traction splint","Distal pulses present","Distal pulses absent","Deformity"] },
-  { k:"circ",  l:"Pulses and skin", o:["Radial present","Radial absent","Carotid only","Regular","Irregular","Warm","Cool","Pale","Mottled","Diaphoretic","Bleeding controlled"] },
-  { k:"back",  l:"Back and skin", o:["Log-rolled","Intact","Wounds noted","Pressure areas","Not examined"] },
+  { k:"head",  l:"Head",   norm:["Atraumatic"], o:["Atraumatic"].concat(CAL, ["Hematoma","Depression","Battle\u2019s sign","Raccoon eyes"]) },
+  { k:"pupR",  l:"Right pupil (mm)", ex:PUPEX, norm:["Reactive"], o:PUPIL },
+  { k:"pupL",  l:"Left pupil (mm)",  ex:PUPEX, norm:["Reactive"], o:PUPIL },
+  { k:"mouth", l:"Mouth, nose and face", norm:["Clear"], o:["Clear","Blood","Vomit","Packing","Loose teeth"].concat(CAL) },
+  { k:"neck",  l:"Neck",   norm:["Trachea midline","No JVD"], ex:[["Trachea midline","Trachea deviated"],["JVD","No JVD"]], o:["Trachea midline","Trachea deviated","JVD","No JVD","Collar on","Subcutaneous air"] },
+  { k:"chest", l:"Chest",  norm:["Equal rise and fall"], ex:[["Equal rise and fall","Unequal rise"]], o:["Equal rise and fall","Unequal rise","Paradoxical","Flail","Crepitus on palpation"].concat(CAL, ["Wound sealed","Decompressed","Pacemaker","ICD","Port"]) },
+  { k:"lungR", l:"Lung sounds, right", norm:["Clear"], ex:[["Clear","Diminished","Absent"]], o:["Clear","Diminished","Absent","Wheezes","Crackles","Rhonchi","Not assessed"] },
+  { k:"lungL", l:"Lung sounds, left",  norm:["Clear"], ex:[["Clear","Diminished","Absent"]], o:["Clear","Diminished","Absent","Wheezes","Crackles","Rhonchi","Not assessed"] },
+  { k:"heart", l:"Heart sounds", norm:["Normal S1 S2"], ex:[["Not listened to","Normal S1 S2","Muffled"]], o:["Not listened to","Normal S1 S2","Muffled","Murmur","Irregular"] },
+  { k:"abd",   l:"Abdomen", norm:["Soft"], ex:[["Soft","Rigid"]], o:["Soft","Distended","Rigid","Tender","Surgical","Not examined"] },
+  { k:"limbs", l:"Pelvis and limbs", norm:["Pelvis stable","Distal pulses present"], ex:[["Distal pulses present","Distal pulses absent"]], o:["Pelvis stable","Binder on","Splinted","Traction splint","Distal pulses present","Distal pulses absent","Deformity"] },
+  { k:"circ",  l:"Pulses and skin", norm:["Radial present","Regular","Warm"], ex:[["Radial present","Radial absent","Carotid only"],["Regular","Irregular"],["Warm","Cool"]], o:["Radial present","Radial absent","Carotid only","Regular","Irregular","Warm","Cool","Pale","Mottled","Diaphoretic","Bleeding controlled"] },
+  { k:"back",  l:"Back and skin", norm:["Intact"], ex:[["Intact","Wounds noted"]], o:["Log-rolled","Intact","Wounds noted","Pressure areas","Not examined"] },
   { k:"tubes", l:"Tubes and drains", o:["ET tube","Trach","NG","OG","Foley","Chest tube right","Chest tube left","Surgical drain","Pacer wires","EVD"] }
 ];
 var VITF = [
@@ -3520,24 +3528,50 @@ function asOn(k, v, sc){ return (asStore(sc)[k] || []).indexOf(v) >= 0; }
 /* "Not assessed" and a finding cannot both be true, so they push each other
    out: a row that said Not assessed and Clear would be worse than blank. */
 var NOTDONE = ["Not assessed", "Not listened to", "Not examined"];
+function assessRow(k){ for (var i = 0; i < ASSESS.length; i++) if (ASSESS[i].k === k) return ASSESS[i]; return null; }
+/* the group v belongs to, if it is one of the one-at-a-time sets */
+function exGroup(k, v){
+  var g = assessRow(k);
+  if (!g || !g.ex) return null;
+  for (var i = 0; i < g.ex.length; i++) if (g.ex[i].indexOf(v) >= 0) return g.ex[i];
+  return null;
+}
 function asToggle(k, v, sc){
   var st = asStore(sc), a = st[k] || (st[k] = []), i = a.indexOf(v);
   if (i >= 0) a.splice(i, 1);
   else if (NOTDONE.indexOf(v) >= 0) a = st[k] = [v];
   else {
-    a = st[k] = a.filter(function(x){ return NOTDONE.indexOf(x) < 0; });
+    var ex = exGroup(k, v);
+    a = st[k] = a.filter(function(x){
+      if (NOTDONE.indexOf(x) >= 0) return false;      /* a finding undoes "not assessed" */
+      if (ex && ex.indexOf(x) >= 0) return false;      /* one size, one response, one rhythm */
+      return true;
+    });
     a.push(v);
   }
   if (!a.length) delete st[k];
 }
-function chipRows(sc){
-  return ASSESS.map(function(g){
+/* "No abnormality" is the normal finding written in, not a blank row: the
+   record should say the chest rose equally, not that nobody looked. */
+function asNormal(k, sc){
+  var g = assessRow(k);
+  if (!g || !g.norm) return;
+  asStore(sc)[k] = g.norm.slice();
+}
+function chipRow(g, sc){
+    var normOn = g.norm && g.norm.length &&
+      g.norm.every(function(v){ return asOn(g.k, v, sc); }) &&
+      (asStore(sc)[g.k] || []).length === g.norm.length;
     return "<h3>" + esc(g.l) + '</h3><div class="zrow unit">' +
+      (g.norm ? '<button type="button" class="ubtn norm" data-nab="' + esc(g.k) + '"' +
+        (sc ? ' data-sc="' + sc + '"' : "") + ' aria-pressed="' + normOn + '">No abnormality</button>' : "") +
       g.o.map(function(o){
         return '<button type="button" class="ubtn" data-as="' + esc(g.k) + '" data-asv="' + esc(o) + '"' +
           (sc ? ' data-sc="' + sc + '"' : "") + ' aria-pressed="' + asOn(g.k, o, sc) + '">' + esc(o) + "</button>";
       }).join("") + "</div>";
-  }).join("");
+}
+function chipRows(sc){
+  return ASSESS.map(function(g){ return chipRow(g, sc); }).join("");
 }
 
 /* ---------- In flight ----------
@@ -3712,8 +3746,18 @@ function narrText(){
   if (p2) out += p2.trim() + "\n\n";
 
   /* what was found */
-  var fnd = ASSESS.filter(function(g){ return (DISP.as[g.k] || []).length; })
-    .map(function(g){ return g.l.toLowerCase() + " " + DISP.as[g.k].join(", "); });
+  /* "lung sounds bilaterally clear" is how it would be said out loud, so say
+     it that way when both sides match */
+  var bilat = (DISP.as.lungR || []).length && (DISP.as.lungL || []).length &&
+    DISP.as.lungR.join("|") === DISP.as.lungL.join("|");
+  var fnd = ASSESS.filter(function(g){
+      if (bilat && g.k === "lungL") return false;
+      return (DISP.as[g.k] || []).length;
+    })
+    .map(function(g){
+      if (bilat && g.k === "lungR") return "lung sounds bilaterally " + DISP.as.lungR.join(", ").toLowerCase() + " and equal";
+      return g.l.toLowerCase() + " " + DISP.as[g.k].join(", ");
+    });
   var p3 = "";
   if (fnd.length) p3 += "On examination: " + fnd.join("; ") + ". ";
   if (DISP.asf.ett) p3 += "Endotracheal tube " + DISP.asf.ett +
@@ -3973,9 +4017,12 @@ function flightCard(){
     '<p class="note">Tap <b>Now</b> as each goes on.</p>' +
     '<h3>Radio call</h3>' +
     legRows([LEGS[legIndex("radio")], LEGS[legIndex("rad10")]]) +
-    '<h3>Passed to the receiving facility</h3><div class="zrow unit">' +
+    '<details class="vent sub"' + (foldOpen("rad", (DISP.fl.rad || []).length) ? " open" : "") + ' data-fold="rad">' +
+    '<summary><b>Passed to the receiving facility</b>' +
+    ((DISP.fl.rad || []).length ? ' \u2014 ' + DISP.fl.rad.length + " of " + RADIO.length : "") + "</summary>" +
+    '<div class="zrow unit">' +
     RADIO.map(function(x){
-      return '<button type="button" class="ubtn" data-rad="' + esc(x) + '" aria-pressed="' + ((DISP.fl.rad || []).indexOf(x) >= 0) + '">' + esc(x) + "</button>"; }).join("") + "</div>" +
+      return '<button type="button" class="ubtn" data-rad="' + esc(x) + '" aria-pressed="' + ((DISP.fl.rad || []).indexOf(x) >= 0) + '">' + esc(x) + "</button>"; }).join("") + "</div></details>" +
     '<div class="grid">' + FLF.map(function(f){
       return '<div class="field"><label for="fl-' + f.k + '">' + f.l + '</label><input id="fl-' + f.k + '" data-fl="' + f.k + '" inputmode="text" autocomplete="off" placeholder="' + esc(f.ph) + '" value="' + esc(DISP.fl[f.k] || "") + '"></div>';
     }).join("") + "</div>" +
@@ -4006,12 +4053,9 @@ function isTubed(){
 function assessCard(){
   var tubed = isTubed();
   var h = '<section class="card"><h2>Head to toe</h2>' +
-    '<p class="note">Worked in order, head down. Tap what you see; a row takes as many taps as you need, and tapping again clears it. Heart sounds carry a <b>Not listened to</b> option, because not everyone does. It all prints in the dispatch log.</p>';
+    '<p class="note">Worked in order, head down. <b>No abnormality</b> fills in the normal finding for that region; otherwise tap what you see. Size, rhythm and the like take one answer, everything else takes as many as apply, and tapping again clears it. It all prints in the dispatch log.</p>';
   ASSESS.forEach(function(g){
-    h += "<h3>" + esc(g.l) + '</h3><div class="zrow unit">' +
-      g.o.map(function(o){
-        return '<button type="button" class="ubtn" data-as="' + esc(g.k) + '" data-asv="' + esc(o) + '" aria-pressed="' + asOn(g.k, o) + '">' + esc(o) + "</button>";
-      }).join("") + "</div>";
+    h += chipRow(g, "");
     if (g.k === "tubes" && tubed){
       h += '<div class="grid">' +
         '<div class="field"><label for="as-ett">Tube size</label><input id="as-ett" inputmode="decimal" autocomplete="off" placeholder="e.g. 7.5" value="' + esc(DISP.asf.ett || "") + '"></div>' +
@@ -4264,6 +4308,16 @@ document.addEventListener("click", function(ev){
   if (t.dataset.vm){
     DISP.vent.mode = DISP.vent.mode === t.dataset.vm ? "" : t.dataset.vm; dispSave();
     var scv2 = $("main").scrollTop; viewContact(); $("main").scrollTop = scv2;
+    return;
+  }
+  if (t.dataset.nab){
+    var nk = t.dataset.nab, nsc = t.dataset.sc, nst = asStore(nsc), ng = assessRow(nk);
+    /* tapping it again takes it back off, so it is not a one-way door */
+    var isOn = ng && ng.norm && ng.norm.every(function(v){ return asOn(nk, v, nsc); }) &&
+      (nst[nk] || []).length === ng.norm.length;
+    if (isOn) delete nst[nk]; else asNormal(nk, nsc);
+    dispSave();
+    var scn2 = $("main").scrollTop; viewContact(); $("main").scrollTop = scn2;
     return;
   }
   if (t.dataset.as){
