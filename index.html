@@ -336,7 +336,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r21";
+var BUILD = "2026-11-20 r22";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -2333,7 +2333,8 @@ function equipCard(w, ageY, zoneName){
   rows.push(["Fluid bolus 20 mL/kg", Math.round(w*20) + " mL"]);
   return '<section class="card"><h2>Sizes for this patient <span class="src ref">STANDARD REFERENCE</span></h2>' +
     '<table><tbody>' + rows.map(function(r){ return "<tr><td>" + esc(r[0]) + '</td><td class="rt"><b>' + esc(r[1]) + "</b></td></tr>"; }).join("") + "</tbody></table>" +
-    '<p class="note">One set of sizes, for ' + fmt(w) + ' kg' + (zoneName ? ' (' + esc(zoneName) + ' zone)' : "") +
+    '<p class="note">One set of sizes, for ' + fmt(w) + ' kg' +
+    (zoneName ? ' \u2014 the middle of the ' + esc(zoneName) + ' band, which is what the joules, tidal volume and bolus below are worked out from. The tube, blade, i-gel, suction, IO and chest tube are the band\u2019s own sizes, not arithmetic' : "") +
     ' — not a table of every category. Broselow-Luten equipment conventions and PALS energy doses; <b>the MCFR book prints none of this</b>. Confirm against the tape and the kit on the aircraft. Keep a tube half a size either way within reach.</p></section>';
 }
 function vitalsCard(w, ageY){
