@@ -2,7 +2,7 @@
    The whole app is index.html, so the install step caches that plus the icons
    and the manifest. Bump CACHE on every deploy: the activate step deletes the
    older caches, so a crew that opens the app after a deploy gets the new build. */
-const CACHE = 'trauma-star-2026-11-20-r25';
+const CACHE = 'trauma-star-2026-11-20-r26';
 const ASSETS = ['./', './index.html', './manifest.webmanifest',
                 './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
