@@ -19,10 +19,14 @@ page, works offline, installs to a phone or iPad home screen.
 - **Patient** — Adult / Pediatric / OB, weight and height in either unit, ideal
   body weight, lung-protective tidal volume, i-gel and ET tube sizing, advanced
   airway and pain-management doses. Entering a weight calculates every per-kg
-  dose in the app, honouring the maximums and minimums the protocol prints.
-- **Peds** — tap the colour your Broselow tape lands on, or an age, or enter a
-  measured weight, and every pediatric dose in the MCFR protocols is calculated
-  at once: arrest drugs, defibrillation and cardioversion energies, RSI,
+  dose in the app, honouring the maximums and minimums the protocol prints. On a
+  pediatric patient this is also the one place the Broselow colour and the age
+  estimate are chosen; typing a measured weight clears the colour, since a scale
+  beats the tape.
+- **Peds** — the answer sheet for the pediatric weight set on the Patient tab.
+  The colour, the age and the weight are entered once, there, and never asked
+  for twice; this tab reads that weight back at the top and calculates every
+  pediatric dose in the MCFR protocols at once: arrest drugs, defibrillation and cardioversion energies, RSI,
   analgesia, seizure, allergy, fluids, trauma, toxicology. A colour is a weight
   band, so each dose comes back as a range across that band; a measured weight
   gives a single number. Every row shows the per-kg dose and the page it is on.

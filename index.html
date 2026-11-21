@@ -186,6 +186,7 @@ nav button svg{width:20px;height:20px}
 .abtn[aria-pressed="true"]{background:var(--peds-bg);border-color:var(--peds);color:var(--peds)}
 .zrow.age .abtn{flex:1 1 68px;min-height:48px}
 .zhead{border-left:6px solid var(--peds)}
+.zsum{border-left:6px solid var(--peds)}
 .zdose{font-weight:800;font-variant-numeric:tabular-nums;color:var(--calc);background:var(--calc-bg);border:1px solid var(--calc-line);border-radius:7px;padding:3px 8px;display:inline-block;white-space:nowrap}
 .zdose.capped{border-style:dashed}
 td.rt,th.rt{text-align:right;vertical-align:middle}
@@ -396,7 +397,7 @@ body.pvopen{overflow:hidden}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r29";
+var BUILD = "2026-11-20 r30";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1068,10 +1069,18 @@ function pedPick(){
     '<p class="note">' + (w
       ? '<b>' + (w.exact ? fmt(w.lo) + ' kg' : fmt(w.lo) + '\u2013' + fmt(w.hi) + ' kg') + '</b>' + (ZONE ? ' \u00b7 ' + esc(ZONE.c) : '') + '. Every pediatric dose in Protocols and Meds is calculated for it. A measured weight typed below overrides the zone.'
       : 'Tap the colour your tape lands on, or an age. A measured weight typed below beats both.') +
-    ' The colour bands are the published Broselow-Luten zones and the ages are a rough 2 \u00d7 age + 8 kg estimate \u2014 <b>neither is the Handtevy table</b>. Confirm against the tape you carry. Full breakdown on the Peds tab.</p>' +
+    ' The colour bands are the published Broselow-Luten zones and the ages are a rough 2 \u00d7 age + 8 kg estimate \u2014 <b>neither is the Handtevy table</b>. Confirm against the tape you carry.</p>' +
+    (w ? '<button type="button" class="linkbtn" data-tab="peds">Every pediatric dose, size and vital sign for this weight</button>' : '') +
     '</div>';
 }
 
+/* A measured weight beats the tape, so the colour must stop looking chosen.
+   Repaint only the colour/age block — the weight input is its sibling and
+   keeps focus and caret while the crew is still typing. */
+function pedRepaint(){
+  var pp = view.querySelector(".pedpick");
+  if (pp) pp.outerHTML = pedPick();
+}
 function viewPatient(){
   var ti = P.cm ? P.cm/2.54 : null, ft = ti != null ? Math.floor(ti/12) : "", inch = ti != null ? Math.round((ti - Math.floor(ti/12)*12)*10)/10 : "";
   if (inch === 12){ ft += 1; inch = 0; }
@@ -2842,26 +2851,19 @@ function vitalsCard(w, ageY){
 function viewPeds(){
   var w = zoneKg(), h = "";
 
-  h += '<section class="card"><h2>Length-based zone <span class="src ref">STANDARD REFERENCE</span></h2>' +
-    '<p class="note">Measure with your tape, then tap the colour it lands on. The doses below are the MCFR per-kg doses for that zone’s weight band — not the doses printed on the tape. The colour bands are the published Broselow-Luten zones; the MCFR book prints no colour table, so <b>confirm the band against the tape you carry</b>.</p>' +
-    '<div class="zrow">' + BROSELOW.map(zoneChip).join("") + "</div></section>";
-
-  h += '<section class="card"><h2>Age <span class="src ref">ESTIMATE</span></h2>' +
-    '<div class="zrow age">' + PEDAGE.map(function(a){
-      return '<button type="button" class="abtn" data-age="' + a.lbl + '"' + (ZONE && ZONE.c === a.lbl ? ' aria-pressed="true"' : ' aria-pressed="false"') +
-        "><span class=\"zc\">" + a.lbl + '</span><span class="zk">' + a.kg + " kg</span></button>"; }).join("") + "</div>" +
-    '<p class="note">A rough weight for age (about 2 × age + 8 kg over one year), for when there is no tape and no scale. <b>It is not the Handtevy table</b> — Handtevy’s weights are its own and are in the Handtevy Mobile app your service licenses. MCFR’s protocol refers to Handtevy for pediatric whole blood and TXA criteria (p. 120). A measured weight beats both.</p></section>';
-
-  h += '<section class="card"><h2>Weight in use' + (kgEstimated() ? ' <span class="src ref">FROM THE COLOUR</span>' : "") + '</h2><div class="grid">' +
-    '<div class="field"><label for="z-kg">Weight (kg)</label><input id="z-kg" inputmode="decimal" autocomplete="off" placeholder="kg" value="' + (P.type === "P" && P.kg ? fmt(P.kg) : "") + '"></div>' +
-    '<div class="field"><label for="z-lb">Weight (lb)</label><input id="z-lb" inputmode="decimal" autocomplete="off" placeholder="lb" value="' + (P.type === "P" && P.kg ? r1(P.kg*2.20462) : "") + '"></div></div>' +
-    '<p class="note">' + (kgEstimated()
-      ? "Filled in from the colour you tapped \u2014 the middle of that band \u2014 and <b>every dose in Protocols and Meds is already calculated on it</b>. Type over it if you have a real weight; that replaces the zone and gives one number per drug instead of a range."
-      : "A measured or scale weight gives one number per drug instead of a range. This also sets the patient to Pediatric, so every dose in Protocols and Meds is calculated for it too.") + "</p>" +
-    (w ? '<button type="button" class="clearbtn" id="zclear">Clear the zone and weight</button>' : "") + "</section>";
+  /* The colour, the age and the weight are entered ONCE, on the Patient tab.
+     This tab is the answer sheet for whatever weight is in use there: two sets
+     of colour chips and two weight boxes meant two copies to keep in step. */
+  h += '<section class="card zsum"' + (ZONE && ZONE.hex ? ' style="border-left-color:' + ZONE.hex + '"' : "") +
+    '><h2>Weight in use' + (kgEstimated() ? ' <span class="src ref">FROM THE COLOUR</span>' : "") + '</h2>' +
+    '<p class="note">' + (w
+      ? '<b>' + (w.exact ? fmt(w.lo) + ' kg' : fmt(w.lo) + '\u2013' + fmt(w.hi) + ' kg') + '</b>' +
+        (ZONE ? ' \u00b7 ' + esc(ZONE.c) : '') + '. Set on the <b>Patient</b> tab \u2014 the colour off your tape, an age, or a measured weight. Change it there and every number on this page follows.'
+      : 'Nothing set yet. The colour, the age and the weight all live on the <b>Patient</b> tab, so there is one weight for the whole app.') + '</p>' +
+    '<button type="button" class="linkbtn" data-tab="patient">' + (w ? 'Change the weight on the Patient tab' : 'Set the weight on the Patient tab') + '</button></section>';
 
   if (!w){
-    h += '<div class="need">Tap a colour, an age, or enter a weight, and every pediatric dose in the MCFR protocols is calculated here.</div>';
+    h += '<div class="need">Set the colour, the age or a weight on the <b>Patient</b> tab and every pediatric dose in the MCFR protocols is calculated here.</div>';
     view.innerHTML = h; return;
   }
 
@@ -2870,7 +2872,7 @@ function viewPeds(){
   h += '<section class="card zhead"' + (ZONE && ZONE.hex ? ' style="border-left-color:' + ZONE.hex + '"' : "") + '><h2>Doses for ' + esc(src) + "</h2>" +
     '<p class="note">' + (w.exact
       ? "Every dose is the MCFR per-kg amount × " + fmt(w.lo) + " kg, with the maximums and minimums the protocol prints applied."
-      : "A zone is a weight band, so each dose is a range across " + band + ". The per-kg dose and page are shown under each one. Enter a measured weight above for a single number.") +
+      : "A zone is a weight band, so each dose is a range across " + band + ". The per-kg dose and page are shown under each one. Enter a measured weight on the Patient tab for a single number.") +
     " Verify every dose before administration.</p></section>";
 
   /* one patient, one set of sizes and one set of norms */
@@ -3330,8 +3332,8 @@ document.addEventListener("input", function(ev){
     if (DETAIL){ var both = DETAIL.pops.indexOf("A") >= 0 && (DETAIL.pops.indexOf("P") >= 0 || DETAIL.pops.indexOf("N") >= 0); $("pnodes").innerHTML = renderNodes(DETAIL.nodes, both ? state.filter : "", !DETAIL.proc && !quickEmpty(DETAIL.nodes) ? state.quick : 0); $("dleg").innerHTML = detailLegend(DETAIL); $("pw-note").textContent = pedNote(); }
     return;
   }
-  if (id === "f-kg"){ P.kg = v || null; P.kgEst = 0; $("f-lb").value = P.kg ? r1(P.kg*2.20462) : ""; }
-  else if (id === "f-lb"){ P.kg = v ? v/2.20462 : null; P.kgEst = 0; $("f-kg").value = P.kg ? fmt(P.kg) : ""; }
+  if (id === "f-kg"){ P.kg = v || null; P.kgEst = 0; if (v){ ZONE = null; zoneSave(); pedRepaint(); } $("f-lb").value = P.kg ? r1(P.kg*2.20462) : ""; }
+  else if (id === "f-lb"){ P.kg = v ? v/2.20462 : null; P.kgEst = 0; if (v){ ZONE = null; zoneSave(); pedRepaint(); } $("f-kg").value = P.kg ? fmt(P.kg) : ""; }
   else if (id === "f-cm"){ P.cm = v || null; var ti = P.cm ? P.cm/2.54 : null; $("f-ft").value = ti != null ? Math.floor(ti/12) : ""; $("f-in").value = ti != null ? Math.round((ti - Math.floor(ti/12)*12)*10)/10 : ""; }
   else if (id === "f-ft" || id === "f-in"){ var f = num($("f-ft").value), n = num($("f-in").value); P.cm = (f == null && n == null) ? null : ((f || 0)*12 + (n || 0))*2.54 || null; $("f-cm").value = P.cm ? r1(P.cm) : ""; }
   else if (id === "f-dob"){
