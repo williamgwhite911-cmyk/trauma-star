@@ -2,7 +2,11 @@
    The whole app is index.html, so the install step caches that plus the icons
    and the manifest. Bump CACHE on every deploy: the activate step deletes the
    older caches, so a crew that opens the app after a deploy gets the new build. */
-const CACHE = 'trauma-star-2026-11-20-r30';
+const CACHE = 'trauma-star-2026-11-20-r33';
+/* The book pages and the reference pages are kept in their own cache, named for
+   the book edition rather than the build, so shipping an app update does not
+   throw away the 18 MB a crew already downloaded. */
+const BULK = 'trauma-star-bulk-v4.2';
 const ASSETS = ['./', './index.html', './manifest.webmanifest',
                 './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
@@ -13,7 +17,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== BULK).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });

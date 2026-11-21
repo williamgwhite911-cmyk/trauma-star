@@ -30,7 +30,17 @@ page, works offline, installs to a phone or iPad home screen.
   analgesia, seizure, allergy, fluids, trauma, toxicology. A colour is a weight
   band, so each dose comes back as a range across that band; a measured weight
   gives a single number. Every row shows the per-kg dose and the page it is on.
-- **Report** — a microphone for the report you are *given* at the sending
+- **Contact** — everything that happens at the patient's side, in the order it
+  happens. IFT or scene call; for an IFT the hospital unit, the nurse giving
+  handover, the sending nurse and physician or NP and the receiving physician,
+  and for a scene call the requesting unit and the location. Then the three
+  bedside times — at bedside, leaving bedside, loading into the helicopter —
+  stamped where you are standing when they happen, writing into the same
+  dispatch log. Then the handover microphone, what is running on arrival, and
+  photographs of the ventilator, the IV pump and the monitor, which are faster
+  than copying numbers off a screen and cannot be mistyped.
+
+  The microphone is for the report you are *given* at the sending
   facility. Record, and the phone writes it down while you listen and ask
   questions. It then flags what it heard — drugs, allergies, code status, drips,
   anticoagulants, last doses, labs, airway, access, weight — against a checklist
