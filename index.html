@@ -336,7 +336,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r19";
+var BUILD = "2026-11-20 r20";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1350,16 +1350,56 @@ function usedIn(g, open){
    Concentrations are pre-filled only where the formulary itself states them, or
    where the Trauma Star box stock is known. Everything else starts blank: vial
    strengths differ and the number has to come off the vial in your hand. */
+/* Stock strengths as photographed on the aircraft: the controlled-drug box
+   7 Nov 2026, and the Trauma Star North master inventory 18 Oct 2026.
+   Strengths only - lot numbers and expiry dates belong to the inventory, not
+   to a dosing tool, and would be stale within weeks. */
 var CONC = [
- { d:"Epinephrine 1:1,000",            amt:1,    u:"mg",  vol:1,  src:"formulary p. 149" },
- { d:"Epinephrine 1:10,000",           amt:0.1,  u:"mg",  vol:1,  src:"formulary p. 150" },
- { d:"Epinephrine push dose",          amt:10,   u:"mcg", vol:1,  src:"formulary p. 151, the standardized mix" },
- { d:"Calcium chloride 10%",           amt:100,  u:"mg",  vol:1,  src:"10% solution" },
- { d:"Sodium bicarbonate 8.4%",        amt:1,    u:"mEq", vol:1,  src:"8.4% solution" },
- { d:"Ketamine 500 mg / 10 mL",        amt:500,  u:"mg",  vol:10, src:"Trauma Star box stock, 50 mg/mL" },
- { d:"Midazolam 10 mg / 2 mL",         amt:10,   u:"mg",  vol:2,  src:"Trauma Star box stock" },
- { d:"Fentanyl 250 mcg / 5 mL",        amt:250,  u:"mcg", vol:5,  src:"Trauma Star box stock" },
- { d:"Hydromorphone 2 mg / mL",        amt:2,    u:"mg",  vol:1,  src:"Trauma Star box stock" },
+ { d:"Adenosine 6 mg / 2 mL",             amt:6,    u:"mg",  vol:2,  src:"TS North 18 Oct 2026" },
+ { d:"Adenosine 12 mg / 4 mL",            amt:12,   u:"mg",  vol:4,  src:"TS North 18 Oct 2026" },
+ { d:"Albuterol 2.5 mg / 3 mL",           amt:2.5,  u:"mg",  vol:3,  src:"TS North 18 Oct 2026" },
+ { d:"Amiodarone 150 mg / 3 mL",          amt:150,  u:"mg",  vol:3,  src:"TS North 18 Oct 2026" },
+ { d:"Atropine 1 mg / 10 mL",             amt:1,    u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Calcium chloride 10% 1 g / 10 mL",  amt:1000, u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Ceftriaxone 1 g vial",              amt:1000, u:"mg",  vol:null, src:"TS North 18 Oct 2026",
+   warn:"Powder. Type the volume you reconstituted it to. The sepsis and open-fracture protocols call for 2 g, which is two of these vials." },
+ { d:"Dextrose 50% 25 g / 50 mL",         amt:25000,u:"mg",  vol:50, src:"TS North 18 Oct 2026" },
+ { d:"Diltiazem 100 mg vial",             amt:100,  u:"mg",  vol:null, src:"TS North 18 Oct 2026",
+   warn:"Powder. Type the volume you reconstituted it to." },
+ { d:"Diphenhydramine \u2014 verify the vial", amt:null, u:"mg", vol:null, src:"TS North 18 Oct 2026",
+   warn:"The inventory does not record this strength. Read it off the vial." },
+ { d:"Dopamine premix 400 mg / 250 mL",   amt:400,  u:"mg",  vol:250, src:"TS North 18 Oct 2026" },
+ { d:"Epinephrine 1:1,000 (1 mg / mL)",   amt:1,    u:"mg",  vol:1,  src:"formulary p. 149" },
+ { d:"Epinephrine 1:10,000 prefilled 1 mg / 10 mL", amt:1, u:"mg", vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Epinephrine push dose 10 mcg / mL", amt:10,   u:"mcg", vol:1,  src:"formulary p. 151, the standardized mix" },
+ { d:"Esmolol 100 mg / 10 mL",            amt:100,  u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Etomidate 40 mg / 20 mL",           amt:40,   u:"mg",  vol:20, src:"controlled-drug box 7 Nov 2026" },
+ { d:"Fentanyl 50 mcg / mL",              amt:50,   u:"mcg", vol:1,  src:"controlled-drug box 7 Nov 2026" },
+ { d:"Flumazenil 0.5 mg / 5 mL",          amt:0.5,  u:"mg",  vol:5,  src:"TS North 18 Oct 2026",
+   warn:"Carried, but it appears in no protocol and in no formulary page in this app." },
+ { d:"Furosemide 100 mg / 10 mL",         amt:100,  u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Hydromorphone 2 mg / mL",           amt:2,    u:"mg",  vol:1,  src:"controlled-drug box 7 Nov 2026" },
+ { d:"Ketamine 100 mg / mL",              amt:100,  u:"mg",  vol:1,  src:"controlled-drug box 7 Nov 2026",
+   warn:"TWO KETAMINE STRENGTHS ARE RECORDED: 100 mg/mL here, and 500 mg/10 mL (50 mg/mL) below. They differ by a factor of two. Read the vial in your hand before you draw." },
+ { d:"Ketamine 500 mg / 10 mL (50 mg/mL)",amt:500,  u:"mg",  vol:10, src:"stated Nov 2026",
+   warn:"TWO KETAMINE STRENGTHS ARE RECORDED: this one, and 100 mg/mL above. They differ by a factor of two. Read the vial in your hand before you draw." },
+ { d:"Labetalol 100 mg / 20 mL",          amt:100,  u:"mg",  vol:20, src:"TS North 18 Oct 2026" },
+ { d:"Magnesium sulfate 50% 5 g / 10 mL", amt:5000, u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Metoprolol 5 mg / 5 mL",            amt:5,    u:"mg",  vol:5,  src:"TS North 18 Oct 2026" },
+ { d:"Midazolam 10 mg / 2 mL",            amt:10,   u:"mg",  vol:2,  src:"controlled-drug box 7 Nov 2026" },
+ { d:"Naloxone 2 mg / 2 mL",              amt:2,    u:"mg",  vol:2,  src:"TS North 18 Oct 2026" },
+ { d:"Nicardipine 25 mg / 10 mL",         amt:25,   u:"mg",  vol:10, src:"TS North 18 Oct 2026" },
+ { d:"Norepinephrine 4 mg / 4 mL",        amt:4,    u:"mg",  vol:4,  src:"TS North 18 Oct 2026" },
+ { d:"Ondansetron 1 mg / 2 mL",           amt:1,    u:"mg",  vol:2,  src:"TS North 18 Oct 2026",
+   warn:"The inventory flags this strength for verification. Zofran is usually 4 mg/2 mL. If the vial is 4 mg/2 mL and you calculate on 1 mg/2 mL you will draw four times the volume you need. Read the vial." },
+ { d:"Rocuronium 100 mg / 10 mL",         amt:100,  u:"mg",  vol:10, src:"controlled-drug box 7 Nov 2026" },
+ { d:"Sodium bicarbonate 4.2% 2.5 mEq / 5 mL", amt:2.5, u:"mEq", vol:5, src:"TS North 18 Oct 2026" },
+ { d:"Sodium bicarbonate 8.4% 50 mEq / 50 mL", amt:50, u:"mEq", vol:50, src:"TS North 18 Oct 2026" },
+ { d:"Solu-Medrol 125 mg vial",           amt:125,  u:"mg",  vol:null, src:"TS North 18 Oct 2026",
+   warn:"Act-O-Vial. Type the volume after you mix it." },
+ { d:"Terbutaline 1 mg / mL",             amt:1,    u:"mg",  vol:1,  src:"TS North 18 Oct 2026" },
+ { d:"TXA 1,000 mg / 10 mL",              amt:1000, u:"mg",  vol:10, src:"TS North 18 Oct 2026",
+   warn:"The protocol dose is 2 g, which is two of these vials." },
  { d:"Other \u2014 read it off the vial", amt:null, u:"mg",  vol:null, src:"" }
 ];
 var CV = { i:0, amt:null, vol:null, dose:null, u:"mg" };
@@ -1387,7 +1427,8 @@ function cvOut(){
 function cvCard(){
   var p = cvPick(), u = cvUnit();
   return '<section class="card drawcard"><h2>Draw-up volume <span class="src ref">CALCULATOR</span></h2>' +
-    '<p class="note">Dose in, millilitres out. Pick what you are drawing, or type the strength off the vial.</p>' +
+    '<p class="note">Dose in, millilitres out. Pick what you are drawing, or type the strength off the vial. Strengths come from the controlled-drug box photographed 7 Nov 2026 and the Trauma Star North inventory of 18 Oct 2026 \u2014 <b>always confirm against the vial in your hand</b>.</p>' +
+    (p.warn ? '<div class="n-w">' + esc(p.warn) + "</div>" : "") +
     '<div class="field"><label for="cv-d">Medication</label><select id="cv-d">' +
       CONC.map(function(c, i){ return '<option value="' + i + '"' + (i === CV.i ? " selected" : "") + ">" + esc(c.d) + "</option>"; }).join("") +
     "</select></div>" +
