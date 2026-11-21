@@ -290,6 +290,11 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
   background:var(--surface);color:var(--ink);font-size:13px;font-weight:600}
 .ubtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 .ubtn.al[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.filebtn{display:block;text-align:center;padding:12px;margin:10px 0 4px;border-radius:10px;
+  background:var(--accent);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.linkbtn.tiny{display:inline-block;width:auto;margin:0 0 0 6px;padding:5px 9px;font-size:12px}
+textarea.syn{width:100%;box-sizing:border-box;padding:8px;font-size:15px;line-height:1.35;
+  border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);resize:vertical}
 </style>
 </head>
 <body>
@@ -336,7 +341,7 @@ td.rt,th.rt{text-align:right;vertical-align:middle}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r22";
+var BUILD = "2026-11-20 r23";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -1806,7 +1811,7 @@ var CREWLIST = {
   medic: ["Anderson, Morgan","Bernard, Michael","Carmichael, Joshua","Carson, James","Duran, Fernando","Foster, Kaitlyn","Hernandez Lopez, Jesus","Hill, Matthew","Hubman, Jesse","Komoroski, Liz","Lopez, Michael","Mock, Gavin","Montes, Alfredo","Perez, Antonio","Perez, Harold","Saez, Adrian","Sanchez, Sergio","Simancas, Xavier","Sparber, Aaron","Suarez, Damian","Tome, Shaun","Vandervoort, Richard"],
   pilot: ["Baard, David","Bremer, Klaus","Davis, Harold (Park)","Dean, Simon","Gomez, Juan","Montufar, Edwin","Nguyen, Cuong","Rivas, Mark","Scott, Ron","Spotts, Curtis","Totaram, David"]
 };
-var DISP = { date:"", ship:"", base:"", call:"", send:"", sendFree:"", scene:"", unit:"", recv:"", mdSend:"", rnSend:"", mdRecv:"", road:"", dx:"", alerts:{}, crew:{ rn:"", medic:"", pilot:"" }, rider:"", oca:"", t:{} };
+var DISP = { date:"", ship:"", base:"", call:"", send:"", sendFree:"", scene:"", unit:"", recv:"", mdSend:"", rnSend:"", mdRecv:"", road:"", dx:"", alerts:{}, syn:{}, crew:{ rn:"", medic:"", pilot:"" }, rider:"", oca:"", t:{} };
 /* names typed before, kept on this phone only so the fields autocomplete next time */
 var ROSTER = { rn:[], medic:[], pilot:[] };
 try { var rst = JSON.parse(localStorage.getItem("mcfr-crew") || "null"); if (rst) for (var rk in ROSTER) if (Array.isArray(rst[rk])) ROSTER[rk] = rst[rk]; } catch(e){}
@@ -1824,6 +1829,7 @@ if (typeof DISP.crew === "string") DISP.crew = { rn:DISP.crew, medic:"", pilot:"
 if (!DISP.crew || typeof DISP.crew !== "object") DISP.crew = { rn:"", medic:"", pilot:"" };
 if (typeof DISP.rider !== "string") DISP.rider = "";
 if (!DISP.alerts || typeof DISP.alerts !== "object") DISP.alerts = {};
+if (!DISP.syn || typeof DISP.syn !== "object") DISP.syn = {};
 ["ship","base","call","send","sendFree","scene","unit","recv","mdSend","rnSend","mdRecv","road","dx"].forEach(function(k){ if (typeof DISP[k] !== "string") DISP[k] = ""; });
 function crewNames(role){
   var a = (CREWLIST[role] || []).slice();
@@ -1874,6 +1880,12 @@ function dispText(){
   var al = ALERTS.filter(function(a){ return DISP.alerts[a.k]; }).map(function(a){ return a.l; });
   if (al.length) out.push("Alerts: " + al.join(", "));
   if (DISP.dx) out.push("Diagnosis: " + DISP.dx);
+  var syn = SYNF.filter(function(f){ return (DISP.syn || {})[f.k]; });
+  if (syn.length){
+    out.push("");
+    out.push("SYNOPSIS");
+    syn.forEach(function(f){ out.push(f.l + ": " + DISP.syn[f.k]); });
+  }
   if (P.kg != null) out.push("Weight: " + fmt(P.kg) + " kg");
   var L = dispLeg();
   if (L){
@@ -1898,6 +1910,99 @@ var UNITS = ["Emergency", "ICU", "L&D", "Cath lab", "OR", "Med-surg", "Nursery /
 var STOP = /^(the|a|an|and|or|with|without|of|to|in|on|for|from|at|is|was|has|had|per|pt|patient|possible|suspected|likely|acute|chronic|severe|mild|left|right|new|onset)$/;
 
 function dispTA(){ var e = document.getElementById("dp-ta"); if (e) e.value = dispText(); }
+/* ---------- Records held on this phone ----------
+   Monroe County has no BAA with an AI vendor, so nothing here is transmitted
+   and nothing is summarised off the device. Files live in IndexedDB on this
+   handset only - same place a browser keeps its own data - and are wiped with
+   the run. This app has no server to send them to even if someone wanted one. */
+var RDB = null, RDBfail = false;
+function recOpen(cb){
+  if (RDB) return cb(RDB);
+  if (RDBfail || !window.indexedDB) return cb(null);
+  try {
+    var rq = indexedDB.open("mcfr-records", 1);
+    rq.onupgradeneeded = function(e){
+      var db = e.target.result;
+      if (!db.objectStoreNames.contains("files")) db.createObjectStore("files", { keyPath:"id", autoIncrement:true });
+    };
+    rq.onsuccess = function(e){ RDB = e.target.result; cb(RDB); };
+    rq.onerror = function(){ RDBfail = true; cb(null); };
+  } catch(e){ RDBfail = true; cb(null); }
+}
+function recTx(mode, cb){
+  recOpen(function(db){ if (!db) return cb(null); try { cb(db.transaction("files", mode).objectStore("files")); } catch(e){ cb(null); } });
+}
+function recAdd(file, cb){
+  recTx("readwrite", function(st){
+    if (!st) return cb(false);
+    var r = st.add({ name:file.name || "photo", type:file.type || "", size:file.size || 0, added:Date.now(), blob:file });
+    r.onsuccess = function(){ cb(true); }; r.onerror = function(){ cb(false); };
+  });
+}
+function recAll(cb){
+  recTx("readonly", function(st){
+    if (!st) return cb(null);
+    var out = [], c = st.openCursor();
+    c.onsuccess = function(e){
+      var cur = e.target.result;
+      if (!cur) return cb(out);
+      out.push({ id:cur.value.id, name:cur.value.name, type:cur.value.type, size:cur.value.size, added:cur.value.added });
+      cur.continue();
+    };
+    c.onerror = function(){ cb(null); };
+  });
+}
+function recGet(id, cb){ recTx("readonly", function(st){ if (!st) return cb(null); var r = st.get(id); r.onsuccess = function(){ cb(r.result ? r.result.blob : null); }; r.onerror = function(){ cb(null); }; }); }
+function recDel(id, cb){ recTx("readwrite", function(st){ if (!st) return cb(false); var r = st.delete(id); r.onsuccess = function(){ cb(true); }; r.onerror = function(){ cb(false); }; }); }
+function recClear(cb){ recTx("readwrite", function(st){ if (!st) return cb(false); var r = st.clear(); r.onsuccess = function(){ cb(true); }; r.onerror = function(){ cb(false); }; }); }
+function kb(n){ return n >= 1048576 ? (n/1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n/1024)) + " KB"; }
+
+function recCard(){
+  return '<section class="card" id="reccard"><h2>Records from the sending facility</h2>' +
+    '<p class="note"><b>These stay on this phone.</b> There is no server behind this app, nothing is uploaded, and nothing is sent to any AI to be summarised — the county has no business associate agreement for that yet. Treat this handset as you would the paper: wipe it when you have handed over.</p>' +
+    '<label class="filebtn" for="rec-f">Add photos or PDFs</label>' +
+    '<input id="rec-f" type="file" accept="image/*,application/pdf" multiple hidden>' +
+    '<div id="rec-list"><div class="need">Nothing attached to this run.</div></div></section>';
+}
+function recPaint(){
+  var box = $("rec-list"); if (!box) return;
+  recAll(function(list){
+    if (list === null){ box.innerHTML = '<div class="need">This phone will not let the app store files. Keep using the camera roll.</div>'; return; }
+    if (!list.length){ box.innerHTML = '<div class="need">Nothing attached to this run.</div>'; return; }
+    var tot = list.reduce(function(a, x){ return a + (x.size || 0); }, 0);
+    box.innerHTML = '<table><tbody>' + list.map(function(f){
+        return '<tr><td><b>' + esc(f.name) + "</b><span class=\"ssub\">" + esc(f.type.indexOf("pdf") >= 0 ? "PDF" : "Image") + " · " + kb(f.size) + "</span></td>" +
+          '<td class="rt"><button type="button" class="linkbtn tiny" data-recopen="' + f.id + '">Open</button>' +
+          '<button type="button" class="linkbtn tiny" data-recdel="' + f.id + '">Remove</button></td></tr>';
+      }).join("") + "</tbody></table>" +
+      '<p class="note">' + list.length + " item" + (list.length === 1 ? "" : "s") + ", " + kb(tot) + " on this phone." +
+      (tot > 52428800 ? " <b>That is a lot to be carrying — wipe after handover.</b>" : "") + "</p>" +
+      '<button type="button" class="clearbtn" id="rec-wipe">Wipe every record from this phone</button>';
+  });
+}
+
+/* ---------- Handoff synopsis ----------
+   What an AI would have pulled out of the records, asked for directly. It works
+   with no signal, which the AI would not have. */
+var SYNF = [
+  { k:"why",   l:"Why we are flying",        ph:"one line" },
+  { k:"hx",    l:"Pertinent history",         ph:"the two or three that matter" },
+  { k:"allerg",l:"Allergies",                 ph:"or NKDA" },
+  { k:"given", l:"Given at the sending facility", ph:"what, how much, what time" },
+  { k:"access",l:"Lines and access",          ph:"size, site, patent?" },
+  { k:"drips", l:"Drips running",             ph:"drug, rate" },
+  { k:"labs",  l:"Last labs and imaging",     ph:"the abnormal ones" },
+  { k:"code",  l:"Code status and decision-maker", ph:"and who to call" }
+];
+function synCard(){
+  return '<section class="card"><h2>Handoff synopsis</h2>' +
+    SYNF.map(function(f){
+      return '<div class="field"><label for="sy-' + f.k + '">' + esc(f.l) + '</label>' +
+        '<textarea id="sy-' + f.k + '" class="syn" rows="2" placeholder="' + esc(f.ph) + '">' + esc((DISP.syn && DISP.syn[f.k]) || "") + "</textarea></div>";
+    }).join("") +
+    '<p class="note">Fill it on the ground while you still have the chart in front of you. It goes into the copy-out at the bottom with the rest of the run, and it works with no signal.</p></section>';
+}
+
 function viewDispatch(){
   var any = LEGS.some(function(x){ return DISP.t[x.k]; });
   var ift = DISP.call === "ift";
@@ -1962,6 +2067,7 @@ function viewDispatch(){
     (P.kg != null ? '<p class="note">This is the same weight the Patient tab uses, so every per-kg dose in Protocols and Meds is calculated for it.</p>' : "") +
     "</section>";
 
+  h += recCard() + synCard();
   h += dispProtos();
 
   /* ---- times ---- */
@@ -1987,6 +2093,7 @@ function viewDispatch(){
     '<button type="button" class="linkbtn" id="dp-copy">Copy</button><span class="copied" id="dp-copied"></span>' +
     '<button type="button" class="clearbtn" id="dp-wipe">Clear the whole run</button></section>';
   view.innerHTML = h;
+  recPaint();
 }
 
 /* distance, drive and flight time between the two ends of this run */
@@ -2596,6 +2703,13 @@ function go(h){ if (location.hash === "#" + h) route(); else location.hash = h; 
 var clearArmed = false, clearTimer = null;
 window.addEventListener("hashchange", route);
 document.addEventListener("change", function(ev){ var t = ev.target;
+  if (t.id === "rec-f"){
+    var fs = t.files ? [].slice.call(t.files) : [], left = fs.length;
+    if (!left) return;
+    fs.forEach(function(f){ recAdd(f, function(){ if (!--left) recPaint(); }); });
+    t.value = "";
+    return;
+  }
   if (t.id && t.id.indexOf("dp-c-") === 0){ rosterAdd(t.id.slice(5), t.value); return; }
   if (t.id === "dp-send" || t.id === "dp-recv"){ DISP[t.id === "dp-send" ? "send" : "recv"] = t.value; DISP.road = ""; dispSave(); return viewDispatch(); }
   if (t.id === "cv-d"){ CV.i = parseInt(t.value, 10) || 0; CV.amt = null; CV.vol = null; CV.u = cvPick().u; cvSave(); var sc0 = $("main").scrollTop; viewMeds(); $("main").scrollTop = sc0; return; }
@@ -2640,10 +2754,23 @@ document.addEventListener("click", function(ev){
   if (t.dataset.unit){ DISP.unit = DISP.unit === t.dataset.unit ? "" : t.dataset.unit; dispSave(); return viewDispatch(); }
   if (t.dataset.alert){ DISP.alerts[t.dataset.alert] = !DISP.alerts[t.dataset.alert]; dispSave(); var sca = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sca; return; }
   if (t.id === "dp-wipe"){
-    DISP = { date:"", ship:"", base:"", call:"", send:"", sendFree:"", scene:"", unit:"", recv:"", mdSend:"", rnSend:"", mdRecv:"", road:"", dx:"", alerts:{}, crew:{ rn:"", medic:"", pilot:"" }, rider:"", oca:"", t:{} };
-    dispSave(); return viewDispatch();
+    DISP = { date:"", ship:"", base:"", call:"", send:"", sendFree:"", scene:"", unit:"", recv:"", mdSend:"", rnSend:"", mdRecv:"", road:"", dx:"", alerts:{}, syn:{}, crew:{ rn:"", medic:"", pilot:"" }, rider:"", oca:"", t:{} };
+    dispSave();
+    recClear(function(){ recPaint(); });
+    return viewDispatch();
   }
   if (t.id === "dp-clear"){ DISP.t = {}; dispSave(); return viewDispatch(); }
+  if (t.dataset.recopen){
+    recGet(+t.dataset.recopen, function(blob){
+      if (!blob) return;
+      var u = URL.createObjectURL(blob);
+      window.open(u, "_blank");
+      setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
+    });
+    return;
+  }
+  if (t.dataset.recdel){ recDel(+t.dataset.recdel, function(){ recPaint(); }); return; }
+  if (t.id === "rec-wipe"){ recClear(function(){ recPaint(); }); return; }
   if (t.id === "dp-copy"){
     var dta = $("dp-ta"); if (!dta) return;
     dta.removeAttribute("readonly"); dta.select(); dta.setSelectionRange(0, 99999);
@@ -2710,6 +2837,7 @@ document.addEventListener("input", function(ev){
     return;
   }
   if (id === "dp-rider"){ DISP.rider = t.value; dispSave(); return dispTA(); }
+  if (id.indexOf("sy-") === 0){ DISP.syn[id.slice(3)] = t.value; dispSave(); return dispTA(); }
   if (id === "dp-dx"){ DISP.dx = t.value; dispSave(); var sc0 = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sc0; var dxf = $("dp-dx"); if (dxf){ dxf.focus(); dxf.setSelectionRange(dxf.value.length, dxf.value.length); } return; }
   if (id === "dp-kg"){ P.kg = num(t.value) || null; save(); dispTA(); return; }
   if (id === "dp-kt"){ TX.kt = num(t.value) || 0; txSave(); var sc1 = $("main").scrollTop; viewDispatch(); $("main").scrollTop = sc1; return; }
