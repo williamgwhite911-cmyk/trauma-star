@@ -343,7 +343,7 @@ textarea.syn{width:100%;box-sizing:border-box;padding:8px;font-size:15px;line-he
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-20 r24";
+var BUILD = "2026-11-20 r25";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -967,6 +967,7 @@ function ettRows(){
 function pedPick(){
   var w = zoneKg();
   return '<div class="pedpick">' +
+    '<p class="note pedin">Pediatric is selected, so the <b>Peds</b> tab is now open in the bar below. It stays hidden on an adult or OB patient so nobody carries adult numbers into it.</p>' +
     '<h3>Length-based zone <span class="src ref">STANDARD REFERENCE</span></h3>' +
     '<div class="zrow">' + BROSELOW.map(zoneChip).join("") + '</div>' +
     '<h3>Or age <span class="src ref">ESTIMATE</span></h3>' +
@@ -2722,11 +2723,26 @@ function viewReport(){
 }
 
 /* ---------- routing ---------- */
+/* The Peds tab is hidden until the patient is set to Pediatric, so nobody can
+   fill in an adult and then wander into the pediatric realm with adult numbers
+   still loaded. Selecting Pediatric on the Patient tab is the only way in. */
+function pedsOpen(){ return P.type === "P"; }
+function navSync(){
+  var pb = document.querySelector('nav button[data-tab="peds"]');
+  if (pb) pb.hidden = !pedsOpen();
+}
 function route(){
   var hsh = (location.hash || "").replace(/^#/, ""), p = null;
   if (hsh.indexOf("p-") === 0) for (var i=0;i<PROTOS.length;i++) if (PROTOS[i].slug === hsh) p = PROTOS[i];
   var tab = p ? "protocols" : (["dispatch","patient","peds","protocols","meds","drips","report","tools"].indexOf(hsh) >= 0 ? hsh : "dispatch");
+  if (tab === "peds" && !pedsOpen()){
+    /* rewrite the address too, or selecting Pediatric later would silently
+       jump the crew into the Peds tab instead of leaving them on Patient */
+    tab = "patient";
+    try { history.replaceState(null, "", "#patient"); } catch(e){ location.hash = "patient"; }
+  }
   state.tab = tab;
+  navSync();
   Array.prototype.forEach.call(document.querySelectorAll("nav button"), function(b){ if (b.dataset.tab === tab) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
   strip();
   if (p) viewDetail(p);
@@ -2866,6 +2882,8 @@ document.addEventListener("click", function(ev){
   if (t.dataset.drip != null){ state.dq = t.dataset.drip; return go("drips"); }
   if (t.dataset.mixreset){ delete MIX[t.dataset.mixreset]; try { localStorage.setItem("mcfr-mix", JSON.stringify(MIX)); } catch(e){} var sc = $("main").scrollTop; listDrips(); $("main").scrollTop = sc; return; }
   if (t.dataset.set){
+    /* a new patient type means any zone from the last patient is stale */
+    if (t.dataset.set === "type" && t.dataset.v !== P.type) ZONE = null;
     P[t.dataset.set] = t.dataset.v;
     if (t.dataset.set === "type" && t.dataset.v === "OB") P.sex = "F";
     save(); return route();
