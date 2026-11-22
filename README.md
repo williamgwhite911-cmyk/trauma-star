@@ -44,7 +44,28 @@ page, works offline, installs to a phone or iPad home screen.
   facility. Record, and the phone writes it down while you listen and ask
   questions. It then flags what it heard — drugs, allergies, code status, drips,
   anticoagulants, last doses, labs, airway, access, weight — against a checklist
-  of what a receiving crew needs. The transcript stays on the device.
+  of what a receiving crew needs. The transcript appears in the same card as the
+  record button, with Save, Copy and Clear, and stays on the device.
+
+  Meds given before arrival and drips running are picked from a searchable list
+  of the protocol's meds and drips plus common critical care drugs; a pick fills
+  the dose, route, concentration and rate range, everything stays editable, and
+  lines can be added without limit. The same list shows on Dispatch and Contact.
+  The ventilator's tidal volume fills in from ideal body weight (6 mL/kg) until
+  the actual setting is typed. Meds given in flight are dose-checked against the
+  weight and the allergies, with a flashing alert when they do not match.
+
+  At the end: the narrative, the attestation, and a signature block for each
+  crew member — the printed name above, a finger-drawn signature in the middle
+  of the screen, Clear, and Save, which turns to a green check only once the
+  signature is stored on the phone.
+- **Given from the protocol** — each dose line on a protocol page has a *Given*
+  box. Ticking it adds the drug, the dose worked out for the weight, the route
+  and the time to the Contact tab's *Given in flight* list; unticking takes it
+  off again.
+- **Print / PDF** — a button at the top of every page, beside the patient
+  weight, prints the run record with signatures or saves it as a PDF from the
+  iPhone print sheet. The same button is at the end of the Contact tab.
 - **The book itself** — every protocol page carries a button that opens the
   published *2025 MCFR Protocols V4.2* PDF at the page it is printed on. Page
   numbers in this app are the book's own, and the PDF opens at the same number.
