@@ -445,7 +445,7 @@ body.pvopen{overflow:hidden}
 
 "use strict";
 var DATA = JSON.parse(document.getElementById("data").textContent);
-var BUILD = "2026-11-21 r51";
+var BUILD = "2026-11-21 r52";
 var G1 = "⟦", G2 = "⟧";
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -2649,6 +2649,10 @@ function viewDispatch(){
   }
   h += '<section class="card"><h2>Copy the log</h2><textarea class="repta" id="dp-ta" rows="14" readonly>' + esc(dispText()) + "</textarea>" +
     '<button type="button" class="linkbtn" id="dp-copy">Copy</button><span class="copied" id="dp-copied"></span>' +
+    /* the other one is at the foot of the Contact tab, behind the whole
+       assessment; a crew finishing a run looks at the log, so put it here too */
+    '<button type="button" class="linkbtn" id="rep-print">Print or make a PDF</button>' +
+    '<button type="button" class="linkbtn" id="rep-save">Save the report</button>' +
     '<button type="button" class="clearbtn" id="dp-wipe">Clear the whole run</button></section>';
   view.innerHTML = h;
 }
