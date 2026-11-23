@@ -1,170 +1,65 @@
-# Trauma Star — MCFR Protocols
+# Trauma Star — Protocols & Dosages (2026 build)
 
-Field reference for Monroe County Fire Rescue / Trauma Star flight crews. One
-page, works offline, installs to a phone or iPad home screen.
+Monroe County Fire Rescue Trauma Star. 105 protocol pages as action cards, dose
+calculators, the pediatric tape, burns, RSI, the Hamilton T1 ventilator pages,
+hospital destinations and the flight checklists — one page, works with no signal.
 
-**Live:** https://williamgwhite911-cmyk.github.io/trauma-star/
+**DRAFT PAGES ARE NOT APPROVED.** Anything tagged *Draft — not approved* is
+written for the Medical Director's review and is not to be worked from.
 
-## What it holds
+## This goes in a SUBFOLDER, beside the older app
 
-- **Protocols** — all 83 protocols from the *Monroe County Fire Rescue EMS
-  Protocols, 2025 Version* (144-page file, V4.2), by section, with the book's
-  page numbers. Trauma Star (green) items are marked. Search covers the full
-  text and matches either the generic or the trade name.
-- **Meds** — the current **Medication Formulary, pp. 138–180**, one drug per
-  page. pp. 138–164 are shared by the ground units and Trauma Star; pp. 165–180
-  are **Trauma Star only**. Filter by shared / Trauma Star / changed.
-- **Drips** — continuous and timed infusions with Sapphire pump rates, VTBI and
-  gravity drip rates. Mixes are editable and remembered on the device.
-- **Patient** — Adult / Pediatric / OB, weight and height in either unit, ideal
-  body weight, lung-protective tidal volume, i-gel and ET tube sizing, advanced
-  airway and pain-management doses. Entering a weight calculates every per-kg
-  dose in the app, honouring the maximums and minimums the protocol prints. On a
-  pediatric patient this is also the one place the Broselow colour and the age
-  estimate are chosen; typing a measured weight clears the colour, since a scale
-  beats the tape.
-- **Peds** — the answer sheet for the pediatric weight set on the Patient tab.
-  The colour, the age and the weight are entered once, there, and never asked
-  for twice; this tab reads that weight back at the top and calculates every
-  pediatric dose in the MCFR protocols at once: arrest drugs, defibrillation and cardioversion energies, RSI,
-  analgesia, seizure, allergy, fluids, trauma, toxicology. A colour is a weight
-  band, so each dose comes back as a range across that band; a measured weight
-  gives a single number. Every row shows the per-kg dose and the page it is on.
-- **Contact** — everything that happens at the patient's side, in the order it
-  happens. IFT or scene call; for an IFT the hospital unit, the nurse giving
-  handover, the sending nurse and physician or NP and the receiving physician,
-  and for a scene call the requesting unit and the location. Then the three
-  bedside times — at bedside, leaving bedside, loading into the helicopter —
-  stamped where you are standing when they happen, writing into the same
-  dispatch log. Then the handover microphone, what is running on arrival, and
-  photographs of the ventilator, the IV pump and the monitor, which are faster
-  than copying numbers off a screen and cannot be mistyped.
+The older app stays where it is, at the repository root. Put these files in a
+folder called `v2`, so the repo looks like this:
 
-  The microphone is for the report you are *given* at the sending
-  facility. Record, and the phone writes it down while you listen and ask
-  questions. It then flags what it heard — drugs, allergies, code status, drips,
-  anticoagulants, last doses, labs, airway, access, weight — against a checklist
-  of what a receiving crew needs. The transcript appears in the same card as the
-  record button, with Save, Copy and Clear, and stays on the device.
+    index.html            <- the older app, untouched
+    sw.js
+    v2/index.html         <- this build
+    v2/sw.js
+    v2/manifest.webmanifest
+    v2/icons/
 
-  Meds given before arrival and drips running are picked from a searchable list
-  of the protocol's meds and drips plus common critical care drugs; a pick fills
-  the dose, route, concentration and rate range, everything stays editable, and
-  lines can be added without limit. The same list shows on Dispatch and Contact.
-  The ventilator's tidal volume fills in from ideal body weight (6 mL/kg) until
-  the actual setting is typed. Meds given in flight are dose-checked against the
-  weight and the allergies, with a flashing alert when they do not match.
+The two apps are then completely separate: separate URLs, separate caches,
+separate home-screen icons. Nothing this build does can disturb the old one.
 
-  At the end: the narrative, the attestation, and a signature block for each
-  crew member — the printed name above, a finger-drawn signature in the middle
-  of the screen, Clear, and Save, which turns to a green check only once the
-  signature is stored on the phone.
-- **Given from the protocol** — each dose line on a protocol page has a *Given*
-  box. Ticking it adds the drug, the dose worked out for the weight, the route
-  and the time to the Contact tab's *Given in flight* list; unticking takes it
-  off again.
-- **Print / PDF** — a button at the top of every page, beside the patient
-  weight, prints the run record with signatures or saves it as a PDF from the
-  iPhone print sheet. The same button is at the end of the Contact tab.
-- **The book itself** — every protocol page carries a button that opens the
-  published *2025 MCFR Protocols V4.2* PDF at the page it is printed on. Page
-  numbers in this app are the book's own, and the PDF opens at the same number.
-- **Tools** — trauma alert and sepsis alert checks, pediatric minimum systolic
-  BP, burn fluid rates, the phone numbers in the protocol, procedure pages, and
-  transport distance and flight time between the bases and the hospitals.
+- old app:  https://williamgwhite911-cmyk.github.io/trauma-star/
+- this one: https://williamgwhite911-cmyk.github.io/trauma-star/v2/
 
-## The formulary pages
+## Uploading it
 
-Each medication card is the formulary page as written: Information, Indications
-with its Mechanism line, adult and pediatric dosage, administration
-considerations, contraindications, adverse effects and special considerations.
-33 of the 43 carry all of that; the other 10 have everything except the three
-narrative fields (Information, Mechanism, Adverse effects) and say so on the
-card.
+Repo → **Add file → Upload files** → drag the `v2` folder in → commit to `main`.
+Wait for "pages build and deployment" to finish (about a minute).
 
-The published V4.2 book in this repository carries the *older* short formulary
-on its pp. 137–143, so the medication cards do not link into it. The protocol
-pages do.
+If GitHub flattens the folder and drops the files at the root, delete them and
+instead use **Add file → Create new file**, type `v2/index.html` as the name —
+typing the slash creates the folder — then upload the rest into it.
 
-## Where the pediatric colours come from
+## Put it on a phone or iPad
 
-The MCFR book prints no colour/weight table. It names the Handtevy system once,
-for pediatric whole blood and TXA criteria (p. 120), and otherwise leaves the
-weight to the tape or to the Handtevy app.
+1. Open the **/v2/** link in **Safari** (iPhone/iPad) or **Chrome** (Android).
+2. Let it finish loading once **while you have signal** — that is when it caches
+   itself, and on a phone that already has the old app that first online load is
+   what hands control to this copy.
+3. Share → **Add to Home Screen**. It appears as **TS Protocols**.
+4. It now opens full screen and works in the aircraft with no signal at all.
 
-So the Peds tab does not try to be the tape. You read the colour off your tape;
-it gives you the **MCFR** dose for that weight. The colour bands are the
-published Broselow-Luten zones, marked `STANDARD REFERENCE` — confirm them
-against the tape you carry. The age chips are a rough weight-for-age estimate
-(about 2 × age + 8 kg), **not** the Handtevy table; Handtevy's weights are its
-own and live in the Handtevy Mobile app the service licenses. A measured weight
-beats both.
+The old app's icon is unchanged and still works. Two icons, two apps.
 
-No dose on that tab comes from the tape's printed doses or from Handtevy. Every
-one is a per-kg value printed in the MCFR protocols or formulary, multiplied by
-the weight, with the protocol's own maximums and minimums applied, and the page
-shown beside it.
+## Updating it
 
-## The report microphone and patient information
+Replace `v2/index.html`, then change the `CACHE` string at the top of `v2/sw.js`
+to any new value. Phones pick the new version up the next time they open the app
+with signal. Offline, they keep running the copy they already have.
 
-The transcript is held on the device and this app sends it nowhere. The speech
-recognition, though, is the phone's own: on iPhone and on Android the audio goes
-to Apple or Google to be turned into text. That is the platform, not this app,
-and it sits outside the county's agreements. Until the HIPAA arrangement with
-Monroe County is settled, keep names, dates of birth and record numbers out of
-it and clear the report at the end of the run. The app says so on the page.
+## What is in here
 
-## Patient types
+| File | What it is |
+|---|---|
+| `index.html` | The whole app — protocols, drugs, calculators, images. One file. |
+| `sw.js` | Service worker, scoped to `/v2/` only. Caches the app so it opens offline. |
+| `manifest.webmanifest` | Name, colours and icons for the home-screen app. |
+| `icons/` | The Trauma Star icon at 180, 192 and 512 px. |
 
-`Adult`, `Pediatric` and `OB`. The protocol book has no separate obstetric
-weight-based dosing, so **OB is dosed as an adult** — it changes what the app
-shows you, not what it calculates:
-
-- the 10 Obstetrical protocols come first in the protocol list;
-- the 15 other protocols that carry pregnancy-specific instructions are listed
-  under them, and those lines are pulled to the top when you open one
-  (the eclampsia referral in Seizure, third-trimester arrest, the pain and
-  airway contraindications, the ≥ 20 week trauma-alert criterion, the whole
-  blood pregnancy category);
-- ideal body weight, tidal volume and the ET tube row use the female formula.
-
-## Sources and limits
-
-Protocol text is carried over as written. Items marked **STANDARD REFERENCE**
-(ideal body weight, tidal volume, i-gel and ET tube sizing) are not in the MCFR
-protocol and come from general published references. Drip mixes marked **NOT IN
-PROTOCOL** are editable starting points, not protocol. Amber values are
-arithmetic on the weight entered.
-
-The formulary in this build is the current edition (pp. 138–180), which
-supersedes the short formulary on pp. 136–143 of the older V4(2) file. Where the
-two differ this edition governs — most importantly **TXA is 2 g for adults**,
-not 1 g. Cards whose dose or indication changed are marked `CHANGED` and say
-what it was. Page numbers 168–180 are inferred from sequence; the printed number
-was cropped in the source.
-
-**This is an unofficial aid.** It does not replace the official protocol,
-medical direction or clinical judgment. Verify every dose before administration.
-
-## No patient data leaves the device
-
-Nothing is uploaded. Weight, height and drip mixes are kept in the browser's
-local storage on that device only. A scanned name and date of birth are held in
-memory until the patient is cleared or the app is closed, and are never written
-to storage. The ID barcode is decoded on the phone itself.
-
-## Deploying
-
-GitHub Pages serves this directly from the repository root — no build step.
-
-    index.html              the whole app
-    manifest.webmanifest    install metadata
-    sw.js                   offline cache
-    icon*.png              app icons (Trauma Star AW139)
-
-After pushing a change, **bump `CACHE` in `sw.js`**. The activate step deletes
-older caches, so a crew that opens the app after a deploy picks up the new
-build; without the bump they keep the cached one.
-
-To install: open the live URL, then Share → Add to Home Screen (iPhone/iPad) or
-the install prompt (Android).
+Sources are listed inside the app, on the **Sources** tab: printed page numbers
+are the 2025 MCFR EMS Protocols V4.2 and the current Medication Formulary;
+anything else is marked PROGRAM, REFERENCE or DRAFT.
