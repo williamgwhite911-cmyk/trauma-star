@@ -1,7 +1,7 @@
 /* Trauma Star protocols - offline cache. Built 2026-11-22.
    Change CACHE when index.html changes; phones pick it up next time they
    open the app with signal. */
-var CACHE = "ts-protocols-v2-434a9b334a";
+var CACHE = "ts-protocols-v2-airvo-1123";
 var FILES = ["./", "./index.html", "./manifest.webmanifest",
   "./icons/icon-180.png", "./icons/icon-192.png",
   "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
