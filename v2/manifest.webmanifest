@@ -1,0 +1,29 @@
+{
+ "name": "Trauma Star Protocols & Dosages (2026)",
+ "short_name": "TS Protocols",
+ "description": "Monroe County Fire Rescue Trauma Star protocols, dosages, pediatric tape, RSI, ventilator, destinations and flight checklists. Works offline.",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#0b1620",
+ "theme_color": "#16324a",
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
